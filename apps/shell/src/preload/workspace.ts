@@ -37,7 +37,7 @@ export function exposeWorkspaceApi(): void {
     discard: (token) => call('discard', token),
     apply: (id, token) => call('apply', id, token),
     undoCleanup: (id) => call('undoCleanup', id),
-    exportWorkbook: (id) => call('exportWorkbook', id),
+    exportWorkbook: (id, ownedPath) => call('exportWorkbook', id, ownedPath),
   }
   contextBridge.exposeInMainWorld('infomonk', api)
 }

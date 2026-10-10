@@ -1,0 +1,106 @@
+.im-research {
+  display: grid;
+  gap: 18px;
+}
+.im-research label {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin: 8px 0;
+}
+.im-research input[type='checkbox'] {
+  width: 16px;
+  height: 16px;
+}
+.im-research-config,
+.im-cell-inspector,
+.im-research-publish {
+  padding: 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--im-radius-panel);
+}
+.im-research-config summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+.im-research fieldset {
+  border: 1px solid var(--border);
+  border-radius: var(--im-radius-control);
+  margin: 12px 0;
+}
+.im-workflow-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 12px;
+}
+.im-workflow-cards article {
+  padding: 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--im-radius-panel);
+}
+.im-workflow-cards article.selected {
+  border-color: var(--im-accent);
+}
+.im-workspace .im-workflow-title {
+  border: 0;
+  padding: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+.im-run-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+.im-table-scroll {
+  overflow: auto;
+  max-height: 420px;
+}
+.im-research table {
+  border-collapse: collapse;
+  width: 100%;
+}
+.im-research td,
+.im-research th {
+  padding: 8px;
+  text-align: left;
+  border: 1px solid var(--border);
+}
+.im-research th small,
+.im-research td small {
+  display: block;
+  font-size: 11px;
+  font-weight: 400;
+}
+.im-research td button {
+  white-space: normal;
+  text-align: left;
+  border: 0;
+  padding: 4px;
+  background: transparent;
+  width: 100%;
+}
+.im-research .im-cell-missing {
+  color: var(--text-secondary);
+  font-style: italic;
+  background: var(--im-soft);
+}
+.im-cell-inspector article {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  overflow-wrap: anywhere;
+}
+.im-cell-inspector pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  background: var(--hover);
+  padding: 12px;
+}
+.im-research small {
+  color: var(--text-secondary);
+}

@@ -1,13 +1,14 @@
 # Infomonk product context
 
-Updated 9 October 2026. Stages 0–2 are implemented locally on the GenOffice fork.
-Stages 3–8 remain the ordered roadmap.
+Updated 10 October 2026. Stages 0–5 are implemented locally on the GenOffice fork
+within bounded supported input/source families. Stages 6–8 remain deferred.
 
 Infomonk is an AI research and data intelligence workspace that builds, verifies
 and maintains structured tables from documents and the web. The current runnable
-milestone provides project organization and a real local spreadsheet cleanup
-journey. Document extraction, web acquisition and maintained datasets are future
-capabilities; registering a source does not perform them.
+milestone provides project organization, real spreadsheet cleanup, supplier-quote
+extraction, a bounded World Bank adapter and reviewed maintained-table workflows.
+Registering a source alone does not extract it: users confirm a task, schema and
+scope, inspect a sample, process all inputs and review before publication.
 
 ## Owner decisions and scope
 
@@ -16,12 +17,13 @@ capabilities; registering a source does not perform them.
 - Sheets are primary. Documents, slides, PDF, Markdown and HTML are supporting
   viewers and secondary outputs, reachable through Create and Local files.
 - The owner initially approved an audit only, then authorized completing Stages
-  1–2 first. The attached build prompt supplies product context; direct user
+  1–2 first, then explicitly authorized Stages 3–5. The attached build prompt supplies product context; direct user
   scope controls execution. `assay.md` remains excluded.
 - Windows is the executed platform. Local work must remain useful without paid
   APIs. No provider request or credential change was required for this milestone.
 - Preserve original files, licenses, notices, history, internal package names and
-  committed dependency versions. No new processing framework was installed.
+  committed dependency versions. No new application processing dependency was added.
+  An isolated Unstructured parser comparison uses synthetic fixtures only.
 
 ## Runnable behavior
 
@@ -29,8 +31,10 @@ Projects support creation from a goal, file or registered URL, rename, descripti
 star, search, sorting and reopening. A project owns a working workbook and source
 snapshots; opening a source uses a separate native preview copy. Home, Projects,
 Sheets, Sources, Workflows, Outputs, Activity, Connections and Settings are in the
-real desktop shell. Workflow scheduling and new connections have honest empty
-states. Source Refresh is unavailable.
+real desktop shell. Workflows perform bounded document extraction and public
+population acquisition/enrichment; Refresh opens those controls. Schedules require
+the open desktop application and always produce a candidate for review. New
+arbitrary connections remain unavailable.
 
 CSV/TSV import has a delimiter/sample preview. Clean table inspects the complete
 chosen saved sheet/range, previews trimming, chosen number/date normalization,
@@ -41,8 +45,11 @@ sorting. Direct formulas, undo/redo, filters, save and export use inherited edit
 
 Source record references identify a saved workbook version, worksheet and original
 row. They are not verified evidence for current cell values or document facts.
-Human edits, copied rows, deleted helper IDs and arbitrary agent mutations need
-the accepted-data/evidence contracts planned for Stage 3. Details states this gap.
+Accepted research tables have separate stable identities, immutable evidence,
+SQLite revisions and persistent corrections. Details resolves a selected research
+cell to its snapshot/locator and warns when the sheet differs from accepted data.
+Native edits, copied rows, renamed headers/sheets and deleted helper IDs do not
+automatically reconcile into that ledger. Record corrections in Workflows.
 
 ## Inherited capabilities that prevent duplicate work
 
@@ -58,3 +65,7 @@ links do not supply immutable field evidence or maintained dataset revisions.
 See [IMPLEMENTATION_PLAN.md](IMPLEMENTATION_PLAN.md),
 [ARCHITECTURE.md](ARCHITECTURE.md) and
 [the implementation verification](docs/implementation/verification.md).
+
+The [Stages 3–5 contracts and limitations](docs/implementation/research-workflows.md)
+define the current document family, public-source scope, field origins, deletion
+policy and durable executor. No provider credentials are needed for these tasks.

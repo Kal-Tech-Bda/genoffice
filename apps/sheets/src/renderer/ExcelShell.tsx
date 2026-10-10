@@ -370,6 +370,8 @@ interface ExcelShellProps {
   /// A1 label of the active cell, echoed live by the Name Box.
   readonly activeCellA1: string
   readonly detailsRange: string | null
+  readonly onReadEvidenceCell?: () =>
+    import('../../../shell/src/shared/research-api').EvidenceSelection | null
   /// Name Box / Go To jump; returns an error message, or null on success.
   readonly onGoToReference: (ref: string) => string | null
   readonly onListDefinedNames: () => readonly { name: string; ref: string }[]
@@ -483,6 +485,7 @@ export function ExcelShell({
   onGetAnchorValue,
   activeCellA1,
   detailsRange,
+  onReadEvidenceCell,
   onGoToReference,
   onListDefinedNames,
   onReadPasteSpecialSource,
@@ -963,6 +966,7 @@ export function ExcelShell({
           onUndo={onUndo}
           scopeRange={aiScopeRange}
           detailsRange={detailsRange}
+          onReadEvidenceCell={onReadEvidenceCell}
           scopeColumns={aiScopeColumns}
           scopeLocked={aiScopeLocked}
           onScopeDismiss={onAiScopeDismiss}

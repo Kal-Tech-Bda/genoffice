@@ -7,6 +7,7 @@ import { CleanupFlow } from './CleanupFlow'
 import { ProjectCreator } from './ProjectCreator'
 import { mt, type MonkString } from './en'
 import { MonkMark } from './Mark'
+import { ResearchPanel } from './ResearchPanel'
 import './workspace.css'
 
 declare global {
@@ -249,15 +250,22 @@ export function Workspace({
           <button disabled={busy} onClick={() => void run(() => navigate('sources'))}>
             {mt('addSources')}
           </button>
-          <button disabled title={mt('refreshUnavailable')}>
-            {mt('refresh')}
+          <button onClick={() => void run(() => navigate('workflows'))}>{mt('refresh')}</button>
+          <button
+            disabled={!!activeFile && activeFile !== metadata?.primaryWorkbook}
+            title="Clean table operates on the saved primary project workbook"
+            onClick={() => void run(() => navigate('cleanup'))}
+          >
+            {mt('cleanTable')}
           </button>
-          <button onClick={() => void run(() => navigate('cleanup'))}>{mt('cleanTable')}</button>
           <button onClick={() => void run(() => navigate('outputs'))}>{mt('create')}</button>
           <button
             onClick={() =>
               void run(async () => {
-                await window.infomonk.exportWorkbook(project.id)
+                await window.infomonk.exportWorkbook(
+                  project.id,
+                  activeFile && /\.xlsx$/i.test(activeFile) ? activeFile : undefined,
+                )
               })
             }
           >
@@ -420,6 +428,12 @@ export function Workspace({
               )}
               {section === 'sources' && (
                 <>
+                  <button
+                    className="im-primary"
+                    onClick={() => void run(() => navigate('workflows'))}
+                  >
+                    Build a table from sources
+                  </button>
                   <p className="im-muted">{mt('sourceInfo')}</p>
                   <div className="im-controls">
                     <button onClick={() => void run(addFile)}>{mt('addFile')}</button>
@@ -468,12 +482,7 @@ export function Workspace({
                   )}
                 </>
               )}
-              {section === 'workflows' && (
-                <div className="im-empty">
-                  <h2>{mt('workflowEmpty')}</h2>
-                  <p>{mt('workflowInfo')}</p>
-                </div>
-              )}
+              {section === 'workflows' && <ResearchPanel key={project.id} project={project} />}
               {section === 'outputs' && (
                 <>
                   <p className="im-muted">{mt('outputInfo')}</p>
@@ -495,7 +504,8 @@ export function Workspace({
                   {project.files
                     .filter(
                       (path) =>
-                        /\.(docx|pptx|md|html|pdf)$/i.test(path) &&
+                        /\.(docx|pptx|md|html|pdf|xlsx)$/i.test(path) &&
+                        path !== metadata?.primaryWorkbook &&
                         !/[\\/]previews[\\/]/.test(path),
                     )
                     .map((path) => (

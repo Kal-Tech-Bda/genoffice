@@ -1,5 +1,8 @@
 import type { AiPanelPrefs } from '@genoffice/ui'
 import { contextBridge, ipcRenderer, webUtils } from 'electron'
+import { exposeSheetEvidence } from './research'
+
+exposeSheetEvidence()
 
 import type {
   AiChatResponse,

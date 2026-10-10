@@ -10,6 +10,8 @@ import { GensparkMark } from '../ribbon-icons'
 import { MonkMark } from '../../../../shell/src/renderer/src/infomonk/Mark'
 import { mt } from '../../../../shell/src/renderer/src/infomonk/en'
 import './infomonk-panel.css'
+import { EvidenceDetails } from './EvidenceDetails'
+import type { EvidenceSelection } from '../../../../shell/src/shared/research-api'
 import type { ChangePlan } from '@genoffice/xlsx-gateway/domain/workbook.types'
 import { ATTACHMENT_IMAGE_EXTS, type AttachmentMeta } from '../../shared/desktop-api'
 import { useI18n, type TFunc } from '../i18n/locale'
@@ -246,6 +248,7 @@ export function AiChatPanel({
   onUndo,
   scopeRange,
   detailsRange,
+  onReadEvidenceCell,
   scopeColumns,
   scopeLocked,
   onScopeDismiss,
@@ -288,6 +291,7 @@ export function AiChatPanel({
    *  and dismissing the chip clears it until the next selection change */
   readonly scopeRange: string | null
   readonly detailsRange: string | null
+  readonly onReadEvidenceCell?: (() => EvidenceSelection | null) | undefined
   /** header names when the scope covers whole columns; they label the chip in
    *  place of the range */
   readonly scopeColumns: readonly string[] | null
@@ -589,7 +593,7 @@ export function AiChatPanel({
               ))}
             </ul>
           )}
-          <p>{mt('evidenceEmpty')}</p>
+          <EvidenceDetails range={detailsRange} read={onReadEvidenceCell} />
         </section>
       )}
       <div style={{ display: panelMode === 'assistant' ? 'contents' : 'none' }}>

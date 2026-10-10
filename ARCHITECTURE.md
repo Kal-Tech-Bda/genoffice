@@ -6,7 +6,8 @@ Audit date: 9 October 2026. Upstream revision:
 This describes source-confirmed architecture. Runtime evidence and limitations
 are recorded separately in [docs/audit/verification.md](docs/audit/verification.md).
 The inherited architecture below is the audited baseline. The implemented Infomonk
-seam is described next; later dataset/execution boundaries remain recommendations.
+seams are described next. Stages 3–5 add the accepted ledger and local executor
+described in [research contracts](docs/implementation/research-workflows.md).
 
 ## Implemented Infomonk seam (Stages 1–2)
 
@@ -37,7 +38,7 @@ flowchart LR
   Source copies have no automatic retention/pruning policy yet.
 - CSV/TSV imports reuse the inherited decoder, delimiter/parser and XLSX writer.
   Existing XLSX imports copy the original. Document, text and goal starts create a
-  real blank workbook; extraction is unavailable. Inputs are bounded to 32 MiB;
+  real blank workbook; extraction is an explicit workflow action. Inputs are bounded to 32 MiB;
   imports and chosen cleanup ranges are bounded to 100,000 cells.
 - `clean-table.ts` reads the saved workbook, profiles the full chosen range and
   constructs deterministic rule plans. A 15-minute preview token pins the source
@@ -71,9 +72,45 @@ only `INFOMONK_UPDATE_URL` can configure the fork's feed. Genspark auth/cloud/se
 remain optional inherited integrations and keep their identity. Secondary editor
 branding and some upstream help/repository links remain. Installers were not tested.
 
-No new parser, dataset database, scheduler, connector framework or agent harness
-has been installed. [IMPLEMENTATION_PLAN.md](IMPLEMENTATION_PLAN.md) defines the
-accepted-data and extraction contracts for Stage 3.
+## Research domain and execution (Stages 3–5)
+
+`ResearchPanel → window.infomonkResearch → validated shell IPC → ResearchService`
+connects task/schema/source confirmation, sample inspection, batch execution,
+cell evidence, corrections and publication. The service reuses WorkspaceStore
+snapshots/ProjectStore membership, inherited DOCX/PDF parsers, CSV/XLSX package
+creation and atomic writes. `research-api.ts` defines the domain contracts.
+
+`research/store.ts` uses the already available Node SQLite runtime for schema 2
+migrations, the durable queue/input checkpoints, execution/validation events,
+normalized accepted cells, immutable revisions and independent corrections.
+It is separate from the regenerable search SQLite cache and UI/chat JSON.
+Publication writes a separate XLSX first, then atomically advances the accepted
+revision with configuration, processing, coverage and revision fences. Failed,
+cancelled or obsolete execution cannot replace accepted data. Unreferenced output
+files may remain after interruption before commit; no accepted pointer is advanced.
+
+`research/extract.ts` separates source parsing from the supported quote-family
+extractor. `worldbank.ts` is one strictly bounded structured adapter with durable
+HTTP snapshots, pagination/scope/count validation, timeout and rate-limit backoff.
+Enrichment matches confirmed public country codes against a local accepted quote
+revision. No internal names/document text or provider secrets are sent externally.
+
+The same SQLite queue owns app-open scheduling; no parallel scheduler or hosted
+service exists. Missing execution times coalesce, pending review prevents overlap,
+and scheduling never automatically publishes. Interrupted active runs become
+failed resumable attempts on restart. Retry reuses acquired inputs; new runs
+reacquire public responses. Full contracts are in the research document linked above.
+
+`projection.ts` creates separate related worksheets with typed literals, hidden
+record IDs and linked research/evidence metadata. Sheets exposes only a narrow
+`window.infomonkEvidence` bridge. Main IPC derives the workbook path from its actual
+Sheets tab, checks owned membership and resolves references through the ledger;
+renderer-supplied source paths are never accepted. Details verifies the selected
+record/column and warns on value/revision divergence. Native viewers use verified
+snapshot copies. Arbitrary native edits do not silently become ledger corrections.
+
+No new application parser/framework dependency or agent harness was installed.
+The isolated parser experiment is documented separately; Stages 6–8 are deferred.
 
 ## Inherited system
 
@@ -236,13 +273,13 @@ distribution. No new telemetry or hosted service was configured here.
 3. **Cleanup operations:** build on existing parsing, DSL, previews, execution,
    aggregation and saves. Add missing user-facing preview/original-copy behavior
    and explicit formula/load safety instead of rebuilding formulas or imports.
-4. **Research domain, later:** immutable source versions, stable table/row/column
+4. **Research domain (implemented for supported families):** immutable source versions, stable table/row/column
    identities, observations/evidence, accepted revisions, review and corrections.
    Declare one authoritative transactional store before introducing managed sheets.
-5. **Adapters and execution, later:** one replaceable parsing boundary, one bounded
+5. **Adapters and execution (implemented locally):** one replaceable parsing boundary, one bounded
    web adapter, and eventually an isolated runner plus an authoritative scheduler.
    `packages/pipelines` currently exports slides only; create a distinct research
    workflow module rather than claiming an ETL engine already exists.
 
-No public API, dataset schema or application implementation was added in this
-milestone. See [the reuse map](docs/reuse-map.md) for exact feature decisions.
+The Stage 0 audit itself changed no application behavior; subsequent Stages 1–5
+implement the local seams above. See [the reuse map](docs/reuse-map.md) for decisions.

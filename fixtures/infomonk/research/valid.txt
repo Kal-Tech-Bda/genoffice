@@ -1,0 +1,9 @@
+Supplier Quote
+Quote ID: Q-100
+Supplier: Northwind Demo
+Date: 2026-09-01
+Currency: CAD
+Total: 125.50
+Country code: CAN
+Item 1 | Paper | 5 | 20.00
+Item 2 | Delivery | 1 | 25.50

@@ -133,12 +133,19 @@ export function registerWorkspaceIpc(
         return store.undo(id.parse(args[0]))
       case 'exportWorkbook': {
         const project = store.get(id.parse(args[0]))
+        const ownedPath = path.optional().parse(args[1])
+        if (
+          ownedPath &&
+          (!/\.xlsx$/i.test(ownedPath) ||
+            !project.files.some((file) => file.toLowerCase() === ownedPath.toLowerCase()))
+        )
+          throw new Error('Export requires a project-owned workbook.')
         const result = await dialog.showSaveDialog(window, {
           defaultPath: `${project.name.replace(/[<>:"/\\|?*]/g, '-')}.xlsx`,
           filters: [{ name: 'Excel workbook', extensions: ['xlsx'] }],
         })
         if (!result.canceled && result.filePath) {
-          await copyFile(project.workspace.primaryWorkbook, result.filePath)
+          await copyFile(ownedPath ?? project.workspace.primaryWorkbook, result.filePath)
           return true
         }
         return false

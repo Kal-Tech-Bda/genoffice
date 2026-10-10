@@ -1,0 +1,276 @@
+{
+  "profile": "C:\\Users\\Place\\Documents\\ChatGPT\\Socrates\\.task\\infomonk\\research-profile-1791617707641",
+  "checks": [
+    {
+      "name": "Native PDF extraction, sample and exact evidence locator",
+      "passed": true,
+      "evidence": {
+        "quote": "Q-100",
+        "total": 125.5,
+        "locator": "PDF page 1, line 6"
+      }
+    },
+    {
+      "name": "DOCX/PDF duplicate business keys, missing facts and transactional publication",
+      "passed": true,
+      "evidence": {
+        "quotes": 2,
+        "lineItems": 2,
+        "coverage": {
+          "complete": 3,
+          "failed": 0,
+          "total": 3
+        }
+      }
+    },
+    {
+      "name": "Actual sheet cell resolves immutable PDF snapshot and locator",
+      "passed": true,
+      "evidence": "E2 / Q-100 / total"
+    },
+    {
+      "name": "Manual correction survives idempotent full refresh",
+      "passed": true,
+      "evidence": {
+        "value": 130,
+        "changes": {
+          "added": 0,
+          "changed": 0,
+          "removed": 0
+        }
+      }
+    },
+    {
+      "name": "Persistent app-open schedule can pause",
+      "passed": true,
+      "evidence": {
+        "minutes": 15,
+        "paused": true
+      }
+    },
+    {
+      "name": "Workflow structure copy excludes private inputs",
+      "passed": true,
+      "evidence": "No source IDs, country selections or parent records copied"
+    },
+    {
+      "name": "Live bounded World Bank adapter paginates and retains field evidence",
+      "passed": true,
+      "evidence": {
+        "rows": 18,
+        "pages": 2,
+        "retrievedAt": "2026-10-10T07:35:16.059Z"
+      }
+    },
+    {
+      "name": "Mixed-source enrichment uses reviewed exact country-code matching",
+      "passed": true,
+      "evidence": {
+        "internalValue": 130,
+        "externalYear": 2024
+      }
+    },
+    {
+      "name": "Fresh-process restart retains accepted revisions, overrides and paused schedule",
+      "passed": true,
+      "evidence": {
+        "revision": 3,
+        "correction": 130
+      }
+    },
+    {
+      "name": "Failed retrieval leaves accepted public records unchanged",
+      "passed": true,
+      "evidence": "Injected HTTP 403 fixture; accepted 18 records retained"
+    },
+    {
+      "name": "Native cancellation fences publication",
+      "passed": true,
+      "evidence": "Injected pending HTTP fixture cancelled"
+    },
+    {
+      "name": "Interrupted native run recovers and explicit retry processes inputs",
+      "passed": true,
+      "evidence": "Application restart, accepted revision unchanged; retry candidate reviewed then cancelled"
+    },
+    {
+      "name": "Native refresh reviews added/changed/absent records and preserves manual precedence",
+      "passed": true,
+      "evidence": {
+        "changes": {
+          "added": 1,
+          "changed": 3,
+          "removed": 1
+        },
+        "accepted": ["Q-100", "Q-300"],
+        "correction": 130
+      }
+    },
+    {
+      "name": "Native app-open scheduler enqueues one due run and stops at review",
+      "passed": true,
+      "evidence": {
+        "status": "review",
+        "acceptedRevision": 4,
+        "pausedAfterCheck": true
+      }
+    },
+    {
+      "name": "Native edit/undo/redo/save retains research metadata and does not overwrite accepted data",
+      "passed": true,
+      "evidence": {
+        "sheet": 135,
+        "accepted": 130,
+        "revision": 4
+      }
+    },
+    {
+      "name": "Export uses active research workbook with embedded evidence",
+      "passed": true,
+      "evidence": "Byte-equivalent saved XLSX export, not the blank primary workbook"
+    },
+    {
+      "name": "Final built restart and gated evidence smoke",
+      "passed": true,
+      "evidence": "Edited 135 vs accepted manual 130, immutable source total 150; inherited ZIP gate and current built UI verified"
+    }
+  ],
+  "screenshots": [
+    "quote-sample-evidence-light.png",
+    "quote-accepted-light.png",
+    "sheet-cell-evidence-light.png",
+    "workflow-history-light.png",
+    "worldbank-live-light.png",
+    "enrichment-dark.png",
+    "sheet-edited-warning-dark.png"
+  ],
+  "liveRetrievals": [
+    {
+      "country": "CAN",
+      "year": 2024,
+      "population": 41262329,
+      "url": "https://api.worldbank.org/v2/country/CAN;DEU;FRA;GBR;MEX;USA/indicator/SP.POP.TOTL?format=json&date=2022:2024&per_page=10&page=1",
+      "sha256": "b9b125bb1a391879ded0375841095719ef6eda1ce7a38e401ebc0da56b446b83"
+    },
+    {
+      "country": "CAN",
+      "year": 2023,
+      "population": 40049088,
+      "url": "https://api.worldbank.org/v2/country/CAN;DEU;FRA;GBR;MEX;USA/indicator/SP.POP.TOTL?format=json&date=2022:2024&per_page=10&page=1",
+      "sha256": "b9b125bb1a391879ded0375841095719ef6eda1ce7a38e401ebc0da56b446b83"
+    },
+    {
+      "country": "CAN",
+      "year": 2022,
+      "population": 38950132,
+      "url": "https://api.worldbank.org/v2/country/CAN;DEU;FRA;GBR;MEX;USA/indicator/SP.POP.TOTL?format=json&date=2022:2024&per_page=10&page=1",
+      "sha256": "b9b125bb1a391879ded0375841095719ef6eda1ce7a38e401ebc0da56b446b83"
+    },
+    {
+      "country": "DEU",
+      "year": 2024,
+      "population": 83516593,
+      "url": "https://api.worldbank.org/v2/country/CAN;DEU;FRA;GBR;MEX;USA/indicator/SP.POP.TOTL?format=json&date=2022:2024&per_page=10&page=1",
+      "sha256": "b9b125bb1a391879ded0375841095719ef6eda1ce7a38e401ebc0da56b446b83"
+    },
+    {
+      "country": "DEU",
+      "year": 2023,
+      "population": 83287273,
+      "url": "https://api.worldbank.org/v2/country/CAN;DEU;FRA;GBR;MEX;USA/indicator/SP.POP.TOTL?format=json&date=2022:2024&per_page=10&page=1",
+      "sha256": "b9b125bb1a391879ded0375841095719ef6eda1ce7a38e401ebc0da56b446b83"
+    },
+    {
+      "country": "DEU",
+      "year": 2022,
+      "population": 83177813,
+      "url": "https://api.worldbank.org/v2/country/CAN;DEU;FRA;GBR;MEX;USA/indicator/SP.POP.TOTL?format=json&date=2022:2024&per_page=10&page=1",
+      "sha256": "b9b125bb1a391879ded0375841095719ef6eda1ce7a38e401ebc0da56b446b83"
+    },
+    {
+      "country": "FRA",
+      "year": 2024,
+      "population": 68551653,
+      "url": "https://api.worldbank.org/v2/country/CAN;DEU;FRA;GBR;MEX;USA/indicator/SP.POP.TOTL?format=json&date=2022:2024&per_page=10&page=1",
+      "sha256": "b9b125bb1a391879ded0375841095719ef6eda1ce7a38e401ebc0da56b446b83"
+    },
+    {
+      "country": "FRA",
+      "year": 2023,
+      "population": 68372286,
+      "url": "https://api.worldbank.org/v2/country/CAN;DEU;FRA;GBR;MEX;USA/indicator/SP.POP.TOTL?format=json&date=2022:2024&per_page=10&page=1",
+      "sha256": "b9b125bb1a391879ded0375841095719ef6eda1ce7a38e401ebc0da56b446b83"
+    },
+    {
+      "country": "FRA",
+      "year": 2022,
+      "population": 68184457,
+      "url": "https://api.worldbank.org/v2/country/CAN;DEU;FRA;GBR;MEX;USA/indicator/SP.POP.TOTL?format=json&date=2022:2024&per_page=10&page=1",
+      "sha256": "b9b125bb1a391879ded0375841095719ef6eda1ce7a38e401ebc0da56b446b83"
+    },
+    {
+      "country": "GBR",
+      "year": 2024,
+      "population": 69281000,
+      "url": "https://api.worldbank.org/v2/country/CAN;DEU;FRA;GBR;MEX;USA/indicator/SP.POP.TOTL?format=json&date=2022:2024&per_page=10&page=1",
+      "sha256": "b9b125bb1a391879ded0375841095719ef6eda1ce7a38e401ebc0da56b446b83"
+    },
+    {
+      "country": "GBR",
+      "year": 2023,
+      "population": 68526000,
+      "url": "https://api.worldbank.org/v2/country/CAN;DEU;FRA;GBR;MEX;USA/indicator/SP.POP.TOTL?format=json&date=2022:2024&per_page=10&page=2",
+      "sha256": "4c50d042f4d0bf9afa973b66e42dda1a0e7ce148629282402862fe3b5a527e11"
+    },
+    {
+      "country": "GBR",
+      "year": 2022,
+      "population": 67636000,
+      "url": "https://api.worldbank.org/v2/country/CAN;DEU;FRA;GBR;MEX;USA/indicator/SP.POP.TOTL?format=json&date=2022:2024&per_page=10&page=2",
+      "sha256": "4c50d042f4d0bf9afa973b66e42dda1a0e7ce148629282402862fe3b5a527e11"
+    },
+    {
+      "country": "MEX",
+      "year": 2024,
+      "population": 130861007,
+      "url": "https://api.worldbank.org/v2/country/CAN;DEU;FRA;GBR;MEX;USA/indicator/SP.POP.TOTL?format=json&date=2022:2024&per_page=10&page=2",
+      "sha256": "4c50d042f4d0bf9afa973b66e42dda1a0e7ce148629282402862fe3b5a527e11"
+    },
+    {
+      "country": "MEX",
+      "year": 2023,
+      "population": 129739759,
+      "url": "https://api.worldbank.org/v2/country/CAN;DEU;FRA;GBR;MEX;USA/indicator/SP.POP.TOTL?format=json&date=2022:2024&per_page=10&page=2",
+      "sha256": "4c50d042f4d0bf9afa973b66e42dda1a0e7ce148629282402862fe3b5a527e11"
+    },
+    {
+      "country": "MEX",
+      "year": 2022,
+      "population": 128613117,
+      "url": "https://api.worldbank.org/v2/country/CAN;DEU;FRA;GBR;MEX;USA/indicator/SP.POP.TOTL?format=json&date=2022:2024&per_page=10&page=2",
+      "sha256": "4c50d042f4d0bf9afa973b66e42dda1a0e7ce148629282402862fe3b5a527e11"
+    },
+    {
+      "country": "USA",
+      "year": 2024,
+      "population": 340003797,
+      "url": "https://api.worldbank.org/v2/country/CAN;DEU;FRA;GBR;MEX;USA/indicator/SP.POP.TOTL?format=json&date=2022:2024&per_page=10&page=2",
+      "sha256": "4c50d042f4d0bf9afa973b66e42dda1a0e7ce148629282402862fe3b5a527e11"
+    },
+    {
+      "country": "USA",
+      "year": 2023,
+      "population": 336755052,
+      "url": "https://api.worldbank.org/v2/country/CAN;DEU;FRA;GBR;MEX;USA/indicator/SP.POP.TOTL?format=json&date=2022:2024&per_page=10&page=2",
+      "sha256": "4c50d042f4d0bf9afa973b66e42dda1a0e7ce148629282402862fe3b5a527e11"
+    },
+    {
+      "country": "USA",
+      "year": 2022,
+      "population": 333996304,
+      "url": "https://api.worldbank.org/v2/country/CAN;DEU;FRA;GBR;MEX;USA/indicator/SP.POP.TOTL?format=json&date=2022:2024&per_page=10&page=2",
+      "sha256": "4c50d042f4d0bf9afa973b66e42dda1a0e7ce148629282402862fe3b5a527e11"
+    }
+  ],
+  "environment": "Windows built Electron renderers"
+}

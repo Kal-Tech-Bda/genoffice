@@ -141,3 +141,19 @@ safe cleanup UX where they are insufficient. Stage 3 can compare inherited
 parsing with **one** structured parser on identical synthetic documents, checking
 field accuracy, missing values and actual evidence locators. Only then select a
 parser dependency and persistence contract.
+
+## Stage 3–5 implementation research (10 October 2026)
+
+The current implementation uses inherited DOCX/PDF paths and the existing Node
+SQLite runtime. One isolated Unstructured comparison on the synthetic quote
+corpus did not justify a production parser dependency; the candidate PDF import
+blocker is explicitly retained in [the comparison](implementation/parser-comparison.md).
+Docling remained source-screened, not runtime-benchmarked. No PostgreSQL/pg-boss
+stack was needed for the selected local app-open executor.
+
+The new public adapter uses the [World Bank V2 indicators API](https://datahelpdesk.worldbank.org/knowledgebase/articles/889392)
+and documented [paging/date/JSON parameters](https://datahelpdesk.worldbank.org/knowledgebase/articles/898581-api-basic-call-structures),
+with dataset [attribution and terms](https://data.worldbank.org/summary-terms-of-use).
+This is one bounded population series, not arbitrary public-site automation.
+Actual live responses, source hashes and evidence pointers are in
+[research verification](implementation/research-verification.md).

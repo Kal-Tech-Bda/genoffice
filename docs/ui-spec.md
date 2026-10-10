@@ -1,8 +1,42 @@
 # Infomonk implemented UI specification
 
-Updated 9 October 2026. Stages 1–2 are implemented in the GenOffice Electron
+Updated 10 October 2026. Stages 1–5 are implemented in the GenOffice Electron
 shell. [Actual screenshots](implementation/verification.md#screenshots) show
 executed native windows; [baseline screenshots](audit/verification.md) are historical.
+
+The original Stage 1–2 layout below is retained. Workflows and research Details
+now have the implemented behavior described in
+[Stages 3–5 journeys](implementation/research-workflows.md), with
+[actual research screenshots](implementation/research-verification.md).
+
+## Research and refresh states (Stages 3–5)
+
+- Sources → Build a table from sources opens Workflows. Task, input snapshots,
+  typed schema and row meaning are explicit; fixed extraction rules are shown.
+- Workflow cards show actual input/configuration, accepted revision, destination,
+  trigger, latest result and pending review. Run sample/full, Edit, History,
+  structure copy, Update schedule and pause/resume operate on persistent records.
+- A sample is visibly non-publishable. Candidate status/progress/coverage,
+  missing/conflicting cells, related sheets and execution/validation events are
+  real stored results. Tables show their complete count and first 100 rows.
+- Cell inspection shows value/origin, prior accepted value, missing reason,
+  source version, locator and excerpt. Snapshot verification resolves the hash
+  and locator; native viewers open a copy. Source values do not override manual
+  corrections silently.
+- Added/changed/absent counts use stable keys and content hashes. Absent records
+  can be inspected; retain is the default. Publication requires a full completed
+  run and review, and is blocked by failed coverage. Reviewed removal preserves
+  overridden records.
+- Details in an accepted research workbook resolves the top-left selected cell.
+  A changed sheet value/revision produces an explicit warning. Reload checks
+  again after edits. Corrections are recorded in the accepted-table inspector.
+- Refresh opens workflow controls. Accepted XLSX outputs are visible in Outputs.
+  Export copies the active owned XLSX; cleanup remains scoped to the primary
+  project workbook. Schedules state that Infomonk must be open and that publication
+  always requires review; paused schedules show their actual state.
+- World Bank scope/access requirements and exact-code enrichment are shown before
+  collection. Internal/external/manual values are distinguished. No arbitrary
+  search, scrape, OCR or hidden provider action is implied.
 
 ## Navigation and state
 

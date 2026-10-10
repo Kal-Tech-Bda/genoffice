@@ -1,0 +1,180 @@
+import { app, ipcMain, type BrowserWindow } from 'electron'
+import { z } from 'zod'
+import { RESEARCH_CHANNEL, EVIDENCE_CHANNEL, type ResearchConfig } from '../../shared/research-api'
+import { WorkspaceStore } from '../workspace-store'
+import { ResearchService } from './service'
+import { quoteColumns } from './extract'
+
+const projectId = z.string().regex(/^proj-[a-f0-9]{12}$/)
+const uuid = z.string().uuid()
+const value = z.union([z.string().max(2000), z.number().finite(), z.null()])
+const key = z.string().regex(/^[a-zA-Z0-9_ -]{1,50}$/)
+const config = z
+  .object({
+    kind: z.enum(['quotes', 'worldbank', 'enrich']),
+    instructions: z.string().max(4000),
+    sourceIds: z.array(uuid).max(20),
+    fields: z
+      .array(z.enum(quoteColumns.map((c) => c.id) as [string, ...string[]]))
+      .min(1)
+      .max(6),
+    countries: z.array(z.string().regex(/^[A-Z]{3}$/)).max(10),
+    fromYear: z.number().int().min(1960).max(new Date().getFullYear()),
+    toYear: z.number().int().min(1960).max(new Date().getFullYear()),
+    parentWorkflowId: uuid.optional(),
+  })
+  .strict()
+  .refine((c) => c.toYear >= c.fromYear && c.toYear - c.fromYear <= 2, 'Choose at most three years')
+  .refine((c) => c.fields.includes('quote_id'), 'Quote ID is required for stable keys')
+  .refine(
+    (c) =>
+      [c.sourceIds, c.fields, c.countries].every(
+        (values) => new Set(values).size === values.length,
+      ),
+    'Remove duplicate input IDs, fields or country codes',
+  )
+const evidence = z
+  .object({
+    sourceId: z.string().max(100),
+    sourceVersion: z.string().regex(/^[a-f0-9]{64}$/),
+    sourceName: z.string().max(255),
+    uri: z.string().max(4096),
+    retrievedAt: z.string().max(40),
+    locator: z.string().max(200),
+    excerpt: z.string().max(200_000),
+    method: z.string().max(100),
+  })
+  .strict()
+const selection = z
+  .object({ tableId: key, rowId: z.string().regex(/^[a-f0-9]{24}$/), columnId: key, value })
+  .strict()
+
+export function registerResearchIpc(
+  host: () => BrowserWindow | null,
+  open: (path: string) => void,
+  sheetPath: (id: number) => string | null,
+): void {
+  const service = new ResearchService(
+    app.getPath('userData'),
+    new WorkspaceStore(app.getPath('userData')),
+  )
+  service.start()
+  app.on('before-quit', () => service.close())
+  ipcMain.handle(RESEARCH_CHANNEL, async (event, method: unknown, ...args: unknown[]) => {
+    const window = host()
+    if (
+      !window ||
+      event.sender !== window.webContents ||
+      event.senderFrame !== window.webContents.mainFrame
+    )
+      throw new Error('Research operations require the application shell.')
+    const id = projectId.parse(args[0])
+    service.workspace.get(id)
+    switch (method) {
+      case 'state':
+        return service.state(id)
+      case 'save':
+        return service.save(
+          id,
+          z.string().trim().min(1).max(120).parse(args[1]),
+          config.parse(args[2]) as ResearchConfig,
+          uuid.optional().parse(args[3]),
+        )
+      case 'run':
+        return service.run(id, uuid.parse(args[1]), z.boolean().parse(args[2]))
+      case 'cancel':
+        return service.cancel(id, uuid.parse(args[1]))
+      case 'retry':
+        return service.retry(id, uuid.parse(args[1]))
+      case 'publish':
+        return service.publish(
+          id,
+          uuid.parse(args[1]),
+          z.boolean().parse(args[2]),
+          z.boolean().parse(args[3]),
+        )
+      case 'schedule': {
+        const w = service.store.workflow(uuid.parse(args[1]), id)
+        service.store.schedule(
+          w.id,
+          z.union([z.number().int().min(15).max(10080), z.null()]).parse(args[2]),
+          z.boolean().parse(args[3]),
+        )
+        return
+      }
+      case 'copy': {
+        const w = service.store.workflow(uuid.parse(args[1]), id)
+        return service.store.save(id, `${w.name} template`, {
+          ...w.config,
+          sourceIds: [],
+          countries: [],
+          parentWorkflowId: undefined,
+        })
+      }
+      case 'accepted': {
+        const w = service.store.workflow(uuid.parse(args[1]), id)
+        return service.store.accepted(w.id)
+      }
+      case 'correct':
+        return service.correct(
+          id,
+          uuid.parse(args[1]),
+          key.parse(args[2]),
+          z
+            .string()
+            .regex(/^[a-f0-9]{24}$/)
+            .parse(args[3]),
+          key.parse(args[4]),
+          value.parse(args[5]),
+          z.string().trim().min(1).max(2000).parse(args[6]),
+        )
+      case 'open': {
+        const w = service.store.workflow(uuid.parse(args[1]), id)
+        if (!w.destination) throw new Error('Publish a full reviewed candidate first.')
+        service.workspace.projects.moveFileToProject(w.destination, id)
+        open(w.destination)
+        return
+      }
+      case 'evidence':
+        return service.evidence(id, evidence.parse(args[1]))
+      case 'openEvidence':
+        open(await service.evidencePath(id, evidence.parse(args[1])))
+        return
+      default:
+        throw new Error('Unknown research action.')
+    }
+  })
+  ipcMain.handle(EVIDENCE_CHANNEL, async (event, method: unknown, ...args: unknown[]) => {
+    const path = sheetPath(event.sender.id)
+    if (!path || event.senderFrame !== event.sender.mainFrame)
+      throw new Error('Evidence access requires an owned Sheets tab.')
+    if (method === 'cell') return service.sheetCell(path, selection.parse(args[0]))
+    if (method === 'inspect' || method === 'open') {
+      const target = z
+        .object({
+          workflowId: uuid,
+          tableId: key,
+          rowId: z.string().regex(/^[a-f0-9]{24}$/),
+          columnId: key,
+        })
+        .passthrough()
+        .parse(args[0])
+      const details = await service.sheetCell(path, {
+        tableId: target.tableId,
+        rowId: target.rowId,
+        columnId: target.columnId,
+        value: null,
+      })
+      if (!details || details.workflowId !== target.workflowId)
+        throw new Error('Evidence cell does not belong to this workbook.')
+      const index = z.number().int().min(0).max(100).parse(args[1])
+      const item = details.cell.evidence[index]
+      if (!item) throw new Error('Evidence reference not found.')
+      const w = service.store.workflow(details.workflowId)
+      if (method === 'inspect') return service.evidence(w.projectId, item)
+      open(await service.evidencePath(w.projectId, item))
+      return
+    }
+    throw new Error('Unknown evidence action.')
+  })
+}

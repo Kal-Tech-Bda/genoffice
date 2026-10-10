@@ -68,6 +68,6 @@ export interface WorkspaceApi {
   discard(token: string): Promise<void>
   apply(id: string, token: string): Promise<WorkspaceProject>
   undoCleanup(id: string): Promise<WorkspaceProject>
-  exportWorkbook(id: string): Promise<boolean>
+  exportWorkbook(id: string, ownedPath?: string): Promise<boolean>
 }
 export const WORKSPACE_CHANNEL = 'infomonk:workspace'

@@ -1,110 +1,65 @@
-# Infomonk implementation status and next-stage plan
+# Infomonk implementation scope and next milestones
 
-Updated 9 October 2026. Implemented boundary: **Stages 0–2**. The owner explicitly
-selected completing Stages 1–2 first. Stages 3–8 are deferred.
+Updated 10 October 2026. The owner authorized Stages 1–2, then Stages 3–5.
+Stages 0–5 are delivered locally within the supported boundaries below;
+Stages 6–8 remain deferred. The supplied build prompt is context, and direct user
+scope takes precedence. `assay.md` remains excluded.
 
-## Delivered
-
-| Stage                                  | Result                                                                                                                                                                                      | Evidence                                                                                                          |
-| -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| 0: fork, baseline and deep audit       | Full upstream history, hosted fork, executed Windows baseline, capability traces and primary-source candidate screen                                                                        | [Baseline verification](docs/audit/verification.md), [research](docs/research.md), [reuse map](docs/reuse-map.md) |
-| 1: real workspace                      | Original Infomonk mark/theme, Home/Projects, shared creation, persistent project metadata, native editor bounds, project sections, Assistant/Details                                        | [UI specification](docs/ui-spec.md), [architecture](ARCHITECTURE.md), actual screenshots                          |
-| 2: existing spreadsheet to clean table | CSV/TSV/XLSX import, full saved-scope profile, explicit transformations, preview/discard, separate cleaned workbook, record references, previous version, native editing/save/export/reopen | [Implementation verification](docs/implementation/verification.md), synthetic fixtures and focused tests          |
+| Stage | Delivered behavior                                                                                                                                                                     | Evidence                                                                                                                |
+| ----- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| 0     | Full upstream history, hosted fork, running Windows baseline, capability/reuse audit                                                                                                   | [Historical baseline](docs/audit/verification.md)                                                                       |
+| 1     | Real project shell, metadata, navigation, source viewers, themes, Assistant/Details                                                                                                    | [Stage 1–2 checks](docs/implementation/verification.md)                                                                 |
+| 2     | Native spreadsheet import, bounded cleanup preview/apply, preserved originals, row origins and save/reopen                                                                             | [Stage 1–2 checks](docs/implementation/verification.md)                                                                 |
+| 3     | Supplier-quote PDF/DOCX/text extraction, simple DOCX tables, typed schemas/sample/batch review, related items, transactional accepted cells and corrections, exact immutable evidence  | [Research checks](docs/implementation/research-verification.md), [contracts](docs/implementation/research-workflows.md) |
+| 4     | Live bounded World Bank population acquisition, pagination/scope validation, field evidence and country-code enrichment of accepted quotes                                             | [Research checks](docs/implementation/research-verification.md)                                                         |
+| 5     | Versioned workflows, durable queue/inputs/checkpoints/events, reviewed refresh diffs, persistent overrides, retry/cancel/recovery, app-open scheduling and input-free structure copies | [Research checks](docs/implementation/research-verification.md)                                                         |
 
 Hosted fork: [Kal-Tech-Bda/genoffice](https://github.com/Kal-Tech-Bda/genoffice).
-Local implementation branch: `codex/infomonk-workspace`. The upstream baseline is
-`1ca5e9adfc1807a158db19741eff825dba9ab757`; dependencies and upstream history are
-preserved. See [the manifest](docs/upstream-manifest.md) for environment and sync.
+Local branch: `codex/infomonk-workspace`. Base:
+`1ca5e9adfc1807a158db19741eff825dba9ab757`. Upstream history, internal package
+names, dependency locks, licenses/notices and `ee/` remain preserved.
+No hosted release, installer or provider credential change is part of this work.
 
-## How to exercise the milestone
+## Exercise the current milestone
 
-1. Run `npm ci`, `npm run fixtures`, `npm run fixtures -w @genoffice/sheets`,
-   `npm run build:all`, then `npm run dev` from the repository root.
-2. Create a project with `fixtures/infomonk/suppliers.tsv`; confirm Tab delimiter.
-3. Open Clean table, inspect the saved sheet/range, select ID as a duplicate key,
-   trim whitespace, remove entirely blank rows, sort by ID and choose a date
-   policy if desired. Preview before applying.
-4. Five rows become three; amount total changes from 35 to 25. The original
-   file and workbook remain intact. Missing amount stays missing and invalid
-   dates stay visible with a warning.
-5. Apply, edit directly in Univer, use native formulas/undo/filter commands, save,
-   restart, reopen the project and Export workbook. Save native edits before
-   using cleanup or exporting the project's saved workbook.
-
-The interface works without a model provider. Live assistant requests retain the
-inherited provider stack but were not sent during verification.
+Use the documented npm development route in README. Try the synthetic cleanup
+fixture for Stage 2 and `fixtures/infomonk/research/valid.pdf` for Stages 3–5.
+Sources → Build a table from sources opens explicit task/schema/input selection.
+Run a sample, inspect evidence, cancel the sample, process all confirmed inputs,
+review issues and publish. Record corrections in the accepted-table inspector.
+Refresh creates candidates; schedules require an open desktop app and never
+publish automatically. The full supported journey is in the contracts document.
 
 ## Ranked remaining gaps
 
-1. **Accepted data and field evidence.** Row-origin references are intentionally
-   limited. Add stable table/column IDs, candidate versus accepted values,
-   source locators, persistent human corrections and revision transactions in
-   Stage 3 before claiming verified extraction or maintained datasets.
-2. **Document extraction with measured coverage.** Sources already preserve and
-   display files. Parsing, schema proposal, field extraction and review remain
-   absent. Reuse available parsers first; choose an external parser from measured
-   gaps rather than installing the entire research list.
-3. **Managed-record mutation boundaries.** Cleanup and native full-row sorting
-   preserve IDs; assistant sort proposals are blocked for managed tables. Manual
-   helper deletion/copying, arbitrary edits and repeated column/worksheet changes
-   need identity reconciliation. CSV export loses workbook provenance metadata.
-4. **Release readiness.** New workspace copy is English. Inherited editor locales
-   remain. Secondary editor chrome still carries upstream branding. Installer
-   packaging, inherited non-Windows default-app integration, cross-platform execution, credentialed providers and optional cloud
-   services need their own verification. No production release was built.
-5. **Inherited platform failures.** Windows unit fixtures still have POSIX path,
-   chmod and symlink assumptions; the baseline Docs protection failure remains.
-   Pin upgrades and the 14 baseline npm advisories need a separate compatibility
-   decision. Native Rust tests passed in the final attempt without policy changes.
+1. **Broader input families and semantic extraction.** The deterministic quote
+   family and single public adapter are intentional bounds. Scans, handwriting,
+   arbitrary nested forms, provider-driven extraction and arbitrary web research
+   need separately measured coverage and evidence guarantees. The isolated parser
+   comparison did not justify a production dependency.
+2. **Identity reconciliation for unrestricted sheet mutations.** Native editing
+   remains available, but header/worksheet changes, helper deletion/copying and
+   arbitrary agent writes do not automatically update accepted data. Persistent
+   corrections use the ledger UI; CSV loses package evidence. A later harness
+   must work through reviewed domain operations instead of raw cell mutation.
+3. **Retention and service deployment.** Snapshots/revisions/previews have no
+   automatic pruning. SQLite plus app-open execution is the selected local mode.
+   Off-computer updates, a hosted executor, team access and service migration
+   require another deployment decision; do not add a competing scheduler.
+4. **Release readiness.** New workspace copy is English; some secondary chrome
+   remains upstream. Credentialed providers, optional cloud services, installers
+   and non-Windows runtime remain unverified. Existing Windows path/chmod/symlink
+   test failures and baseline dependency advisories require separate compatibility
+   work. No broad dependency upgrades were made.
 
-## Bounded Stage 3: simple documents to structured sheets
+## Deferred roadmap
 
-**Input family:** text-based supplier quotes in PDF and DOCX, optionally equivalent
-Markdown/text. One row means one quote. Fields: supplier, quote date, currency,
-quote identifier and total. Repeated line items go in a related sheet. Defer scans,
-handwriting, arbitrary nested forms, web collection and schedules.
+Stage 6: a specialized research/data engineering harness, reusing the existing
+agent/provider streaming, cancellation and tool infrastructure. It should consume
+the accepted-ledger contracts and bounded adapters, not recreate chat, editors,
+formula evaluation or durable execution.
 
-**Reuse first:** source snapshots and native previews in WorkspaceStore; DOCX
-blocks/OOXML indices from `docx-engine`; existing `file-parse` and PDF text/layout
-paths; existing provider transport, structured tool validation, Univer and XLSX
-writer. Do not rebuild source viewers, chat or provider configuration.
-
-1. Create a small labeled corpus with valid quotes, missing fields, conflicting
-   totals, duplicate inputs and one failed file. Record expected values and
-   exact source locators. Parsing coverage and field accuracy are separate scores.
-2. Compare inherited extraction against **one** parser candidate, initially
-   Docling, on the same corpus. Adopt it only if missing structure/locators or
-   measured accuracy justify its runtime and licensing cost. Keep a replaceable
-   `parseSource(version) -> structuredDocument` seam. No parser is installed now.
-3. Add a separate local transactional accepted-data store, initially evaluate
-   SQLite through the already available Node runtime. Keep ProjectStore for UI
-   metadata and chats. Version schema and migrations; document later service
-   migration. Search-index SQLite must remain a regenerable cache.
-4. Establish contracts for project/schema version, stable table/row/column IDs,
-   source version, candidate/accepted value, missing reason, evidence locator,
-   extraction method, attempt, validation issue, human correction and revision.
-   Import Stage 2 record IDs as origin links; do not equate them with validated
-   field evidence. XLSX remains a projection/export of accepted data.
-5. Implement typed schema/sample review, bounded batch processing and explicit
-   incomplete coverage. Use a configured provider or a clearly supported
-   deterministic document-family extractor. Keep absent facts absent and validate
-   values plus locators before acceptance.
-6. Connect Details to the exact immutable snapshot and page/bounding box or DOCX
-   block/table cell. A missing locator is a visible review issue. Human corrections
-   must be stored independently from a new extraction attempt.
-7. Test duplicate-input idempotence, correction survival, failed-file coverage,
-   transaction rollback, crash/restart and accepted revision reopening. No failed
-   attempt may overwrite an accepted table.
-
-**Exit criteria:** an extracted cell opens its correct original evidence; missing
-facts/evidence remain visible; duplicate files do not duplicate records; a human
-correction persists; failed files show incomplete coverage; accepted data survives
-restart. Implement only the storage and processing needed for those guarantees.
-
-## Later roadmap
-
-Stage 4: bounded web acquisition and mixed-source enrichment. Stage 5: reusable
-workflows, refresh, change review and a durable executor. Stage 6: specialized data
-engineering harness using inherited agent/provider infrastructure. Stage 7: secondary outputs and table-to-template workflows. Stage 8: hardening,
-advanced inputs and team capabilities as described in the build prompt.
-None of those subsystems is claimed as implemented by this milestone.
+Stage 7: secondary outputs and table-to-template workflows using inherited
+document/slides/PDF/Markdown/HTML editors and writers. Stage 8: hardening, broader
+input families, team capabilities and release work as described by the build
+prompt. These stages are not claimed as implemented or authorized by this turn.

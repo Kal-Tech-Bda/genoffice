@@ -135,3 +135,23 @@ Root LICENSE/NOTICE, `ee/`, `package-lock.json` and native Cargo lockfile are
 unchanged. No dependency upgrades or supporting repository forks were made.
 Final Stage 1–2 checks and limits are in
 [implementation/verification.md](implementation/verification.md).
+
+## Local patch inventory (Stages 3–5, 10 October 2026)
+
+- Typed research shell IPC/preload and narrow Sheets cell-evidence IPC.
+- Inherited DOCX/PDF parsing plus a bounded supplier-quote extractor and related
+  item tables; a World Bank population adapter with structured response snapshots.
+- Separate Node SQLite schema 2 ledger, durable queue/cursors/checkpoints/events,
+  accepted cell/revision transactions and persistent correction history.
+- Workflow/sample/review/publication UI, field evidence, manual refresh diffs,
+  app-open schedules, pause/resume, retry/cancel and structure-only copies.
+- Typed XLSX projections with opaque row IDs, embedded evidence metadata,
+  active-owned-workbook export and primary-only cleanup boundary.
+- Synthetic corpus, meaningful research regressions, isolated parser comparison
+  and native acceptance records/screenshots. The experimental Python environment
+  lives under ignored `.task`; it is not a runtime/product dependency.
+
+The upstream baseline/remotes/history, package/native locks, licenses/notices
+and `ee/` remain unchanged. Implementation commits remain local; no release,
+installer or provider configuration was published. See
+[Stages 3–5 verification](implementation/research-verification.md).

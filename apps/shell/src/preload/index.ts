@@ -1,7 +1,9 @@
 import { contextBridge, ipcRenderer, webUtils } from 'electron'
 import { exposeWorkspaceApi } from './workspace'
+import { exposeResearchApi } from './research'
 
 exposeWorkspaceApi()
+exposeResearchApi()
 import type { IpcRendererEvent } from 'electron'
 import {
   AI_MEDIA_PROVIDERS,

@@ -119,3 +119,22 @@ its extension recommendations; execution is recorded separately in
 | Themes/branding          | Extend semantic/app tokens; original Infomonk mark; `electron-builder.cjs`, shell identity                    | Actual light/dark/narrow screenshots and theme pipeline; secondary chrome/new-copy localization and packaging deferred                                                      |
 | Cloud/telemetry/updates  | Keep genuine Genspark integrations optional; disable upstream analytics injection; fork-specific updater env  | Source builds/local operations need no provider; cloud/auth/provider and installers not runtime-tested                                                                      |
 | Research backend         | Defer accepted data, parsing improvements, web acquisition, workflows and workers                             | Stage 3 plan names inherited parsing/evidence seams and one comparison candidate; no speculative framework installs                                                         |
+
+# Stage 3–5 applied reuse decisions
+
+| Inherited function                                           | Disposition and new seam                                                                                | Executed evidence                                                                   |
+| ------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| `docx-engine.parseDocx`, `Block.docxIndex`, table rows/cells | Reuse; `research/extract.ts` normalizes supported quote labels and emits original structure locators    | DOCX/text/table focused tests; native DOCX/PDF duplicate processing                 |
+| PDF `read-text.ts` / PDFium text-layer service               | Reuse; content-order page/line evidence, scanned/truncated coverage rejection                           | Native text-PDF sample and exact snapshot inspection                                |
+| Workspace snapshots and native document/PDF routing          | Extend; ledger input hash verification, resolved locators and separate preview copies                   | Actual sheet-cell → PDF source; native sample inspector                             |
+| Node SQLite already used by file-index                       | Reuse runtime; separate schema 2 authoritative accepted ledger/queue, not search-cache reuse            | Transaction rollback, migration/restart, normalized cells, correction/rerun tests   |
+| CSV XLSX package builder and atomic writer                   | Extend typed projection with related worksheets, forced text IDs and linked evidence metadata           | Scientific-looking ID regression; native accepted workbook open                     |
+| Univer selection/ribbon/save/undo and managed-sort guard     | Reuse; narrow cell evidence callback and owned-tab IPC, edited-value warning                            | Native cell evidence; inherited native regression suites                            |
+| ProjectStore files/metadata/chats                            | Reuse unchanged as metadata/chat authority; bind generated revision files and repair membership on open | Native output navigation and restart                                                |
+| Existing provider/agent/Codex bridge                         | Retain unchanged; no duplicate generic harness, no live credentialed request                            | Source-confirmed; live provider behavior remains unverified                         |
+| Existing package pipeline exports slides only                | Add distinct bounded `research/` modules; do not label it an inherited ETL engine                       | Durable acquisition, parsing/extraction, review/publication runtime journey         |
+| Candidate parser and PostgreSQL/pg-boss stacks               | Defer product adoption; isolated Unstructured comparison, existing SQLite owns local queue              | [Parser comparison](implementation/parser-comparison.md); no app dependencies added |
+
+Current limitations and evidence: [research contracts](implementation/research-workflows.md),
+[verification](implementation/research-verification.md). Historical Stage 0/1–2
+dispositions below retain their original scope.

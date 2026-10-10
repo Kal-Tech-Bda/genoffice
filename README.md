@@ -2,8 +2,8 @@
 
 Infomonk is a desktop research and data intelligence workspace built on
 [GenOffice](https://github.com/genspark-ai/genoffice). This fork currently delivers
-project organization and a real local spreadsheet cleanup workflow. Structured
-extraction, web collection and maintained-dataset workflows remain the roadmap.
+project organization, local spreadsheet cleanup, bounded supplier-quote extraction,
+public population research and reviewed refresh workflows.
 
 ## Run locally
 
@@ -39,18 +39,25 @@ Create opens supporting editors. Local controls need no paid model API.
 
 ## Status and evidence
 
-Stages 0–2 are implemented locally. The [hosted fork](https://github.com/Kal-Tech-Bda/genoffice)
+Stages 0–5 are implemented locally within the supported scopes below. The [hosted fork](https://github.com/Kal-Tech-Bda/genoffice)
 is established; the implementation branch is `codex/infomonk-workspace`.
 
 - [Implementation checks, screenshots and limits](docs/implementation/verification.md)
+- [Stages 3–5 journeys and storage contracts](docs/implementation/research-workflows.md)
+- [Research verification and native screenshots](docs/implementation/research-verification.md)
 - [Feature status](docs/implementation/feature-status.md)
-- [Product context](PRODUCT_CONTEXT.md) and [precise Stage 3 plan](IMPLEMENTATION_PLAN.md)
+- [Product context](PRODUCT_CONTEXT.md) and [implementation scope](IMPLEMENTATION_PLAN.md)
 - [Architecture](ARCHITECTURE.md), [UI specification](docs/ui-spec.md) and [reuse map](docs/reuse-map.md)
 - [Upstream manifest](docs/upstream-manifest.md), [research](docs/research.md) and [historical baseline](docs/audit/verification.md)
 
 Cleanup supports bounded flat tables. Formula/advanced-structure row changes are
-rejected. Record origins are not verified field evidence. Refresh, extraction,
-new connectors and scheduling have honest unavailable states. Live providers,
+rejected. Cleanup row origins remain distinct from accepted research field evidence.
+Supplier quotes support labeled text PDF/DOCX, simple DOCX tables and UTF-8 text.
+World Bank population is the single bounded public adapter. Workflows keep source
+snapshots, candidates, corrections and accepted revisions in local SQLite; refresh
+requires review, and schedules run while the desktop app is open. Start from
+`fixtures/infomonk/research/valid.pdf` and open Sources → Build a table from sources.
+Stages 6–8, arbitrary document/web understanding and hosted execution remain deferred. Live providers,
 installers and other operating systems were not verified. Known inherited Windows
 unit failures are recorded; no dependency upgrades or policy bypasses were used.
 

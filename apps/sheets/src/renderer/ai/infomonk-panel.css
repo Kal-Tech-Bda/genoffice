@@ -34,3 +34,25 @@
   font-size: 14px;
   font-weight: 600;
 }
+.im-cell-evidence button {
+  font: inherit;
+  padding: 6px 8px;
+  margin: 4px;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+}
+.im-cell-evidence article {
+  border-top: 1px solid var(--border);
+  padding: 12px 0;
+}
+.im-cell-evidence pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.im-cell-evidence small {
+  display: block;
+  overflow-wrap: anywhere;
+}

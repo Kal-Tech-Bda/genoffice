@@ -1,0 +1,24 @@
+{
+  "synthetic": true,
+  "quoteId": "Q-100",
+  "supplier": "Northwind Demo",
+  "date": "2026-09-01",
+  "currency": "CAD",
+  "total": 125.5,
+  "countryCode": "CAN",
+  "lineItems": 2,
+  "locators": {
+    "textTotal": "Text line 6",
+    "docxTotal": "DOCX body element 6",
+    "pdfTotal": "PDF page 1, line 6"
+  },
+  "missing": {
+    "quoteId": "Q-200",
+    "date": null,
+    "total": null
+  },
+  "conflict": {
+    "quoteId": "Q-100",
+    "total": null
+  }
+}

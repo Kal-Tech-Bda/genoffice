@@ -275,6 +275,7 @@ import type {
 } from '../shared/home-api'
 import { HOME_CHANNELS } from '../shared/home-api'
 import { registerWorkspaceIpc } from './workspace-ipc'
+import { registerResearchIpc } from './research/ipc'
 import {
   normalizeAiPanelPrefs,
   sameAiPanelPrefs,
@@ -5704,6 +5705,16 @@ registerWorkspaceIpc(
     openDocumentPath(path)
   },
   (left, top) => tabManager?.setWorkspaceInsets(left, top),
+)
+registerResearchIpc(
+  () => shellWindow,
+  (path) => {
+    openDocumentPath(path)
+  },
+  (id) => {
+    const tab = tabManager?.describeWebContents(id)
+    return tab?.kind === 'sheets' ? (tab.filePath ?? null) : null
+  },
 )
 registerIntegrationsIpc({
   settingsPath: APP_SETTINGS_PATH,

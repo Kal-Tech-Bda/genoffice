@@ -4043,6 +4043,28 @@ export function App({
     return range.getCellStyleData() ?? {}
   }
 
+  const readEvidenceCell = useCallback(():
+    import('../../../shell/src/shared/research-api').EvidenceSelection | null => {
+    const workbook = univerRef.current?.univerAPI.getActiveWorkbook()
+    const sheet = workbook?.getActiveSheet()
+    const selected = workbook?.getActiveRange()?.getRange()
+    if (!sheet || !selected || selected.startRow < 1) return null
+    const width = Math.min(32, sheet.getSheet().getSnapshot().columnCount ?? 26)
+    const headers = sheet.getRange(0, 0, 1, width).getValues()[0] ?? []
+    const helper = headers.indexOf('_infomonk_record_id')
+    const columnId = headers[selected.startColumn]
+    const rowId = helper < 0 ? null : sheet.getRange(selected.startRow, helper, 1, 1).getValue()
+    const value = sheet.getRange(selected.startRow, selected.startColumn, 1, 1).getValue()
+    if (typeof rowId !== 'string' || !/^[a-f0-9]{24}$/.test(rowId) || typeof columnId !== 'string')
+      return null
+    return {
+      tableId: sheet.getSheetName(),
+      rowId,
+      columnId,
+      value: typeof value === 'string' || typeof value === 'number' ? value : null,
+    }
+  }, [])
+
   function anchorCellValue(): number | string | null {
     try {
       const value = univerRef.current?.univerAPI.getActiveWorkbook()?.getActiveRange()?.getValue()
@@ -5105,6 +5127,7 @@ export function App({
         onGetAnchorValue={anchorCellValue}
         activeCellA1={activeCellA1}
         detailsRange={detailsRange}
+        onReadEvidenceCell={readEvidenceCell}
         onGoToReference={(ref) => goToReferenceImpl(dataToolsContext(), ref)}
         onListDefinedNames={() => listDefinedNamesImpl(dataToolsContext())}
         onReadPasteSpecialSource={readPasteSpecialSourceFromRuntime}

@@ -1,0 +1,455 @@
+{
+  "candidate": "unstructured 0.18.15",
+  "results": [
+    {
+      "file": "valid.docx",
+      "status": "parsed",
+      "seconds": 0.023,
+      "elements": [
+        {
+          "text": "Supplier Quote",
+          "type": "UncategorizedText",
+          "metadata": {
+            "category_depth": 0,
+            "file_directory": "fixtures\\infomonk\\research",
+            "filename": "valid.docx",
+            "last_modified": "2026-10-10T04:21:12",
+            "languages": ["eng"],
+            "filetype": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+          }
+        },
+        {
+          "text": "Quote ID: Q-100",
+          "type": "UncategorizedText",
+          "metadata": {
+            "category_depth": 0,
+            "file_directory": "fixtures\\infomonk\\research",
+            "filename": "valid.docx",
+            "last_modified": "2026-10-10T04:21:12",
+            "languages": ["eng"],
+            "filetype": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+          }
+        },
+        {
+          "text": "Supplier: Northwind Demo",
+          "type": "UncategorizedText",
+          "metadata": {
+            "category_depth": 0,
+            "file_directory": "fixtures\\infomonk\\research",
+            "filename": "valid.docx",
+            "last_modified": "2026-10-10T04:21:12",
+            "languages": ["eng"],
+            "filetype": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+          }
+        },
+        {
+          "text": "Date: 2026-09-01",
+          "type": "UncategorizedText",
+          "metadata": {
+            "category_depth": 0,
+            "file_directory": "fixtures\\infomonk\\research",
+            "filename": "valid.docx",
+            "last_modified": "2026-10-10T04:21:12",
+            "languages": ["eng"],
+            "filetype": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+          }
+        },
+        {
+          "text": "Currency: CAD",
+          "type": "UncategorizedText",
+          "metadata": {
+            "category_depth": 0,
+            "file_directory": "fixtures\\infomonk\\research",
+            "filename": "valid.docx",
+            "last_modified": "2026-10-10T04:21:12",
+            "languages": ["eng"],
+            "filetype": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+          }
+        },
+        {
+          "text": "Total: 125.50",
+          "type": "UncategorizedText",
+          "metadata": {
+            "category_depth": 0,
+            "file_directory": "fixtures\\infomonk\\research",
+            "filename": "valid.docx",
+            "last_modified": "2026-10-10T04:21:12",
+            "languages": ["eng"],
+            "filetype": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+          }
+        },
+        {
+          "text": "Country code: CAN",
+          "type": "UncategorizedText",
+          "metadata": {
+            "category_depth": 0,
+            "file_directory": "fixtures\\infomonk\\research",
+            "filename": "valid.docx",
+            "last_modified": "2026-10-10T04:21:12",
+            "languages": ["eng"],
+            "filetype": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+          }
+        },
+        {
+          "text": "Item 1 | Paper | 5 | 20.00",
+          "type": "UncategorizedText",
+          "metadata": {
+            "category_depth": 0,
+            "file_directory": "fixtures\\infomonk\\research",
+            "filename": "valid.docx",
+            "last_modified": "2026-10-10T04:21:12",
+            "languages": ["eng"],
+            "filetype": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+          }
+        },
+        {
+          "text": "Item 2 | Delivery | 1 | 25.50",
+          "type": "UncategorizedText",
+          "metadata": {
+            "category_depth": 0,
+            "file_directory": "fixtures\\infomonk\\research",
+            "filename": "valid.docx",
+            "last_modified": "2026-10-10T04:21:12",
+            "languages": ["eng"],
+            "filetype": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+          }
+        }
+      ]
+    },
+    {
+      "file": "table.docx",
+      "status": "parsed",
+      "seconds": 0.004,
+      "elements": [
+        {
+          "text": "Supplier Quote",
+          "type": "UncategorizedText",
+          "metadata": {
+            "category_depth": 0,
+            "file_directory": "fixtures\\infomonk\\research",
+            "filename": "table.docx",
+            "last_modified": "2026-10-10T04:21:12",
+            "languages": ["eng"],
+            "filetype": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+          }
+        },
+        {
+          "text": "Quote ID Q-100 Supplier Northwind Demo Date 2026-09-01 Currency CAD Total 125.50 Country code CAN",
+          "type": "Table",
+          "metadata": {
+            "file_directory": "fixtures\\infomonk\\research",
+            "filename": "table.docx",
+            "last_modified": "2026-10-10T04:21:12",
+            "text_as_html": "<table><tr><td>Quote ID</td><td>Q-100</td></tr><tr><td>Supplier</td><td>Northwind Demo</td></tr><tr><td>Date</td><td>2026-09-01</td></tr><tr><td>Currency</td><td>CAD</td></tr><tr><td>Total</td><td>125.50</td></tr><tr><td>Country code</td><td>CAN</td></tr></table>",
+            "languages": ["eng"],
+            "filetype": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+          }
+        },
+        {
+          "text": "Item Description Quantity Unit price 1 Paper 5 20.00 2 Delivery 1 25.50",
+          "type": "Table",
+          "metadata": {
+            "file_directory": "fixtures\\infomonk\\research",
+            "filename": "table.docx",
+            "last_modified": "2026-10-10T04:21:12",
+            "text_as_html": "<table><tr><td>Item</td><td>Description</td><td>Quantity</td><td>Unit price</td></tr><tr><td>1</td><td>Paper</td><td>5</td><td>20.00</td></tr><tr><td>2</td><td>Delivery</td><td>1</td><td>25.50</td></tr></table>",
+            "languages": ["eng"],
+            "filetype": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+          }
+        }
+      ]
+    },
+    {
+      "file": "valid.pdf",
+      "status": "error",
+      "seconds": 0.028,
+      "error": "ModuleNotFoundError(\"No module named 'pi_heif'\")"
+    },
+    {
+      "file": "valid.txt",
+      "status": "parsed",
+      "seconds": 0.001,
+      "elements": [
+        {
+          "text": "Supplier Quote Quote ID: Q-100 Supplier: Northwind Demo Date: 2026-09-01 Currency: CAD Total: 125.50 Country code: CAN Item 1 | Paper | 5 | 20.00 Item 2 | Delivery | 1 | 25.50",
+          "type": "UncategorizedText",
+          "metadata": {
+            "last_modified": "2026-10-10T04:21:12",
+            "languages": ["eng"],
+            "file_directory": "fixtures\\infomonk\\research",
+            "filename": "valid.txt",
+            "filetype": "text/plain"
+          }
+        }
+      ]
+    },
+    {
+      "file": "missing.md",
+      "status": "parsed",
+      "seconds": 0.001,
+      "elements": [
+        {
+          "text": "Supplier Quote",
+          "type": "Title",
+          "metadata": {
+            "last_modified": "2026-10-10T04:21:12",
+            "languages": ["eng"],
+            "file_directory": "fixtures\\infomonk\\research",
+            "filename": "missing.md",
+            "filetype": "text/plain"
+          }
+        },
+        {
+          "text": "Quote ID: Q",
+          "type": "Title",
+          "metadata": {
+            "last_modified": "2026-10-10T04:21:12",
+            "languages": ["eng"],
+            "file_directory": "fixtures\\infomonk\\research",
+            "filename": "missing.md",
+            "filetype": "text/plain"
+          }
+        },
+        {
+          "text": "200",
+          "type": "UncategorizedText",
+          "metadata": {
+            "last_modified": "2026-10-10T04:21:12",
+            "languages": ["eng"],
+            "file_directory": "fixtures\\infomonk\\research",
+            "filename": "missing.md",
+            "filetype": "text/plain",
+            "parent_id": "8acc7dc777e6ec591cf34f5fa283b486"
+          }
+        },
+        {
+          "text": "Supplier: South Demo",
+          "type": "Title",
+          "metadata": {
+            "last_modified": "2026-10-10T04:21:12",
+            "languages": ["eng"],
+            "file_directory": "fixtures\\infomonk\\research",
+            "filename": "missing.md",
+            "filetype": "text/plain"
+          }
+        },
+        {
+          "text": "Date: 2026",
+          "type": "UncategorizedText",
+          "metadata": {
+            "last_modified": "2026-10-10T04:21:12",
+            "languages": ["eng"],
+            "file_directory": "fixtures\\infomonk\\research",
+            "filename": "missing.md",
+            "filetype": "text/plain",
+            "parent_id": "1d33b8063ad5a05c05150f445e61f6f8"
+          }
+        },
+        {
+          "text": "02",
+          "type": "UncategorizedText",
+          "metadata": {
+            "last_modified": "2026-10-10T04:21:12",
+            "languages": ["eng"],
+            "file_directory": "fixtures\\infomonk\\research",
+            "filename": "missing.md",
+            "filetype": "text/plain",
+            "parent_id": "1d33b8063ad5a05c05150f445e61f6f8"
+          }
+        },
+        {
+          "text": "31",
+          "type": "UncategorizedText",
+          "metadata": {
+            "last_modified": "2026-10-10T04:21:12",
+            "languages": ["eng"],
+            "file_directory": "fixtures\\infomonk\\research",
+            "filename": "missing.md",
+            "filetype": "text/plain",
+            "parent_id": "1d33b8063ad5a05c05150f445e61f6f8"
+          }
+        },
+        {
+          "text": "Currency: USD",
+          "type": "Title",
+          "metadata": {
+            "last_modified": "2026-10-10T04:21:12",
+            "languages": ["eng"],
+            "file_directory": "fixtures\\infomonk\\research",
+            "filename": "missing.md",
+            "filetype": "text/plain"
+          }
+        },
+        {
+          "text": "Country code: USA",
+          "type": "Title",
+          "metadata": {
+            "last_modified": "2026-10-10T04:21:12",
+            "languages": ["eng"],
+            "file_directory": "fixtures\\infomonk\\research",
+            "filename": "missing.md",
+            "filetype": "text/plain"
+          }
+        }
+      ]
+    },
+    {
+      "file": "conflict.txt",
+      "status": "parsed",
+      "seconds": 0.001,
+      "elements": [
+        {
+          "text": "Supplier Quote",
+          "type": "Title",
+          "metadata": {
+            "last_modified": "2026-10-10T04:21:12",
+            "languages": ["eng"],
+            "file_directory": "fixtures\\infomonk\\research",
+            "filename": "conflict.txt",
+            "filetype": "text/plain"
+          }
+        },
+        {
+          "text": "Quote ID: Q",
+          "type": "Title",
+          "metadata": {
+            "last_modified": "2026-10-10T04:21:12",
+            "languages": ["eng"],
+            "file_directory": "fixtures\\infomonk\\research",
+            "filename": "conflict.txt",
+            "filetype": "text/plain"
+          }
+        },
+        {
+          "text": "100",
+          "type": "UncategorizedText",
+          "metadata": {
+            "last_modified": "2026-10-10T04:21:12",
+            "languages": ["eng"],
+            "file_directory": "fixtures\\infomonk\\research",
+            "filename": "conflict.txt",
+            "filetype": "text/plain",
+            "parent_id": "c48cc03ee7b15dad560ae9e62b0a7483"
+          }
+        },
+        {
+          "text": "Supplier: Northwind Demo",
+          "type": "Title",
+          "metadata": {
+            "last_modified": "2026-10-10T04:21:12",
+            "languages": ["eng"],
+            "file_directory": "fixtures\\infomonk\\research",
+            "filename": "conflict.txt",
+            "filetype": "text/plain"
+          }
+        },
+        {
+          "text": "Date: 2026",
+          "type": "UncategorizedText",
+          "metadata": {
+            "last_modified": "2026-10-10T04:21:12",
+            "languages": ["eng"],
+            "file_directory": "fixtures\\infomonk\\research",
+            "filename": "conflict.txt",
+            "filetype": "text/plain",
+            "parent_id": "38d6ee6b509a195000da6a5411843039"
+          }
+        },
+        {
+          "text": "09",
+          "type": "UncategorizedText",
+          "metadata": {
+            "last_modified": "2026-10-10T04:21:12",
+            "languages": ["eng"],
+            "file_directory": "fixtures\\infomonk\\research",
+            "filename": "conflict.txt",
+            "filetype": "text/plain",
+            "parent_id": "38d6ee6b509a195000da6a5411843039"
+          }
+        },
+        {
+          "text": "01",
+          "type": "UncategorizedText",
+          "metadata": {
+            "last_modified": "2026-10-10T04:21:12",
+            "languages": ["eng"],
+            "file_directory": "fixtures\\infomonk\\research",
+            "filename": "conflict.txt",
+            "filetype": "text/plain",
+            "parent_id": "38d6ee6b509a195000da6a5411843039"
+          }
+        },
+        {
+          "text": "Currency: CAD",
+          "type": "Title",
+          "metadata": {
+            "last_modified": "2026-10-10T04:21:12",
+            "languages": ["eng"],
+            "file_directory": "fixtures\\infomonk\\research",
+            "filename": "conflict.txt",
+            "filetype": "text/plain"
+          }
+        },
+        {
+          "text": "Total: 125.50",
+          "type": "UncategorizedText",
+          "metadata": {
+            "last_modified": "2026-10-10T04:21:12",
+            "languages": ["eng"],
+            "file_directory": "fixtures\\infomonk\\research",
+            "filename": "conflict.txt",
+            "filetype": "text/plain",
+            "parent_id": "d14d9116b2f9345a36e31336e7813300"
+          }
+        },
+        {
+          "text": "Country code: CAN",
+          "type": "Title",
+          "metadata": {
+            "last_modified": "2026-10-10T04:21:12",
+            "languages": ["eng"],
+            "file_directory": "fixtures\\infomonk\\research",
+            "filename": "conflict.txt",
+            "filetype": "text/plain"
+          }
+        },
+        {
+          "text": "Total: 130.00",
+          "type": "UncategorizedText",
+          "metadata": {
+            "last_modified": "2026-10-10T04:21:12",
+            "languages": ["eng"],
+            "file_directory": "fixtures\\infomonk\\research",
+            "filename": "conflict.txt",
+            "filetype": "text/plain",
+            "parent_id": "49e2799e6338df7753823789eeb04cc4"
+          }
+        }
+      ]
+    },
+    {
+      "file": "unsupported.txt",
+      "status": "parsed",
+      "seconds": 0.001,
+      "elements": [
+        {
+          "text": "A synthetic unstructured note. No supported quote labels.",
+          "type": "NarrativeText",
+          "metadata": {
+            "last_modified": "2026-10-10T04:21:12",
+            "languages": ["eng"],
+            "file_directory": "fixtures\\infomonk\\research",
+            "filename": "unsupported.txt",
+            "filetype": "text/plain"
+          }
+        }
+      ]
+    },
+    {
+      "file": "broken.pdf",
+      "status": "error",
+      "seconds": 0.001,
+      "error": "ModuleNotFoundError(\"No module named 'pi_heif'\")"
+    }
+  ]
+}
