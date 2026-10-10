@@ -10,7 +10,7 @@ async function waitForWorkbook(page: Page): Promise<void> {
   await page.waitForFunction(() => document.body.textContent?.includes('Sheet1'), null, {
     timeout: 30_000,
   })
-  await page.waitForTimeout(1_500)
+  await expect(page.locator('main.app-shell')).toHaveAttribute('aria-busy', 'false')
 }
 
 /** center of cell A1: right of the ~46px row header, below the ~24px column header */

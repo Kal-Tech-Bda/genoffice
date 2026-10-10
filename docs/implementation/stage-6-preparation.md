@@ -2,7 +2,9 @@
 
 This hardening milestone defines defaults and evaluation inputs. It does not
 enable a coding agent, generated-code runner or private cloud processing.
-`assay.md` remains excluded. Stages 6–8 still need a separate implementation turn.
+`assay.md` remains excluded. The owner subsequently moved the engineering harness
+to the final phase, after workspace accuracy, outputs and validation. This
+historical Stage 6 contract is preparation only; execution remains disabled.
 
 ## First input pattern and independent evaluation
 

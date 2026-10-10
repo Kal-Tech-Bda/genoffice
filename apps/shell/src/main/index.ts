@@ -5814,18 +5814,19 @@ app.whenReady().then(async () => {
     const endWorkspaceSession = startWorkspaceSession(app.getPath('userData'))
     app.once('will-quit', endWorkspaceSession)
     relocateWorkspace(app.getPath('userData'))
-    registerWorkspaceIpc(
-      () => shellWindow,
-      (path) => openDocumentPath(path),
-      (left, top) => tabManager?.setWorkspaceInsets(left, top),
-    )
-    registerResearchIpc(
+    const research = registerResearchIpc(
       () => shellWindow,
       (path) => openDocumentPath(path),
       (id) => {
         const tab = tabManager?.describeWebContents(id)
         return tab?.kind === 'sheets' ? (tab.filePath ?? null) : null
       },
+    )
+    registerWorkspaceIpc(
+      () => shellWindow,
+      (path) => openDocumentPath(path),
+      (left, top) => tabManager?.setWorkspaceInsets(left, top),
+      (projects) => research.summaries(projects),
     )
   } catch (error) {
     dialog.showErrorBox('Workspace unavailable', String(error))

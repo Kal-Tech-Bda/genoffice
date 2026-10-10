@@ -6,10 +6,12 @@ export function ProjectCreator({
   onCreated,
   onClose,
   template,
+  startKind = 'general',
 }: {
   onCreated: (project: WorkspaceProject) => void
   onClose: () => void
   template?: { projectId: string; workflowId: string }
+  startKind?: 'general' | 'extractFiles' | 'researchWeb' | 'workSpreadsheet'
 }) {
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
@@ -93,6 +95,7 @@ export function ProjectCreator({
         return
       }
       const project = await window.infomonk.create({
+        startKind,
         name: name.trim(),
         description,
         ...(filePath ? { filePath } : {}),
@@ -132,6 +135,19 @@ export function ProjectCreator({
             ×
           </button>
         </div>
+        {!template && (
+          <p className="im-muted">
+            {mt(
+              startKind === 'extractFiles'
+                ? 'extractStart'
+                : startKind === 'researchWeb'
+                  ? 'webStart'
+                  : startKind === 'workSpreadsheet'
+                    ? 'spreadsheetStart'
+                    : 'generalStart',
+            )}
+          </p>
+        )}
         {template && (
           <p>
             Start with the saved workflow structure and instructions. Choose inputs in the new

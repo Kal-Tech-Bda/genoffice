@@ -80,6 +80,9 @@ export interface WorkspaceMetadata {
   description: string
   starred: boolean
   primaryWorkbook: string
+  /** Last selected or published owned workbook; primary remains the cleanup input. */
+  workingWorkbook?: string
+  startKind?: 'general' | 'extractFiles' | 'researchWeb' | 'workSpreadsheet'
   previousWorkbook?: string
   sources: WorkspaceSource[]
   activity: { at: string; text: string }[]
@@ -92,6 +95,7 @@ export interface WorkspaceSource {
   addedAt: string
   sha256?: string
   snapshotPath?: string
+  previousVersions?: Omit<WorkspaceSource, 'id' | 'previousVersions'>[]
 }
 
 export interface ProjectIndex {

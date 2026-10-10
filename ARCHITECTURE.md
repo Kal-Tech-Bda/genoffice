@@ -110,7 +110,42 @@ record/column and warns on value/revision divergence. Native viewers use verifie
 snapshot copies. Arbitrary native edits do not silently become ledger corrections.
 
 No new application parser/framework dependency or agent harness was installed.
-The isolated parser experiment is documented separately; Stages 6–8 are deferred.
+The isolated parser experiment is documented separately. The owner puts the
+engineering harness last; it remains disabled.
+
+## Workspace accuracy and source-version seam
+
+- Optional ProjectStore metadata records `startKind` and `workingWorkbook`.
+  File starts route to Sources and public starts to the existing adapter controls.
+  Opening/accepting an owned XLSX remembers it without changing the cleanup
+  `primaryWorkbook`. Source/preview files cannot become the working workbook.
+  Default reopen and export fallback resolve the same owned workbook.
+- `WorkspaceStore.updateSource` retains logical source identity, saves a new
+  content-addressed snapshot and appends the previous metadata version. Concurrent
+  updates compare the old hash before changing the pointer. Preview IPC may select
+  a trusted previous hash, verifies the immutable bytes and opens a separate copy.
+  Profile relocation includes working workbooks and historical source paths.
+- `ResearchService.queue` supplies local input references to `ResearchStore.queue`
+  in the queue transaction. Execution and retry parse those pinned paths rather
+  than re-resolving the latest project source. Confirmed duplicate-byte inputs
+  remain pinned even when extraction deduplicates them. Publication checks the
+  current selected content set both before projection and before accepted commit.
+- Metadata SQL supplies Home summaries and freshness without loading historic
+  candidate JSON. Counts cover accepted rows across related tables, unresolved
+  cells, pending reviews and active runs. Current signatures include local hashes
+  and enrichment parent revisions. Public sources retain acquisition timestamps;
+  freshness does not probe remote changes.
+- `pages.ts` applies Needs review across the complete table before the 100-row
+  page. Overview reads at most 100 revision outputs and combines recent events
+  and correction records into 50 research activity entries. Workspace Activity
+  merges these with project activity and displays at most 100 entries. Older
+  output count remains visible; run history remains separately paged.
+- Sheets keeps the opening `inert` guard until Univer reaches Steady, preventing
+  name-box navigation before scroll render dependencies exist. The lifecycle
+  subscription is released on completion or renderer disposal.
+
+The [workspace flow report](docs/testing/workspace-flow-2026-10-10.md) records
+executed boundaries and the synthetic comparison.
 
 The hardening boundary uses `ResearchStore.history/latest` to query indexed run
 summaries without parsing candidate blobs or calculating historical diffs.

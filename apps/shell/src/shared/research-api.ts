@@ -29,6 +29,7 @@ export interface ResearchTable {
   rows: ResearchRow[]
   totalRows?: number
   offset?: number
+  allRows?: number
 }
 export interface ResearchDataset {
   schemaVersion: 1
@@ -58,6 +59,7 @@ export interface ResearchWorkflow {
   destination: string | null
 }
 export interface ResearchRun {
+  inputsChanged?: boolean
   id: string
   workflowId: string
   configVersion: number
@@ -88,6 +90,37 @@ export interface ResearchState {
   latestRuns: ResearchRunSummary[]
   executor: string
   history: { offset: number; total: number; limit: number }
+  freshness: Record<string, ResearchFreshness>
+}
+export interface ResearchFreshness {
+  sourceSignature: string
+  acceptedAt: string | null
+  configurationChanged: boolean
+  inputsChanged: boolean
+}
+export interface ResearchProjectSummary {
+  reviewWorkflowId: string | null
+  reviewRunId: string | null
+  workflowCount: number
+  pendingReviews: number
+  activeRuns: number
+  unresolvedCells: number
+  acceptedRows: number
+  acceptedTables: number
+  inputsChanged: boolean
+  lastAcceptedAt: string | null
+}
+export interface ResearchOverview {
+  outputCount: number
+  outputs: {
+    workflowId: string
+    name: string
+    revision: number
+    path: string
+    at: string
+    current: boolean
+  }[]
+  activity: { id: string; at: string; text: string; workflowId: string; runId?: string }[]
 }
 export type ResearchRunSummary = Omit<ResearchRun, 'candidate' | 'events' | 'changes'> & {
   hasCandidate: boolean
@@ -95,6 +128,7 @@ export type ResearchRunSummary = Omit<ResearchRun, 'candidate' | 'events' | 'cha
 export interface ResearchPageRequest {
   tableId?: string
   offset?: number
+  needsReview?: boolean
 }
 export interface ResearchAbsentPage {
   rows: { table: string; row: ResearchRow }[]
@@ -112,6 +146,7 @@ export interface CellDetails {
   editedInSheet: boolean
 }
 export interface ResearchApi {
+  overview(projectId: string): Promise<ResearchOverview>
   policy(projectId: string): Promise<{
     version: number
     firstInputPattern: string

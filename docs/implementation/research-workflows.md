@@ -2,7 +2,7 @@
 
 Implemented 10 October 2026 on the existing Electron fork. This is a bounded local
 milestone. The evidence is in [research verification](research-verification.md).
-Stages 6–8 remain deferred. `assay.md` is excluded.
+The engineering harness is the final phase and remains disabled. `assay.md` is excluded.
 
 ## Try the journeys
 
@@ -28,6 +28,26 @@ Launch with the existing `npm run dev`, or build all editors and run
 7. Edit/run workflows, inspect history and added/changed/absent records, retry
    interrupted processing or cancel a run. Scheduling can be manual, every
    15 minutes, hourly or daily while the app is open; pause/resume is persistent.
+
+Sources → Update snapshot retains the source ID and previous immutable versions.
+Open previous inspects a saved version; it does not revert accepted data. Home
+flags changed selected inputs, and Workflows shows the accepted timestamp and
+refresh requirement. A queued run uses the local versions confirmed at queue
+time. Changed inputs block publication, including a change while projecting
+the output file. Cancel a stale candidate and run with current snapshots.
+An external original changing on disk is not automatically watched or imported.
+
+Home → Needs review selects projects with pending candidates, unresolved accepted
+facts or changed configuration/inputs. Review table opens the applicable workflow.
+Within a table, Needs review filters missing values and validation issues across
+the complete table, then pages the result. Manual corrections remain identifiable
+as manual even when the filter no longer contains that row.
+
+Outputs distinguishes the current accepted revision from earlier immutable
+ledger revisions; native edits to an XLSX are separately owned file edits.
+Activity links real run events and correction records. Opening a published or
+explicitly selected owned workbook makes it the remembered working workbook;
+cleanup remains attached to the original/cleaned primary workbook.
 
 ## Supported extraction
 

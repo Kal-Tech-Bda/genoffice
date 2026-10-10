@@ -13,7 +13,12 @@ import type {
   ResearchDataset,
   ResearchValue,
   ResearchPageRequest,
+  ResearchFreshness,
+  ResearchOverview,
+  ResearchProjectSummary,
+  ResearchWorkflow,
 } from '../../shared/research-api'
+import type { WorkspaceProject } from '../../shared/workspace-api'
 import { ResearchStore, type DurableInput } from './store'
 import { cell, extractQuote, hash, mergeDatasets, parseSource, type ParsedSource } from './extract'
 import { fetchPopulation, parsePopulation, worldBankUrl } from './worldbank'
@@ -54,6 +59,9 @@ export class ResearchService {
     return {
       workflows: this.store.workflows(projectId),
       latestRuns: this.store.latest(projectId),
+      freshness: Object.fromEntries(
+        this.store.workflows(projectId).map((w) => [w.id, this.freshness(w)]),
+      ),
       ...this.store.history(projectId, offset, workflowId),
       executor:
         'Local desktop queue. Scheduled acquisition runs only while Infomonk is open. Missed times coalesce into one run on reopening; publication always requires review.',
@@ -61,7 +69,180 @@ export class ResearchService {
   }
   detail(projectId: string, runId: string, page: ResearchPageRequest = {}) {
     const r = this.store.run(runId, projectId)
-    return { ...r, events: r.events.slice(-100), candidate: datasetPage(r.candidate, page) }
+    return {
+      ...r,
+      inputsChanged: this.inputsChanged(this.store.workflow(r.workflowId), runId, r.sample),
+      events: r.events.slice(-100),
+      candidate: datasetPage(r.candidate, page),
+    }
+  }
+  private inputVersions(runId: string): { sourceId: string; sourceVersion: string; uri: string }[] {
+    return this.store.db
+      .prepare(
+        "SELECT json_extract(data,'$.sourceId') AS sourceId,json_extract(data,'$.sourceVersion') AS sourceVersion,json_extract(data,'$.uri') AS uri FROM inputs WHERE run_id=? ORDER BY ordinal",
+      )
+      .all(runId)
+      .map((r) => ({
+        sourceId: String(r.sourceId),
+        sourceVersion: String(r.sourceVersion),
+        uri: String(r.uri),
+      }))
+  }
+  private inputsChanged(w: ResearchWorkflow, runId: string, sample = false): boolean {
+    const known = this.inputVersions(runId)
+    if (w.config.kind === 'quotes') {
+      if (!known.length) return false
+      const sources = this.workspace.get(w.projectId).workspace.sources
+      if (sample)
+        return known.some(
+          (input) => sources.find((s) => s.id === input.sourceId)?.sha256 !== input.sourceVersion,
+        )
+      const current = new Set(
+        w.config.sourceIds.map((id) => sources.find((s) => s.id === id)?.sha256),
+      )
+      const prior = new Set(known.map((input) => input.sourceVersion))
+      return (
+        current.size !== prior.size ||
+        [...current].some((version) => !version || !prior.has(version))
+      )
+    }
+    if (w.config.kind === 'enrich' && w.config.parentWorkflowId) {
+      const parent = this.store.workflow(w.config.parentWorkflowId, w.projectId)
+      const input = known.find((input) => input.sourceId === parent.id)
+      return !!input && input.uri !== `infomonk:revision:${parent.id}:${parent.acceptedRevision}`
+    }
+    return false
+  }
+  private freshness(w: ResearchWorkflow): ResearchFreshness {
+    const published = this.store.db
+      .prepare(
+        "SELECT id,config_version,updated_at FROM runs WHERE workflow_id=? AND status='published' ORDER BY updated_at DESC,id DESC LIMIT 1",
+      )
+      .get(w.id)
+    const accepted = this.store.db
+      .prepare('SELECT created_at FROM revisions WHERE workflow_id=? AND revision=?')
+      .get(w.id, w.acceptedRevision)
+    const sources = this.workspace.get(w.projectId).workspace.sources
+    return {
+      sourceSignature: hash(
+        JSON.stringify({
+          sources: w.config.sourceIds.map((id) => sources.find((s) => s.id === id)?.sha256 ?? null),
+          parentRevision:
+            w.config.kind === 'enrich' && w.config.parentWorkflowId
+              ? this.store.workflow(w.config.parentWorkflowId, w.projectId).acceptedRevision
+              : null,
+        }),
+      ),
+      acceptedAt: accepted ? String(accepted.created_at) : null,
+      configurationChanged: !!published && Number(published.config_version) !== w.configVersion,
+      inputsChanged: !!published && this.inputsChanged(w, String(published.id)),
+    }
+  }
+  summaries(projects: WorkspaceProject[]): Record<string, ResearchProjectSummary> {
+    return Object.fromEntries(
+      projects.map((project) => {
+        const workflows = this.store.workflows(project.id)
+        const pending = this.store.db
+          .prepare(
+            "SELECT SUM(CASE WHEN r.status='review' THEN 1 ELSE 0 END) AS reviews,SUM(CASE WHEN r.status IN ('queued','acquiring','processing') THEN 1 ELSE 0 END) AS active FROM runs r JOIN workflows w ON w.id=r.workflow_id WHERE w.project_id=?",
+          )
+          .get(project.id)
+        const facts = this.store.db
+          .prepare(
+            "SELECT COUNT(DISTINCT a.workflow_id||':'||a.table_id||':'||a.row_id) AS rows,COUNT(DISTINCT a.workflow_id||':'||a.table_id) AS tables,SUM(CASE WHEN json_extract(a.cell,'$.value') IS NULL OR json_array_length(json_extract(a.cell,'$.issues'))>0 THEN 1 ELSE 0 END) AS unresolved FROM accepted_cells a JOIN workflows w ON w.id=a.workflow_id WHERE w.project_id=?",
+          )
+          .get(project.id)
+        const freshness = workflows.map((w) => this.freshness(w))
+        const changedWorkflow =
+          workflows[freshness.findIndex((f) => f.inputsChanged || f.configurationChanged)]
+        const review = this.store.db
+          .prepare(
+            "SELECT r.id,r.workflow_id FROM runs r JOIN workflows w ON w.id=r.workflow_id WHERE w.project_id=? AND r.status='review' ORDER BY r.updated_at DESC,r.id DESC LIMIT 1",
+          )
+          .get(project.id)
+        const missing =
+          !review && Number(facts?.unresolved ?? 0) > 0
+            ? this.store.db
+                .prepare(
+                  "SELECT a.workflow_id FROM accepted_cells a JOIN workflows w ON w.id=a.workflow_id WHERE w.project_id=? AND (json_extract(a.cell,'$.value') IS NULL OR json_array_length(json_extract(a.cell,'$.issues'))>0) LIMIT 1",
+                )
+                .get(project.id)
+            : null
+        return [
+          project.id,
+          {
+            reviewWorkflowId: review
+              ? String(review.workflow_id)
+              : missing
+                ? String(missing.workflow_id)
+                : (changedWorkflow?.id ?? null),
+            reviewRunId: review ? String(review.id) : null,
+            workflowCount: workflows.length,
+            pendingReviews: Number(pending?.reviews ?? 0),
+            activeRuns: Number(pending?.active ?? 0),
+            unresolvedCells: Number(facts?.unresolved ?? 0),
+            acceptedRows: Number(facts?.rows ?? 0),
+            acceptedTables: Number(facts?.tables ?? 0),
+            inputsChanged: freshness.some((f) => f.inputsChanged || f.configurationChanged),
+            lastAcceptedAt:
+              freshness
+                .flatMap((f) => (f.acceptedAt ? [f.acceptedAt] : []))
+                .sort()
+                .at(-1) ?? null,
+          },
+        ]
+      }),
+    )
+  }
+  overview(projectId: string): ResearchOverview {
+    this.workspace.get(projectId)
+    const outputs = this.store.db
+      .prepare(
+        'SELECT r.workflow_id,w.name,r.revision,r.destination,r.created_at,w.accepted_revision FROM revisions r JOIN workflows w ON w.id=r.workflow_id WHERE w.project_id=? ORDER BY r.created_at DESC,r.revision DESC LIMIT 100',
+      )
+      .all(projectId)
+      .map((r) => ({
+        workflowId: String(r.workflow_id),
+        name: String(r.name),
+        revision: Number(r.revision),
+        path: String(r.destination),
+        at: String(r.created_at),
+        current: Number(r.revision) === Number(r.accepted_revision),
+      }))
+    const events = this.store.db
+      .prepare(
+        'SELECT e.id,e.at,e.message,e.run_id,w.id AS workflow_id,w.name FROM run_events e JOIN runs r ON r.id=e.run_id JOIN workflows w ON w.id=r.workflow_id WHERE w.project_id=? ORDER BY e.id DESC LIMIT 50',
+      )
+      .all(projectId)
+      .map((e) => ({
+        id: `event:${e.id}`,
+        at: String(e.at),
+        text: `${e.name}: ${e.message}`,
+        workflowId: String(e.workflow_id),
+        runId: String(e.run_id),
+      }))
+    const corrections = this.store.db
+      .prepare(
+        'SELECT c.id,c.at,c.column_id,c.reason,w.id AS workflow_id,w.name FROM corrections c JOIN workflows w ON w.id=c.workflow_id WHERE w.project_id=? ORDER BY c.at DESC,c.rowid DESC LIMIT 50',
+      )
+      .all(projectId)
+      .map((c) => ({
+        id: `correction:${c.id}`,
+        at: String(c.at),
+        text: `${c.name}: corrected ${c.column_id} · ${c.reason}`,
+        workflowId: String(c.workflow_id),
+      }))
+    return {
+      outputs,
+      outputCount: Number(
+        this.store.db
+          .prepare(
+            'SELECT COUNT(*) AS count FROM revisions r JOIN workflows w ON w.id=r.workflow_id WHERE w.project_id=?',
+          )
+          .get(projectId)?.count ?? 0,
+      ),
+      activity: [...events, ...corrections].sort((a, b) => b.at.localeCompare(a.at)).slice(0, 50),
+    }
   }
   cell(
     projectId: string,
@@ -159,9 +340,33 @@ export class ResearchService {
       throw new Error('Choose quote inputs first.')
     if (w.config.kind !== 'quotes' && !w.config.countries.length)
       throw new Error('Confirm country codes first.')
-    const run = this.store.queue(workflowId, sample)
+    const run = this.queue(w, sample)
     this.tick()
     return run
+  }
+  private queue(w: ResearchWorkflow, sample: boolean) {
+    const sources = this.workspace.get(w.projectId).workspace.sources
+    const selected =
+      w.config.kind === 'quotes'
+        ? w.config.sourceIds.map((id) => {
+            const s = sources.find((source) => source.id === id)
+            if (!s?.snapshotPath || !s.sha256)
+              throw new Error('Choose saved source snapshots first.')
+            return s
+          })
+        : []
+    const inputs = (sample ? selected.slice(0, 1) : selected).map((s, ordinal) => ({
+      ordinal,
+      sourceId: s.id,
+      sourceVersion: s.sha256!,
+      name: s.name,
+      uri: s.uri,
+      retrievedAt: s.addedAt,
+      path: s.snapshotPath!,
+      parsed: null,
+      error: null,
+    }))
+    return this.store.queue(w.id, sample, inputs)
   }
   cancel(projectId: string, runId: string): void {
     this.store.run(runId, projectId)
@@ -178,7 +383,7 @@ export class ResearchService {
     if (this.running) return
     for (const workflow of this.store.due()) {
       try {
-        this.store.queue(workflow.id, false)
+        this.queue(workflow, false)
       } catch {
         /* A pending review/running task takes precedence; no overlapping rerun. */
       }
@@ -228,6 +433,16 @@ export class ResearchService {
     const sources = this.workspace.get(w.projectId).workspace.sources
     const quoteSources = config.sourceIds
       .map((id) => {
+        const pinned = known.find((input) => input.sourceId === id)
+        if (pinned)
+          return {
+            id: pinned.sourceId,
+            name: pinned.name,
+            uri: pinned.uri,
+            sha256: pinned.sourceVersion,
+            snapshotPath: pinned.path,
+            addedAt: pinned.retrievedAt,
+          }
         const source = sources.find((s) => s.id === id)
         if (!source) throw new Error('Configured source no longer exists')
         return source
@@ -252,7 +467,8 @@ export class ResearchService {
           `Parsing ${index + 1}/${selected.length}: ${source.name}`,
           { total, complete: completed, failed: failures.length },
         )
-        let input = known.find((i) => i.ordinal === index)
+        let input =
+          known.find((i) => i.sourceId === source.id) ?? known.find((i) => i.ordinal === index)
         try {
           const bytes = await this.workspace.boundedRead(source.snapshotPath!)
           if (hash(bytes) !== source.sha256)
@@ -449,6 +665,13 @@ export class ResearchService {
     allowRemovals: boolean,
   ): Promise<string> {
     const run = this.store.run(runId, projectId)
+    const assertInputs = () => {
+      if (this.inputsChanged(this.store.workflow(run.workflowId, projectId), runId))
+        throw new Error(
+          'Source inputs changed since this run. Cancel this candidate and run again with the current snapshots.',
+        )
+    }
+    assertInputs()
     const config = this.store.config(runId)
     if (config.kind === 'enrich') {
       const parent = this.store.inputs(runId).find((i) => i.ordinal === 100)
@@ -468,8 +691,10 @@ export class ResearchService {
       )
         throw new Error('Internal accepted source changed during publication; rerun enrichment.')
     }
+    assertInputs()
     this.store.publish(runId, dataset, path)
     this.workspace.projects.moveFileToProject(path, projectId)
+    this.workspace.rememberWorkbook(projectId, path)
     return path
   }
   async correct(
@@ -519,6 +744,7 @@ export class ResearchService {
       w.acceptedRevision,
     )
     this.workspace.projects.moveFileToProject(path, projectId)
+    this.workspace.rememberWorkbook(projectId, path)
   }
   async evidence(
     projectId: string,

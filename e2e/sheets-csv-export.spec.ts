@@ -18,7 +18,7 @@ async function waitForWorkbook(page: Page, sheetName = 'Sheet1'): Promise<void> 
   await page.waitForFunction((name) => document.body.textContent?.includes(name), sheetName, {
     timeout: 30_000,
   })
-  await page.waitForTimeout(1_500)
+  await expect(page.locator('main.app-shell')).toHaveAttribute('aria-busy', 'false')
 }
 
 /// Stubs the native dialogs: the save picker returns `csvPath`, and every

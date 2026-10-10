@@ -22,8 +22,8 @@ must succeed first. The backup excludes root provider/settings/auth files,
 caches and external original files. Chats and snapshots remain private workspace
 content. Provider configuration must be set up separately after restoration.
 
-Restore relocates project file membership, primary/previous workbooks, source
-snapshot paths, workflow/revision destinations, durable input paths and typed
+Restore relocates project file membership, primary/previous/working workbooks,
+current and historical source snapshot paths, workflow/revision destinations, durable input paths and typed
 chat file/attachment references. Original source URIs, evidence excerpts,
 arbitrary chat/tool text and stable chat IDs retain their historical meaning.
 External originals are not required to resolve an owned source snapshot.

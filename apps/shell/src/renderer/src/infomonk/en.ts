@@ -26,14 +26,22 @@ export const monkStrings = {
   goal: 'What do you want to learn?',
   file: 'Starting workbook or source',
   chooseFile: 'Choose a file',
-  chooseWorkbook: 'Choose an XLSX, CSV or TSV file',
+  chooseWorkbook: 'Choose an XLSX, CSV, TSV, DOCX, PDF, Markdown or text file',
   url: 'Source URL (optional)',
   create: 'Create',
   cancel: 'Cancel',
   close: 'Close',
   creating: 'Creating project…',
   unavailableCreation:
-    'Documents and URLs can be registered as sources. Extraction and web collection arrive in the next stage.',
+    'Labeled supplier quotes can become reviewed tables. Public population uses the World Bank task. Other links are saved as references; they are not collected automatically.',
+  extractStart:
+    'Add a labeled supplier quote (PDF, DOCX or text). Next, choose sources and inspect a sample before publishing a table. Other document families remain unsupported.',
+  webStart:
+    'Start with the public World Bank population task, then confirm countries and years. A pasted website link is a reference; arbitrary website collection is not available.',
+  spreadsheetStart:
+    'Open XLSX, CSV or TSV in the real sheet editor. Inspect and preview cleanup before applying changes.',
+  generalStart:
+    'Name your table project and add sources now or later. Extraction and public-data tasks require explicit input confirmation.',
   delimiter: 'Delimiter',
   comma: 'Comma',
   semicolon: 'Semicolon',
@@ -48,7 +56,7 @@ export const monkStrings = {
   addSources: 'Add sources',
   refresh: 'Refresh',
   refreshUnavailable:
-    'Source refresh is not implemented. Use the editor for formula or pivot recalculation.',
+    'Refresh opens saved workflows. New source versions create candidates for review; formulas and pivots use the editor recalculation commands.',
   cleanTable: 'Clean table',
   rename: 'Rename project',
   editDescription: 'Edit description',
@@ -56,7 +64,7 @@ export const monkStrings = {
   backHome: 'Back to Home',
   sourceEmpty: 'No sources yet.',
   sourceInfo:
-    'Local files are copied into versioned snapshots. Opening one creates a separate viewing copy. Links are registered; no web collection runs.',
+    'Local files are copied into saved snapshots. Use Update snapshot to capture a revised file; accepted tables change only after reviewed refresh. Opening a source creates a separate viewing copy. Links are references, not automatic collection.',
   addFile: 'Add a local file',
   addLink: 'Add a link',
   openSource: 'Open source',
@@ -64,7 +72,8 @@ export const monkStrings = {
   linkOnly: 'Link only · not collected',
   workflowEmpty: 'No saved workflows yet.',
   workflowInfo:
-    'Reusable tasks and update schedules are planned after the first extraction workflow. Nothing runs automatically.',
+    'Saved workflows keep confirmed inputs, reviewed tables and update settings. Schedules run while the desktop app is open and stop at review.',
+  needsReview: 'Needs review',
   outputInfo: 'Use Create to open a secondary editor. Your workbook remains the primary output.',
   createDocument: 'Document',
   createSlides: 'Slides',

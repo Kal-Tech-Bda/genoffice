@@ -17,7 +17,7 @@ async function waitForWorkbook(page: Page): Promise<void> {
     timeout: 30_000,
   })
   // let the first viewport range stream in before dispatching mouse events
-  await page.waitForTimeout(1_500)
+  await expect(page.locator('main.app-shell')).toHaveAttribute('aria-busy', 'false')
 }
 
 /** center of cell A1: right of the ~46px row header, below the ~24px column header */

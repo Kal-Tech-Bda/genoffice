@@ -1,0 +1,8 @@
+Supplier Quote
+Quote ID: Q-M001
+Supplier: Maple Demo
+Date: 2026-10-01
+Currency: CAD
+Total: 115.00
+Country code: CAN
+Item 1 | Paper packs | 5 | 23.00

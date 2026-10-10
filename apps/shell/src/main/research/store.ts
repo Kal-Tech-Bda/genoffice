@@ -217,34 +217,38 @@ export class ResearchStore {
         .all(now()) as SqlRow[]
     ).map((r) => this.workflow(String(r.id)))
   }
-  queue(id: string, sample: boolean): ResearchRun {
-    const w = this.workflow(id)
-    const pending = this.db
-      .prepare(
-        "SELECT id FROM runs WHERE workflow_id=? AND status IN ('queued','acquiring','processing','review')",
-      )
-      .get(id)
-    if (pending) throw new Error('Review, cancel or finish the current run before another run.')
-    const runId = randomUUID()
-    const at = now()
-    this.db
-      .prepare(
-        "INSERT INTO runs(id,workflow_id,config_version,config,processing_version,base_revision,sample,status,progress,created_at,updated_at,coverage) VALUES(?,?,?,?,?,?,?,'queued','Queued',?,?,?)",
-      )
-      .run(
-        runId,
-        id,
-        w.configVersion,
-        JSON.stringify(w.config),
-        PROCESSING_VERSION,
-        w.acceptedRevision,
-        Number(sample),
-        at,
-        at,
-        JSON.stringify({ complete: 0, failed: 0, total: 0 }),
-      )
-    this.event(runId, 'queued', 'Attempt queued')
-    return this.run(runId)
+  queue(id: string, sample: boolean, inputs: DurableInput[] = []): ResearchRun {
+    return this.transaction(() => {
+      const w = this.workflow(id)
+      const pending = this.db
+        .prepare(
+          "SELECT id FROM runs WHERE workflow_id=? AND status IN ('queued','acquiring','processing','review')",
+        )
+        .get(id)
+      if (pending) throw new Error('Review, cancel or finish the current run before another run.')
+      const runId = randomUUID()
+      const at = now()
+      this.db
+        .prepare(
+          "INSERT INTO runs(id,workflow_id,config_version,config,processing_version,base_revision,sample,status,progress,created_at,updated_at,coverage) VALUES(?,?,?,?,?,?,?,'queued','Queued',?,?,?)",
+        )
+        .run(
+          runId,
+          id,
+          w.configVersion,
+          JSON.stringify(w.config),
+          PROCESSING_VERSION,
+          w.acceptedRevision,
+          Number(sample),
+          at,
+          at,
+          JSON.stringify({ complete: 0, failed: 0, total: 0 }),
+        )
+      this.event(runId, 'queued', 'Attempt queued')
+      const insert = this.db.prepare('INSERT INTO inputs(run_id,ordinal,data) VALUES(?,?,?)')
+      for (const input of inputs) insert.run(runId, input.ordinal, JSON.stringify(input))
+      return this.run(runId)
+    })
   }
   run(id: string, projectId?: string): ResearchRun {
     const r = this.db.prepare('SELECT * FROM runs WHERE id=?').get(id) as SqlRow | undefined

@@ -33,7 +33,9 @@ for (const { ext, url, channel } of KINDS) {
         }) as typeof dialog.showSaveDialog
       })
       const editor = await waitForPageWithUrl(app, url)
-      await editor.waitForTimeout(2000)
+      if (ext === 'xlsx')
+        await expect(editor.locator('main.app-shell')).toHaveAttribute('aria-busy', 'false')
+      else await editor.waitForTimeout(2000)
       await app.evaluate(
         ({ webContents }, [u, ch]) => {
           webContents

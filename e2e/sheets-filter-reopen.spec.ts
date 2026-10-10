@@ -49,7 +49,7 @@ test.describe('sheets: filter criteria survive save and reopen', () => {
       await sheets.waitForFunction(() => document.body.textContent?.includes('Sheet1'), null, {
         timeout: 30_000,
       })
-      await sheets.waitForTimeout(1_500)
+      await expect(sheets.locator('main.app-shell')).toHaveAttribute('aria-busy', 'false')
 
       // A1:B5 — header row plus four data rows, then filter B to "keep"
       await sheets.evaluate(async () => {

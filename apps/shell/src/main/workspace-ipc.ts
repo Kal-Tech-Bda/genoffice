@@ -3,6 +3,8 @@ import { copyFile } from 'node:fs/promises'
 import { z } from 'zod'
 import { WORKSPACE_CHANNEL } from '../shared/workspace-api'
 import { WorkspaceStore } from './workspace-store'
+import type { ResearchProjectSummary } from '../shared/research-api'
+import type { WorkspaceProject } from '../shared/workspace-api'
 
 const id = z.string().regex(/^proj-[a-f0-9]{12}$/)
 const path = z.string().min(1).max(4096)
@@ -40,6 +42,7 @@ export function registerWorkspaceIpc(
   host: () => BrowserWindow | null,
   open: (path: string) => void,
   layout: (left: number, top: number) => void,
+  summaries: (projects: WorkspaceProject[]) => Record<string, ResearchProjectSummary>,
 ): void {
   const store = new WorkspaceStore(app.getPath('userData'))
   ipcMain.handle(WORKSPACE_CHANNEL, async (event, method: unknown, ...args: unknown[]) => {
@@ -51,8 +54,11 @@ export function registerWorkspaceIpc(
     )
       throw new Error('Workspace access is limited to the application shell.')
     switch (method) {
-      case 'list':
-        return store.list()
+      case 'list': {
+        const projects = store.list(),
+          research = summaries(projects)
+        return projects.map((project) => ({ ...project, research: research[project.id] }))
+      }
       case 'create':
         return store.create(
           z
@@ -62,6 +68,9 @@ export function registerWorkspaceIpc(
               filePath: path.optional(),
               url: url.optional(),
               delimiter: delimiter.optional(),
+              startKind: z
+                .enum(['general', 'extractFiles', 'researchWeb', 'workSpreadsheet'])
+                .optional(),
             })
             .strict()
             .parse(args[0]),
@@ -79,8 +88,10 @@ export function registerWorkspaceIpc(
             .parse(args[1]),
         )
       case 'open':
-        open(store.get(id.parse(args[0])).workspace.primaryWorkbook)
+        open(store.workbookPath(id.parse(args[0])))
         return
+      case 'rememberWorkbook':
+        return store.rememberWorkbook(id.parse(args[0]), path.parse(args[1]))
       case 'pickFile': {
         const result = await dialog.showOpenDialog(window, {
           properties: ['openFile'],
@@ -100,10 +111,21 @@ export function registerWorkspaceIpc(
           id.parse(args[0]),
           z.object({ path: path.optional(), url: url.optional() }).strict().parse(args[1]),
         )
+      case 'updateSource':
+        return store.updateSource(
+          id.parse(args[0]),
+          z.string().uuid().parse(args[1]),
+          path.parse(args[2]),
+        )
       case 'openSource': {
         const target = await store.sourcePreviewPath(
           id.parse(args[0]),
           z.string().uuid().parse(args[1]),
+          z
+            .string()
+            .regex(/^[a-f0-9]{64}$/)
+            .optional()
+            .parse(args[2]),
         )
         if (/^https?:\/\//i.test(target)) await shell.openExternal(url.parse(target))
         else open(target)
@@ -145,7 +167,7 @@ export function registerWorkspaceIpc(
           filters: [{ name: 'Excel workbook', extensions: ['xlsx'] }],
         })
         if (!result.canceled && result.filePath) {
-          await copyFile(ownedPath ?? project.workspace.primaryWorkbook, result.filePath)
+          await copyFile(ownedPath ?? store.workbookPath(project.id), result.filePath)
           return true
         }
         return false

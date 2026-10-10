@@ -1,0 +1,91 @@
+{
+  "synthetic": true,
+  "profile": "C:\\Users\\Place\\AppData\\Local\\Temp\\genoffice-e2e-S9nTUr",
+  "projectId": "proj-5249472df30b",
+  "workflowId": "52f41fb4-854b-4940-bb97-e80c210b98a5",
+  "acceptedPath": "C:\\Users\\Place\\AppData\\Local\\Temp\\genoffice-e2e-S9nTUr\\projects\\proj-5249472df30b\\workspace\\research\\Research-Paper quote comparison-r3-5afccd77.xlsx",
+  "exportPath": "C:\\Users\\Place\\AppData\\Local\\Temp\\infomonk-flow-export-LoMWm4\\comparison.xlsx",
+  "checks": [
+    {
+      "name": "File-start creation routes to Sources instead of a blank workbook",
+      "passed": true
+    },
+    {
+      "name": "A genuine sample has one quote and cannot publish",
+      "passed": true
+    },
+    {
+      "name": "Project needs-review filter links to the actual missing fact; manual correction resolves it",
+      "passed": true
+    },
+    {
+      "name": "Home reopens the accepted working workbook, not the blank starter",
+      "passed": true
+    },
+    {
+      "name": "Reviewed refresh updates document facts and retains 108 as manual override beside incoming evidence 115",
+      "passed": true
+    },
+    {
+      "name": "Outputs identify current/earlier revisions; Activity contains publication, correction and source update events",
+      "passed": true
+    },
+    {
+      "name": "Native formula yields the independently expected lowest CAD quote of 90; save and XLSX export preserve the actual workbook",
+      "passed": true
+    },
+    {
+      "name": "Fresh-process reopen retains formula, selected accepted workbook, manual value and current source evidence",
+      "passed": true
+    }
+  ],
+  "rendererErrors": [],
+  "expected": {
+    "synthetic": true,
+    "authorship": "Expected business facts authored independently of extraction code",
+    "useCase": "Compare three supplier quotes for five packs of paper, retain a missing total for review, correct it manually, update two source documents, refresh and reopen",
+    "currency": "CAD",
+    "initial": {
+      "Q-N001": 100,
+      "Q-C001": 90,
+      "Q-M001": null
+    },
+    "afterCorrection": {
+      "Q-N001": 100,
+      "Q-C001": 90,
+      "Q-M001": 108
+    },
+    "updatedIncoming": {
+      "Q-N001": 120,
+      "Q-C001": 90,
+      "Q-M001": 115
+    },
+    "afterReviewedRefresh": {
+      "Q-N001": 120,
+      "Q-C001": 90,
+      "Q-M001": 108
+    },
+    "manualCorrection": {
+      "quote": "Q-M001",
+      "value": 108,
+      "reason": "Synthetic reviewer confirmation; manual fact without document proof"
+    },
+    "rowMeaning": "One quote per Quote ID; a separate related table has one item per quote",
+    "quotes": 3,
+    "lineItems": 3,
+    "initialMissingFacts": 1,
+    "finalLowestDocumentQuote": "Q-C001",
+    "totalsLocations": {
+      "northwind.txt": "Text line 6",
+      "cedar.docx": "DOCX body element 6",
+      "maple.pdf": "PDF page 1, line 6",
+      "northwind-v2.txt": "Text line 6",
+      "maple-v2.txt": "Text line 6"
+    }
+  },
+  "finalAccepted": {
+    "Q-N001": 120,
+    "Q-C001": 90,
+    "Q-M001": 108
+  }
+}

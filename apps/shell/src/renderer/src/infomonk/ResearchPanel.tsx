@@ -38,9 +38,11 @@ const initial: ResearchConfig = {
 export function ResearchPanel({
   project,
   onCreateFrom,
+  initialSelection,
 }: {
   project: WorkspaceProject
   onCreateFrom: (workflowId: string) => void
+  initialSelection?: { workflowId: string; runId: string | null; needsReview?: boolean }
 }) {
   const [state, setState] = useState<ResearchState>({
     workflows: [],
@@ -48,24 +50,29 @@ export function ResearchPanel({
     latestRuns: [],
     executor: '',
     history: { offset: 0, total: 0, limit: 20 },
+    freshness: {},
   })
   const [historyOffset, setHistoryOffset] = useState(0)
   const [run, setRun] = useState<ResearchRun | null>(null)
   const [absent, setAbsent] = useState<ResearchAbsentPage | null>(null)
   const [editingId, setEditingId] = useState<string | undefined>()
-  const [name, setName] = useState('Supplier quotes')
+  const [name, setName] = useState(
+    project.workspace?.startKind === 'researchWeb' ? 'Public population' : 'Supplier quotes',
+  )
   const [config, setConfig] = useState<ResearchConfig>({
     ...initial,
+    kind: project.workspace?.startKind === 'researchWeb' ? 'worldbank' : 'quotes',
     sourceIds:
       project.workspace?.sources
         .filter((s) => /\.(pdf|docx|md|txt)$/i.test(s.name))
         .map((s) => s.id) ?? [],
   })
   const [countryText, setCountryText] = useState(initial.countries.join(', '))
-  const [selectedId, setSelectedId] = useState<string | null>(null)
-  const [runId, setRunId] = useState<string | null>(null)
+  const [selectedId, setSelectedId] = useState<string | null>(initialSelection?.workflowId ?? null)
+  const [runId, setRunId] = useState<string | null>(initialSelection?.runId ?? null)
   const [accepted, setAccepted] = useState<ResearchDataset | null>(null)
-  const [showAccepted, setShowAccepted] = useState(false)
+  const [showAccepted, setShowAccepted] = useState(!!initialSelection && !initialSelection.runId)
+  const [needsReview, setNeedsReview] = useState(initialSelection?.needsReview ?? false)
   const [error, setError] = useState('')
   const [busy, setBusy] = useState(false)
   const [acknowledge, setAcknowledge] = useState(false)
@@ -85,10 +92,14 @@ export function ResearchPanel({
   const [reason, setReason] = useState('')
   const [schedule, setSchedule] = useState('manual')
   const workflow = state.workflows.find((w) => w.id === selectedId)
+  useEffect(
+    () => setSchedule(workflow?.scheduleMinutes?.toString() ?? 'manual'),
+    [workflow?.scheduleMinutes, selectedId],
+  )
   const runSummary =
     state.runs.find((r) => r.id === runId) ?? state.latestRuns.find((r) => r.id === runId)
   const detailVersion = runId
-    ? `${runId}:${runSummary?.updatedAt ?? ''}:${workflow?.acceptedRevision ?? 0}`
+    ? `${runId}:${runSummary?.updatedAt ?? ''}:${workflow?.acceptedRevision ?? 0}:${state.freshness[workflow?.id ?? '']?.sourceSignature ?? ''}`
     : ''
   const query = useRef({ offset: historyOffset, workflowId: selectedId })
   query.current = { offset: historyOffset, workflowId: selectedId }
@@ -101,6 +112,7 @@ export function ResearchPanel({
     setAbsent(null)
     cellRequest.current++
     setShowAccepted(false)
+    setNeedsReview(false)
     setSelectedCell(null)
     setInspection(null)
     setAcknowledge(false)
@@ -138,7 +150,7 @@ export function ResearchPanel({
     let live = true
     if (!runId) return
     void window.infomonkResearch
-      .detail(project.id, runId)
+      .detail(project.id, runId, { needsReview })
       .then((value) => {
         if (live) {
           setRun(value)
@@ -151,7 +163,22 @@ export function ResearchPanel({
     return () => {
       live = false
     }
-  }, [project.id, runId, detailVersion])
+  }, [project.id, runId, detailVersion, needsReview])
+  useEffect(() => {
+    let live = true
+    if (!showAccepted || !selectedId) return
+    void window.infomonkResearch
+      .accepted(project.id, selectedId, { needsReview })
+      .then((value) => {
+        if (live) setAccepted(value)
+      })
+      .catch((err) => {
+        if (live) setError(String(err))
+      })
+    return () => {
+      live = false
+    }
+  }, [project.id, selectedId, showAccepted, needsReview, workflow?.acceptedRevision])
   async function selectCell(table: ResearchTable, row: ResearchRow, column: string) {
     if (!workflow) return
     const request = ++cellRequest.current
@@ -178,8 +205,13 @@ export function ResearchPanel({
     if (!workflow) return
     cellRequest.current++
     const page = showAccepted
-      ? await window.infomonkResearch.accepted(project.id, workflow.id, { tableId, offset })
-      : (await window.infomonkResearch.detail(project.id, runId!, { tableId, offset })).candidate
+      ? await window.infomonkResearch.accepted(project.id, workflow.id, {
+          tableId,
+          offset,
+          needsReview,
+        })
+      : (await window.infomonkResearch.detail(project.id, runId!, { tableId, offset, needsReview }))
+          .candidate
     const merge = (current: ResearchDataset | null) =>
       current && page
         ? {
@@ -210,6 +242,8 @@ export function ResearchPanel({
     setHistoryOffset(0)
     showRun(state.latestRuns.find((r) => r.workflowId === w.id)?.id ?? null)
     setAccepted(await window.infomonkResearch.accepted(project.id, w.id))
+    const latest = state.latestRuns.find((r) => r.workflowId === w.id)
+    setShowAccepted(w.acceptedRevision > 0 && (!latest || latest.status === 'published'))
     setSchedule(w.scheduleMinutes?.toString() ?? 'manual')
   }
   function edit(w: ResearchWorkflow) {
@@ -445,6 +479,17 @@ export function ResearchPanel({
                   : `${w.config.countries.join(', ')} / ${w.config.fromYear}–${w.config.toYear}`}
               </small>
               <p>{latest ? `${latest.status}: ${latest.progress}` : 'No runs yet'}</p>
+              {w.acceptedRevision > 0 && (
+                <p className="im-muted">
+                  Accepted {new Date(state.freshness[w.id]?.acceptedAt ?? '').toLocaleString()} ·{' '}
+                  {state.freshness[w.id]?.inputsChanged ||
+                  state.freshness[w.id]?.configurationChanged
+                    ? 'Inputs or configuration changed · run a reviewed refresh'
+                    : w.config.kind === 'worldbank'
+                      ? 'Public snapshot · refresh to check for new observations'
+                      : 'Selected input snapshots match the accepted run'}
+                </p>
+              )}
               <small>
                 Destination: {w.destination?.split(/[\\/]/).pop() ?? 'New reviewed XLSX revision'} ·{' '}
                 {w.paused
@@ -486,6 +531,14 @@ export function ResearchPanel({
       {workflow && (
         <>
           <h2>{workflow.name}</h2>
+          {showAccepted &&
+            (state.freshness[workflow.id]?.inputsChanged ||
+              state.freshness[workflow.id]?.configurationChanged) && (
+              <p className="im-muted">
+                These accepted values use earlier inputs or configuration. Run all confirmed inputs
+                to review a fresh candidate.
+              </p>
+            )}
           <div className="im-controls">
             <button disabled={busy} onClick={() => void act(() => start(true))}>
               Run sample
@@ -507,7 +560,11 @@ export function ResearchPanel({
               disabled={!workflow.acceptedRevision || busy}
               onClick={() =>
                 void act(async () => {
-                  setAccepted(await window.infomonkResearch.accepted(project.id, workflow.id))
+                  setAccepted(
+                    await window.infomonkResearch.accepted(project.id, workflow.id, {
+                      needsReview,
+                    }),
+                  )
                   setShowAccepted(true)
                   setSelectedCell(null)
                   cellRequest.current++
@@ -631,6 +688,12 @@ export function ResearchPanel({
                 'Sample only; cannot publish. Cancel the sample, adjust the configuration if needed, then run all confirmed inputs.'}
             </p>
           )}
+          {run?.inputsChanged && !showAccepted && (
+            <p role="alert" className="im-error">
+              Source inputs changed since this run. Accepted data is unchanged. Cancel this
+              candidate and run again with the current snapshots.
+            </p>
+          )}
           {run && (
             <details>
               <summary>
@@ -710,8 +773,46 @@ export function ResearchPanel({
               <h3>
                 {showAccepted
                   ? `Accepted revision ${workflow.acceptedRevision}`
-                  : 'Candidate — accepted data unchanged'}
+                  : run?.status === 'published'
+                    ? 'Published run with current manual overrides'
+                    : 'Candidate — accepted data unchanged'}
               </h3>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={needsReview}
+                  disabled={busy}
+                  onChange={(event) => {
+                    const next = event.target.checked
+                    void act(async () => {
+                      setNeedsReview(next)
+                      cellRequest.current++
+                      setSelectedCell(null)
+                      setInspection(null)
+                      if (showAccepted)
+                        setAccepted(
+                          await window.infomonkResearch.accepted(project.id, workflow.id, {
+                            needsReview: next,
+                          }),
+                        )
+                      else if (runId)
+                        setRun(
+                          await window.infomonkResearch.detail(project.id, runId, {
+                            needsReview: next,
+                          }),
+                        )
+                    })
+                  }}
+                />{' '}
+                Show rows needing review
+              </label>
+              {needsReview && (
+                <p className="im-muted">
+                  Shows rows with missing values or validation issues across the complete table.
+                  Manual changes remain labeled. Filtering does not alter publication or accepted
+                  records.
+                </p>
+              )}
               {dataset.issues.map((issue, i) => (
                 <p className="im-error" key={i}>
                   {issue}
@@ -720,7 +821,10 @@ export function ResearchPanel({
               {dataset.tables.map((table) => (
                 <div className="im-research-table" key={table.id}>
                   <h3>
-                    {table.name} · {table.totalRows ?? table.rows.length} rows
+                    {table.name} · {table.totalRows ?? table.rows.length}
+                    {needsReview
+                      ? ` of ${table.allRows ?? table.totalRows} rows need review`
+                      : ' rows'}
                   </h3>
                   <p>{table.rowMeaning}</p>
                   <small>
@@ -898,7 +1002,11 @@ export function ResearchPanel({
                               : correction,
                           reason,
                         )
-                        setAccepted(await window.infomonkResearch.accepted(project.id, workflow.id))
+                        setAccepted(
+                          await window.infomonkResearch.accepted(project.id, workflow.id, {
+                            needsReview,
+                          }),
+                        )
                         setSelectedCell(null)
                       })
                     }
@@ -933,11 +1041,15 @@ export function ResearchPanel({
               </label>
               <button
                 className="im-primary"
-                disabled={busy || run.sample || run.coverage.failed > 0}
+                disabled={busy || run.sample || run.coverage.failed > 0 || run.inputsChanged}
                 onClick={() =>
                   void act(async () => {
                     await window.infomonkResearch.publish(project.id, run.id, acknowledge, removals)
-                    setAccepted(await window.infomonkResearch.accepted(project.id, workflow.id))
+                    setAccepted(
+                      await window.infomonkResearch.accepted(project.id, workflow.id, {
+                        needsReview,
+                      }),
+                    )
                     setShowAccepted(true)
                     setSelectedCell(null)
                   })

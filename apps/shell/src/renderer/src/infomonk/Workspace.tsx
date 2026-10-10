@@ -8,6 +8,7 @@ import { ProjectCreator } from './ProjectCreator'
 import { mt, type MonkString } from './en'
 import { MonkMark } from './Mark'
 import { ResearchPanel } from './ResearchPanel'
+import type { ResearchOverview } from '../../../shared/research-api'
 import './workspace.css'
 
 declare global {
@@ -50,8 +51,20 @@ export function Workspace({
   const [section, setSection] = useState<Section>('home')
   const [creator, setCreator] = useState(false)
   const [template, setTemplate] = useState<{ projectId: string; workflowId: string } | undefined>()
+  const [startKind, setStartKind] = useState<
+    'general' | 'extractFiles' | 'researchWeb' | 'workSpreadsheet'
+  >('general')
+  const [selection, setSelection] = useState<
+    { workflowId: string; runId: string | null; needsReview?: boolean } | undefined
+  >()
+  const [overview, setOverview] = useState<ResearchOverview>({
+    outputCount: 0,
+    outputs: [],
+    activity: [],
+  })
   const [search, setSearch] = useState('')
   const [starred, setStarred] = useState(false)
+  const [reviewOnly, setReviewOnly] = useState(false)
   const [sort, setSort] = useState('recent')
   const [error, setError] = useState('')
   const [busy, setBusy] = useState(false)
@@ -91,7 +104,8 @@ export function Workspace({
     return () => window.removeEventListener('focus', onFocus)
   }, [])
   useEffect(() => {
-    if (activeFile) {
+    let live = true
+    if (activeFile && !homeActive) {
       const owner = projects.find(
         (item) =>
           item.files.some((file) => file.toLowerCase() === activeFile.toLowerCase()) ||
@@ -102,23 +116,66 @@ export function Workspace({
       )
       if (owner) {
         setProjectId(owner.id)
-        setSection('sheets')
+        setSection(
+          /[\\/]workspace[\\/](?:research[\\/])?(?:previews|sources)[\\/]/i.test(activeFile)
+            ? 'sources'
+            : /\.xlsx$/i.test(activeFile)
+              ? 'sheets'
+              : 'outputs',
+        )
       } else setProjectId(null)
+      if (
+        owner &&
+        /\.xlsx$/i.test(activeFile) &&
+        !/[\\/]workspace[\\/](?:research[\\/])?(?:previews|sources)[\\/]/i.test(activeFile) &&
+        owner.workspace?.workingWorkbook !== activeFile
+      )
+        void window.infomonk
+          .rememberWorkbook(owner.id, activeFile)
+          .then((next) => {
+            if (live)
+              setProjects((current) => [next, ...current.filter((item) => item.id !== next.id)])
+          })
+          .catch((err) => {
+            if (live) setError(String(err))
+          })
     }
-  }, [activeFile, projects])
+    return () => {
+      live = false
+    }
+  }, [activeFile, projects, homeActive])
   useEffect(() => {
     void window.infomonk
       .layout(editorWorkspaceVisible ? 224 : 0, editorWorkspaceVisible ? 56 : 0)
       .catch((err) => setError(String(err)))
   }, [editorWorkspaceVisible])
-  async function navigate(next: Section) {
+  useEffect(() => {
+    let live = true
+    if (!projectId || !homeActive || !['outputs', 'activity'].includes(section)) return
+    void window.infomonkResearch
+      .overview(projectId)
+      .then((value) => {
+        if (live) setOverview(value)
+      })
+      .catch((err) => {
+        if (live) setError(String(err))
+      })
+    return () => {
+      live = false
+    }
+  }, [projectId, homeActive, section])
+  async function navigate(
+    next: Section,
+    requestedSelection?: { workflowId: string; runId: string | null; needsReview?: boolean },
+  ) {
     setSection(next)
     setError('')
     setEditing(null)
+    setSelection(requestedSelection)
     if (next === 'sheets' && project) await window.infomonk.open(project.id)
     else {
       await window.aiOfficeTabs.activate('home')
-      if (next === 'outputs' || next === 'activity') await refresh()
+      await refresh()
     }
   }
   async function openProject(item: WorkspaceProject) {
@@ -126,15 +183,20 @@ export function Workspace({
     setSection('sheets')
     await window.infomonk.open(item.id)
   }
-  async function newProject() {
+  async function newProject(kind: typeof startKind = 'general') {
     await window.aiOfficeTabs.activate('home')
     setTemplate(undefined)
+    setStartKind(kind)
     setCreator(true)
   }
   const visible = projects
     .filter(
       (item) =>
         (!starred || item.workspace?.starred) &&
+        (!reviewOnly ||
+          !!item.research?.pendingReviews ||
+          !!item.research?.unresolvedCells ||
+          !!item.research?.inputsChanged) &&
         `${item.name} ${item.workspace?.description}`.toLowerCase().includes(search.toLowerCase()),
     )
     .sort((a, b) =>
@@ -143,6 +205,11 @@ export function Workspace({
   async function addFile() {
     const path = await window.infomonk.pickFile()
     if (path && project) changed(await window.infomonk.addSource(project.id, { path }))
+  }
+  async function updateSource(sourceId: string) {
+    if (!project) return
+    const path = await window.infomonk.pickFile()
+    if (path) changed(await window.infomonk.updateSource(project.id, sourceId, path))
   }
   async function showSettings() {
     await window.aiOfficeTabs.activate('home')
@@ -301,7 +368,7 @@ export function Workspace({
                 <div className="im-starts">
                   {(['researchWeb', 'extractFiles', 'workSpreadsheet'] as const).map(
                     (key, index) => (
-                      <button key={key} onClick={() => void run(newProject)}>
+                      <button key={key} onClick={() => void run(() => newProject(key))}>
                         <span aria-hidden="true">{['↗', '▧', '▦'][index]}</span>
                         {mt(key)}
                       </button>
@@ -324,6 +391,13 @@ export function Workspace({
                     onClick={() => setStarred((value) => !value)}
                   >
                     ☆ {mt('starred')}
+                  </button>
+                  <button
+                    aria-pressed={reviewOnly}
+                    className={reviewOnly ? 'selected' : ''}
+                    onClick={() => setReviewOnly((value) => !value)}
+                  >
+                    {mt('needsReview')}
                   </button>
                   <select
                     aria-label="Project sort"
@@ -363,6 +437,51 @@ export function Workspace({
                       <time dateTime={item.updatedAt}>
                         {new Date(item.updatedAt).toLocaleDateString()}
                       </time>
+                      {item.research && (
+                        <div className="im-project-status">
+                          <small>
+                            {item.research.acceptedRows
+                              ? `${item.research.acceptedRows} accepted rows across ${item.research.acceptedTables} tables`
+                              : item.research.workflowCount
+                                ? 'No accepted table yet'
+                                : 'Local workbook'}
+                            {item.research.activeRuns > 0
+                              ? ` · ${item.research.activeRuns} running`
+                              : ''}
+                          </small>
+                          {item.research.pendingReviews > 0 && (
+                            <small>
+                              {item.research.pendingReviews} candidate
+                              {item.research.pendingReviews === 1 ? '' : 's'} awaiting review
+                            </small>
+                          )}
+                          {item.research.unresolvedCells > 0 && (
+                            <small>{item.research.unresolvedCells} missing or flagged facts</small>
+                          )}
+                          {item.research.inputsChanged && (
+                            <small>Inputs changed · reviewed refresh needed</small>
+                          )}
+                          {item.research.reviewWorkflowId && (
+                            <button
+                              disabled={busy}
+                              onClick={() =>
+                                void run(async () => {
+                                  setProjectId(item.id)
+                                  await navigate('workflows', {
+                                    workflowId: item.research!.reviewWorkflowId!,
+                                    runId: item.research!.reviewRunId,
+                                    needsReview:
+                                      !item.research!.reviewRunId &&
+                                      item.research!.unresolvedCells > 0,
+                                  })
+                                })
+                              }
+                            >
+                              Review table: {item.name}
+                            </button>
+                          )}
+                        </div>
+                      )}
                       <button
                         aria-label={`${mt('starred')}: ${item.name}`}
                         aria-pressed={item.workspace?.starred}
@@ -470,7 +589,49 @@ export function Workspace({
                             <strong>{source.name}</strong>
                             <p>{source.snapshotPath ? mt('snapshot') : mt('linkOnly')}</p>
                             <small>{source.sha256?.slice(0, 16) ?? source.uri}</small>
+                            <small>Added {new Date(source.addedAt).toLocaleString()}</small>
+                            {!!source.previousVersions?.length && (
+                              <details>
+                                <summary>
+                                  {source.previousVersions.length} previous saved versions
+                                </summary>
+                                {source.previousVersions.map((version, index) => (
+                                  <div
+                                    className="im-source-version"
+                                    key={`${version.sha256}:${index}`}
+                                  >
+                                    <small>
+                                      {version.name} · {new Date(version.addedAt).toLocaleString()}{' '}
+                                      · {version.sha256?.slice(0, 16)}
+                                    </small>
+                                    <button
+                                      disabled={busy}
+                                      onClick={() =>
+                                        void run(() =>
+                                          window.infomonk.openSource(
+                                            project.id,
+                                            source.id,
+                                            version.sha256,
+                                          ),
+                                        )
+                                      }
+                                    >
+                                      Open previous version {index + 1}
+                                    </button>
+                                  </div>
+                                ))}
+                              </details>
+                            )}
                           </div>
+                          {source.snapshotPath && (
+                            <button
+                              disabled={busy}
+                              aria-label={`Update snapshot: ${source.name}`}
+                              onClick={() => void run(() => updateSource(source.id))}
+                            >
+                              Update snapshot
+                            </button>
+                          )}
                           <button
                             onClick={() =>
                               void run(() => window.infomonk.openSource(project.id, source.id))
@@ -486,8 +647,9 @@ export function Workspace({
               )}
               {section === 'workflows' && (
                 <ResearchPanel
-                  key={project.id}
+                  key={`${project.id}:${selection?.workflowId ?? ''}:${selection?.runId ?? ''}`}
                   project={project}
+                  initialSelection={selection}
                   onCreateFrom={(workflowId) => {
                     setTemplate({ projectId: project.id, workflowId })
                     setCreator(true)
@@ -496,6 +658,42 @@ export function Workspace({
               )}
               {section === 'outputs' && (
                 <>
+                  <h2>Accepted tables · {overview.outputCount}</h2>
+                  {overview.outputCount > 100 && (
+                    <p className="im-muted">
+                      Showing the latest 100 accepted revisions. Older files remain in the project
+                      folder.
+                    </p>
+                  )}
+                  {overview.outputs.map((output) => (
+                    <article
+                      className="im-source-row"
+                      key={`${output.workflowId}:${output.revision}`}
+                    >
+                      <div>
+                        <strong>
+                          {output.name} · revision {output.revision}
+                        </strong>
+                        <p>
+                          {output.current ? 'Current accepted table' : 'Earlier accepted revision'}{' '}
+                          · {new Date(output.at).toLocaleString()}
+                        </p>
+                      </div>
+                      <button
+                        disabled={busy}
+                        onClick={() =>
+                          void run(() =>
+                            output.current
+                              ? window.infomonkResearch.open(project.id, output.workflowId)
+                              : window.aiOffice.openPath(output.path),
+                          )
+                        }
+                      >
+                        Open {output.name} revision {output.revision}
+                      </button>
+                    </article>
+                  ))}
+                  <h2>Supporting outputs</h2>
                   <p className="im-muted">{mt('outputInfo')}</p>
                   <div className="im-controls">
                     {(
@@ -517,7 +715,8 @@ export function Workspace({
                       (path) =>
                         /\.(docx|pptx|md|html|pdf|xlsx)$/i.test(path) &&
                         path !== metadata?.primaryWorkbook &&
-                        !/[\\/]previews[\\/]/.test(path),
+                        !/[\\/](previews|sources)[\\/]/.test(path) &&
+                        !/[\\/]research[\\/]Research-/.test(path),
                     )
                     .map((path) => (
                       <article className="im-source-row" key={path}>
@@ -531,15 +730,41 @@ export function Workspace({
               )}
               {section === 'activity' && (
                 <div className="im-timeline">
-                  {metadata?.activity.map((entry, index) => (
-                    <article key={`${entry.at}:${index}`}>
-                      <span className="im-timeline-dot" />
-                      <div>
-                        <strong>{entry.text}</strong>
-                        <time dateTime={entry.at}>{new Date(entry.at).toLocaleString()}</time>
-                      </div>
-                    </article>
-                  ))}
+                  {[
+                    ...(metadata?.activity ?? []).map((entry, index) => ({
+                      ...entry,
+                      id: `workspace:${index}`,
+                      workflowId: undefined,
+                      runId: undefined,
+                    })),
+                    ...overview.activity,
+                  ]
+                    .sort((a, b) => b.at.localeCompare(a.at))
+                    .slice(0, 100)
+                    .map((entry) => (
+                      <article key={entry.id}>
+                        <span className="im-timeline-dot" />
+                        <div>
+                          <strong>{entry.text}</strong>
+                          <time dateTime={entry.at}>{new Date(entry.at).toLocaleString()}</time>
+                          {entry.workflowId && (
+                            <button
+                              disabled={busy}
+                              onClick={() =>
+                                void run(() =>
+                                  navigate('workflows', {
+                                    workflowId: entry.workflowId!,
+                                    runId: entry.runId ?? null,
+                                  }),
+                                )
+                              }
+                            >
+                              Open workflow
+                            </button>
+                          )}
+                        </div>
+                      </article>
+                    ))}
                 </div>
               )}
               {section === 'cleanup' && (
@@ -570,11 +795,22 @@ export function Workspace({
       {homeActive && creator && (
         <ProjectCreator
           template={template}
+          startKind={startKind}
           onClose={() => setCreator(false)}
           onCreated={(item) => {
             changed(item)
             setCreator(false)
-            void run(() => openProject(item))
+            setProjectId(item.id)
+            const documents = item.workspace?.sources.some((source) =>
+              /\.(pdf|docx|md|txt)$/i.test(source.name),
+            )
+            void run(() =>
+              item.workspace?.startKind === 'researchWeb'
+                ? navigate('workflows')
+                : documents
+                  ? navigate('sources')
+                  : openProject(item),
+            )
           }}
         />
       )}

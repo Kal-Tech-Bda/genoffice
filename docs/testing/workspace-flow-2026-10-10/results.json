@@ -1,0 +1,206 @@
+{
+  "checkedAt": "2026-10-10T23:05:09.453Z",
+  "branch": "codex/infomonk-workspace",
+  "testedBaseCommit": "e65f6d4bd8652a609844e1e7c17311d1a41436a0",
+  "sourceHashes": {
+    "apps/sheets/src/renderer/App.tsx": "528fc0f592406f2d774262627ee714afa8710b10458e440e9ef2120ad92b8f64",
+    "apps/shell/src/main/index.ts": "d7763c6919942df7b6b9f39bd97b0e50e62b528cbcf3c2c57ea56d809ac2a651",
+    "apps/shell/src/main/research/ipc.ts": "f1baf822fed487e426ba60419c197d47e537b061fd37926eeb86a9ddc5fc0be2",
+    "apps/shell/src/main/research/pages.ts": "52ad9bf413c404e5c1f86203a8474936b3adb3260ae91169a2b4a726355e8e66",
+    "apps/shell/src/main/research/service.ts": "21b63c83b418cdb98311f3172e9575af9112372cb7e346c4758e753f3e36c349",
+    "apps/shell/src/main/research/store.ts": "ac2b90093cd04c4cce670e0601efb75dc90895c2eaaeb10bd83aff1bb75b09d4",
+    "apps/shell/src/main/workspace-ipc.ts": "6752da26a8b9a6d27c0695be6b0ec5adcc9a3c68cb5196bfba9b02ae4e40bc8b",
+    "apps/shell/src/main/workspace-portability.ts": "0561e445f2caa0ae034bc14258f12ce348d8e3344330fe8d3f8fa6551effd229",
+    "apps/shell/src/main/workspace-store.ts": "4f1b0fc1194a48b0c255dd1c8c905ec41fb4091b50afec687bba4fd9e9babbe5",
+    "apps/shell/src/preload/research.ts": "350f13eaa670fd3e302f33dc91d82063c73ccd6d6cfcbe3fb504f8dbd52a6ec0",
+    "apps/shell/src/preload/workspace.ts": "ba06383f7ab295a0d98dfb9b5883ee7f10ca52f65cbeb1cb576bdf691f67ae83",
+    "apps/shell/src/renderer/src/infomonk/ProjectCreator.tsx": "eab88c215a7cbe704b748c05c712a22eda01b92ea688ce1559c7811b25ca6d68",
+    "apps/shell/src/renderer/src/infomonk/ResearchPanel.tsx": "7dad155de127867f7879c22105cc0c58046011d160728f1f7357d448ad6d23f4",
+    "apps/shell/src/renderer/src/infomonk/Workspace.tsx": "f676c7c6624b226d5a2b351c322efdfa0a4ff25102b21eb8baace19442745f33",
+    "apps/shell/src/renderer/src/infomonk/en.ts": "7ae5cf31db1c52c262de2e100baa234db50630819f3ae8391c75c7969cf0ad22",
+    "apps/shell/src/renderer/src/infomonk/workspace.css": "e84a515e63900e6548f031f4fa8439ae1e74fa5b7e1cc731e06bd80589a86aa9",
+    "apps/shell/src/shared/research-api.ts": "5e69eda1e9f8f1f3827a62d852c5bafa2c54d5dcc24c5d0dc490d153ab302b55",
+    "apps/shell/src/shared/workspace-api.ts": "aa01261143e6f28f339e605eb5bc854e1c6ada58705f0473e31d81b986b742dd",
+    "apps/shell/tests/workspace-flow.test.ts": "6f219ed667bb0f20eae6d1891eb102e9e051cec157497b3d2889bf2ad7f51d39",
+    "e2e/infomonk-hardening.spec.ts": "c0db9cd64831b0909fa4b4dd4d8f8fcc392cb8c0f0fbbc3f89e75e28cdcf4cc9",
+    "e2e/infomonk-workspace-flow.spec.ts": "c975d0f63200b3acf67a86e810e1c8e3e516bb9a1cf49802f204b2c79b719c56",
+    "e2e/open-empty-file-save.spec.ts": "02354962a64d6066761fee857d1e9b72f650c0037fb85a84df53a99e8afefcf7",
+    "e2e/sheets-csv-export.spec.ts": "676eafd24efb8abeeeb5fd039a29de318e30008cead34f103c3943ce8335bf68",
+    "e2e/sheets-csv-inplace-save.spec.ts": "39999696508035152d995263f1739a94e483aae14fa2386ce1c34bb266cf5523",
+    "e2e/sheets-edit-save.spec.ts": "e812c3bf5b29762116d6aa957f2f4d477a5f692d8fbefe6e07ac8df87a48ae86",
+    "e2e/sheets-filter-reopen.spec.ts": "896f75a2da96b5290826afc1a0be3d2ffa406bdca322d6afdf772226f9fae485",
+    "e2e/sheets-find-replace.spec.ts": "e32ddd80a92921cb00ad28a8580cfb95ff9534241b77ccca4b9cfc4b03904eaa",
+    "e2e/sheets-open-tsv.spec.ts": "0df744af4b1a2b80fb6dc3711e77085d8639b735e470066d37c5cabdb2e36ee4",
+    "fixtures/infomonk/workspace-flow/expected.json": "9cf094dbdc5264db2592abb2da5cf0ade756c571509e79fe86efa2087b1bc2a5",
+    "fixtures/infomonk/workspace-flow/generate.mjs": "2b5ca98ca17b11148768f9dcdea81ee620ea81e6c5cac59be568a1f107e8fb63",
+    "fixtures/infomonk/workspace-flow/maple-v2.txt": "3b0009fba9688e0df40e99f1760cb4f478677230cecf649dc205c725875c2bc4",
+    "fixtures/infomonk/workspace-flow/northwind-v2.txt": "5777499851a4ea39a22c5d6140a20802cdf8b1bf4a2742491758498be0746fe1",
+    "fixtures/infomonk/workspace-flow/northwind.txt": "715c1aeaab6bac3960d68e10049bcbfb539bd28baf216661ea9ca6a6dbaaaaca",
+    "packages/project-store/src/types.ts": "b28997d0901cb79c3e17ddf281af61e290dcd7c11297608eaa680edf7de655cc"
+  },
+  "fixtureHashes": {
+    "expected.json": "9cf094dbdc5264db2592abb2da5cf0ade756c571509e79fe86efa2087b1bc2a5",
+    "northwind.txt": "715c1aeaab6bac3960d68e10049bcbfb539bd28baf216661ea9ca6a6dbaaaaca",
+    "northwind-v2.txt": "5777499851a4ea39a22c5d6140a20802cdf8b1bf4a2742491758498be0746fe1",
+    "cedar.docx": "a34b6a3674e420c8453d5c4c1e9aa6d108ead30059a7ac2c0d89155f41ce78cc",
+    "maple.pdf": "d06ac2cb08c1f6180d3aedf03c5d177b7ca3f5060dbd54b95de0475b9299621b",
+    "maple-v2.txt": "3b0009fba9688e0df40e99f1760cb4f478677230cecf649dc205c725875c2bc4"
+  },
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "windows": "10.0.26200",
+    "node": "v24.13.1",
+    "npm": "11.8.0",
+    "electron": "43.7.6",
+    "playwright": "1.62.1"
+  },
+  "checks": {
+    "shellBuild": "passed",
+    "sheetsBuild": "passed",
+    "rootTypes": {
+      "workspaces": 26,
+      "passed": true,
+      "finalShellAndSheets": "passed"
+    },
+    "focused": {
+      "passed": 40,
+      "failed": 0,
+      "files": 6
+    },
+    "shell": {
+      "passed": 819,
+      "failed": 19,
+      "skipped": 3
+    },
+    "sheets": {
+      "passed": 3339,
+      "failed": 2,
+      "skipped": 1
+    },
+    "nativeRust": {
+      "passed": 242,
+      "failed": 0
+    },
+    "projectStore": {
+      "passed": 120,
+      "failed": 0,
+      "skipped": 1
+    },
+    "electron": {
+      "passed": 22,
+      "failed": 0,
+      "retries": 0,
+      "skipped": 0
+    },
+    "lint": {
+      "errors": 0,
+      "inheritedWarnings": 12
+    },
+    "format": "passed",
+    "themeColors": "passed",
+    "englishComments": "passed",
+    "licenses": "passed"
+  },
+  "useCase": {
+    "record": "use-case-results.json",
+    "synthetic": true,
+    "checkpoints": 8,
+    "rendererErrors": 0,
+    "expectedTotals": {
+      "Q-N001": 120,
+      "Q-C001": 90,
+      "Q-M001": 108
+    },
+    "formula": "MIN(E2:E4)",
+    "expectedFormulaResult": 90,
+    "savedExportByteIdentical": true,
+    "freshProcessReopen": true
+  },
+  "manual": {
+    "surface": "Computer Use / Windows native UI",
+    "profile": "C:\\Users\\Place\\AppData\\Local\\Temp\\genoffice-e2e-S9nTUr",
+    "checks": [
+      "Home → remembered revision 3",
+      "Sources → retained source history",
+      "Previous Maple PDF → original blank Total",
+      "Rebuilt source metadata spacing",
+      "Returned to accepted sheet"
+    ],
+    "captures": [
+      "manual-original-pdf-dark.png",
+      "manual-source-versions-dark.png"
+    ]
+  },
+  "performance": {
+    "profile": "C:\\Users\\Place\\Documents\\ChatGPT\\Socrates\\.task\\preflight-20261010\\performance-profile-1791657545335",
+    "projectId": "proj-b109b455056a",
+    "samples": [
+      {
+        "elapsedMs": 26.9,
+        "runs": 20,
+        "total": 100,
+        "jsonCharacters": 9728,
+        "hasFullCandidates": false
+      },
+      {
+        "elapsedMs": 22.9,
+        "runs": 20,
+        "total": 100,
+        "jsonCharacters": 9728,
+        "hasFullCandidates": false
+      },
+      {
+        "elapsedMs": 22.8,
+        "runs": 20,
+        "total": 100,
+        "jsonCharacters": 9728,
+        "hasFullCandidates": false
+      }
+    ],
+    "medianIpcMs": 22.9,
+    "detail": {
+      "elapsedMs": 33.3,
+      "jsonCharacters": 51722,
+      "tables": [
+        {
+          "name": "Quotes",
+          "rows": 1,
+          "total": 1,
+          "evidenceCount": 1
+        },
+        {
+          "name": "Line items",
+          "rows": 100,
+          "total": 1000,
+          "evidenceCount": 1
+        }
+      ]
+    },
+    "historyUiPage2": true,
+    "mainRssMiB": 321.6,
+    "note": "Built native Electron shell/preload/main IPC, same synthetic 100-run/1000-item profile as preflight. No extraction accuracy or capacity certification."
+  },
+  "inheritedWindowsFailures": {
+    "shell": {
+      "linuxBasename": 1,
+      "symlinkPrivileges": 2,
+      "posixHeadlessPaths": 16
+    },
+    "sheets": {
+      "chmodWriteDenial": 2
+    },
+    "failureFilesUnchangedFromUpstream": true
+  },
+  "presentationOnlyAfterFullElectronRun": "Separated source hash/time labels; rebuilt and manually checked. No behavior assertions changed.",
+  "preservedFiles": {
+    "package-lock.json": "04cfc1c5bd594b1188694dd319115c3c865006195f7b8f252055bda26be522fc",
+    "apps/sheets/native/xlsx-engine/Cargo.lock": "5bbbcda56985f1ec168c7ac6c32ca76e5d923484deb5e1cd8d1c391cbddc6b81",
+    "LICENSE": "68e32334df324ef4fc79fad3a26487e5abac36055a484bb6c8d7ecf9d8350885"
+  },
+  "engineeringHarness": {
+    "executionEnabled": false,
+    "implementationOrder": "last"
+  },
+  "assayExcluded": true
+}

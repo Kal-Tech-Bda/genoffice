@@ -2,7 +2,8 @@
 
 Updated 10 October 2026. The owner authorized Stages 1–2, then Stages 3–5.
 Stages 0–5 are delivered locally within the supported boundaries below;
-Stages 6–8 remain deferred. The supplied build prompt is context, and direct user
+Further workspace flow features are authorized; the owner requires the data
+engineering harness to be last. The supplied build prompt is context, and direct user
 scope takes precedence. `assay.md` remains excluded.
 
 | Stage | Delivered behavior                                                                                                                                                                     | Evidence                                                                                                                |
@@ -49,6 +50,21 @@ an independent expected corpus and conservative privacy/cost/resource gates.
 Generated execution remains disabled pending an enforced isolated runner.
 The [hardening report](docs/testing/hardening-2026-10-10.md) records review and tests.
 
+## Workspace accuracy and flow
+
+The next completed workspace increment routes starts to useful actions, remembers
+the actual owned working workbook, reports review/freshness state from the ledger,
+filters the entire table for missing facts, retains source versions and pins inputs
+at queue time. Current/earlier outputs and publication/correction activity connect
+the navigation to maintained research data. Cold spreadsheet opens keep the loading
+guard until render modules finish initializing.
+
+The [synthetic supplier comparison](docs/testing/workspace-flow-2026-10-10.md)
+uses independently authored expected facts, TXT/DOCX/PDF inputs and real native
+editing, save, export and restart. It checks a manual value of 108 against an
+incoming source value of 115 without silently replacing the override. No new
+parser, framework, hosted service or provider request is needed.
+
 ## Ranked remaining gaps
 
 1. **Broader input families and semantic extraction.** The deterministic quote
@@ -71,14 +87,19 @@ The [hardening report](docs/testing/hardening-2026-10-10.md) records review and 
    test failures and baseline dependency advisories require separate compatibility
    work. No broad dependency upgrades were made.
 
-## Deferred roadmap
+## Remaining order (owner-directed)
 
-Stage 6: a specialized research/data engineering harness, reusing the existing
+Continue workspace accuracy, table-to-output workflows and validation first.
+The original Stage 7 secondary editors/writers remain available; richer
+table-to-template workflows and release/localization work remain pending.
+Broader input families require their own measured coverage and evidence checks.
+
+The specialized research/data engineering harness (original Stage 6) is **last**,
+reusing the existing
 agent/provider streaming, cancellation and tool infrastructure. It should consume
 the accepted-ledger contracts and bounded adapters, not recreate chat, editors,
 formula evaluation or durable execution.
 
-Stage 7: secondary outputs and table-to-template workflows using inherited
-document/slides/PDF/Markdown/HTML editors and writers. Stage 8: hardening, broader
-input families, team capabilities and release work as described by the build
-prompt. These stages are not claimed as implemented or authorized by this turn.
+Its frozen preparation inputs remain useful, but generated execution stays
+disabled. Installer publishing, paid requests and a hosted/team deployment are
+not implied by completing local workspace features.

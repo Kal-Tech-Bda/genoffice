@@ -59,10 +59,18 @@ async function waitForWorkbook(page: Page): Promise<void> {
   await page.waitForFunction(() => document.body.textContent?.includes('Fruit'), undefined, {
     timeout: 30_000,
   })
-  await page.waitForFunction(() => document.body.textContent?.includes('fully loaded'), undefined, {
-    timeout: 60_000,
-  })
-  await page.waitForTimeout(1_000)
+  await expect(page.locator('main.app-shell')).toHaveAttribute('aria-busy', 'false')
+  await expect
+    .poll(() =>
+      page.evaluate(() =>
+        (window as unknown as { __genofficeDebug?: any }).__genofficeDebug?.univerAPI
+          .getActiveWorkbook()
+          ?.getActiveSheet()
+          ?.getRange('A6')
+          .getValue(),
+      ),
+    )
+    .toBe('apple')
 }
 
 // Ctrl+F opens the app's Excel-style Find & Replace panel (the stock Univer

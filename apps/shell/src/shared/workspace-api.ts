@@ -1,13 +1,15 @@
 import type { ProjectData } from '@genoffice/project-store'
 import type { CellScalar } from '@genoffice/xlsx-gateway/domain/workbook.types'
+import type { ResearchProjectSummary } from './research-api'
 
-export type WorkspaceProject = ProjectData
+export type WorkspaceProject = ProjectData & { research?: ResearchProjectSummary }
 export interface CreateWorkspace {
   name: string
   description: string
   filePath?: string
   url?: string
   delimiter?: string
+  startKind?: 'general' | 'extractFiles' | 'researchWeb' | 'workSpreadsheet'
 }
 export interface TableProfile {
   sha256: string
@@ -55,13 +57,15 @@ export interface WorkspaceApi {
     patch: { name?: string; description?: string; starred?: boolean },
   ): Promise<WorkspaceProject>
   open(id: string): Promise<void>
+  rememberWorkbook(id: string, path: string): Promise<WorkspaceProject>
   pickFile(): Promise<string | null>
   filePreview(
     path: string,
     delimiter?: string,
   ): Promise<{ delimiter: string | null; rows: string[][] }>
   addSource(id: string, input: { path?: string; url?: string }): Promise<WorkspaceProject>
-  openSource(id: string, sourceId: string): Promise<void>
+  updateSource(id: string, sourceId: string, path: string): Promise<WorkspaceProject>
+  openSource(id: string, sourceId: string, version?: string): Promise<void>
   layout(left: number, top: number): Promise<void>
   profile(id: string, sheetId?: string, range?: string, hasHeader?: boolean): Promise<TableProfile>
   preview(id: string, options: CleanupOptions): Promise<CleanupPreview>

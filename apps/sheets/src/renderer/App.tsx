@@ -1092,6 +1092,7 @@ export function App({
   /** The shell can repeat its queued-open nudge while the renderer starts.
    * Only one picker/open request may own the workbook session at a time. */
   const workbookOpeningRef = useRef(false)
+  const openingReadySubscriptionRef = useRef<{ dispose(): void } | null>(null)
   /** Current session's projectId/chatId (resolved when the workbook opens) */
   const chatRefIdsRef = useRef<{ projectId: string; chatId: string } | null>(null)
 
@@ -3234,6 +3235,8 @@ export function App({
       },
     )
     return () => {
+      openingReadySubscriptionRef.current?.dispose()
+      openingReadySubscriptionRef.current = null
       unsubscribeMenu()
       unsubscribeCloseSave()
       offThemeChanged?.()
@@ -4547,9 +4550,29 @@ export function App({
     workbookOpeningRef.current = true
     setOpeningWorkbook(true)
     const finishOpening = (): void => {
-      workbookOpeningRef.current = false
-      setOpeningWorkbook(false)
-      focusSheetGrid()
+      const runtime = univerRef.current
+      const finish = (): void => {
+        openingReadySubscriptionRef.current?.dispose()
+        openingReadySubscriptionRef.current = null
+        workbookOpeningRef.current = false
+        setOpeningWorkbook(false)
+        focusSheetGrid()
+      }
+      // A cold view can load cells before the scroll/selection render modules
+      // exist. Keep the existing loading guard until Univer finishes startup,
+      // or immediate name-box navigation rejects with QuantityCheckError.
+      if (
+        runtime &&
+        runtime.univerAPI.getCurrentLifecycleStage() < runtime.univerAPI.Enum.LifecycleStages.Steady
+      ) {
+        if (!openingReadySubscriptionRef.current)
+          openingReadySubscriptionRef.current = runtime.univerAPI.addEvent(
+            runtime.univerAPI.Event.LifeCycleChanged,
+            ({ stage }) => {
+              if (stage === runtime.univerAPI.Enum.LifecycleStages.Steady) finish()
+            },
+          )
+      } else finish()
     }
     try {
       if (!window.desktopApi) {

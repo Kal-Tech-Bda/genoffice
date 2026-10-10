@@ -1,7 +1,9 @@
 # Infomonk product context
 
 Updated 10 October 2026. Stages 0–5 are implemented locally on the GenOffice fork
-within bounded supported input/source families. Stages 6–8 remain deferred.
+within bounded supported input/source families. The engineering harness remains
+disabled and will be the final implementation phase, after workspace accuracy,
+usable outputs and end-to-end validation.
 
 Infomonk is an AI research and data intelligence workspace that builds, verifies
 and maintains structured tables from documents and the web. The current runnable
@@ -19,6 +21,9 @@ scope, inspect a sample, process all inputs and review before publication.
 - The owner initially approved an audit only, then authorized completing Stages
   1–2 first, then explicitly authorized Stages 3–5. The attached build prompt supplies product context; direct user
   scope controls execution. `assay.md` remains excluded.
+- The owner then authorized further workspace features and use-case testing,
+  explicitly placing the data engineering harness last. The original numbered
+  roadmap does not override that order.
 - Windows is the executed platform. Local work must remain useful without paid
   APIs. No provider request or credential change was required for this milestone.
 - Preserve original files, licenses, notices, history, internal package names and
@@ -35,6 +40,20 @@ real desktop shell. Workflows perform bounded document extraction and public
 population acquisition/enrichment; Refresh opens those controls. Schedules require
 the open desktop application and always produce a candidate for review. New
 arbitrary connections remain unavailable.
+
+File starts lead to Sources; web starts lead to the supported public task.
+Published tables and explicitly selected owned workbooks become the remembered
+working workbook. Home reports actual accepted rows across tables, pending
+reviews, missing facts, active runs and changed inputs. Review links open the
+relevant candidate or accepted table; a full-table Needs review filter finds
+missing/invalid facts beyond the first page.
+
+Updating a local source creates a new immutable snapshot and retains previous
+versions. Accepted data changes only after reviewed refresh. Runs pin selected
+local versions when queued; stale candidates cannot publish. Outputs distinguish
+current and earlier accepted revisions, and Activity includes publications and
+corrections. Public freshness describes saved acquisition evidence, without
+claiming to know whether the external service has subsequently changed.
 
 CSV/TSV import has a delimiter/sample preview. Clean table inspects the complete
 chosen saved sheet/range, previews trimming, chosen number/date normalization,
@@ -65,6 +84,9 @@ links do not supply immutable field evidence or maintained dataset revisions.
 See [IMPLEMENTATION_PLAN.md](IMPLEMENTATION_PLAN.md),
 [ARCHITECTURE.md](ARCHITECTURE.md) and
 [the implementation verification](docs/implementation/verification.md).
+The [workspace use case](docs/testing/workspace-flow-2026-10-10.md) exercises
+three supplier quotes through missing-fact review, correction, source update,
+refresh, native formula, saved export and fresh-process reopen.
 
 The [Stages 3–5 contracts and limitations](docs/implementation/research-workflows.md)
 define the current document family, public-source scope, field origins, deletion

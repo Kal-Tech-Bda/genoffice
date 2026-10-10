@@ -128,10 +128,15 @@ export function relocateWorkspace(root: string): { relocated: boolean; oldRoot: 
     p.files = (p.files ?? []).map(map)
     if (p.workspace) {
       p.workspace.primaryWorkbook = map(p.workspace.primaryWorkbook)
+      if (p.workspace.workingWorkbook)
+        p.workspace.workingWorkbook = map(p.workspace.workingWorkbook)
       if (p.workspace.previousWorkbook)
         p.workspace.previousWorkbook = map(p.workspace.previousWorkbook)
-      for (const source of p.workspace.sources)
+      for (const source of p.workspace.sources) {
         if (source.snapshotPath) source.snapshotPath = map(source.snapshotPath)
+        for (const previous of source.previousVersions ?? [])
+          if (previous.snapshotPath) previous.snapshotPath = map(previous.snapshotPath)
+      }
     }
     atomicJson(path, p)
     const chats = join(path.replace(/project\.json$/, ''), 'chats')

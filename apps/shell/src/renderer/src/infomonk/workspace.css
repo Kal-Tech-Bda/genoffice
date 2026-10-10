@@ -213,6 +213,22 @@
   gap: 20px;
   margin: 0 0 22px;
 }
+.im-project-status {
+  display: grid;
+  gap: 4px;
+  font-size: var(--im-text-small);
+  color: var(--text-secondary);
+  max-width: 290px;
+}
+.im-source-version {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+}
+.im-source-row > div > small {
+  display: block;
+}
 .im-controls {
   display: flex;
   flex-wrap: wrap;

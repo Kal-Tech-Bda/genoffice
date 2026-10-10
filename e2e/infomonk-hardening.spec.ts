@@ -225,6 +225,7 @@ test('restores a closed-profile backup and resolves source evidence in the actua
     expect(state.workflows[0].destination!.startsWith(restored)).toBe(true)
     await page.evaluate(([p, w]) => window.infomonkResearch.open(p, w), [project.id, workflow.id])
     const sheet = await waitForPageWithUrl(app, '://sheets/')
+    await expect(sheet.locator('main.app-shell')).toHaveAttribute('aria-busy', 'false')
     await sheet.locator('[data-u-comp="defined-name"] input').fill('E2')
     await sheet.locator('[data-u-comp="defined-name"] input').press('Enter')
     await sheet.getByRole('tab', { name: 'Details', exact: true }).click()

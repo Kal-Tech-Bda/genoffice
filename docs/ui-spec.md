@@ -4,8 +4,7 @@ Updated 10 October 2026. Stages 1–5 are implemented in the GenOffice Electron
 shell. [Actual screenshots](implementation/verification.md#screenshots) show
 executed native windows; [baseline screenshots](audit/verification.md) are historical.
 
-The original Stage 1–2 layout below is retained. Workflows and research Details
-now have the implemented behavior described in
+Workflows and research Details have the implemented behavior described in
 [Stages 3–5 journeys](implementation/research-workflows.md), with
 [actual research screenshots](implementation/research-verification.md).
 
@@ -37,25 +36,38 @@ now have the implemented behavior described in
 - World Bank scope/access requirements and exact-code enrichment are shown before
   collection. Internal/external/manual values are distinguished. No arbitrary
   search, scrape, OCR or hidden provider action is implied.
+- Home shows accepted rows across related tables, pending review candidates,
+  missing/invalid accepted facts, active runs and changed configuration/inputs.
+  Needs review includes those actual review conditions; Review table opens the
+  relevant candidate or unresolved accepted table.
+- Workflow freshness shows accepted time and saved-input changes. Public data
+  carries its acquisition time; the UI does not claim live remote freshness.
+  A stale local-input candidate explains why publication is blocked.
+- Sources → Update snapshot selects a new version, retaining old hashes and
+  Open previous actions. Accepted values stay unchanged until reviewed refresh.
+- Needs review within a table applies to the complete table before paging. Counts
+  distinguish matching rows from all rows. Corrections may remove resolved rows
+  from the filter without losing their manual origin.
 
 ## Navigation and state
 
-| Location                      | Implemented behavior                                                                                          | Boundary                                                                                                                    |
-| ----------------------------- | ------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| Home / Projects               | First-use and returning states; recent activity, star filter, search, name/recent sorting, New project        | Activity time derives from persisted metadata, chat activity and saved workbook mtime; no fabricated freshness/review count |
-| Shared project creation       | Goal, suggested name, file picker/native file-drop seam, URL, CSV/TSV delimiter and first-six-row preview     | Goal/URL/document starts a blank real workbook with sources; no automatic extraction or web collection                      |
-| Sheets                        | Opens primary XLSX directly in inherited Univer; native ribbon, formula bar, worksheet tabs, editing and save | One primary workbook per project; native file tabs remain separate                                                          |
-| Sources                       | File snapshots with hash, registered links and native preview tabs                                            | Previews are copies; links open externally and are not retrieved snapshots                                                  |
-| Workflows                     | Honest unavailable detail explaining future repeat/update support                                             | No scheduler, sample success or fake run history                                                                            |
-| Outputs / Create              | Document, slides, Markdown, HTML and PDF creation through inherited editors; opens saved supporting outputs   | List discovers project-bound files and supported outputs saved directly in the owned workspace folder                       |
-| Activity                      | Persisted project creation, rename/star/source/cleanup/version changes                                        | Metadata activity, not a maintained-dataset audit ledger                                                                    |
-| Connections                   | Existing provider/account access and explicit empty state for new integrations                                | Genspark account remains labeled Genspark; no Infomonk authentication invented                                              |
-| Local files / Settings / Help | Inherited file browser and actual settings/help                                                               | Upstream help and secondary editor wording remain partly upstream                                                           |
+| Location                      | Implemented behavior                                                                                       | Boundary                                                                                                                     |
+| ----------------------------- | ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| Home / Projects               | Recent activity, actual research state, Needs review, star/search/sort, New project and Review table       | Ledger counts include related tables; public freshness is acquisition evidence                                               |
+| Shared project creation       | Goal, file/link, CSV/TSV preview and explicit start intent                                                 | Extract from files opens Sources; Research the web opens the supported population task; extraction/retrieval remain explicit |
+| Sheets                        | Opens remembered owned XLSX in inherited Univer; native ribbon, formulas, editing and save                 | Primary workbook remains the cleanup input; sources/previews are excluded from remembered selection                          |
+| Sources                       | Current immutable snapshots, hash/time, Update snapshot, previous versions and native copies               | Updating a snapshot does not update accepted data; registered links are reference-only                                       |
+| Workflows                     | Confirmed task/schema/scope, sample/full run, review, correction, history, refresh and app-open scheduling | Bounded quote family and public adapter; publication always requires review                                                  |
+| Outputs / Create              | Current/earlier accepted revisions and saved supporting native outputs                                     | At most 100 accepted revisions displayed, total count shown; supporting editors/writers reused                               |
+| Activity                      | Project events merged with real run/publication/correction entries and workflow links                      | Up to 100 displayed entries; paged run history remains available separately                                                  |
+| Connections                   | Existing provider/account access and explicit empty state for new integrations                             | Genspark account remains labeled Genspark; no Infomonk authentication invented                                               |
+| Local files / Settings / Help | Inherited file browser and actual settings/help                                                            | Upstream help and secondary editor wording remain partly upstream                                                            |
 
-No extraction, evidence, Needs review filter, workflow schedule or connector state
-masquerades as implemented. A sample adapter was unnecessary: ordinary empty
-states describe the unavailable functionality. Review issues become a real badge/
-filter only when Stage 3 persists them.
+Empty/unavailable states describe unsupported extraction families, arbitrary web
+research and new connectors accurately. A blank starter workbook remains useful
+for native work, but file extraction starts at source confirmation instead.
+Opening an older revision explicitly remembers that owned file; the current
+ledger revision remains labeled separately in Outputs.
 
 ## Native workspace geometry
 
@@ -76,7 +88,8 @@ and preserve the mounted workbook. Unowned native files keep their native layout
 The inherited chat remains mounted while Assistant/Details switch. Composer,
 selection quote, attachments, existing resize/collapse preferences and streaming
 infrastructure are reused. Details displays current selected-range context and
-states that verified source evidence is unavailable. Source previews open native
+shows saved origin references or accepted research evidence when available, and
+honest empty states otherwise. Source previews open native
 editor tabs. Cleanup profile exposes original record references for its first
 eight data rows, explicitly labeled as a sample; statistical counts cover the
 whole chosen saved range.
@@ -85,6 +98,11 @@ No model reply was fabricated or requested. Actual provider-dependent conversati
 and authentication paths remain unverified. The workspace stays useful through
 local controls. New sheet panel identity uses the original Infomonk mark;
 secondary editors retain upstream panel/ribbon identities for now.
+
+A cold spreadsheet view remains inert with its opening indicator until both the
+initial range and Univer startup are ready. Name-box navigation cannot run against
+unregistered scroll render modules. Prewarmed views retain their existing path.
+See [the native workspace use case](testing/workspace-flow-2026-10-10.md).
 
 ## Cleanup interaction
 

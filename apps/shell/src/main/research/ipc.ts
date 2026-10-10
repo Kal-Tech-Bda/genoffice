@@ -12,7 +12,14 @@ const uuid = z.string().uuid()
 const value = z.union([z.string().max(2000), z.number().finite(), z.null()])
 const key = z.string().regex(/^[a-zA-Z0-9_ -]{1,50}$/)
 const offset = z.number().int().min(0).max(1_000_000).default(0)
-const page = z.object({ tableId: key.optional(), offset: offset.optional() }).strict().optional()
+const page = z
+  .object({
+    tableId: key.optional(),
+    offset: offset.optional(),
+    needsReview: z.boolean().optional(),
+  })
+  .strict()
+  .optional()
 const config = z
   .object({
     kind: z.enum(['quotes', 'worldbank', 'enrich']),
@@ -57,7 +64,7 @@ export function registerResearchIpc(
   host: () => BrowserWindow | null,
   open: (path: string) => void,
   sheetPath: (id: number) => string | null,
-): void {
+): ResearchService {
   const service = new ResearchService(
     app.getPath('userData'),
     new WorkspaceStore(app.getPath('userData')),
@@ -75,6 +82,8 @@ export function registerResearchIpc(
     const id = projectId.parse(args[0])
     service.workspace.get(id)
     switch (method) {
+      case 'overview':
+        return service.overview(id)
       case 'policy':
         return ENGINEERING_POLICY
       case 'state':
@@ -210,4 +219,5 @@ export function registerResearchIpc(
     }
     throw new Error('Unknown evidence action.')
   })
+  return service
 }

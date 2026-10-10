@@ -1,7 +1,7 @@
 import { randomUUID } from 'node:crypto'
 import { existsSync, mkdirSync, readdirSync, statSync, writeFileSync } from 'node:fs'
 import { readFile, copyFile } from 'node:fs/promises'
-import { basename, extname, join, isAbsolute } from 'node:path'
+import { basename, extname, join, isAbsolute, relative } from 'node:path'
 import { ProjectStore, type ProjectData, type WorkspaceSource } from '@genoffice/project-store'
 import {
   decodeCsvBuffer,
@@ -48,7 +48,7 @@ export class WorkspaceStore {
       .map((project) => {
         let editedAt = project.updatedAt
         try {
-          editedAt = statSync(project.workspace!.primaryWorkbook).mtime.toISOString()
+          editedAt = statSync(this.workbookPath(project.id)).mtime.toISOString()
         } catch {
           /* Missing files remain discoverable through their project metadata. */
         }
@@ -130,6 +130,7 @@ export class WorkspaceStore {
         description: input.description,
         starred: false,
         primaryWorkbook,
+        startKind: input.startKind ?? 'general',
         sources,
         activity: [],
       },
@@ -170,6 +171,59 @@ export class WorkspaceStore {
       return project
     project.workspace.sources.push(source)
     return this.save(id, project.workspace, `Added source: ${source.name}`)
+  }
+  rememberWorkbook(id: string, path: string): ProjectData {
+    const project = this.get(id)
+    if (
+      !/\.xlsx$/i.test(path) ||
+      /^(?:research[\\/])?(?:previews|sources)[\\/]/i.test(relative(this.folder(id), path)) ||
+      !project.files.some((file) => file.toLowerCase() === path.toLowerCase()) ||
+      !existsSync(path)
+    )
+      throw new Error('Choose an existing project-owned workbook.')
+    if (project.workspace.workingWorkbook === path) return project
+    project.workspace.workingWorkbook = path
+    return this.projects.updateWorkspace(id, project.workspace)
+  }
+  workbookPath(id: string): string {
+    const project = this.get(id),
+      saved = project.workspace.workingWorkbook
+    return saved &&
+      /\.xlsx$/i.test(saved) &&
+      !/^(?:research[\\/])?(?:previews|sources)[\\/]/i.test(relative(this.folder(id), saved)) &&
+      existsSync(saved) &&
+      project.files.some((file) => file.toLowerCase() === saved.toLowerCase())
+      ? saved
+      : project.workspace.primaryWorkbook
+  }
+  async updateSource(id: string, sourceId: string, path: string): Promise<ProjectData> {
+    const before = this.get(id).workspace.sources.find((source) => source.id === sourceId)
+    if (!before?.snapshotPath) throw new Error('Choose a saved local source to update.')
+    if (
+      !['.xlsx', '.csv', '.tsv', '.docx', '.pdf', '.md', '.txt'].includes(
+        extname(path).toLowerCase(),
+      )
+    )
+      throw new Error('Unsupported source file.')
+    const bytes = await this.boundedRead(path),
+      replacement = this.source(id, path, bytes)
+    const project = this.get(id),
+      index = project.workspace.sources.findIndex((source) => source.id === sourceId)
+    const current = project.workspace.sources[index]
+    if (!current || current.sha256 !== before.sha256)
+      throw new Error('Source changed during update; inspect it again.')
+    if (current.sha256 === replacement.sha256) return project
+    const { id: _id, previousVersions, ...version } = current
+    project.workspace.sources[index] = {
+      ...replacement,
+      id: sourceId,
+      previousVersions: [version, ...(previousVersions ?? [])],
+    }
+    return this.save(
+      id,
+      project.workspace,
+      `Updated source: ${replacement.name} · ${current.sha256?.slice(0, 8)} → ${replacement.sha256?.slice(0, 8)}; tables unchanged until reviewed refresh`,
+    )
   }
   async boundedRead(path: string): Promise<Buffer> {
     if (!isAbsolute(path)) throw new Error('An absolute file path is required.')
@@ -246,6 +300,7 @@ export class WorkspaceStore {
         project.workspace.sources.push(source)
       project.workspace.previousWorkbook = preview.path
       project.workspace.primaryWorkbook = path
+      project.workspace.workingWorkbook = path
       const updated = this.save(
         id,
         project.workspace,
@@ -263,11 +318,16 @@ export class WorkspaceStore {
     if (!project.workspace.previousWorkbook) throw new Error('No cleanup to undo.')
     const current = project.workspace.primaryWorkbook
     project.workspace.primaryWorkbook = project.workspace.previousWorkbook
+    project.workspace.workingWorkbook = project.workspace.primaryWorkbook
     project.workspace.previousWorkbook = current
     return this.save(id, project.workspace, 'Switched to the previous workbook version')
   }
-  async sourcePreviewPath(id: string, sourceId: string): Promise<string> {
-    const source = this.get(id).workspace.sources.find((item) => item.id === sourceId)
+  async sourcePreviewPath(id: string, sourceId: string, version?: string): Promise<string> {
+    const current = this.get(id).workspace.sources.find((item) => item.id === sourceId)
+    const source =
+      version && version !== current?.sha256
+        ? current?.previousVersions?.find((source) => source.sha256 === version)
+        : current
     if (!source) throw new Error('Source not found.')
     if (!source.snapshotPath) return source.uri
     if (digest(await this.boundedRead(source.snapshotPath)) !== source.sha256)
