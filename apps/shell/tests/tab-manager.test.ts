@@ -228,7 +228,7 @@ beforeEach(() => {
 describe('initial state', () => {
   it('starts with only the non-closable, active Home tab', () => {
     expect(manager.list()).toEqual([
-      { id: 'home', kind: 'home', title: 'GenOffice', closable: false, active: true },
+      { id: 'home', kind: 'home', title: 'Infomonk', closable: false, active: true },
     ])
   })
 })
@@ -287,7 +287,7 @@ describe('opening tabs', () => {
     manager.openSlidesTab('/tmp/deck.pptx')
     manager.openPdfTab('/tmp/scan.pdf')
     expect(manager.list().map((t) => t.title)).toEqual([
-      'GenOffice',
+      'Infomonk',
       'report.docx',
       'budget.xlsx',
       'deck.pptx',
@@ -298,7 +298,7 @@ describe('opening tabs', () => {
   it('uses module default titles for pathless tabs', () => {
     manager.openSheetsTab()
     manager.openSlidesTab()
-    expect(manager.list().map((t) => t.title)).toEqual(['GenOffice', 'AI Sheets', 'AI Slides'])
+    expect(manager.list().map((t) => t.title)).toEqual(['Infomonk', 'AI Sheets', 'AI Slides'])
   })
 
   it('assigns unique, monotonic tab ids', () => {
@@ -965,7 +965,7 @@ describe('detach / attach (Open in New Window, tear-off, dock)', () => {
       height: WINDOW_HEIGHT - TAB_STRIP_HEIGHT,
     })
     expect(manager.list().map((t) => [t.id, t.title, t.active])).toEqual([
-      ['home', 'GenOffice', false],
+      ['home', 'Infomonk', false],
       [newId, 'deck.pptx', true],
       ['t1', 'a.docx', false],
       ['t2', 'b.docx', false],
@@ -980,12 +980,12 @@ describe('detach / attach (Open in New Window, tear-off, dock)', () => {
     const second = manager.detachTab(manager.openSheetsTab('/tmp/y.xlsx'))!
     const third = manager.detachTab(manager.openSheetsTab('/tmp/z.xlsx'))!
     manager.attachTab(first, 0)
-    expect(manager.list().map((t) => t.title)).toEqual(['GenOffice', 'x.xlsx', 'a.docx'])
+    expect(manager.list().map((t) => t.title)).toEqual(['Infomonk', 'x.xlsx', 'a.docx'])
     manager.attachTab(second, -4)
-    expect(manager.list().map((t) => t.title)).toEqual(['GenOffice', 'y.xlsx', 'x.xlsx', 'a.docx'])
+    expect(manager.list().map((t) => t.title)).toEqual(['Infomonk', 'y.xlsx', 'x.xlsx', 'a.docx'])
     manager.attachTab(third, 99)
     expect(manager.list().map((t) => t.title)).toEqual([
-      'GenOffice',
+      'Infomonk',
       'y.xlsx',
       'x.xlsx',
       'a.docx',
@@ -998,12 +998,7 @@ describe('detach / attach (Open in New Window, tear-off, dock)', () => {
     const record = manager.detachTab(manager.openPdfTab('/tmp/scan.pdf'))!
     manager.openDocsTab('/tmp/b.docx')
     manager.attachTab(record)
-    expect(manager.list().map((t) => t.title)).toEqual([
-      'GenOffice',
-      'a.docx',
-      'b.docx',
-      'scan.pdf',
-    ])
+    expect(manager.list().map((t) => t.title)).toEqual(['Infomonk', 'a.docx', 'b.docx', 'scan.pdf'])
   })
 
   it('installs the HTML-fullscreen listeners once per view across detach and re-attach', () => {

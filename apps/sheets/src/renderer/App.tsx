@@ -336,6 +336,7 @@ import { installMenuInputEnter } from './menu-input-enter'
 import { installCellContextMenu } from './cell-context-menu'
 import { installClipboardAnchorTile } from './clipboard-anchor-tile'
 import { installSelectionWrapGuard } from './selection-wrap-fix'
+import { installRecordSortGuard, recordSortProposalError } from './record-sort-guard'
 import { sharedFormulaResolverFor } from './shared-formula-journal'
 import { installCellClipAnchorFix } from './cell-clip-anchor-fix'
 import { installBorderOverflowExclusionFix } from './border-overflow-exclusion'
@@ -723,6 +724,7 @@ export function App({
   /// A1 label of the active cell, echoed live by the Name Box. Updated from
   /// the same SelectionChanged refresh that keeps selectionFormat current.
   const [activeCellA1, setActiveCellA1] = useState('')
+  const [detailsRange, setDetailsRange] = useState<string | null>(null)
   /// The multi-cell selection the AI composer shows as its scope chip, or null.
   /// A resting single-cell selection carries no intent, so it gets no chip —
   /// only a range the user deliberately dragged or shift-selected does.
@@ -1024,6 +1026,12 @@ export function App({
     operations: readonly WorkbookOperation[],
     summary: string,
   ): { ok: true; plan: ChangePlan } | { ok: false; error: string } {
+    const workbook = univerRef.current?.univerAPI.getActiveWorkbook()
+    const error = recordSortProposalError(operations, (id) => {
+      const row = workbook?.getSheetBySheetId(id)?.getSheet().getSnapshot().cellData?.[0]
+      return Object.values(row ?? {}).some((cell) => cell?.v === '_infomonk_record_id')
+    })
+    if (error) return { ok: false, error }
     return proposeOperationsImpl(planContext(), operations, summary)
   }
 
@@ -1931,6 +1939,10 @@ export function App({
     const sheetRenameFixDisposable = installSheetRenameFix()
     // Arrow keys stop at the sheet edge instead of wrapping to the far side.
     const selectionWrapGuardDisposable = installSelectionWrapGuard(runtime)
+    const recordSortGuardDisposable = installRecordSortGuard(runtime, (message) => {
+      setMessage(message)
+      showToast(message, 'error')
+    })
     // Arrows on a multi-cell selection collapse to the active cell first,
     // then move one step (Excel), instead of stepping past the range edge.
     const arrowCollapseDisposable = installArrowCollapse(runtime)
@@ -3162,10 +3174,12 @@ export function App({
     window.addEventListener('blur', cancelSelectionPointer)
     const selectionDisposable = runtime.univerAPI.addEvent(
       runtime.univerAPI.Event.SelectionChanged,
-      () => {
+      ({ selections }) => {
         if (selectionDragRef.current) selectionDragRef.current.selectionChanged = true
         else if (!selectionAskSettling) setAiSelectionAskAnchor(null)
         refreshSelectionFormatRef.current()
+        const selected = selections[0]
+        setDetailsRange(selected ? boundsToA1(selected) : null)
         // A grid click ends any floating-visual selection.
         clearVisualSelection()
       },
@@ -3175,6 +3189,10 @@ export function App({
     const formatEchoDisposable = runtime.univerAPI.addEvent(
       runtime.univerAPI.Event.CommandExecuted,
       ({ id }) => {
+        if (id === 'sheet.operation.set-selections') {
+          const range = runtime.univerAPI.getActiveWorkbook()?.getActiveRange()
+          setDetailsRange(range ? boundsToA1(range.getRange()) : null)
+        }
         if (
           id === SET_RANGE_VALUES_MUTATION ||
           id === SET_NUMFMT_MUTATION ||
@@ -3244,6 +3262,7 @@ export function App({
       formulaLexerFixDisposable.dispose()
       sheetRenameFixDisposable.dispose()
       selectionWrapGuardDisposable.dispose()
+      recordSortGuardDisposable.dispose()
       arrowCollapseDisposable.dispose()
       sheetProtectionDisposable.dispose()
       ctrlDragFillDisposable.dispose()
@@ -4120,11 +4139,13 @@ export function App({
       setSelectionFormat(null)
       setSelectedTable(null)
       setActiveCellA1('')
+      setDetailsRange(null)
       setPivotSelectionKey(null)
       clearAiScope()
       return
     }
     setActiveCellA1(`${columnLetter(range.getColumn())}${range.getRow() + 1}`)
+    setDetailsRange(boundsToA1(range.getRange()))
     setPivotSelectionKey(pivotSelectionKeyImpl(pivotContext()))
     const tableEcho = selectedTableEcho(tableDesignContext())
     setSelectedTable((previous) =>
@@ -5083,6 +5104,7 @@ export function App({
         onGetActiveCell={() => activeCellLabelImpl(dataToolsContext())}
         onGetAnchorValue={anchorCellValue}
         activeCellA1={activeCellA1}
+        detailsRange={detailsRange}
         onGoToReference={(ref) => goToReferenceImpl(dataToolsContext(), ref)}
         onListDefinedNames={() => listDefinedNamesImpl(dataToolsContext())}
         onReadPasteSpecialSource={readPasteSpecialSourceFromRuntime}

@@ -114,6 +114,7 @@ import { builtinTablePalette, tableStyleNames, type TableStyleFamily } from './t
 import { STATUS_BAR_FUNCS, type StatusBarFunc } from './status-bar-stats'
 import { SHEET_ZOOM_MAX, SHEET_ZOOM_MIN, clampZoomPercent } from './zoom-range'
 import { ZoomDialog } from './ZoomDialog'
+import { mt } from '../../../shell/src/renderer/src/infomonk/en'
 
 // No File tab: file commands live in the macOS
 // application menu (File → Open/Save/Save As) and the toolbar icons.
@@ -368,6 +369,7 @@ interface ExcelShellProps {
   readonly onGetAnchorValue: () => number | string | null
   /// A1 label of the active cell, echoed live by the Name Box.
   readonly activeCellA1: string
+  readonly detailsRange: string | null
   /// Name Box / Go To jump; returns an error message, or null on success.
   readonly onGoToReference: (ref: string) => string | null
   readonly onListDefinedNames: () => readonly { name: string; ref: string }[]
@@ -480,6 +482,7 @@ export function ExcelShell({
   onGetActiveCell,
   onGetAnchorValue,
   activeCellA1,
+  detailsRange,
   onGoToReference,
   onListDefinedNames,
   onReadPasteSpecialSource,
@@ -959,6 +962,7 @@ export function ExcelShell({
           onNewChat={onNewChat}
           onUndo={onUndo}
           scopeRange={aiScopeRange}
+          detailsRange={detailsRange}
           scopeColumns={aiScopeColumns}
           scopeLocked={aiScopeLocked}
           onScopeDismiss={onAiScopeDismiss}
@@ -3325,7 +3329,7 @@ function Ribbon({
             <GensparkMark size={26} />
           </span>
           <span>
-            <strong>Genspark AI</strong>
+            <strong>{mt('assistant')}</strong>
           </span>
         </button>
         <button

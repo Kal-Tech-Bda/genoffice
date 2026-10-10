@@ -41,6 +41,7 @@ test.describe('sheets: filter criteria survive save and reopen', () => {
         join(saveDir, 'filtered.xlsx'),
       )
 
+      await page.getByTitle('Local files', { exact: true }).click()
       await expect(page.locator('.quick-card').nth(1)).toContainText('AI Sheets')
       await page.locator('.quick-card').nth(1).click()
 

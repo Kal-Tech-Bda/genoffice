@@ -1,0 +1,196 @@
+{
+  "milestone": "Infomonk Stages 1\u20132",
+  "date": "2026-10-09",
+  "base": "1ca5e9adfc1807a158db19741eff825dba9ab757",
+  "platform": "Windows x64",
+  "branch": "codex/infomonk-workspace",
+  "dependenciesChanged": false,
+  "providerRequestSent": false,
+  "build": {
+    "all": "passed",
+    "finalShell": "passed",
+    "finalSheets": "passed"
+  },
+  "typecheck": {
+    "workspaces": 26,
+    "status": "passed"
+  },
+  "lint": {
+    "errors": 0,
+    "inheritedWarnings": 12
+  },
+  "format": "passed",
+  "themeTokens": "passed",
+  "englishComments": "passed",
+  "productionNpmLicenses": "passed",
+  "unit": {
+    "root": {
+      "stoppedAt": "electron-utils",
+      "i18nPassed": 26,
+      "electronUtilsPassed": 254,
+      "electronUtilsInheritedFailures": 3
+    },
+    "projectStore": {
+      "passed": 120,
+      "skipped": 1
+    },
+    "xlsxGateway": {
+      "passed": 248
+    },
+    "shell": {
+      "passed": 786,
+      "inheritedFailures": 19,
+      "skipped": 3
+    },
+    "sheetsTypeScript": {
+      "passed": 3339,
+      "inheritedFailures": 2,
+      "skipped": 1
+    },
+    "native": {
+      "libraryPassed": 235,
+      "executablePassed": 7,
+      "docTests": 0
+    },
+    "focusedNew": {
+      "passed": 9,
+      "note": "Included in shell/sheets totals"
+    }
+  },
+  "electronRegression": {
+    "passed": 10,
+    "failed": 0,
+    "skipped": 0,
+    "note": "Nine passing original results plus filter rerun after intentional Home route update"
+  },
+  "desktop": [
+    {
+      "route": "built renderers",
+      "checks": [
+        {
+          "name": "Create a project and import TSV into a real workbook",
+          "passed": true
+        },
+        {
+          "name": "Assistant and Details preserve the mounted composer",
+          "passed": true
+        },
+        {
+          "name": "Assistant resize and collapse retain draft",
+          "passed": true
+        },
+        {
+          "name": "Rename, star, search and filter persisted project metadata",
+          "passed": true
+        },
+        {
+          "name": "Registered source snapshots and opened a separate native DOCX preview",
+          "passed": true
+        },
+        {
+          "name": "Project section changes preserve the live workbook and draft",
+          "passed": true
+        },
+        {
+          "name": "Whole-range profile, selected keys, date policy, preview and discard",
+          "passed": true
+        },
+        {
+          "name": "Applied cleanup creates a separate native workbook with source record references",
+          "passed": true
+        },
+        {
+          "name": "Partial-column sorting is blocked for managed records",
+          "passed": true
+        },
+        {
+          "name": "Native full-row sorting and saving retain original row references",
+          "passed": true
+        },
+        {
+          "name": "Direct formula entry, undo/redo, computed total and native save",
+          "passed": true
+        },
+        {
+          "name": "Exported the actual saved native workbook",
+          "passed": true
+        },
+        {
+          "name": "Workflow and connector states report unavailable functionality honestly",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "route": "built renderers, fresh process",
+      "checks": [
+        {
+          "name": "Fresh-process project, formulas and source references",
+          "passed": true
+        },
+        {
+          "name": "GUI previous-version restore and redo retain both workbooks",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "route": "development renderers",
+      "checks": [
+        {
+          "name": "Registered immutable PDF and opened native source viewer",
+          "passed": true
+        },
+        {
+          "name": "Narrow navigation and native editor bounds remain aligned",
+          "passed": true
+        },
+        {
+          "name": "Create document, native save and project Outputs discovery",
+          "passed": true
+        },
+        {
+          "name": "Activity renders persisted project changes",
+          "passed": true
+        }
+      ]
+    }
+  ],
+  "fixtureProof": {
+    "inputRows": 5,
+    "outputRows": 3,
+    "amountBefore": 35,
+    "amountAfter": 25,
+    "missingPreserved": true,
+    "leadingZerosPreserved": true,
+    "originalUnchanged": true,
+    "formula": "=SUM(C2:C4)",
+    "formulaValue": 25,
+    "gammaOriginalRow": 6,
+    "liveDetailsRange": "A2:D4"
+  },
+  "screenshots": [
+    "activity-light.png",
+    "cleanup-preview-light.png",
+    "cleanup-profile-light.png",
+    "home-first-light.png",
+    "home-returning-dark.png",
+    "home-returning-light.png",
+    "outputs-light.png",
+    "project-create-light.png",
+    "sheet-assistant-dark.png",
+    "sheet-assistant-light.png",
+    "sheet-details-light.png",
+    "sheet-narrow-light.png",
+    "sheet-reopened-light.png",
+    "source-pdf-light.png",
+    "sources-light.png"
+  ],
+  "unverified": [
+    "live providers/auth/cloud",
+    "physical OS file drop",
+    "installer packaging",
+    "non-Windows runtime"
+  ],
+  "deferredStages": [3, 4, 5, 6, 7, 8]
+}

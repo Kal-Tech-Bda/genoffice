@@ -1,3 +1,69 @@
+# Infomonk
+
+Infomonk is a desktop research and data intelligence workspace built on
+[GenOffice](https://github.com/genspark-ai/genoffice). This fork currently delivers
+project organization and a real local spreadsheet cleanup workflow. Structured
+extraction, web collection and maintained-dataset workflows remain the roadmap.
+
+## Run locally
+
+Windows x64 is verified. Use Node >=22.12 (upstream recommends Node 22), npm >=10,
+Rust/Cargo and MSVC build tools. The tested runtime was Node 24.13.1/npm 11.8.0.
+Keep the committed lockfile; no dependency upgrades are needed.
+
+```powershell
+npm ci
+npm run fixtures
+npm run fixtures -w @genoffice/sheets
+npm run build:all
+npm run dev
+```
+
+`build:all` builds the native spreadsheet engine and all editors. The root dev
+command launches their Vite renderers and the Electron shell. Rebuild shell main
+and preloads after changes to them. Default development data is stored in
+`%APPDATA%/Infomonk Dev`; set `INFOMONK_USER_DATA` for an isolated profile.
+
+## Try the local workflow
+
+Create a project with `fixtures/infomonk/suppliers.tsv`, confirm the delimiter,
+then open **Clean table**. Inspect the saved range, choose ID as the duplicate key,
+trim whitespace, remove blank rows and sort. Preview before applying. Five rows
+become three, the amount total changes from 35 to 25, leading-zero IDs survive,
+and missing values stay missing. Apply creates a separate XLSX and keeps originals.
+
+Work directly in the real spreadsheet: formulas, undo, filters, sorting and save
+remain available. Save native edits before cleanup or Export workbook. Project
+metadata and applied changes survive restart. Sources open native preview copies;
+Create opens supporting editors. Local controls need no paid model API.
+
+## Status and evidence
+
+Stages 0–2 are implemented locally. The [hosted fork](https://github.com/Kal-Tech-Bda/genoffice)
+is established; the implementation branch is `codex/infomonk-workspace`.
+
+- [Implementation checks, screenshots and limits](docs/implementation/verification.md)
+- [Feature status](docs/implementation/feature-status.md)
+- [Product context](PRODUCT_CONTEXT.md) and [precise Stage 3 plan](IMPLEMENTATION_PLAN.md)
+- [Architecture](ARCHITECTURE.md), [UI specification](docs/ui-spec.md) and [reuse map](docs/reuse-map.md)
+- [Upstream manifest](docs/upstream-manifest.md), [research](docs/research.md) and [historical baseline](docs/audit/verification.md)
+
+Cleanup supports bounded flat tables. Formula/advanced-structure row changes are
+rejected. Record origins are not verified field evidence. Refresh, extraction,
+new connectors and scheduling have honest unavailable states. Live providers,
+installers and other operating systems were not verified. Known inherited Windows
+unit failures are recorded; no dependency upgrades or policy bypasses were used.
+
+The open-source foundation retains its license and notices. `ee/` remains governed
+by its separate license and is unchanged. Internal package names remain
+`@genoffice/*`. No Infomonk public release or installer is published.
+
+<details>
+<summary>Preserved upstream GenOffice README and documentation</summary>
+
+The following content documents upstream GenOffice. Its download, website,
+community and localized-document links refer to upstream, not an Infomonk release.
+
 <p align="center">
   <a href="https://genoffice.ai/">
     <picture>
@@ -677,3 +743,5 @@ is covered by the [GenOffice Enterprise License](ee/LICENSE).
 The GenOffice and Genspark names and logos are trademarks of Mainfunc, Inc.
 The Apache-2.0 license does not grant permission to use them (see section 6);
 forks should use their own branding.
+
+</details>

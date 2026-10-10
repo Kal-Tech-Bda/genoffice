@@ -71,6 +71,27 @@ export interface ProjectInfo {
 
 export interface ProjectData extends ProjectInfo {
   files: string[]
+  workspace?: WorkspaceMetadata
+}
+
+/** Local workspace metadata; accepted datasets use a separate future store. */
+export interface WorkspaceMetadata {
+  version: 1
+  description: string
+  starred: boolean
+  primaryWorkbook: string
+  previousWorkbook?: string
+  sources: WorkspaceSource[]
+  activity: { at: string; text: string }[]
+}
+
+export interface WorkspaceSource {
+  id: string
+  name: string
+  uri: string
+  addedAt: string
+  sha256?: string
+  snapshotPath?: string
 }
 
 export interface ProjectIndex {

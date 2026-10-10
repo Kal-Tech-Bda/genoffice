@@ -885,6 +885,19 @@ export class ProjectStore {
     return this.readProject(projectId)
   }
 
+  /** Reads fresh data on every update so chat/file changes are retained. */
+  updateWorkspace(
+    projectId: string,
+    workspace: NonNullable<ProjectData['workspace']>,
+  ): ProjectData {
+    const project = this.readProject(projectId)
+    if (!project || projectId === 'default') throw new Error('Workspace project not found')
+    project.workspace = workspace
+    project.updatedAt = nowIso()
+    this.writeProject(project)
+    return project
+  }
+
   /**
    * Lists all projects.
    */

@@ -23,10 +23,8 @@ document.body.classList.add(IS_MAC ? 'mac' : 'overlay-title-bar')
 // so the UI never flashes (home showing briefly before the onboarding overlay)
 void Promise.all([
   window.aiOffice.getLanguage(),
-  // if the flag is unreadable, skip onboarding rather than block the home screen
-  window.aiOffice.onboardingSeen().catch(() => true),
   window.aiOffice.getTheme().catch(() => 'system' as const),
-]).then(([lang, onboardingSeen, theme]) => {
+]).then(([lang, theme]) => {
   document.documentElement.lang = htmlLang(lang)
   document.documentElement.dir = htmlDir(lang)
   // apply theme attribute before first paint to avoid flash
@@ -56,7 +54,7 @@ void Promise.all([
             <HelpScreen />
           </React.Suspense>
         ) : (
-          <AppFrame initialOnboardingSeen={onboardingSeen} />
+          <AppFrame />
         )}
       </LocaleProvider>
     </React.StrictMode>,

@@ -79,9 +79,15 @@ const HOME_ID = 'home'
  */
 export class TabManager {
   private readonly tabs: TabRecord[] = [
-    { id: HOME_ID, kind: 'home', view: null, title: 'GenOffice' },
+    { id: HOME_ID, kind: 'home', view: null, title: 'Infomonk' },
   ]
   private activeId: string = HOME_ID
+  private workspaceInsets = { left: 0, top: 0 }
+
+  setWorkspaceInsets(left: number, top: number): void {
+    this.workspaceInsets = { left, top }
+    this.layout()
+  }
   private nextId = 1
   /** tab whose page entered HTML fullscreen (e.g. slides slideshow) — its view covers the tab strip */
   private htmlFullScreenId: string | null = null
@@ -170,7 +176,10 @@ export class TabManager {
     if (active?.view && this.bleedWcIds.has(active.view.webContents.id)) {
       return { x: 0, y: 0, width, height }
     }
-    return { x: 0, y: TAB_STRIP_HEIGHT, width, height: Math.max(0, height - TAB_STRIP_HEIGHT) }
+    const left = width < 1000 ? 64 : this.workspaceInsets.left
+    const x = this.workspaceInsets.left === 0 ? 0 : left
+    const y = TAB_STRIP_HEIGHT + this.workspaceInsets.top
+    return { x, y, width: Math.max(0, width - x), height: Math.max(0, height - y) }
   }
 
   /** Grow/restore a tab view over the tab strip on request (slides show fullscreen) */

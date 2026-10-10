@@ -1,0 +1,36 @@
+.im-panel-tabs {
+  display: flex;
+  gap: 4px;
+  padding: 8px 16px;
+  border-bottom: 1px solid var(--border);
+}
+.im-panel-tabs button {
+  flex: 1;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-secondary);
+  padding: 8px;
+  cursor: pointer;
+  font: inherit;
+}
+.im-panel-tabs button[aria-selected='true'] {
+  background: var(--surface-subtle);
+  color: var(--text);
+  font-weight: 600;
+}
+.im-panel-tabs button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.im-panel-details {
+  padding: 24px;
+  overflow: auto;
+  color: var(--text-secondary);
+  font: 14px/1.6 var(--gs-font-sans);
+}
+.im-panel-details h3 {
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 600;
+}

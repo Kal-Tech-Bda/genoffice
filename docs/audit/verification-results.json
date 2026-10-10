@@ -1,0 +1,522 @@
+{
+  "date": "2026-10-09",
+  "upstream": "1ca5e9adfc1807a158db19741eff825dba9ab757",
+  "environment": {
+    "platform": "Windows x64",
+    "node": "24.13.1",
+    "npm": "11.8.0",
+    "rust": "1.93.0"
+  },
+  "unitTotals": {
+    "passed": 17665,
+    "failed": 59,
+    "skipped": 50
+  },
+  "unitWorkspaces": [
+    {
+      "workspace": "@genoffice/i18n",
+      "code": 0,
+      "counts": {
+        "passed": 26,
+        "failed": 0,
+        "skipped": 0
+      },
+      "testSummary": "26 passed (26)"
+    },
+    {
+      "workspace": "@genoffice/electron-utils",
+      "code": 1,
+      "counts": {
+        "passed": 254,
+        "failed": 3,
+        "skipped": 0
+      },
+      "testSummary": "3 failed | 254 passed (257)"
+    },
+    {
+      "workspace": "@genoffice/font-metrics",
+      "code": 0,
+      "elapsedSeconds": 1,
+      "counts": {
+        "passed": 25,
+        "failed": 0,
+        "skipped": 0
+      },
+      "testSummary": "Tests  25 passed (25)"
+    },
+    {
+      "workspace": "@genoffice/zip-gate",
+      "code": 0,
+      "elapsedSeconds": 1,
+      "counts": {
+        "passed": 9,
+        "failed": 0,
+        "skipped": 0
+      },
+      "testSummary": "Tests  9 passed (9)"
+    },
+    {
+      "workspace": "@genoffice/docx-engine",
+      "code": 0,
+      "elapsedSeconds": 11,
+      "counts": {
+        "passed": 1708,
+        "failed": 0,
+        "skipped": 1
+      },
+      "testSummary": "Tests  1708 passed | 1 skipped (1709)"
+    },
+    {
+      "workspace": "@genoffice/pdf2docx",
+      "code": 0,
+      "elapsedSeconds": 5,
+      "counts": {
+        "passed": 815,
+        "failed": 0,
+        "skipped": 7
+      },
+      "testSummary": "Tests  815 passed | 7 skipped (822)"
+    },
+    {
+      "workspace": "@genoffice/html2docx",
+      "code": 0,
+      "elapsedSeconds": 1,
+      "counts": {
+        "passed": 110,
+        "failed": 0,
+        "skipped": 0
+      },
+      "testSummary": "110 passed (110)"
+    },
+    {
+      "workspace": "@genoffice/file-parse",
+      "code": 0,
+      "elapsedSeconds": 3,
+      "counts": {
+        "passed": 124,
+        "failed": 0,
+        "skipped": 0
+      },
+      "testSummary": "Tests  124 passed (124)"
+    },
+    {
+      "workspace": "@genoffice/pptx-engine",
+      "code": 0,
+      "elapsedSeconds": 9,
+      "counts": {
+        "passed": 1236,
+        "failed": 0,
+        "skipped": 17
+      },
+      "testSummary": "Tests  1236 passed | 17 skipped (1253)"
+    },
+    {
+      "workspace": "@genoffice/xlsx-gateway",
+      "code": 0,
+      "elapsedSeconds": 2,
+      "counts": {
+        "passed": 248,
+        "failed": 0,
+        "skipped": 0
+      },
+      "testSummary": "Tests  248 passed (248)"
+    },
+    {
+      "workspace": "@genoffice/pptx-ops",
+      "code": 0,
+      "elapsedSeconds": 2,
+      "counts": {
+        "passed": 68,
+        "failed": 0,
+        "skipped": 0
+      },
+      "testSummary": "Tests  68 passed (68)"
+    },
+    {
+      "workspace": "@genoffice/pptx-render",
+      "code": 0,
+      "elapsedSeconds": 4,
+      "counts": {
+        "passed": 386,
+        "failed": 0,
+        "skipped": 0
+      },
+      "testSummary": "Tests  386 passed (386)"
+    },
+    {
+      "workspace": "@genoffice/pipelines",
+      "code": 0,
+      "elapsedSeconds": 2,
+      "counts": {
+        "passed": 77,
+        "failed": 0,
+        "skipped": 0
+      },
+      "testSummary": "Tests  77 passed (77)"
+    },
+    {
+      "workspace": "@genoffice/ai-search",
+      "code": 1,
+      "elapsedSeconds": 2,
+      "counts": {
+        "passed": 177,
+        "failed": 4,
+        "skipped": 0
+      },
+      "testSummary": "Tests  4 failed | 177 passed (181)"
+    },
+    {
+      "workspace": "@genoffice/agent-core",
+      "code": 0,
+      "elapsedSeconds": 5,
+      "counts": {
+        "passed": 166,
+        "failed": 0,
+        "skipped": 0
+      },
+      "testSummary": "Tests  166 passed (166)"
+    },
+    {
+      "workspace": "@genoffice/ai-provider",
+      "code": 1,
+      "elapsedSeconds": 3,
+      "counts": {
+        "passed": 417,
+        "failed": 1,
+        "skipped": 0
+      },
+      "testSummary": "Tests  1 failed | 417 passed (418)"
+    },
+    {
+      "workspace": "@genoffice/project-store",
+      "code": 0,
+      "elapsedSeconds": 1,
+      "counts": {
+        "passed": 120,
+        "failed": 0,
+        "skipped": 1
+      },
+      "testSummary": "Tests  120 passed | 1 skipped (121)"
+    },
+    {
+      "workspace": "@genoffice/cli",
+      "code": 1,
+      "elapsedSeconds": 67,
+      "counts": {
+        "passed": 400,
+        "failed": 27,
+        "skipped": 3
+      },
+      "testSummary": "Tests  27 failed | 400 passed | 3 skipped (430)"
+    },
+    {
+      "workspace": "@genoffice/ui",
+      "code": 0,
+      "elapsedSeconds": 2,
+      "counts": {
+        "passed": 124,
+        "failed": 0,
+        "skipped": 0
+      },
+      "testSummary": "Tests  124 passed (124)"
+    },
+    {
+      "workspace": "@genoffice/docs",
+      "code": 1,
+      "elapsedSeconds": 60,
+      "counts": {
+        "passed": 3443,
+        "failed": 1,
+        "skipped": 0
+      },
+      "testSummary": "Tests  1 failed | 3443 passed (3444)"
+    },
+    {
+      "workspace": "@genoffice/sheets",
+      "code": 1,
+      "elapsedSeconds": 26,
+      "counts": {
+        "passed": 3337,
+        "failed": 2,
+        "skipped": 1
+      },
+      "testSummary": "2 failed | 3337 passed | 1 skipped (3340)"
+    },
+    {
+      "workspace": "@genoffice/shell",
+      "code": 1,
+      "elapsedSeconds": 9,
+      "counts": {
+        "passed": 779,
+        "failed": 19,
+        "skipped": 3
+      },
+      "testSummary": "Tests  19 failed | 779 passed | 3 skipped (801)"
+    },
+    {
+      "workspace": "@genoffice/slides",
+      "code": 0,
+      "elapsedSeconds": 19,
+      "counts": {
+        "passed": 1413,
+        "failed": 0,
+        "skipped": 14
+      },
+      "testSummary": "Tests  1413 passed | 14 skipped (1427)"
+    },
+    {
+      "workspace": "@genoffice/pdf",
+      "code": 1,
+      "elapsedSeconds": 8,
+      "counts": {
+        "passed": 890,
+        "failed": 1,
+        "skipped": 0
+      },
+      "testSummary": "Tests  1 failed | 890 passed (891)"
+    },
+    {
+      "workspace": "@genoffice/markdown",
+      "code": 1,
+      "elapsedSeconds": 30,
+      "counts": {
+        "passed": 990,
+        "failed": 1,
+        "skipped": 2
+      },
+      "testSummary": "Tests  1 failed | 990 passed | 2 skipped (993)"
+    },
+    {
+      "workspace": "@genoffice/html",
+      "code": 0,
+      "elapsedSeconds": 11,
+      "counts": {
+        "passed": 323,
+        "failed": 0,
+        "skipped": 1
+      },
+      "testSummary": "Tests  323 passed | 1 skipped (324)"
+    }
+  ],
+  "nativeTests": "blocked during debug build: Windows Application Control, os error 4551",
+  "electronStats": {
+    "startTime": "2026-10-09T22:18:14.322Z",
+    "duration": 143097.588,
+    "expected": 16,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  },
+  "electronTests": [
+    {
+      "file": "ai-panel-side-settings.spec.ts",
+      "title": "AI panel side persists across restart and updates an open Docs tab without losing the draft",
+      "status": "expected"
+    },
+    {
+      "file": "home-folders.spec.ts",
+      "title": "shows the tree, opens a folder, then creates / moves / renames / deletes on disk",
+      "status": "unexpected"
+    },
+    {
+      "file": "home-folders.spec.ts",
+      "title": "an added folder joins the tree in place and leaves the list without touching disk",
+      "status": "unexpected"
+    },
+    {
+      "file": "home-folders.spec.ts",
+      "title": "a file created from a folder view lands in that folder",
+      "status": "expected"
+    },
+    {
+      "file": "home-search.spec.ts",
+      "title": "finds files by content and name, highlights hits, opens a result",
+      "status": "expected"
+    },
+    {
+      "file": "home.spec.ts",
+      "title": "shows hero, quick-create cards and tab bar",
+      "status": "expected"
+    },
+    {
+      "file": "home.spec.ts",
+      "title": "renders localized UI when GENOFFICE_LANG=zh-CN",
+      "status": "expected"
+    },
+    {
+      "file": "new-file-tab.spec.ts",
+      "title": "AI Docs quick card opens a docs editor tab",
+      "status": "expected"
+    },
+    {
+      "file": "sheets-csv-export.spec.ts",
+      "title": "File > Export CSV writes a BOM-prefixed CSV of the grid",
+      "status": "expected"
+    },
+    {
+      "file": "sheets-csv-export.spec.ts",
+      "title": "Export CSV with formulas: Continue on the loss warning writes the file and toasts",
+      "status": "expected"
+    },
+    {
+      "file": "sheets-csv-export.spec.ts",
+      "title": "Save As with a .csv pick rides the formula warning through to the file",
+      "status": "expected"
+    },
+    {
+      "file": "sheets-csv-inplace-save.spec.ts",
+      "title": "blank-line CSV opens with one friendly notice and an open action",
+      "status": "expected"
+    },
+    {
+      "file": "sheets-csv-inplace-save.spec.ts",
+      "title": "Cmd+S writes the edit back to the original .csv",
+      "status": "expected"
+    },
+    {
+      "file": "sheets-edit-save.spec.ts",
+      "title": "cell edit round-trips through save and reopen",
+      "status": "expected"
+    },
+    {
+      "file": "sheets-filter-reopen.spec.ts",
+      "title": "criteria restore, rows stay filtered, and re-filtering unhides",
+      "status": "expected"
+    },
+    {
+      "file": "sheets-open-tsv.spec.ts",
+      "title": "splits on tabs, keeps comma-heavy annotations in one cell, and saves as .xlsx",
+      "status": "expected"
+    },
+    {
+      "file": "tab-middle-click-close.spec.ts",
+      "title": "middle-clicking a tab closes it",
+      "status": "expected"
+    },
+    {
+      "file": "theme-pipeline.spec.ts",
+      "title": "setTheme reaches home and editor tabs, persists across relaunch",
+      "status": "expected"
+    }
+  ],
+  "runtime": {
+    "route": "npm run dev",
+    "checks": [
+      {
+        "name": "Development shell and home themes",
+        "passed": true,
+        "evidence": "http://localhost:5199/"
+      },
+      {
+        "name": "Workbook import, leading zeros and live formula",
+        "passed": true,
+        "evidence": {
+          "value": 25,
+          "formula": "=SUM(C2:C4)"
+        }
+      },
+      {
+        "name": "Direct keyboard cell edit",
+        "passed": true,
+        "evidence": {
+          "value": "Alpha revised",
+          "formula": ""
+        }
+      },
+      {
+        "name": "Undo and redo through inherited controls",
+        "passed": true,
+        "evidence": {
+          "cell": {
+            "value": "Alpha revised",
+            "formula": ""
+          },
+          "undoSteps": 1
+        }
+      },
+      {
+        "name": "Direct formula edit and computation",
+        "passed": true,
+        "evidence": {
+          "value": 30,
+          "formula": "=C3*2"
+        }
+      },
+      {
+        "name": "Sheet assistant resize, collapse, expand and draft preservation",
+        "passed": true,
+        "evidence": {
+          "widthBefore": 419.99993896484375,
+          "widthAfter": 479.5999755859375
+        }
+      },
+      {
+        "name": "Native XLSX save",
+        "passed": true,
+        "evidence": "Verified edited text and formula in saved OOXML"
+      },
+      {
+        "name": "Open a DOCX in the inherited editor",
+        "passed": true,
+        "evidence": "http://localhost:5173/?mode=tab"
+      },
+      {
+        "name": "Open a PDF and render a page",
+        "passed": true,
+        "evidence": "http://localhost:5176/"
+      },
+      {
+        "name": "Return to workbook without losing data or assistant draft",
+        "passed": true,
+        "evidence": ["home", "sheets", "sheets", "sheets", "sheets", "docs", "pdf"]
+      }
+    ],
+    "screenshots": [
+      "home-light.png",
+      "home-dark.png",
+      "sheet-assistant-light.png",
+      "sheet-assistant-dark.png",
+      "document-source-dark.png",
+      "pdf-source-dark.png"
+    ]
+  },
+  "freshLaunch": {
+    "passed": true,
+    "values": {
+      "id": "001",
+      "supplier": "Alpha revised",
+      "formula": "=C3*2",
+      "computed": 30,
+      "total": 25
+    }
+  },
+  "benchmark": {
+    "platform": "win32",
+    "architecture": "x64",
+    "nodeVersion": "v24.13.1",
+    "cells": 50000,
+    "sourceBytes": 190026,
+    "outputBytes": 190022,
+    "elapsedMilliseconds": 143.02,
+    "maximumResidentSetKilobytes": 150948
+  },
+  "npmAdvisories": {
+    "moderate": 8,
+    "high": 6,
+    "total": 14
+  },
+  "homeThemeCapture": {
+    "passed": true,
+    "route": "npm run dev",
+    "captures": [
+      {
+        "theme": "light",
+        "bodyBackground": "rgb(255, 255, 255)"
+      },
+      {
+        "theme": "dark",
+        "bodyBackground": "rgb(30, 30, 30)"
+      }
+    ]
+  }
+}

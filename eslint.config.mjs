@@ -16,6 +16,7 @@ export default tseslint.config(
       '**/target/**',
       '**/coverage/**',
       'scripts/drivers/**',
+      '.task/**',
       'apps/*/build/**',
       'packages/*/src/vendor/**',
       // Browser-side extractor fragments are function-body slices (top-level

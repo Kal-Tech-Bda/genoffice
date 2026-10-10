@@ -274,6 +274,7 @@ import type {
   FileSearchSettings,
 } from '../shared/home-api'
 import { HOME_CHANNELS } from '../shared/home-api'
+import { registerWorkspaceIpc } from './workspace-ipc'
 import {
   normalizeAiPanelPrefs,
   sameAiPanelPrefs,
@@ -370,10 +371,13 @@ import { isUpdateChannel, type UpdateChannel } from '../shared/update-api'
 // run silently quits and forwards its argv to the running installed GenOffice.
 // GENOFFICE_USER_DATA: test drivers point this at a scratch dir so an
 // automated instance can run alongside the dev instance (separate lock).
+app.setName('Infomonk')
 if (!app.isPackaged)
   app.setPath(
     'userData',
-    process.env.GENOFFICE_USER_DATA ?? join(app.getPath('appData'), 'GenOffice Dev'),
+    process.env.INFOMONK_USER_DATA ??
+      process.env.GENOFFICE_USER_DATA ??
+      join(app.getPath('appData'), 'Infomonk Dev'),
   )
 
 /**
@@ -389,7 +393,7 @@ if (headlessArgv.kind !== 'none') {
 }
 
 // The product rename from "AI Office" to GenOffice changed the userData path; migrate old user data once
-if (app.isPackaged) {
+if (app.isPackaged && app.getName() === 'GenOffice') {
   const oldDir = join(app.getPath('appData'), 'AI Office')
   const newDir = app.getPath('userData')
   const newEmpty = !existsSync(newDir) || readdirSync(newDir).length === 0
@@ -3141,7 +3145,8 @@ function createShellWindow(): void {
     height: 900,
     minWidth: 720,
     minHeight: 550,
-    title: 'GenOffice',
+    title: 'Infomonk',
+    icon: join(app.getAppPath(), 'build', 'infomonk.png'),
     // vibrancy: editor modules punch translucent regions (e.g. the slides
     // thumbnail pane) through to the desktop
     ...(process.platform === 'darwin'
@@ -5693,6 +5698,13 @@ ipcMain.handle('ai:open-model-settings', () => {
 registerProjectIpc()
 registerDocsIpc()
 registerHomeIpc()
+registerWorkspaceIpc(
+  () => shellWindow,
+  (path) => {
+    openDocumentPath(path)
+  },
+  (left, top) => tabManager?.setWorkspaceInsets(left, top),
+)
 registerIntegrationsIpc({
   settingsPath: APP_SETTINGS_PATH,
   window: () => shellWindow,

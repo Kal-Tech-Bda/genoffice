@@ -3,9 +3,9 @@
  * auto-update feed URL can be injected at build time instead of living in
  * the repo).
  *
- * GENOFFICE_UPDATE_URL — public base URL of the update channel (the generic
- * provider prefix that serves latest.yml / latest-mac.yml). Required for
- * release builds; CI provides it as a repository secret. For local release
+ * INFOMONK_UPDATE_URL — public base URL of the update channel (the generic
+ * provider prefix that serves latest.yml / latest-mac.yml). Optional for fork
+ * release builds; provide it explicitly for an Infomonk update feed. For local release
  * builds put it in apps/shell/electron-builder.env (gitignored) — the
  * electron-builder CLI loads that file automatically.
  *
@@ -13,12 +13,8 @@
  * the publish config is omitted: electron-builder then bakes no
  * app-update.yml into the app and in-app auto-update stays disabled.
  *
- * GENOFFICE_GA4_MEASUREMENT_ID / GENOFFICE_GA4_API_SECRET — GA4 Measurement
- * Protocol credentials for anonymous usage analytics, injected the same way
- * (CI secrets, or apps/shell/electron-builder.env locally). They are written
- * into the packaged app's package.json via extraMetadata and read back by
- * src/main/analytics.ts. When either is unset — every source/fork build —
- * nothing is injected and the app runs with analytics fully disabled.
+ * Upstream GA4 credential injection is disabled for Infomonk builds.
+ * Existing analytics preferences and code remain for upstream compatibility.
  *
  * GENOFFICE_FONT_CDN_URL — base URL for the curated downloadable-font catalog.
  * Official release jobs inject it through extraMetadata so the endpoint stays
@@ -43,9 +39,9 @@ function normalizeHttpsBaseUrl(name, value) {
   }
 }
 
-const updateUrl = process.env.GENOFFICE_UPDATE_URL
-const ga4MeasurementId = process.env.GENOFFICE_GA4_MEASUREMENT_ID
-const ga4ApiSecret = process.env.GENOFFICE_GA4_API_SECRET
+const updateUrl = process.env.INFOMONK_UPDATE_URL
+const ga4MeasurementId = undefined
+const ga4ApiSecret = undefined
 const fontCdnUrl = normalizeHttpsBaseUrl(
   'GENOFFICE_FONT_CDN_URL',
   process.env.GENOFFICE_FONT_CDN_URL,
@@ -296,8 +292,8 @@ function ensureThirdPartyNotices() {
 
 /** @type {import('electron-builder').Configuration} */
 const config = {
-  appId: 'com.genoffice.app',
-  productName: 'GenOffice',
+  appId: 'com.infomonk.app',
+  productName: 'Infomonk',
   // Resolved from the installed electron package so dependency bumps can
   // never leave a stale hard-coded pin behind (packaging would silently ship
   // the old runtime).
@@ -305,7 +301,7 @@ const config = {
   directories: {
     output: process.env.BUILD_DIR || 'release',
   },
-  files: ['out/**'],
+  files: ['out/**', 'build/infomonk.png'],
   extraResources: [
     {
       from: 'build/THIRD-PARTY-NOTICES.txt',
@@ -508,6 +504,7 @@ const config = {
   ],
   npmRebuild: false,
   mac: {
+    icon: 'build/infomonk.icns',
     // Two separate arch packages (NOT universal): arm64 keeps the exact
     // artifact names and update-feed entries it always had, x64 (opt-in via
     // GENOFFICE_MAC_X64=1, see includeMacX64 above) adds Intel support with
@@ -533,6 +530,7 @@ const config = {
     ],
   },
   win: {
+    icon: 'build/infomonk.ico',
     target: [
       {
         target: 'nsis',
@@ -581,7 +579,7 @@ const config = {
     // hicolor/1024x1024/apps/genoffice.png — a size absent from the hicolor
     // theme index, leaving GNOME/KDE launchers on the generic fallback icon
     // (genspark-ai/genoffice#90). The set ships every standard raster size.
-    icon: 'build/icons',
+    icon: 'build/infomonk-icons',
     // mac and win name the binary from productName; linux instead derives it
     // from package.json "name", and "@genoffice/shell" sanitizes to the
     // invalid "@genofficeshell". Setting it explicitly also makes the

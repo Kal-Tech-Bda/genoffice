@@ -9,6 +9,8 @@ export type {
   ProjectSummary,
   TimelineEntry,
   ToolActivity,
+  WorkspaceMetadata,
+  WorkspaceSource,
 } from './types.js'
 export type {
   AppendChatArgs,
