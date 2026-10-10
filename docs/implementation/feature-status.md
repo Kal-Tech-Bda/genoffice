@@ -20,6 +20,18 @@ table following it retains the earlier milestone's evidence.
 Full guarantees, native evidence and remaining limits:
 [research contracts](research-workflows.md), [verification](research-verification.md).
 
+Hardening verified after that milestone:
+
+| Area                        | Status                                                                                                                  | Main paths                                         |
+| --------------------------- | ----------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- |
+| History and table paging    | Native 100-run history: 24 ms median IPC, 20 summaries; 100-row table pages and full evidence on demand                 | ResearchStore history/latest, pages, ResearchPanel |
+| Evidence size compatibility | Unit-tested oversized publication/correction rejection preserves accepted data                                          | metadata, projection, ledger                       |
+| Portable recovery           | Unit/native backup restore with original unavailable; reopened sheet resolves evidence; migration retry tested          | workspace-portability, backup CLI                  |
+| New project from workflow   | Native UI-tested independent project; no prior inputs, history, records, schedule or overrides                          | ProjectCreator / ResearchService                   |
+| Future engineering contract | Independent text corpus and frozen defaults; generated execution/private cloud requests disabled; no runner/model claim | engineering-policy, engineering fixtures           |
+
+See [hardening review and results](../testing/hardening-2026-10-10.md).
+
 | Area                                                  | Status / evidence                                                                                | Main implementation                                                                    |
 | ----------------------------------------------------- | ------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------- |
 | Project create/import/open/rename/star/search         | Runtime-tested; metadata persists after restart                                                  | `Workspace.tsx`, `ProjectCreator.tsx`, `workspace-store.ts`, reused ProjectStore       |

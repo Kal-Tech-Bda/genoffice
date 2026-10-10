@@ -4,11 +4,15 @@ import { RESEARCH_CHANNEL, EVIDENCE_CHANNEL, type ResearchConfig } from '../../s
 import { WorkspaceStore } from '../workspace-store'
 import { ResearchService } from './service'
 import { quoteColumns } from './extract'
+import { datasetPage } from './pages'
+import { ENGINEERING_POLICY } from './engineering-policy'
 
 const projectId = z.string().regex(/^proj-[a-f0-9]{12}$/)
 const uuid = z.string().uuid()
 const value = z.union([z.string().max(2000), z.number().finite(), z.null()])
 const key = z.string().regex(/^[a-zA-Z0-9_ -]{1,50}$/)
+const offset = z.number().int().min(0).max(1_000_000).default(0)
+const page = z.object({ tableId: key.optional(), offset: offset.optional() }).strict().optional()
 const config = z
   .object({
     kind: z.enum(['quotes', 'worldbank', 'enrich']),
@@ -71,8 +75,26 @@ export function registerResearchIpc(
     const id = projectId.parse(args[0])
     service.workspace.get(id)
     switch (method) {
+      case 'policy':
+        return ENGINEERING_POLICY
       case 'state':
-        return service.state(id)
+        return service.state(id, offset.parse(args[1]), uuid.optional().parse(args[2]))
+      case 'detail':
+        return service.detail(id, uuid.parse(args[1]), page.parse(args[2]))
+      case 'cell':
+        return service.cell(
+          id,
+          uuid.parse(args[1]),
+          uuid.nullable().parse(args[2]),
+          key.parse(args[3]),
+          z
+            .string()
+            .regex(/^[a-f0-9]{24}$/)
+            .parse(args[4]),
+          key.parse(args[5]),
+        )
+      case 'absent':
+        return service.absent(id, uuid.parse(args[1]), offset.parse(args[2]))
       case 'save':
         return service.save(
           id,
@@ -80,12 +102,16 @@ export function registerResearchIpc(
           config.parse(args[2]) as ResearchConfig,
           uuid.optional().parse(args[3]),
         )
-      case 'run':
-        return service.run(id, uuid.parse(args[1]), z.boolean().parse(args[2]))
+      case 'run': {
+        const run = service.run(id, uuid.parse(args[1]), z.boolean().parse(args[2]))
+        return service.store.summary(run.id, id)
+      }
       case 'cancel':
         return service.cancel(id, uuid.parse(args[1]))
-      case 'retry':
-        return service.retry(id, uuid.parse(args[1]))
+      case 'retry': {
+        const run = service.retry(id, uuid.parse(args[1]))
+        return service.store.summary(run.id, id)
+      }
       case 'publish':
         return service.publish(
           id,
@@ -113,8 +139,15 @@ export function registerResearchIpc(
       }
       case 'accepted': {
         const w = service.store.workflow(uuid.parse(args[1]), id)
-        return service.store.accepted(w.id)
+        return datasetPage(service.store.accepted(w.id), page.parse(args[2]))
       }
+      case 'createFrom':
+        return service.createFrom(
+          id,
+          uuid.parse(args[1]),
+          z.string().trim().min(1).max(120).parse(args[2]),
+          z.string().max(4000).parse(args[3]),
+        )
       case 'correct':
         return service.correct(
           id,

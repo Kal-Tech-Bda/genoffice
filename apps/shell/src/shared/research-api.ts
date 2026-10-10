@@ -15,6 +15,7 @@ export interface ResearchCell {
   evidence: Evidence[]
   issues: string[]
   origin: 'internal' | 'external' | 'manual'
+  evidenceCount?: number
 }
 export interface ResearchRow {
   id: string
@@ -26,6 +27,8 @@ export interface ResearchTable {
   rowMeaning: string
   columns: { id: string; name: string; type: 'text' | 'number' | 'date' }[]
   rows: ResearchRow[]
+  totalRows?: number
+  offset?: number
 }
 export interface ResearchDataset {
   schemaVersion: 1
@@ -81,8 +84,22 @@ export interface ResearchRun {
 }
 export interface ResearchState {
   workflows: ResearchWorkflow[]
-  runs: ResearchRun[]
+  runs: ResearchRunSummary[]
+  latestRuns: ResearchRunSummary[]
   executor: string
+  history: { offset: number; total: number; limit: number }
+}
+export type ResearchRunSummary = Omit<ResearchRun, 'candidate' | 'events' | 'changes'> & {
+  hasCandidate: boolean
+}
+export interface ResearchPageRequest {
+  tableId?: string
+  offset?: number
+}
+export interface ResearchAbsentPage {
+  rows: { table: string; row: ResearchRow }[]
+  offset: number
+  total: number
 }
 export interface CellDetails {
   workflowId: string
@@ -95,16 +112,42 @@ export interface CellDetails {
   editedInSheet: boolean
 }
 export interface ResearchApi {
-  state(projectId: string): Promise<ResearchState>
+  policy(projectId: string): Promise<{
+    version: number
+    firstInputPattern: string
+    privateCloudRequests: boolean
+    generatedCodeExecution: boolean
+    budgets: {
+      maxCostUsd: number
+      maxAgentTurns: number
+      sampleTimeoutSeconds: number
+      runnerCpuSeconds: number
+      runnerMemoryMiB: number
+      runnerOutputMiB: number
+    }
+    publication: string
+    evaluationCorpus: string
+  }>
+  state(projectId: string, offset?: number, workflowId?: string): Promise<ResearchState>
+  detail(projectId: string, runId: string, page?: ResearchPageRequest): Promise<ResearchRun>
+  cell(
+    projectId: string,
+    workflowId: string,
+    runId: string | null,
+    tableId: string,
+    rowId: string,
+    columnId: string,
+  ): Promise<{ cell: ResearchCell; prior: ResearchCell | null }>
+  absent(projectId: string, runId: string, offset?: number): Promise<ResearchAbsentPage>
   save(
     projectId: string,
     name: string,
     config: ResearchConfig,
     workflowId?: string,
   ): Promise<ResearchWorkflow>
-  run(projectId: string, workflowId: string, sample: boolean): Promise<ResearchRun>
+  run(projectId: string, workflowId: string, sample: boolean): Promise<ResearchRunSummary>
   cancel(projectId: string, runId: string): Promise<void>
-  retry(projectId: string, runId: string): Promise<ResearchRun>
+  retry(projectId: string, runId: string): Promise<ResearchRunSummary>
   publish(
     projectId: string,
     runId: string,
@@ -118,7 +161,17 @@ export interface ResearchApi {
     paused: boolean,
   ): Promise<void>
   copy(projectId: string, workflowId: string): Promise<ResearchWorkflow>
-  accepted(projectId: string, workflowId: string): Promise<ResearchDataset | null>
+  createFrom(
+    projectId: string,
+    workflowId: string,
+    name: string,
+    description: string,
+  ): Promise<string>
+  accepted(
+    projectId: string,
+    workflowId: string,
+    page?: ResearchPageRequest,
+  ): Promise<ResearchDataset | null>
   correct(
     projectId: string,
     workflowId: string,

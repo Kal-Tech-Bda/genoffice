@@ -1,0 +1,8 @@
+{
+  "sourceDocumentsRepresented": 20,
+  "lineItems": 20000,
+  "metadataCharacters": 31687733,
+  "sheetEvidenceLimitCharacters": 16777216,
+  "exceedsEvidenceReaderLimit": true,
+  "note": "Synthetic shape/capacity calculation only, matching 20 sources × 1,000 allowed items. No large XLSX publication or extraction accuracy test was run. projectDataset embeds full dataset without checking the reader limit."
+}

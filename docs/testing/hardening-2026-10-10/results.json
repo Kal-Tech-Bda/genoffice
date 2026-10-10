@@ -1,0 +1,170 @@
+{
+  "checkedAt": "2026-10-10T19:21:51.302Z",
+  "branch": "codex/infomonk-workspace",
+  "testedBaseCommit": "b8c9f3d5939eb0551b560920af25f0c30a97e5f8",
+  "sourceHashes": {
+    "apps/shell/src/main/index.ts": "a959f5d8d82d5cb23544a83c7e5182d59ef550d4de7f67a59afb1dfe64bc506c",
+    "apps/shell/src/main/research/service.ts": "8c5b4a8ba0e1814a9ecc4595e13422845fc9b58619fe8e7b29fa6e253ef500a2",
+    "apps/shell/src/main/research/store.ts": "b6b917ef34b1885323a08c85051ebfe30fd1d51de1de80c83551abc1fe39c483",
+    "apps/shell/src/main/research/ipc.ts": "744780ab3a1618189d524f7f2d4e33a02f017770b93ac9d66ae38615013ee04e",
+    "apps/shell/src/main/research/projection.ts": "835e4512546f7906074ba5a20c5089f1b1316e4fe52d1570967fa0c5f3f240df",
+    "apps/shell/src/main/research/pages.ts": "77c62444e687dc2d10bcaa4dc4978bdc7581931af913a95ee542ec1371885fe8",
+    "apps/shell/src/main/research/metadata.ts": "393624b31253226bed9af3c58f00eacaccf86f817bd7f4d2b0a8103b393f5d99",
+    "apps/shell/src/main/research/engineering-policy.ts": "e4a7dc93e27f1693bed8e645394c79e64dc7d186e01de3425d6a290ea704390f",
+    "apps/shell/src/main/workspace-portability.ts": "d64812cab41afec18c78ec92e3c6d346b97a19bf853614d4db27cd1ef084e781",
+    "apps/shell/src/preload/research.ts": "b40c791e989cc01a492360b50ed255414ad770ca3b1fd23b08937cdce03341cc",
+    "apps/shell/src/shared/research-api.ts": "a3d1e7b69707cd023d53d29e0e36065f4f5be189ff615507567975f8a7b9bcf3",
+    "apps/shell/src/renderer/src/infomonk/ResearchPanel.tsx": "61d17cf2ca2174a2f80c02e13beb0d68bb3bd72619547af5bc941015b8304d60",
+    "apps/shell/src/renderer/src/infomonk/ProjectCreator.tsx": "95eedc5c71ba284a8ad17a503db43991a76830ccf95eaaea74d01e945569c8ec",
+    "apps/shell/src/renderer/src/infomonk/Workspace.tsx": "f2c8a0784c977d96d9b948de8f3c95d73d3ede5bd25cef3d05f51612901dc4eb",
+    "apps/shell/tests/research-hardening.test.ts": "b87aca8d963f17369c6380a62e5f496cb3c70d370f88a0f1720e6948d15eff2e",
+    "apps/shell/tests/workspace-portability.test.ts": "edc50bbd315008cede6978968c00bfacd5a01bffa3e997c4efb33a96b4ea5b1b",
+    "e2e/infomonk-hardening.spec.ts": "ea5190bcba9fae121cc0c46335ce618111663dd15ad6873c92587e1ccd67065b",
+    "e2e/infomonk-research-context.spec.ts": "fbecd13a09e05631f20c7a2360f5168c1c55108de9fee78e44e620a60595106e",
+    "fixtures/infomonk/engineering/expected.json": "d398a447a808efcd322f67481dfd09e16d823c4f520f04a390798eadac48b6ed",
+    "tools/workspace-backup.mjs": "f80d2ada1e7c5cce54f6457c1d5fb3859d2b61ab7c69fd10260525d97515d098"
+  },
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v24.13.1",
+    "npm": "11.8.0",
+    "electron": "43.7.6",
+    "playwright": "1.62.1",
+    "windows": "10.0.26200"
+  },
+  "checks": {
+    "shellBuild": "passed",
+    "rootTypes": {
+      "workspaces": 26,
+      "passed": true
+    },
+    "focused": {
+      "passed": 35,
+      "failed": 0,
+      "files": 5
+    },
+    "shell": {
+      "passed": 814,
+      "failed": 19,
+      "skipped": 3
+    },
+    "sheets": {
+      "passed": 3339,
+      "failed": 2,
+      "skipped": 1
+    },
+    "nativeRust": {
+      "passed": 242,
+      "failed": 0
+    },
+    "electron": {
+      "passed": 18,
+      "failed": 0,
+      "skipped": 0,
+      "retries": 0
+    },
+    "finalHardeningElectronRerun": {
+      "passed": 2,
+      "failed": 0
+    },
+    "lint": {
+      "errors": 0,
+      "inheritedWarnings": 12,
+      "changedFileWarnings": 0
+    },
+    "format": true,
+    "theme": true,
+    "englishComments": true,
+    "licenses": true,
+    "dependencyLocksUnchanged": true
+  },
+  "hardeningCoverage": [
+    "summary history pages without full-run reads",
+    "same synthetic 100-run native performance profile and history UI page 2",
+    "table pages/evidence/prior values on demand",
+    "absent records evaluated against full candidate",
+    "oversized projection/publication/correction leave accepted ledger unchanged",
+    "cross-project template without inputs/history/accepted data/schedule/overrides",
+    "CLI closed-profile backup and native restored sheet evidence with original unavailable",
+    "stable historical URIs and chat text, relocated typed owned references",
+    "maintenance/open-profile/overwrite/nesting refusal",
+    "legacy interrupted relocation repair/retry",
+    "restored queue and schedule fencing before destination exposure",
+    "frozen disabled future engineering policy and independent expected source locators",
+    "prior stale workflow inspector and hidden retry candidate regressions"
+  ],
+  "knownFailures": {
+    "shell": [
+      "Linux desktop basename assertion",
+      "two symlink privilege/environment cases",
+      "16 POSIX headless-export path fixture cases"
+    ],
+    "sheets": ["two chmod write-denial simulation cases on Windows"],
+    "changedFailureFiles": false
+  },
+  "limits": [
+    "Windows x64 only",
+    "synthetic source inputs",
+    "no live provider/model/account requests",
+    "no generated-code runner enabled",
+    "no user-profile migration performed",
+    "no dependency/framework installation or upgrade"
+  ],
+  "performance": {
+    "profile": "C:\\Users\\Place\\Documents\\ChatGPT\\Socrates\\.task\\preflight-20261010\\performance-profile-1791657545335",
+    "projectId": "proj-b109b455056a",
+    "samples": [
+      {
+        "elapsedMs": 24,
+        "runs": 20,
+        "total": 100,
+        "jsonCharacters": 9497,
+        "hasFullCandidates": false
+      },
+      {
+        "elapsedMs": 23.7,
+        "runs": 20,
+        "total": 100,
+        "jsonCharacters": 9497,
+        "hasFullCandidates": false
+      },
+      {
+        "elapsedMs": 24.9,
+        "runs": 20,
+        "total": 100,
+        "jsonCharacters": 9497,
+        "hasFullCandidates": false
+      }
+    ],
+    "medianIpcMs": 24,
+    "detail": {
+      "elapsedMs": 30.8,
+      "jsonCharacters": 51673,
+      "tables": [
+        {
+          "name": "Quotes",
+          "rows": 1,
+          "total": 1,
+          "evidenceCount": 1
+        },
+        {
+          "name": "Line items",
+          "rows": 100,
+          "total": 1000,
+          "evidenceCount": 1
+        }
+      ]
+    },
+    "historyUiPage2": true,
+    "mainRssMiB": 277.7,
+    "note": "Built native Electron shell/preload/main IPC, same synthetic 100-run/1000-item profile as preflight. No extraction accuracy or capacity certification."
+  },
+  "screenshots": [
+    "paged-correction-light.png",
+    "independent-template-dark.png",
+    "restored-sheet-evidence-light.png"
+  ],
+  "rawLogs": ".task/hardening-*.log",
+  "checkpoint": "Final commit follows these source/test hashes; branch synchronization verified after committing."
+}

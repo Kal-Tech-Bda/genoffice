@@ -1,0 +1,27 @@
+{
+  "profile": "C:\\Users\\Place\\Documents\\ChatGPT\\Socrates\\.task\\preflight-20261010\\performance-profile-1791657545335",
+  "projectId": "proj-b109b455056a",
+  "samples": [
+    {
+      "elapsedMs": 40129.7,
+      "runs": 100,
+      "rowsPerCandidate": 1000,
+      "jsonCharacters": 158555990
+    },
+    {
+      "elapsedMs": 40449.5,
+      "runs": 100,
+      "rowsPerCandidate": 1000,
+      "jsonCharacters": 158555990
+    },
+    {
+      "elapsedMs": 40373.5,
+      "runs": 100,
+      "rowsPerCandidate": 1000,
+      "jsonCharacters": 158555990
+    }
+  ],
+  "medianIpcMs": 40373.5,
+  "mainRssMiB": 233.8,
+  "note": "Actual built Electron shell/preload/main IPC; artificial populated history of 100 published candidates, 1,000 line items each. No extraction accuracy or maximum-capacity claim."
+}

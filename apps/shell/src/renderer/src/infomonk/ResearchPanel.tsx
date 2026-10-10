@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import type { WorkspaceProject } from '../../../shared/workspace-api'
 import type {
   Evidence,
@@ -9,6 +9,9 @@ import type {
   ResearchState,
   ResearchTable,
   ResearchWorkflow,
+  ResearchRun,
+  ResearchAbsentPage,
+  ResearchCell,
 } from '../../../shared/research-api'
 import './research.css'
 
@@ -32,8 +35,23 @@ const initial: ResearchConfig = {
   fromYear: 2023,
   toYear: 2024,
 }
-export function ResearchPanel({ project }: { project: WorkspaceProject }) {
-  const [state, setState] = useState<ResearchState>({ workflows: [], runs: [], executor: '' })
+export function ResearchPanel({
+  project,
+  onCreateFrom,
+}: {
+  project: WorkspaceProject
+  onCreateFrom: (workflowId: string) => void
+}) {
+  const [state, setState] = useState<ResearchState>({
+    workflows: [],
+    runs: [],
+    latestRuns: [],
+    executor: '',
+    history: { offset: 0, total: 0, limit: 20 },
+  })
+  const [historyOffset, setHistoryOffset] = useState(0)
+  const [run, setRun] = useState<ResearchRun | null>(null)
+  const [absent, setAbsent] = useState<ResearchAbsentPage | null>(null)
   const [editingId, setEditingId] = useState<string | undefined>()
   const [name, setName] = useState('Supplier quotes')
   const [config, setConfig] = useState<ResearchConfig>({
@@ -56,6 +74,7 @@ export function ResearchPanel({ project }: { project: WorkspaceProject }) {
     table: ResearchTable
     row: ResearchRow
     column: string
+    prior: ResearchCell | null
   } | null>(null)
   const [inspection, setInspection] = useState<{
     text: string
@@ -66,29 +85,114 @@ export function ResearchPanel({ project }: { project: WorkspaceProject }) {
   const [reason, setReason] = useState('')
   const [schedule, setSchedule] = useState('manual')
   const workflow = state.workflows.find((w) => w.id === selectedId)
-  const run = state.runs.find((r) => r.id === runId)
+  const runSummary =
+    state.runs.find((r) => r.id === runId) ?? state.latestRuns.find((r) => r.id === runId)
+  const detailVersion = runId
+    ? `${runId}:${runSummary?.updatedAt ?? ''}:${workflow?.acceptedRevision ?? 0}`
+    : ''
+  const query = useRef({ offset: historyOffset, workflowId: selectedId })
+  query.current = { offset: historyOffset, workflowId: selectedId }
+  const requestNumber = useRef(0)
+  const cellRequest = useRef(0)
   const dataset = showAccepted ? accepted : run?.candidate
-  async function refresh() {
-    setState(await window.infomonkResearch.state(project.id))
+  function showRun(id: string | null) {
+    setRunId(id)
+    setRun(null)
+    setAbsent(null)
+    cellRequest.current++
+    setShowAccepted(false)
+    setSelectedCell(null)
+    setInspection(null)
+    setAcknowledge(false)
+    setRemovals(false)
   }
+  const refresh = useCallback(async () => {
+    const request = ++requestNumber.current
+    const value = await window.infomonkResearch.state(
+      project.id,
+      query.current.offset,
+      query.current.workflowId ?? undefined,
+    )
+    if (request === requestNumber.current) setState(value)
+  }, [project.id])
   useEffect(() => {
     let live = true
-    const read = () =>
-      void window.infomonkResearch
-        .state(project.id)
-        .then((value) => {
-          if (live) setState(value)
-        })
-        .catch((err) => {
-          if (live) setError(String(err))
-        })
-    read()
-    const timer = setInterval(read, 1500)
+    const requests = requestNumber
+    let timer: ReturnType<typeof setTimeout> | undefined
+    const read = async () => {
+      try {
+        await refresh()
+      } catch (err) {
+        if (live) setError(String(err))
+      }
+      if (live) timer = setTimeout(() => void read(), 1500)
+    }
+    void read()
     return () => {
       live = false
-      clearInterval(timer)
+      clearTimeout(timer)
+      requests.current++
     }
-  }, [project.id])
+  }, [refresh, historyOffset, selectedId])
+  useEffect(() => {
+    let live = true
+    if (!runId) return
+    void window.infomonkResearch
+      .detail(project.id, runId)
+      .then((value) => {
+        if (live) {
+          setRun(value)
+          setAbsent(null)
+        }
+      })
+      .catch((err) => {
+        if (live) setError(String(err))
+      })
+    return () => {
+      live = false
+    }
+  }, [project.id, runId, detailVersion])
+  async function selectCell(table: ResearchTable, row: ResearchRow, column: string) {
+    if (!workflow) return
+    const request = ++cellRequest.current
+    const result = await window.infomonkResearch.cell(
+      project.id,
+      workflow.id,
+      showAccepted ? null : runId,
+      table.id,
+      row.id,
+      column,
+    )
+    if (request !== cellRequest.current) return
+    setSelectedCell({
+      table,
+      row: { ...row, cells: { ...row.cells, [column]: result.cell } },
+      column,
+      prior: result.prior,
+    })
+    setInspection(null)
+    setCorrection(String(result.cell.value ?? ''))
+    setReason('')
+  }
+  async function pageTable(tableId: string, offset: number) {
+    if (!workflow) return
+    cellRequest.current++
+    const page = showAccepted
+      ? await window.infomonkResearch.accepted(project.id, workflow.id, { tableId, offset })
+      : (await window.infomonkResearch.detail(project.id, runId!, { tableId, offset })).candidate
+    const merge = (current: ResearchDataset | null) =>
+      current && page
+        ? {
+            ...current,
+            tables: current.tables.map((t) => page.tables.find((p) => p.id === t.id) ?? t),
+          }
+        : current
+    if (showAccepted) setAccepted(merge)
+    else setRun((current) => (current ? { ...current, candidate: merge(current.candidate) } : null))
+    cellRequest.current++
+    setSelectedCell(null)
+    setInspection(null)
+  }
   async function act(fn: () => Promise<void>) {
     setBusy(true)
     setError('')
@@ -103,14 +207,10 @@ export function ResearchPanel({ project }: { project: WorkspaceProject }) {
   }
   async function select(w: ResearchWorkflow) {
     setSelectedId(w.id)
-    setRunId(state.runs.find((r) => r.workflowId === w.id)?.id ?? null)
+    setHistoryOffset(0)
+    showRun(state.latestRuns.find((r) => r.workflowId === w.id)?.id ?? null)
     setAccepted(await window.infomonkResearch.accepted(project.id, w.id))
-    setShowAccepted(false)
-    setSelectedCell(null)
-    setInspection(null)
     setSchedule(w.scheduleMinutes?.toString() ?? 'manual')
-    setAcknowledge(false)
-    setRemovals(false)
   }
   function edit(w: ResearchWorkflow) {
     setEditingId(w.id)
@@ -132,18 +232,17 @@ export function ResearchPanel({ project }: { project: WorkspaceProject }) {
       editingId,
     )
     setSelectedId(w.id)
+    setHistoryOffset(0)
     setEditingId(undefined)
-    setRunId(null)
+    showRun(null)
     setAccepted(await window.infomonkResearch.accepted(project.id, w.id))
+    setSchedule(w.scheduleMinutes?.toString() ?? 'manual')
   }
   async function start(sample: boolean) {
     if (!workflow) return
     const next = await window.infomonkResearch.run(project.id, workflow.id, sample)
-    setRunId(next.id)
-    setShowAccepted(false)
-    setSelectedCell(null)
-    setInspection(null)
-    setAcknowledge(false)
+    setHistoryOffset(0)
+    showRun(next.id)
   }
   async function inspect(e: Evidence) {
     setInspection(await window.infomonkResearch.evidence(project.id, e))
@@ -326,10 +425,14 @@ export function ResearchPanel({ project }: { project: WorkspaceProject }) {
       </details>
       <div className="im-workflow-cards">
         {state.workflows.map((w) => {
-          const latest = state.runs.find((r) => r.workflowId === w.id)
+          const latest = state.latestRuns.find((r) => r.workflowId === w.id)
           return (
             <article key={w.id} className={selectedId === w.id ? 'selected' : ''}>
-              <button className="im-workflow-title" onClick={() => void act(() => select(w))}>
+              <button
+                disabled={busy}
+                className="im-workflow-title"
+                onClick={() => void act(() => select(w))}
+              >
                 {w.name}
               </button>
               <p>
@@ -352,6 +455,7 @@ export function ResearchPanel({ project }: { project: WorkspaceProject }) {
               </small>
               <div className="im-controls">
                 <button
+                  disabled={busy}
                   onClick={() => {
                     edit(w)
                     void act(() => select(w))
@@ -360,6 +464,7 @@ export function ResearchPanel({ project }: { project: WorkspaceProject }) {
                   Edit
                 </button>
                 <button
+                  disabled={busy}
                   onClick={() =>
                     void act(async () => {
                       const template = await window.infomonkResearch.copy(project.id, w.id)
@@ -369,6 +474,9 @@ export function ResearchPanel({ project }: { project: WorkspaceProject }) {
                   }
                 >
                   Copy structure and instructions
+                </button>
+                <button disabled={busy} onClick={() => onCreateFrom(w.id)}>
+                  Start a new project from this workflow
                 </button>
               </div>
             </article>
@@ -396,12 +504,13 @@ export function ResearchPanel({ project }: { project: WorkspaceProject }) {
               Open accepted workbook
             </button>
             <button
-              disabled={!workflow.acceptedRevision}
+              disabled={!workflow.acceptedRevision || busy}
               onClick={() =>
                 void act(async () => {
                   setAccepted(await window.infomonkResearch.accepted(project.id, workflow.id))
                   setShowAccepted(true)
                   setSelectedCell(null)
+                  cellRequest.current++
                 })
               }
             >
@@ -423,6 +532,7 @@ export function ResearchPanel({ project }: { project: WorkspaceProject }) {
               </select>
             </label>
             <button
+              disabled={busy}
               onClick={() =>
                 void act(() =>
                   window.infomonkResearch.schedule(
@@ -437,7 +547,7 @@ export function ResearchPanel({ project }: { project: WorkspaceProject }) {
               Update schedule
             </button>
             <button
-              disabled={!workflow.scheduleMinutes}
+              disabled={busy || !workflow.scheduleMinutes}
               onClick={() =>
                 void act(() =>
                   window.infomonkResearch.schedule(
@@ -458,18 +568,28 @@ export function ResearchPanel({ project }: { project: WorkspaceProject }) {
           </p>
           <details open>
             <summary>Run history</summary>
+            <div className="im-controls">
+              <span>
+                {state.history.total} runs · page {Math.floor(historyOffset / 20) + 1}
+              </span>
+              <button
+                disabled={historyOffset === 0 || busy}
+                onClick={() => setHistoryOffset(Math.max(0, historyOffset - 20))}
+              >
+                Previous runs
+              </button>
+              <button
+                disabled={historyOffset + 20 >= state.history.total || busy}
+                onClick={() => setHistoryOffset(historyOffset + 20)}
+              >
+                Older runs
+              </button>
+            </div>
             {state.runs
               .filter((r) => r.workflowId === workflow.id)
               .map((r) => (
                 <article className="im-run-row" key={r.id}>
-                  <button
-                    onClick={() => {
-                      setRunId(r.id)
-                      setShowAccepted(false)
-                      setSelectedCell(null)
-                      setInspection(null)
-                    }}
-                  >
+                  <button disabled={busy} onClick={() => showRun(r.id)}>
                     {new Date(r.createdAt).toLocaleString()} · {r.sample ? 'sample' : 'full'} ·{' '}
                     {r.status}
                   </button>
@@ -479,6 +599,7 @@ export function ResearchPanel({ project }: { project: WorkspaceProject }) {
                   </span>
                   {['queued', 'acquiring', 'processing', 'review'].includes(r.status) && (
                     <button
+                      disabled={busy}
                       onClick={() =>
                         void act(() => window.infomonkResearch.cancel(project.id, r.id))
                       }
@@ -488,9 +609,10 @@ export function ResearchPanel({ project }: { project: WorkspaceProject }) {
                   )}
                   {['failed', 'cancelled'].includes(r.status) && (
                     <button
+                      disabled={busy}
                       onClick={() =>
                         void act(async () => {
-                          setRunId((await window.infomonkResearch.retry(project.id, r.id)).id)
+                          showRun((await window.infomonkResearch.retry(project.id, r.id)).id)
                         })
                       }
                     >
@@ -522,25 +644,60 @@ export function ResearchPanel({ project }: { project: WorkspaceProject }) {
               ))}
             </details>
           )}
-          {run?.candidate && !showAccepted && accepted && (
-            <details>
-              <summary>Records absent from this acquisition · {run.changes.removed}</summary>
-              {accepted.tables.flatMap((table) =>
-                table.rows
-                  .filter(
-                    (row) =>
-                      !run.candidate?.tables
-                        .find((t) => t.id === table.id)
-                        ?.rows.some((r) => r.id === row.id),
+          {run?.candidate && !showAccepted && workflow.acceptedRevision > 0 && (
+            <details
+              onToggle={(event) => {
+                if (event.currentTarget.open && !absent)
+                  void act(async () =>
+                    setAbsent(await window.infomonkResearch.absent(project.id, run.id)),
                   )
-                  .map((row) => (
-                    <p key={`${table.id}:${row.id}`}>
-                      {table.name} · {row.id.slice(0, 8)} ·{' '}
-                      {Object.values(row.cells)
-                        .map((c) => String(c.value ?? 'Missing'))
-                        .join(' / ')}
-                    </p>
-                  )),
+              }}
+            >
+              <summary>Records absent from this acquisition · {run.changes.removed}</summary>
+              {absent?.rows.map(({ table, row }) => (
+                <p key={`${table}:${row.id}`}>
+                  {table} · {row.id.slice(0, 8)} ·{' '}
+                  {Object.values(row.cells)
+                    .map((c) => String(c.value ?? 'Missing'))
+                    .join(' / ')}
+                </p>
+              ))}
+              {absent && (
+                <div className="im-controls">
+                  <span>{absent.total} absent records</span>
+                  <button
+                    disabled={busy || absent.offset === 0}
+                    onClick={() =>
+                      void act(async () =>
+                        setAbsent(
+                          await window.infomonkResearch.absent(
+                            project.id,
+                            run.id,
+                            Math.max(0, absent.offset - 100),
+                          ),
+                        ),
+                      )
+                    }
+                  >
+                    Previous absent records
+                  </button>
+                  <button
+                    disabled={busy || absent.offset + 100 >= absent.total}
+                    onClick={() =>
+                      void act(async () =>
+                        setAbsent(
+                          await window.infomonkResearch.absent(
+                            project.id,
+                            run.id,
+                            absent.offset + 100,
+                          ),
+                        ),
+                      )
+                    }
+                  >
+                    Next absent records
+                  </button>
+                </div>
               )}
               <p>
                 Absence is not proof of intentional deletion. Retain by default; the reviewed
@@ -563,13 +720,32 @@ export function ResearchPanel({ project }: { project: WorkspaceProject }) {
               {dataset.tables.map((table) => (
                 <div className="im-research-table" key={table.id}>
                   <h3>
-                    {table.name} · {table.rows.length} rows
+                    {table.name} · {table.totalRows ?? table.rows.length} rows
                   </h3>
                   <p>{table.rowMeaning}</p>
                   <small>
-                    Showing first 100 rows. Click a cell to inspect its evidence
+                    Showing rows {(table.offset ?? 0) + (table.rows.length ? 1 : 0)}–
+                    {(table.offset ?? 0) + table.rows.length}. Click a cell to inspect its evidence
                     {showAccepted ? ' or record a correction' : ''}.
                   </small>
+                  <div className="im-controls">
+                    <button
+                      disabled={busy || !table.offset}
+                      onClick={() =>
+                        void act(() => pageTable(table.id, Math.max(0, (table.offset ?? 0) - 100)))
+                      }
+                    >
+                      Previous {table.name} rows
+                    </button>
+                    <button
+                      disabled={
+                        busy || (table.offset ?? 0) + 100 >= (table.totalRows ?? table.rows.length)
+                      }
+                      onClick={() => void act(() => pageTable(table.id, (table.offset ?? 0) + 100))}
+                    >
+                      Next {table.name} rows
+                    </button>
+                  </div>
                   <div className="im-table-scroll">
                     <table>
                       <thead>
@@ -593,18 +769,16 @@ export function ResearchPanel({ project }: { project: WorkspaceProject }) {
                               return (
                                 <td key={column.id}>
                                   <button
+                                    disabled={busy}
                                     className={c?.missingReason ? 'im-cell-missing' : ''}
                                     title={
                                       !showAccepted && prior && prior.value !== c?.value
                                         ? `Previous accepted value: ${String(prior.value ?? 'missing')}`
                                         : c?.origin
                                     }
-                                    onClick={() => {
-                                      setSelectedCell({ table, row, column: column.id })
-                                      setInspection(null)
-                                      setCorrection(String(c?.value ?? ''))
-                                      setReason('')
-                                    }}
+                                    onClick={() =>
+                                      void act(() => selectCell(table, row, column.id))
+                                    }
                                   >
                                     {String(c?.value ?? 'Missing')}
                                     {c?.origin === 'manual' && <small>Manual override</small>}
@@ -633,14 +807,8 @@ export function ResearchPanel({ project }: { project: WorkspaceProject }) {
               {!showAccepted && (
                 <p>
                   Previous accepted value:{' '}
-                  {String(
-                    accepted?.tables
-                      .find((t) => t.id === selectedCell.table.id)
-                      ?.rows.find((r) => r.id === selectedCell.row.id)?.cells[selectedCell.column]
-                      ?.value ?? 'No accepted value',
-                  )}
-                  . Persistent manual overrides shown in the candidate take precedence over incoming
-                  source values.
+                  {String(selectedCell.prior?.value ?? 'No accepted value')}. Persistent manual
+                  overrides shown in the candidate take precedence over incoming source values.
                 </p>
               )}
               {selectedCell.row.cells[selectedCell.column].missingReason && (
@@ -668,11 +836,12 @@ export function ResearchPanel({ project }: { project: WorkspaceProject }) {
                     {e.uri} · retrieved {e.retrievedAt} · SHA256 {e.sourceVersion}
                   </small>
                   <div className="im-controls">
-                    <button onClick={() => void act(() => inspect(e))}>
+                    <button disabled={busy} onClick={() => void act(() => inspect(e))}>
                       Verify snapshot and locator
                     </button>
                     {!e.locator.startsWith('JSON ') && (
                       <button
+                        disabled={busy}
                         onClick={() =>
                           void act(() => window.infomonkResearch.openEvidence(project.id, e))
                         }

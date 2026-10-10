@@ -134,9 +134,30 @@ claimed. Missed times coalesce to one acquisition on reopening. Pending review
 prevents overlapping reruns. Template copying retains task/schema/notes but clears
 source IDs, country selections and parent references; it contains no accepted
 records, corrections, schedule or credentials.
+**Start a new project from this workflow** creates a separate project and blank
+workbook with the saved task/schema/notes. Inputs and any enrichment parent must
+be selected in that project before running. The same-project copy action remains.
 
-Back up the entire userData research database (including WAL via a consistent
-SQLite backup) and project snapshot folders together. No retention or automatic
-pruning exists. A future hosted service should migrate the same identities,
-revisions, evidence and cursor/checkpoint contracts behind this service boundary;
-there is no second scheduler or PostgreSQL service in this desktop milestone.
+History returns 20 indexed summaries per page plus the latest summary for each
+workflow; polling waits for completion before scheduling another read. Selected
+candidate/accepted table previews contain 100 rows per table, full row counts
+and evidence counts. Full cell evidence/prior values load on demand by validated
+project/workflow/run/table/row/column identity. Actual absent records are calculated
+against the whole candidate on the server and paged separately. Table previews
+never control publication or deletion. Selected-run events show the latest 100.
+
+Publication and correction reject serialized research metadata exceeding
+16,777,216 characters before file generation or ledger writes. This matches the
+sheet evidence reader. Split oversized input batches; per-file bounds alone do
+not promise that every permitted batch can publish. Full evidence remains in
+accepted storage and supported XLSX projections.
+
+Use the [backup/restore CLI](workspace-recovery.md) for consistent SQLite and
+owned-project recovery. Startup relocates legacy copied profiles before opening
+the queue. Restored schedules pause and active/queued runs require explicit retry.
+No retention or automatic pruning exists. A future hosted service should migrate
+the same identities, revisions, evidence and cursor/checkpoint contracts behind
+this service boundary; no second scheduler or PostgreSQL service is added.
+
+See [hardening verification](../testing/hardening-2026-10-10.md) for native paging,
+template creation, restore without the original profile and revised IPC timings.

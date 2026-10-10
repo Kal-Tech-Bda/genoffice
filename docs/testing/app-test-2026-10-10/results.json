@@ -1,0 +1,755 @@
+{
+  "executedAt": "2026-10-10T17:55:23.342Z",
+  "commit": "b8c9f3d5939eb0551b560920af25f0c30a97e5f8",
+  "testedWorkingTreeChanges": [
+    "apps/shell/src/renderer/src/infomonk/ResearchPanel.tsx",
+    "e2e/infomonk-research-context.spec.ts"
+  ],
+  "sha256": {
+    "apps/shell/src/renderer/src/infomonk/ResearchPanel.tsx": "a7e929215ec8b61e1ed3e7e468779feddf4d5c4cc2901905611eb121236f2ebd",
+    "e2e/infomonk-research-context.spec.ts": "fbecd13a09e05631f20c7a2360f5168c1c55108de9fee78e44e620a60595106e"
+  },
+  "environment": {
+    "platform": "win32",
+    "release": "10.0.26200",
+    "arch": "x64",
+    "node": "v24.13.1",
+    "npm": "11.8.0",
+    "electron": "43.7.6",
+    "playwright": "1.62.1",
+    "launch": "Built Electron shell and editor WebContentsViews, isolated INFOMONK_USER_DATA profiles, English UI, debug hooks; renderer URL overrides removed"
+  },
+  "automated": {
+    "focused": {
+      "passed": 26,
+      "failed": 0
+    },
+    "shell": {
+      "passed": 805,
+      "failed": 19,
+      "skipped": 3
+    },
+    "sheetsTypescript": {
+      "passed": 3339,
+      "failed": 2,
+      "skipped": 1
+    },
+    "sheetsRust": {
+      "passed": 242,
+      "failed": 0
+    },
+    "typecheck": {
+      "workspaces": 26,
+      "passed": true,
+      "shellRecheckedAfterFix": true
+    },
+    "build": {
+      "workspaces": 8,
+      "passed": true,
+      "shellRebuiltAfterFix": true
+    },
+    "lint": {
+      "errors": 0,
+      "inheritedWarnings": 12,
+      "changedFilesRechecked": true
+    },
+    "format": {
+      "passed": true
+    },
+    "licenses": {
+      "passed": true
+    },
+    "themeColors": {
+      "passed": true
+    },
+    "englishComments": {
+      "passed": true
+    }
+  },
+  "knownFailures": {
+    "shell": [
+      "default-app.test.ts: Linux desktop ID basename on Windows (1)",
+      "file-index-scan.test.ts and folder-tree.test.ts: symlink privilege/environment (2)",
+      "headless-export.test.ts: POSIX absolute-path fixtures on Windows (16)"
+    ],
+    "sheets": [
+      "promote-file-atomically.test.ts: chmod directory permission simulation on Windows (2)"
+    ]
+  },
+  "desktop": {
+    "checkpoints": 39,
+    "passed": 39,
+    "failed": 0,
+    "workspace": [
+      {
+        "name": "Create a project and import TSV into a real workbook",
+        "passed": true,
+        "evidence": {
+          "name": "Supplier research",
+          "id": "proj-f324a28f4c2a"
+        }
+      },
+      {
+        "name": "Assistant and Details preserve the mounted composer",
+        "passed": true,
+        "evidence": "No model request sent"
+      },
+      {
+        "name": "Assistant resize and collapse retain draft",
+        "passed": true
+      },
+      {
+        "name": "Rename, star, search and filter persisted project metadata",
+        "passed": true
+      },
+      {
+        "name": "Registered source snapshots and opened a separate native DOCX preview",
+        "passed": true
+      },
+      {
+        "name": "Project section changes preserve the live workbook and draft",
+        "passed": true
+      },
+      {
+        "name": "Whole-range profile, selected keys, date policy, preview and discard",
+        "passed": true,
+        "evidence": {
+          "inputRows": 5,
+          "outputRows": 3,
+          "totalAfter": 25
+        }
+      },
+      {
+        "name": "Applied cleanup creates a separate native workbook with source record references",
+        "passed": true,
+        "evidence": {
+          "rows": 3,
+          "total": 25,
+          "originalRow": 3
+        }
+      },
+      {
+        "name": "Partial-column sorting is blocked for managed records",
+        "passed": true,
+        "evidence": false
+      },
+      {
+        "name": "Native full-row sorting and saving retain original row references",
+        "passed": true,
+        "evidence": {
+          "originalRow": 6
+        }
+      },
+      {
+        "name": "Direct formula entry, undo/redo, computed total and native save",
+        "passed": true,
+        "evidence": {
+          "formula": "=SUM(C2:C4)",
+          "value": 25
+        }
+      },
+      {
+        "name": "Exported the actual saved native workbook",
+        "passed": true
+      },
+      {
+        "name": "Workflows start without unrequested automatic runs",
+        "passed": true
+      }
+    ],
+    "restart": [
+      {
+        "name": "Fresh-process project, formulas and source references",
+        "passed": true
+      },
+      {
+        "name": "GUI previous-version restore and redo retain both workbooks",
+        "passed": true
+      }
+    ],
+    "research": [
+      {
+        "name": "Native PDF extraction, sample and exact evidence locator",
+        "passed": true,
+        "evidence": {
+          "quote": "Q-100",
+          "total": 125.5,
+          "locator": "PDF page 1, line 6"
+        }
+      },
+      {
+        "name": "DOCX/PDF duplicate business keys, missing facts and transactional publication",
+        "passed": true,
+        "evidence": {
+          "quotes": 2,
+          "lineItems": 2,
+          "coverage": {
+            "complete": 3,
+            "failed": 0,
+            "total": 3
+          }
+        }
+      },
+      {
+        "name": "Actual sheet cell resolves immutable PDF snapshot and locator",
+        "passed": true,
+        "evidence": "E2 / Q-100 / total"
+      },
+      {
+        "name": "Manual correction survives idempotent full refresh",
+        "passed": true,
+        "evidence": {
+          "value": 130,
+          "changes": {
+            "added": 0,
+            "changed": 0,
+            "removed": 0
+          }
+        }
+      },
+      {
+        "name": "Persistent app-open schedule can pause",
+        "passed": true,
+        "evidence": {
+          "minutes": 15,
+          "paused": true
+        }
+      },
+      {
+        "name": "Workflow structure copy excludes private inputs",
+        "passed": true,
+        "evidence": "No source IDs, country selections or parent records copied"
+      },
+      {
+        "name": "Live bounded World Bank adapter paginates and retains field evidence",
+        "passed": true,
+        "evidence": {
+          "rows": 18,
+          "pages": 2,
+          "retrievedAt": "2026-10-10T17:53:45.353Z"
+        }
+      },
+      {
+        "name": "Mixed-source enrichment uses reviewed exact country-code matching",
+        "passed": true,
+        "evidence": {
+          "internalValue": 130,
+          "externalYear": 2024
+        }
+      },
+      {
+        "name": "Fresh-process restart retains accepted revisions, overrides and paused schedule",
+        "passed": true,
+        "evidence": {
+          "revision": 3,
+          "correction": 130
+        }
+      },
+      {
+        "name": "Failed retrieval leaves accepted public records unchanged",
+        "passed": true,
+        "evidence": "Injected HTTP 403 fixture; accepted 18 records retained"
+      },
+      {
+        "name": "Native cancellation fences publication",
+        "passed": true,
+        "evidence": "Injected pending HTTP fixture cancelled"
+      },
+      {
+        "name": "Interrupted native run recovers and explicit retry processes inputs",
+        "passed": true,
+        "evidence": "Application restart, accepted revision unchanged; retry candidate reviewed then cancelled"
+      },
+      {
+        "name": "Native refresh reviews added/changed/absent records and preserves manual precedence",
+        "passed": true,
+        "evidence": {
+          "changes": {
+            "added": 1,
+            "changed": 3,
+            "removed": 1
+          },
+          "accepted": ["Q-100", "Q-300"],
+          "correction": 130
+        }
+      },
+      {
+        "name": "Native app-open scheduler enqueues one due run and stops at review",
+        "passed": true,
+        "evidence": {
+          "status": "review",
+          "acceptedRevision": 4,
+          "pausedAfterCheck": true
+        }
+      },
+      {
+        "name": "Native edit/undo/redo/save retains research metadata and does not overwrite accepted data",
+        "passed": true,
+        "evidence": {
+          "sheet": 135,
+          "accepted": 130,
+          "revision": 4
+        }
+      },
+      {
+        "name": "Export uses active research workbook with embedded evidence",
+        "passed": true,
+        "evidence": "Byte-equivalent saved XLSX export, not the blank primary workbook"
+      },
+      {
+        "name": "Final built restart, edited value warning, persistent override and ZIP-gated source evidence",
+        "passed": true
+      }
+    ],
+    "boundaries": [
+      {
+        "name": "Native DOCX table extraction, related items and exact value-cell evidence",
+        "passed": true,
+        "evidence": {
+          "coverage": {
+            "complete": 1,
+            "failed": 0,
+            "total": 1
+          },
+          "locator": "DOCX body element 2, table row 5, cell 2",
+          "lineItems": 2
+        }
+      },
+      {
+        "name": "Source snapshots survive original-file mutation",
+        "passed": true,
+        "evidence": "Original changed; owned immutable snapshot still yields 125.5"
+      },
+      {
+        "name": "Partial failed acquisition cannot publish or replace accepted rows",
+        "passed": true,
+        "evidence": {
+          "complete": 1,
+          "failed": 1,
+          "total": 2
+        }
+      },
+      {
+        "name": "Copied empty workflow fails visibly and cannot publish",
+        "passed": true,
+        "evidence": {
+          "blocked": true,
+          "error": "Error: Error invoking remote method 'infomonk:research': Error: Choose quote inputs first."
+        }
+      },
+      {
+        "name": "Saving a different workflow clears evidence from the previous workflow",
+        "passed": true,
+        "evidence": "New workflow selection has no stale cell inspector or correction form"
+      },
+      {
+        "name": "Retrying a durable run switches from accepted data to the new candidate",
+        "passed": true,
+        "evidence": "Durable retry exposes the new candidate and its review state"
+      },
+      {
+        "name": "Renderer surfaces remain responsive without unhandled exceptions",
+        "passed": true,
+        "evidence": "Home, Sources and Workflows remain usable"
+      }
+    ],
+    "rendererErrors": []
+  },
+  "e2e": {
+    "stats": {
+      "startTime": "2026-10-10T17:52:13.907Z",
+      "duration": 69011.845,
+      "expected": 16,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "file": "ai-panel-side-settings.spec.ts",
+        "title": "AI panel side persists across restart and updates an open Docs tab without losing the draft",
+        "results": [
+          {
+            "status": "expected",
+            "attempts": [
+              {
+                "status": "passed",
+                "durationMs": 5535
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "file": "infomonk-research-context.spec.ts",
+        "title": "saving a new workflow clears the previous cell evidence and correction form",
+        "results": [
+          {
+            "status": "expected",
+            "attempts": [
+              {
+                "status": "passed",
+                "durationMs": 1286
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "file": "infomonk-research-context.spec.ts",
+        "title": "retrying cancelled durable inputs exposes the candidate from the accepted view",
+        "results": [
+          {
+            "status": "expected",
+            "attempts": [
+              {
+                "status": "passed",
+                "durationMs": 4696
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "file": "open-empty-file-save.spec.ts",
+        "title": "empty .docx opens blank and saves back to its own path",
+        "results": [
+          {
+            "status": "expected",
+            "attempts": [
+              {
+                "status": "passed",
+                "durationMs": 2887
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "file": "open-empty-file-save.spec.ts",
+        "title": "empty .xlsx opens blank and saves back to its own path",
+        "results": [
+          {
+            "status": "expected",
+            "attempts": [
+              {
+                "status": "passed",
+                "durationMs": 2888
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "file": "open-empty-file-save.spec.ts",
+        "title": "empty .pptx opens blank and saves back to its own path",
+        "results": [
+          {
+            "status": "expected",
+            "attempts": [
+              {
+                "status": "passed",
+                "durationMs": 2889
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "file": "sheets-csv-export.spec.ts",
+        "title": "File > Export CSV writes a BOM-prefixed CSV of the grid",
+        "results": [
+          {
+            "status": "expected",
+            "attempts": [
+              {
+                "status": "passed",
+                "durationMs": 5189
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "file": "sheets-csv-export.spec.ts",
+        "title": "Export CSV with formulas: Continue on the loss warning writes the file and toasts",
+        "results": [
+          {
+            "status": "expected",
+            "attempts": [
+              {
+                "status": "passed",
+                "durationMs": 5107
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "file": "sheets-csv-export.spec.ts",
+        "title": "Save As with a .csv pick rides the formula warning through to the file",
+        "results": [
+          {
+            "status": "expected",
+            "attempts": [
+              {
+                "status": "passed",
+                "durationMs": 5026
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "file": "sheets-csv-inplace-save.spec.ts",
+        "title": "blank-line CSV opens with one friendly notice and an open action",
+        "results": [
+          {
+            "status": "expected",
+            "attempts": [
+              {
+                "status": "passed",
+                "durationMs": 1878
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "file": "sheets-csv-inplace-save.spec.ts",
+        "title": "Cmd+S writes the edit back to the original .csv",
+        "results": [
+          {
+            "status": "expected",
+            "attempts": [
+              {
+                "status": "passed",
+                "durationMs": 5652
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "file": "sheets-edit-save.spec.ts",
+        "title": "cell edit round-trips through save and reopen",
+        "results": [
+          {
+            "status": "expected",
+            "attempts": [
+              {
+                "status": "passed",
+                "durationMs": 6742
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "file": "sheets-filter-reopen.spec.ts",
+        "title": "criteria restore, rows stay filtered, and re-filtering unhides",
+        "results": [
+          {
+            "status": "expected",
+            "attempts": [
+              {
+                "status": "passed",
+                "durationMs": 6793
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "file": "sheets-find-replace.spec.ts",
+        "title": "sheets: Excel-style Find & Replace panel",
+        "results": [
+          {
+            "status": "expected",
+            "attempts": [
+              {
+                "status": "passed",
+                "durationMs": 6718
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "file": "sheets-open-tsv.spec.ts",
+        "title": "splits on tabs, keeps comma-heavy annotations in one cell, and saves as .xlsx",
+        "results": [
+          {
+            "status": "expected",
+            "attempts": [
+              {
+                "status": "passed",
+                "durationMs": 3275
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "file": "theme-pipeline.spec.ts",
+        "title": "setTheme reaches home and editor tabs, persists across relaunch",
+        "results": [
+          {
+            "status": "expected",
+            "attempts": [
+              {
+                "status": "passed",
+                "durationMs": 1827
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "livePublicRetrievals": [
+    {
+      "country": "CAN",
+      "year": 2024,
+      "population": 41262329,
+      "url": "https://api.worldbank.org/v2/country/CAN;DEU;FRA;GBR;MEX;USA/indicator/SP.POP.TOTL?format=json&date=2022:2024&per_page=10&page=1",
+      "sha256": "b9b125bb1a391879ded0375841095719ef6eda1ce7a38e401ebc0da56b446b83"
+    },
+    {
+      "country": "CAN",
+      "year": 2023,
+      "population": 40049088,
+      "url": "https://api.worldbank.org/v2/country/CAN;DEU;FRA;GBR;MEX;USA/indicator/SP.POP.TOTL?format=json&date=2022:2024&per_page=10&page=1",
+      "sha256": "b9b125bb1a391879ded0375841095719ef6eda1ce7a38e401ebc0da56b446b83"
+    },
+    {
+      "country": "CAN",
+      "year": 2022,
+      "population": 38950132,
+      "url": "https://api.worldbank.org/v2/country/CAN;DEU;FRA;GBR;MEX;USA/indicator/SP.POP.TOTL?format=json&date=2022:2024&per_page=10&page=1",
+      "sha256": "b9b125bb1a391879ded0375841095719ef6eda1ce7a38e401ebc0da56b446b83"
+    },
+    {
+      "country": "DEU",
+      "year": 2024,
+      "population": 83516593,
+      "url": "https://api.worldbank.org/v2/country/CAN;DEU;FRA;GBR;MEX;USA/indicator/SP.POP.TOTL?format=json&date=2022:2024&per_page=10&page=1",
+      "sha256": "b9b125bb1a391879ded0375841095719ef6eda1ce7a38e401ebc0da56b446b83"
+    },
+    {
+      "country": "DEU",
+      "year": 2023,
+      "population": 83287273,
+      "url": "https://api.worldbank.org/v2/country/CAN;DEU;FRA;GBR;MEX;USA/indicator/SP.POP.TOTL?format=json&date=2022:2024&per_page=10&page=1",
+      "sha256": "b9b125bb1a391879ded0375841095719ef6eda1ce7a38e401ebc0da56b446b83"
+    },
+    {
+      "country": "DEU",
+      "year": 2022,
+      "population": 83177813,
+      "url": "https://api.worldbank.org/v2/country/CAN;DEU;FRA;GBR;MEX;USA/indicator/SP.POP.TOTL?format=json&date=2022:2024&per_page=10&page=1",
+      "sha256": "b9b125bb1a391879ded0375841095719ef6eda1ce7a38e401ebc0da56b446b83"
+    },
+    {
+      "country": "FRA",
+      "year": 2024,
+      "population": 68551653,
+      "url": "https://api.worldbank.org/v2/country/CAN;DEU;FRA;GBR;MEX;USA/indicator/SP.POP.TOTL?format=json&date=2022:2024&per_page=10&page=1",
+      "sha256": "b9b125bb1a391879ded0375841095719ef6eda1ce7a38e401ebc0da56b446b83"
+    },
+    {
+      "country": "FRA",
+      "year": 2023,
+      "population": 68372286,
+      "url": "https://api.worldbank.org/v2/country/CAN;DEU;FRA;GBR;MEX;USA/indicator/SP.POP.TOTL?format=json&date=2022:2024&per_page=10&page=1",
+      "sha256": "b9b125bb1a391879ded0375841095719ef6eda1ce7a38e401ebc0da56b446b83"
+    },
+    {
+      "country": "FRA",
+      "year": 2022,
+      "population": 68184457,
+      "url": "https://api.worldbank.org/v2/country/CAN;DEU;FRA;GBR;MEX;USA/indicator/SP.POP.TOTL?format=json&date=2022:2024&per_page=10&page=1",
+      "sha256": "b9b125bb1a391879ded0375841095719ef6eda1ce7a38e401ebc0da56b446b83"
+    },
+    {
+      "country": "GBR",
+      "year": 2024,
+      "population": 69281000,
+      "url": "https://api.worldbank.org/v2/country/CAN;DEU;FRA;GBR;MEX;USA/indicator/SP.POP.TOTL?format=json&date=2022:2024&per_page=10&page=1",
+      "sha256": "b9b125bb1a391879ded0375841095719ef6eda1ce7a38e401ebc0da56b446b83"
+    },
+    {
+      "country": "GBR",
+      "year": 2023,
+      "population": 68526000,
+      "url": "https://api.worldbank.org/v2/country/CAN;DEU;FRA;GBR;MEX;USA/indicator/SP.POP.TOTL?format=json&date=2022:2024&per_page=10&page=2",
+      "sha256": "4c50d042f4d0bf9afa973b66e42dda1a0e7ce148629282402862fe3b5a527e11"
+    },
+    {
+      "country": "GBR",
+      "year": 2022,
+      "population": 67636000,
+      "url": "https://api.worldbank.org/v2/country/CAN;DEU;FRA;GBR;MEX;USA/indicator/SP.POP.TOTL?format=json&date=2022:2024&per_page=10&page=2",
+      "sha256": "4c50d042f4d0bf9afa973b66e42dda1a0e7ce148629282402862fe3b5a527e11"
+    },
+    {
+      "country": "MEX",
+      "year": 2024,
+      "population": 130861007,
+      "url": "https://api.worldbank.org/v2/country/CAN;DEU;FRA;GBR;MEX;USA/indicator/SP.POP.TOTL?format=json&date=2022:2024&per_page=10&page=2",
+      "sha256": "4c50d042f4d0bf9afa973b66e42dda1a0e7ce148629282402862fe3b5a527e11"
+    },
+    {
+      "country": "MEX",
+      "year": 2023,
+      "population": 129739759,
+      "url": "https://api.worldbank.org/v2/country/CAN;DEU;FRA;GBR;MEX;USA/indicator/SP.POP.TOTL?format=json&date=2022:2024&per_page=10&page=2",
+      "sha256": "4c50d042f4d0bf9afa973b66e42dda1a0e7ce148629282402862fe3b5a527e11"
+    },
+    {
+      "country": "MEX",
+      "year": 2022,
+      "population": 128613117,
+      "url": "https://api.worldbank.org/v2/country/CAN;DEU;FRA;GBR;MEX;USA/indicator/SP.POP.TOTL?format=json&date=2022:2024&per_page=10&page=2",
+      "sha256": "4c50d042f4d0bf9afa973b66e42dda1a0e7ce148629282402862fe3b5a527e11"
+    },
+    {
+      "country": "USA",
+      "year": 2024,
+      "population": 340003797,
+      "url": "https://api.worldbank.org/v2/country/CAN;DEU;FRA;GBR;MEX;USA/indicator/SP.POP.TOTL?format=json&date=2022:2024&per_page=10&page=2",
+      "sha256": "4c50d042f4d0bf9afa973b66e42dda1a0e7ce148629282402862fe3b5a527e11"
+    },
+    {
+      "country": "USA",
+      "year": 2023,
+      "population": 336755052,
+      "url": "https://api.worldbank.org/v2/country/CAN;DEU;FRA;GBR;MEX;USA/indicator/SP.POP.TOTL?format=json&date=2022:2024&per_page=10&page=2",
+      "sha256": "4c50d042f4d0bf9afa973b66e42dda1a0e7ce148629282402862fe3b5a527e11"
+    },
+    {
+      "country": "USA",
+      "year": 2022,
+      "population": 333996304,
+      "url": "https://api.worldbank.org/v2/country/CAN;DEU;FRA;GBR;MEX;USA/indicator/SP.POP.TOTL?format=json&date=2022:2024&per_page=10&page=2",
+      "sha256": "4c50d042f4d0bf9afa973b66e42dda1a0e7ce148629282402862fe3b5a527e11"
+    }
+  ],
+  "fixes": [
+    {
+      "problem": "Saving a new workflow left the previous workflow cell inspector and correction controls visible.",
+      "resolution": "Clear active run, accepted view, cell evidence, inspection and review choices; use the newly selected workflow schedule."
+    },
+    {
+      "problem": "Retrying durable inputs from the accepted view hid the new candidate behind the accepted revision.",
+      "resolution": "Select the retried candidate, clear stale cell evidence and require fresh review choices."
+    }
+  ],
+  "limits": [
+    "No model/provider/account/cloud requests tested.",
+    "Windows x64 only; installers and other operating systems untested.",
+    "Synthetic document corpus; bounded supported extraction and public World Bank adapter only.",
+    "Schedulers tested while app is open, with due timestamp advanced in the isolated test database."
+  ],
+  "rawLogs": ".task/app-test-20261010"
+}

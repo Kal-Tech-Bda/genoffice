@@ -276,6 +276,7 @@ import type {
 import { HOME_CHANNELS } from '../shared/home-api'
 import { registerWorkspaceIpc } from './workspace-ipc'
 import { registerResearchIpc } from './research/ipc'
+import { relocateWorkspace, startWorkspaceSession } from './workspace-portability'
 import {
   normalizeAiPanelPrefs,
   sameAiPanelPrefs,
@@ -5699,23 +5700,6 @@ ipcMain.handle('ai:open-model-settings', () => {
 registerProjectIpc()
 registerDocsIpc()
 registerHomeIpc()
-registerWorkspaceIpc(
-  () => shellWindow,
-  (path) => {
-    openDocumentPath(path)
-  },
-  (left, top) => tabManager?.setWorkspaceInsets(left, top),
-)
-registerResearchIpc(
-  () => shellWindow,
-  (path) => {
-    openDocumentPath(path)
-  },
-  (id) => {
-    const tab = tabManager?.describeWebContents(id)
-    return tab?.kind === 'sheets' ? (tab.filePath ?? null) : null
-  },
-)
 registerIntegrationsIpc({
   settingsPath: APP_SETTINGS_PATH,
   window: () => shellWindow,
@@ -5823,6 +5807,28 @@ app.whenReady().then(async () => {
     }
   }
   if (!hasLock) {
+    app.quit()
+    return
+  }
+  try {
+    const endWorkspaceSession = startWorkspaceSession(app.getPath('userData'))
+    app.once('will-quit', endWorkspaceSession)
+    relocateWorkspace(app.getPath('userData'))
+    registerWorkspaceIpc(
+      () => shellWindow,
+      (path) => openDocumentPath(path),
+      (left, top) => tabManager?.setWorkspaceInsets(left, top),
+    )
+    registerResearchIpc(
+      () => shellWindow,
+      (path) => openDocumentPath(path),
+      (id) => {
+        const tab = tabManager?.describeWebContents(id)
+        return tab?.kind === 'sheets' ? (tab.filePath ?? null) : null
+      },
+    )
+  } catch (error) {
+    dialog.showErrorBox('Workspace unavailable', String(error))
     app.quit()
     return
   }

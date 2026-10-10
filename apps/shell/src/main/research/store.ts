@@ -6,8 +6,10 @@ import type {
   ResearchRun,
   ResearchValue,
   ResearchWorkflow,
+  ResearchRunSummary,
 } from '../../shared/research-api'
 import { PROCESSING_VERSION } from './extract'
+import { checkedResearchMetadata } from './metadata'
 
 type SqlRow = Record<string, string | number | null>
 export interface DurableInput {
@@ -23,6 +25,25 @@ export interface DurableInput {
 }
 const now = () => new Date().toISOString()
 const decode = <T>(text: unknown): T => JSON.parse(String(text)) as T
+const summaryColumns =
+  'id,workflow_id,config_version,processing_version,base_revision,sample,status,progress,error,created_at,updated_at,coverage,(candidate IS NOT NULL) AS has_candidate'
+function runSummary(r: SqlRow): ResearchRunSummary {
+  return {
+    id: String(r.id),
+    workflowId: String(r.workflow_id),
+    configVersion: Number(r.config_version),
+    processingVersion: String(r.processing_version),
+    baseRevision: Number(r.base_revision),
+    sample: !!r.sample,
+    status: String(r.status) as ResearchRunSummary['status'],
+    progress: String(r.progress),
+    error: r.error === null ? null : String(r.error),
+    createdAt: String(r.created_at),
+    updatedAt: String(r.updated_at),
+    coverage: decode<ResearchRunSummary['coverage']>(r.coverage),
+    hasCandidate: !!r.has_candidate,
+  }
+}
 export function diffDataset(
   prior: ResearchDataset | null,
   next: ResearchDataset,
@@ -88,6 +109,7 @@ export class ResearchStore {
       CREATE TABLE run_events(id INTEGER PRIMARY KEY,run_id TEXT NOT NULL REFERENCES runs(id),at TEXT NOT NULL,status TEXT NOT NULL,message TEXT NOT NULL);
       INSERT INTO run_events(run_id,at,status,message) SELECT id,updated_at,status,progress FROM runs;
       PRAGMA user_version=2; COMMIT;`)
+    this.db.exec('CREATE INDEX IF NOT EXISTS run_history ON runs(workflow_id,created_at DESC)')
     for (const run of this.db
       .prepare("SELECT id FROM runs WHERE status IN ('acquiring','processing')")
       .all())
@@ -265,6 +287,54 @@ export class ResearchStore {
         )
         .all(projectId) as SqlRow[]
     ).map((r) => this.run(String(r.id)))
+  }
+  history(
+    projectId: string,
+    offset = 0,
+    workflowId?: string,
+  ): { runs: ResearchRunSummary[]; history: { offset: number; total: number; limit: number } } {
+    const where = 'w.project_id=?' + (workflowId ? ' AND w.id=?' : '')
+    const params = workflowId ? [projectId, workflowId] : [projectId]
+    const total = Number(
+      (
+        this.db
+          .prepare(
+            `SELECT COUNT(*) AS count FROM runs r JOIN workflows w ON r.workflow_id=w.id WHERE ${where}`,
+          )
+          .get(...params) as SqlRow
+      ).count,
+    )
+    const columns = summaryColumns
+      .split(',')
+      .map((c) =>
+        c === '(candidate IS NOT NULL) AS has_candidate'
+          ? '(r.candidate IS NOT NULL) AS has_candidate'
+          : 'r.' + c,
+      )
+      .join(',')
+    const rows = this.db
+      .prepare(
+        `SELECT ${columns} FROM runs r JOIN workflows w ON r.workflow_id=w.id WHERE ${where} ORDER BY r.created_at DESC,r.id DESC LIMIT 20 OFFSET ?`,
+      )
+      .all(...params, offset) as SqlRow[]
+    const runs = rows.map(runSummary)
+    return { runs, history: { offset, total, limit: 20 } }
+  }
+  summary(id: string, projectId: string): ResearchRunSummary {
+    const r = this.db.prepare(`SELECT ${summaryColumns} FROM runs WHERE id=?`).get(id) as
+      SqlRow | undefined
+    if (!r) throw new Error('Run not found.')
+    this.workflow(String(r.workflow_id), projectId)
+    return runSummary(r)
+  }
+  latest(projectId: string): ResearchRunSummary[] {
+    const statement = this.db.prepare(
+      `SELECT ${summaryColumns} FROM runs WHERE workflow_id=? ORDER BY created_at DESC,id DESC LIMIT 1`,
+    )
+    return this.workflows(projectId).flatMap((w) => {
+      const row = statement.get(w.id) as SqlRow | undefined
+      return row ? [runSummary(row)] : []
+    })
   }
   next(): ResearchRun | null {
     const r = this.db
@@ -495,6 +565,7 @@ export class ResearchStore {
       )
         throw new Error('Publication lost its version fence.')
       const revision = w.acceptedRevision + 1
+      checkedResearchMetadata(dataset, w.id, revision)
       this.writeAccepted(w.id, revision, dataset, destination)
       this.event(id, 'published', `Accepted revision ${revision}`)
       this.db
@@ -520,6 +591,7 @@ export class ResearchStore {
       const w = this.workflow(id)
       if (w.acceptedRevision !== baseRevision)
         throw new Error('Accepted revision changed during correction.')
+      checkedResearchMetadata(dataset, id, baseRevision + 1)
       this.db
         .prepare('INSERT INTO corrections VALUES(?,?,?,?,?,?,?,?)')
         .run(randomUUID(), id, table, row, column, JSON.stringify(value), reason, now())

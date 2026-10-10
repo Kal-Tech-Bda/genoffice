@@ -1,0 +1,10 @@
+Synthetic evaluation document. Supplier Invoice.
+Invoice number: INV-042
+Supplier: Northwind Demo
+Customer: Cedar Demo
+Issued: 2026-09-01
+Currency: CAD
+Subtotal: 100.00
+Tax: 13.00
+Amount payable: 113.00
+Line: 1 | Printer paper | 5 packs | 20.00 CAD per pack

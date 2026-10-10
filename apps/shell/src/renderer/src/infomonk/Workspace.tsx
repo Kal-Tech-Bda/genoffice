@@ -49,6 +49,7 @@ export function Workspace({
   const [projectId, setProjectId] = useState<string | null>(null)
   const [section, setSection] = useState<Section>('home')
   const [creator, setCreator] = useState(false)
+  const [template, setTemplate] = useState<{ projectId: string; workflowId: string } | undefined>()
   const [search, setSearch] = useState('')
   const [starred, setStarred] = useState(false)
   const [sort, setSort] = useState('recent')
@@ -127,6 +128,7 @@ export function Workspace({
   }
   async function newProject() {
     await window.aiOfficeTabs.activate('home')
+    setTemplate(undefined)
     setCreator(true)
   }
   const visible = projects
@@ -482,7 +484,16 @@ export function Workspace({
                   )}
                 </>
               )}
-              {section === 'workflows' && <ResearchPanel key={project.id} project={project} />}
+              {section === 'workflows' && (
+                <ResearchPanel
+                  key={project.id}
+                  project={project}
+                  onCreateFrom={(workflowId) => {
+                    setTemplate({ projectId: project.id, workflowId })
+                    setCreator(true)
+                  }}
+                />
+              )}
               {section === 'outputs' && (
                 <>
                   <p className="im-muted">{mt('outputInfo')}</p>
@@ -558,6 +569,7 @@ export function Workspace({
       )}
       {homeActive && creator && (
         <ProjectCreator
+          template={template}
           onClose={() => setCreator(false)}
           onCreated={(item) => {
             changed(item)

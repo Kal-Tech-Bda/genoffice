@@ -1,0 +1,26 @@
+{
+  "originalProfile": "C:\\Users\\Place\\Documents\\ChatGPT\\Socrates\\.task\\app-test-20261010\\research-profile-1791654817031",
+  "restoredProfile": "C:\\Users\\Place\\Documents\\ChatGPT\\Socrates\\.task\\preflight-20261010\\restored-profile-1791657396966",
+  "checks": [
+    {
+      "name": "Copied closed profile starts and retains accepted corrections/revision",
+      "passed": true,
+      "revision": 4,
+      "value": 130
+    },
+    {
+      "name": "Owned path relocation",
+      "portable": false,
+      "oldRootReferenceCount": 7,
+      "primaryWorkbook": "C:\\Users\\Place\\Documents\\ChatGPT\\Socrates\\.task\\app-test-20261010\\research-profile-1791654817031\\projects\\proj-064bb0e72315\\workspace\\Workbook.xlsx",
+      "destination": "C:\\Users\\Place\\Documents\\ChatGPT\\Socrates\\.task\\app-test-20261010\\research-profile-1791654817031\\projects\\proj-064bb0e72315\\workspace\\research\\Research-Quote extraction-r4-5b56f06d.xlsx",
+      "expectedRelocatedWorkbook": "C:\\Users\\Place\\Documents\\ChatGPT\\Socrates\\.task\\preflight-20261010\\restored-profile-1791657396966\\projects\\proj-064bb0e72315\\workspace\\research\\Research-Quote extraction-r4-5b56f06d.xlsx"
+    },
+    {
+      "name": "Durable evidence path relocation",
+      "portable": false,
+      "oldRootReferenceCount": 18,
+      "inspectionUsesOriginalStillPresent": true
+    }
+  ]
+}

@@ -12,11 +12,14 @@ import type {
   ResearchConfig,
   ResearchDataset,
   ResearchValue,
+  ResearchPageRequest,
 } from '../../shared/research-api'
 import { ResearchStore, type DurableInput } from './store'
 import { cell, extractQuote, hash, mergeDatasets, parseSource, type ParsedSource } from './extract'
 import { fetchPopulation, parsePopulation, worldBankUrl } from './worldbank'
 import { projectDataset } from './projection'
+import { datasetPage, previewCell } from './pages'
+import { RESEARCH_METADATA_LIMIT } from './metadata'
 
 export class ResearchService {
   readonly store: ResearchStore
@@ -45,14 +48,78 @@ export class ResearchService {
     await mkdir(path, { recursive: true })
     return path
   }
-  state(projectId: string) {
+  state(projectId: string, offset = 0, workflowId?: string) {
     this.workspace.get(projectId)
+    if (workflowId) this.store.workflow(workflowId, projectId)
     return {
       workflows: this.store.workflows(projectId),
-      runs: this.store.runs(projectId),
+      latestRuns: this.store.latest(projectId),
+      ...this.store.history(projectId, offset, workflowId),
       executor:
         'Local desktop queue. Scheduled acquisition runs only while Infomonk is open. Missed times coalesce into one run on reopening; publication always requires review.',
     }
+  }
+  detail(projectId: string, runId: string, page: ResearchPageRequest = {}) {
+    const r = this.store.run(runId, projectId)
+    return { ...r, events: r.events.slice(-100), candidate: datasetPage(r.candidate, page) }
+  }
+  cell(
+    projectId: string,
+    workflowId: string,
+    runId: string | null,
+    tableId: string,
+    rowId: string,
+    columnId: string,
+  ) {
+    const w = this.store.workflow(workflowId, projectId)
+    const prior =
+      this.store
+        .accepted(w.id)
+        ?.tables.find((t) => t.id === tableId)
+        ?.rows.find((r) => r.id === rowId)?.cells[columnId] ?? null
+    const run = runId ? this.store.run(runId, projectId) : null
+    if (run && run.workflowId !== w.id) throw new Error('Cell is outside this workflow.')
+    const cell = run
+      ? run.candidate?.tables.find((t) => t.id === tableId)?.rows.find((r) => r.id === rowId)
+          ?.cells[columnId]
+      : prior
+    if (!cell) throw new Error('Cell not found.')
+    return { cell, prior }
+  }
+  absent(projectId: string, runId: string, offset = 0) {
+    const run = this.store.run(runId, projectId)
+    if (!run.candidate) throw new Error('Run has no candidate.')
+    const rows =
+      this.store.accepted(run.workflowId)?.tables.flatMap((t) => {
+        const current = new Set(
+          run.candidate?.tables.find((n) => n.id === t.id)?.rows.map((r) => r.id) ?? [],
+        )
+        return t.rows.filter((r) => !current.has(r.id)).map((row) => ({ table: t.name, row }))
+      }) ?? []
+    return {
+      total: rows.length,
+      offset,
+      rows: rows.slice(offset, offset + 100).map((item) => ({
+        ...item,
+        row: {
+          ...item.row,
+          cells: Object.fromEntries(
+            Object.entries(item.row.cells).map(([k, c]) => [k, previewCell(c)]),
+          ),
+        },
+      })),
+    }
+  }
+  async createFrom(projectId: string, workflowId: string, name: string, description: string) {
+    const w = this.store.workflow(workflowId, projectId)
+    const project = await this.workspace.create({ name, description })
+    this.store.save(project.id, w.name, {
+      ...w.config,
+      sourceIds: [],
+      countries: [],
+      parentWorkflowId: undefined,
+    })
+    return project.id
   }
   save(projectId: string, name: string, config: ResearchConfig, workflowId?: string) {
     const project = this.workspace.get(projectId)
@@ -489,16 +556,12 @@ export class ResearchService {
   private findEvidence(projectId: string, evidence: Evidence): DurableInput {
     this.workspace.get(projectId)
     // Resolve trusted ledger inputs instead of accepting renderer file paths.
-    const rows = this.store.db
+    const row = this.store.db
       .prepare(
-        'SELECT i.data FROM inputs i JOIN runs r ON i.run_id=r.id JOIN workflows w ON r.workflow_id=w.id WHERE w.project_id=?',
+        "SELECT i.data FROM inputs i JOIN runs r ON i.run_id=r.id JOIN workflows w ON r.workflow_id=w.id WHERE w.project_id=? AND json_extract(i.data,'$.sourceId')=? AND json_extract(i.data,'$.sourceVersion')=? LIMIT 1",
       )
-      .all(projectId)
-    for (const row of rows) {
-      const input = JSON.parse(String(row.data)) as DurableInput
-      if (input.sourceId === evidence.sourceId && input.sourceVersion === evidence.sourceVersion)
-        return input
-    }
+      .get(projectId, evidence.sourceId, evidence.sourceVersion)
+    if (row) return JSON.parse(String(row.data)) as DurableInput
     throw new Error('Evidence input not found in this project.')
   }
   async evidencePath(projectId: string, evidence: Evidence): Promise<string> {
@@ -520,7 +583,7 @@ export class ResearchService {
     const part = zip.file('infomonk/research.json')
     if (!part) return null
     const json = await part.async('string')
-    if (json.length > 16 * 1024 * 1024)
+    if (json.length > RESEARCH_METADATA_LIMIT)
       throw new Error('Research metadata exceeds the supported bound.')
     const metadata = JSON.parse(json) as {
       workflowId: string

@@ -2,12 +2,14 @@ import JSZip from 'jszip'
 import { sheetCsvToXlsxBuffer } from '@genoffice/xlsx-gateway/gateway/csv-import'
 import { encodeXlsxEscapes } from '@genoffice/xlsx-gateway/gateway/xlsx-escapes'
 import type { ResearchDataset } from '../../shared/research-api'
+import { checkedResearchMetadata } from './metadata'
 
 export async function projectDataset(
   dataset: ResearchDataset,
   workflowId: string,
   revision: number,
 ): Promise<Buffer> {
+  const metadata = checkedResearchMetadata(dataset, workflowId, revision)
   const tables = dataset.tables.length
     ? dataset.tables
     : [{ id: 'empty', name: 'Empty', columns: [], rows: [] }]
@@ -78,25 +80,7 @@ export async function projectDataset(
       )
     }
   }
-  zip!.file(
-    'infomonk/research.json',
-    JSON.stringify({
-      version: 1,
-      workflowId,
-      revision,
-      dataset,
-      attribution: dataset.tables.some((t) =>
-        t.rows.some((r) =>
-          Object.values(r.cells).some((c) =>
-            c.evidence.some((e) => e.method === 'worldbank-SP.POP.TOTL-v1'),
-          ),
-        ),
-      )
-        ? 'World Bank, World Development Indicators, SP.POP.TOTL; original URLs and retrieval times are recorded in cell evidence. CC BY 4.0 subject to source terms. Human changes are labeled manual.'
-        : 'User-provided document snapshots; source versions and locators are recorded in cell evidence. Human changes are labeled manual.',
-      tables: dataset.tables.map((t) => ({ id: t.id, name: t.name, columns: t.columns })),
-    }),
-  )
+  zip!.file('infomonk/research.json', metadata)
   const types = await zip!.file('[Content_Types].xml')!.async('string')
   zip!.file(
     '[Content_Types].xml',

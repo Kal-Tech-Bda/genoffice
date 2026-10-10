@@ -112,6 +112,24 @@ snapshot copies. Arbitrary native edits do not silently become ledger correction
 No new application parser/framework dependency or agent harness was installed.
 The isolated parser experiment is documented separately; Stages 6–8 are deferred.
 
+The hardening boundary uses `ResearchStore.history/latest` to query indexed run
+summaries without parsing candidate blobs or calculating historical diffs.
+`pages.ts` limits candidate/accepted previews to 100 rows and removes evidence
+payloads; explicit cell IPC retrieves trusted full evidence and prior values.
+Absence is computed against complete stored datasets. Renderer polling awaits
+completion and discards stale responses. `metadata.ts` shares the 16 Mi-character
+publication/correction/reader bound; dataset previews never enter accepted writes.
+
+`workspace-portability.ts` coordinates startup/closed-profile transfers with
+session and maintenance markers, relocates owned references before services open,
+and preserves historical source URIs/text. The CLI copies the owned project tree
+and uses SQLite backup for the ledger. Restored automation is fenced in staging
+before the destination is exposed. Root credentials/settings/caches are excluded.
+The old-root marker persists until relocation completes so interruption is retriable.
+Recovery and Stage 6's disabled engineering contract are documented in
+[workspace recovery](docs/implementation/workspace-recovery.md) and
+[Stage 6 preparation](docs/implementation/stage-6-preparation.md).
+
 ## Inherited system
 
 The npm monorepo has seven Electron workspaces: shell, docs, sheets, slides,

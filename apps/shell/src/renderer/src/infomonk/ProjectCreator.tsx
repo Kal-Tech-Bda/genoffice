@@ -5,9 +5,11 @@ import { mt } from './en'
 export function ProjectCreator({
   onCreated,
   onClose,
+  template,
 }: {
   onCreated: (project: WorkspaceProject) => void
   onClose: () => void
+  template?: { projectId: string; workflowId: string }
 }) {
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
@@ -78,6 +80,18 @@ export function ProjectCreator({
     setBusy(true)
     setError('')
     try {
+      if (template) {
+        const id = await window.infomonkResearch.createFrom(
+          template.projectId,
+          template.workflowId,
+          name.trim(),
+          description.trim(),
+        )
+        const project = (await window.infomonk.list()).find((p) => p.id === id)
+        if (!project) throw new Error('Created project could not be loaded.')
+        onCreated(project)
+        return
+      }
       const project = await window.infomonk.create({
         name: name.trim(),
         description,
@@ -118,6 +132,12 @@ export function ProjectCreator({
             ×
           </button>
         </div>
+        {template && (
+          <p>
+            Start with the saved workflow structure and instructions. Choose inputs in the new
+            project; prior records, sources, schedules and credentials are not copied.
+          </p>
+        )}
         <label>
           {mt('projectName')}
           <input
@@ -141,58 +161,62 @@ export function ProjectCreator({
             }}
           />
         </label>
-        <label>
-          {mt('file')}
-          <button type="button" aria-label={mt('chooseFile')} onClick={() => void choose()}>
-            {filePath?.split(/[\\/]/).pop() ?? mt('chooseFile')}
-          </button>
-        </label>
-        {sample.length > 0 && (
+        {!template && (
           <>
             <label>
-              {mt('delimiter')}
-              <select
-                aria-label={mt('delimiter')}
-                value={delimiter}
-                onChange={(event) => setDelimiter(event.target.value)}
-              >
-                {[
-                  [',', 'comma'],
-                  [';', 'semicolon'],
-                  ['\t', 'tab'],
-                  ['|', 'pipe'],
-                ].map(([value, key]) => (
-                  <option key={value} value={value}>
-                    {mt(key as 'comma')}
-                  </option>
-                ))}
-              </select>
+              {mt('file')}
+              <button type="button" aria-label={mt('chooseFile')} onClick={() => void choose()}>
+                {filePath?.split(/[\\/]/).pop() ?? mt('chooseFile')}
+              </button>
             </label>
-            <div className="im-table-scroll">
-              <table aria-label={mt('importPreview')}>
-                <tbody>
-                  {sample.map((row, r) => (
-                    <tr key={r}>
-                      {row.map((cell, c) => (
-                        <td key={c}>{cell}</td>
+            {sample.length > 0 && (
+              <>
+                <label>
+                  {mt('delimiter')}
+                  <select
+                    aria-label={mt('delimiter')}
+                    value={delimiter}
+                    onChange={(event) => setDelimiter(event.target.value)}
+                  >
+                    {[
+                      [',', 'comma'],
+                      [';', 'semicolon'],
+                      ['\t', 'tab'],
+                      ['|', 'pipe'],
+                    ].map(([value, key]) => (
+                      <option key={value} value={value}>
+                        {mt(key as 'comma')}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <div className="im-table-scroll">
+                  <table aria-label={mt('importPreview')}>
+                    <tbody>
+                      {sample.map((row, r) => (
+                        <tr key={r}>
+                          {row.map((cell, c) => (
+                            <td key={c}>{cell}</td>
+                          ))}
+                        </tr>
                       ))}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                    </tbody>
+                  </table>
+                </div>
+              </>
+            )}
+            <label>
+              {mt('url')}
+              <input
+                type="url"
+                value={url}
+                onChange={(event) => setUrl(event.target.value)}
+                placeholder="https://"
+              />
+            </label>
+            <p className="im-muted">{mt('unavailableCreation')}</p>
           </>
         )}
-        <label>
-          {mt('url')}
-          <input
-            type="url"
-            value={url}
-            onChange={(event) => setUrl(event.target.value)}
-            placeholder="https://"
-          />
-        </label>
-        <p className="im-muted">{mt('unavailableCreation')}</p>
         {error && (
           <p role="alert" className="im-error">
             {error}

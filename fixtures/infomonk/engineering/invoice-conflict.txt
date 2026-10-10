@@ -1,0 +1,8 @@
+Synthetic evaluation document. Supplier Invoice.
+Invoice number: INV-099
+Supplier: West Demo
+Customer: Cedar Demo
+Issued: 2026-09-02
+Amount payable: 90.00
+Amount payable: 95.00
+Currency is not specified.

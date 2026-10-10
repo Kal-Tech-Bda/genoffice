@@ -30,6 +30,25 @@ review issues and publish. Record corrections in the accepted-table inspector.
 Refresh creates candidates; schedules require an open desktop app and never
 publish automatically. The full supported journey is in the contracts document.
 
+## Readiness before Stage 6
+
+The [readiness review](docs/testing/pre-stage-6-2026-10-10.md) led to a completed
+hardening milestone. History now returns indexed 20-run summaries, table previews
+page through 100 rows and full evidence loads on cell selection. Polling is serialized.
+On the same synthetic 100-run history, median native IPC fell from 40.37 seconds
+to 24 ms. Publication/corrections enforce the sheet reader's 16 Mi-character limit.
+
+[Closed-profile backup and restore](docs/implementation/workspace-recovery.md)
+relocate owned references; restored sheet evidence was verified with the original
+profile unavailable. A workflow can start a new independent project without its
+inputs, records, schedule or corrections. The implementation and regression tests
+are checkpointed on the hosted implementation branch.
+
+[Stage 6 preparation](docs/implementation/stage-6-preparation.md) selects invoices,
+an independent expected corpus and conservative privacy/cost/resource gates.
+Generated execution remains disabled pending an enforced isolated runner.
+The [hardening report](docs/testing/hardening-2026-10-10.md) records review and tests.
+
 ## Ranked remaining gaps
 
 1. **Broader input families and semantic extraction.** The deterministic quote

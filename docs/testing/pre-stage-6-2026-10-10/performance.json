@@ -1,0 +1,59 @@
+{
+  "environment": {
+    "node": "v24.13.1",
+    "platform": "win32"
+  },
+  "profile": "C:\\Users\\Place\\Documents\\ChatGPT\\Socrates\\.task\\preflight-20261010\\performance-profile-1791657545335",
+  "projectId": "proj-b109b455056a",
+  "projection": [
+    {
+      "quoteRows": 1,
+      "lineItems": 100,
+      "elapsedMs": 21.29,
+      "xlsxBytes": 12952,
+      "metadataBytes": 161280
+    },
+    {
+      "quoteRows": 1,
+      "lineItems": 1000,
+      "elapsedMs": 498.89,
+      "xlsxBytes": 70928,
+      "metadataBytes": 1585080
+    }
+  ],
+  "history": [
+    {
+      "runs": 1,
+      "lineItemsPerRun": 1000,
+      "medianReadAndJsonMs": 27.68,
+      "maxReadAndJsonMs": 31.17,
+      "payloadBytes": 1586266,
+      "rssMiB": 207.9
+    },
+    {
+      "runs": 10,
+      "lineItemsPerRun": 1000,
+      "medianReadAndJsonMs": 266.35,
+      "maxReadAndJsonMs": 276.46,
+      "payloadBytes": 15856225,
+      "rssMiB": 383.3
+    },
+    {
+      "runs": 50,
+      "lineItemsPerRun": 1000,
+      "medianReadAndJsonMs": 1369.82,
+      "maxReadAndJsonMs": 1391.5,
+      "payloadBytes": 79278265,
+      "rssMiB": 735.6
+    },
+    {
+      "runs": 100,
+      "lineItemsPerRun": 1000,
+      "medianReadAndJsonMs": 2715.07,
+      "maxReadAndJsonMs": 2716.91,
+      "payloadBytes": 158555815,
+      "rssMiB": 1523.5
+    }
+  ],
+  "note": "Diagnostic source-level timing with synthetic accepted data; not a desktop capacity or extraction accuracy certification. Each item copies the known fixture cell/evidence shape."
+}

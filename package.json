@@ -17,6 +17,7 @@
     "packages/*"
   ],
   "scripts": {
+    "workspace:backup": "node --experimental-strip-types tools/workspace-backup.mjs",
     "postinstall": "install-electron",
     "format": "node tools/format-changed.mjs --write",
     "format:check": "node tools/format-changed.mjs --check",
