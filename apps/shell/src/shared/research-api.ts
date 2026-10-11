@@ -1,6 +1,9 @@
 export type ResearchValue = string | number | null
+import type { JobSiteId } from './jobs-api'
 export function isResearchIdentity(tableId: string, columnId: string): boolean {
   return (
+    (tableId === 'jobs' && !['application_status', 'notes'].includes(columnId)) ||
+    tableId === 'job_sources' ||
     (['quotes', 'line_items'].includes(tableId) && columnId === 'quote_id') ||
     (tableId === 'population' && ['country_code', 'year'].includes(columnId))
   )
@@ -43,7 +46,7 @@ export interface ResearchDataset {
   issues: string[]
 }
 export interface ResearchConfig {
-  kind: 'quotes' | 'worldbank' | 'enrich'
+  kind: 'quotes' | 'worldbank' | 'enrich' | 'jobs'
   instructions: string
   sourceIds: string[]
   fields: string[]
@@ -51,6 +54,7 @@ export interface ResearchConfig {
   fromYear: number
   toYear: number
   parentWorkflowId?: string
+  jobSiteIds?: JobSiteId[]
 }
 export interface ResearchWorkflow {
   id: string
@@ -257,6 +261,12 @@ export interface ResearchApi {
     reason: string,
   ): Promise<void>
   open(projectId: string, workflowId: string): Promise<void>
+  visitJob(
+    projectId: string,
+    workflowId: string,
+    runId: string | null,
+    rowId: string,
+  ): Promise<void>
   evidence(
     projectId: string,
     evidence: Evidence,

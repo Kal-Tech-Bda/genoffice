@@ -91,8 +91,15 @@ Markdown/DOCX writers. Clearer saved-primary versus working-table operations
 follow that. The earlier ranked list is retained in the historical process review.
 Broader roadmap constraints remain below.
 
+The owner then selected a full Bermuda jobs journey, focused on technology, data
+and office roles with manual workspace refresh. A bounded three-site jobs task
+now reuses the accepted ledger, queue, evidence inspector and XLSX projection.
+The [use-case report](docs/use-cases/bermuda-jobs-2026-10-11.md) records actual
+collection, personal tracking, reviewed refresh, failure/disappearance checks and
+fresh-process native evidence. No ongoing notification automation was requested.
+
 1. **Broader input families and semantic extraction.** The deterministic quote
-   family and single public adapter are intentional bounds. Scans, handwriting,
+   family and fixed public adapters are intentional bounds. Scans, handwriting,
    arbitrary nested forms, provider-driven extraction and arbitrary web research
    need separately measured coverage and evidence guarantees. The isolated parser
    comparison did not justify a production dependency.

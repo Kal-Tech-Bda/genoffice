@@ -8,7 +8,7 @@ import type {
   ResearchWorkflow,
   ResearchRunSummary,
 } from '../../shared/research-api'
-import { PROCESSING_VERSION } from './extract'
+import { processingVersion } from './extract'
 import { checkedResearchMetadata } from './metadata'
 
 type SqlRow = Record<string, string | number | null>
@@ -265,7 +265,7 @@ export class ResearchStore {
           id,
           w.configVersion,
           JSON.stringify(w.config),
-          PROCESSING_VERSION,
+          processingVersion(w.config),
           w.acceptedRevision,
           Number(sample),
           at,
@@ -379,7 +379,7 @@ export class ResearchStore {
     const w = this.workflow(r.workflowId)
     if (!['queued', 'acquiring', 'processing', 'review'].includes(r.status))
       throw new Error(`Run is ${r.status}`)
-    if (w.configVersion !== r.configVersion || r.processingVersion !== PROCESSING_VERSION)
+    if (w.configVersion !== r.configVersion || r.processingVersion !== processingVersion(w.config))
       throw new Error('Obsolete processing/configuration version')
   }
   progress(
@@ -426,7 +426,7 @@ export class ResearchStore {
       .run(
         JSON.stringify(dataset),
         JSON.stringify(coverage),
-        JSON.stringify({ processingVersion: PROCESSING_VERSION, complete: true }),
+        JSON.stringify({ processingVersion: this.run(id).processingVersion, complete: true }),
         now(),
         id,
       )
@@ -460,7 +460,7 @@ export class ResearchStore {
     if (
       r.configVersion !== w.configVersion ||
       r.baseRevision !== w.acceptedRevision ||
-      r.processingVersion !== PROCESSING_VERSION
+      r.processingVersion !== processingVersion(w.config)
     )
       throw new Error('Run is obsolete; create a new run.')
     if (

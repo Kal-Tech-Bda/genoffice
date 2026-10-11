@@ -35,3 +35,26 @@ an explicit workflow. This is a documented compatibility boundary, not a migrati
 Reports from selected accepted tables remain next; the engineering harness stays last.
 
 ---
+
+## 2026-10-11T22:55:34Z — codex/infomonk-workspace — working tree versus fe5b0c24
+
+Bermuda jobs now uses a bounded BMA/Coralisle/Expertise adapter through the existing
+research queue, ledger, review UI and native XLSX writer. ResearchPanel adds confirmed
+websites, compact tracking, persistent personal status/notes and validated live links.
+The shared HTML helper uses the existing parse5 dependency. Public-site evidence and
+export attribution retain real acquisition times, missing facts and location conflicts;
+failed checks preserve accepted data and absent listings stay marked for review.
+The jobs processing version leaves prior quote/World Bank versions intact. Permanent
+synthetic tests, live native use-case evidence and the quality companion record the
+executed flow, refresh, restart and native cell evidence.
+
+Review found no unrelated deletions, installed frameworks or dependency-version changes.
+The electron-utils export and jobs IPC method are additive. Agency title/location keys
+can conflate reposts, title matching is bounded, and generic change counts include
+acquisition timestamps/source versions. Those limitations remain explicit in the
+implementation contract and use-case report. Verification passed 64 focused tests,
+24 selected native tests plus the final two jobs tests, and all workspace type checks;
+three shared utility tests fail in unchanged Windows path/chmod code. No application,
+notification automation, credential change or engineering harness was added.
+
+---

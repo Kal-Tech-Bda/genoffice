@@ -33,11 +33,11 @@ export const monkStrings = {
   close: 'Close',
   creating: 'Creating project…',
   unavailableCreation:
-    'Labeled supplier quotes can become reviewed tables. Public population uses the World Bank task. Other links are saved as references; they are not collected automatically.',
+    'Labeled supplier quotes can become reviewed tables. Web tasks support World Bank population and selected Bermuda career sites. Other links are saved as references; they are not collected automatically.',
   extractStart:
     'Add a labeled supplier quote (PDF, DOCX or text). Next, choose sources and inspect a sample before publishing a table. Other document families remain unsupported.',
   webStart:
-    'Start with the public World Bank population task, then confirm countries and years. A pasted website link is a reference; arbitrary website collection is not available.',
+    'Choose World Bank population or the Bermuda jobs task, then confirm the public source scope. A pasted website link is a reference; arbitrary website collection is not available.',
   spreadsheetStart:
     'Open XLSX, CSV or TSV in the real sheet editor. Inspect and preview cleanup before applying changes.',
   generalStart:

@@ -11,15 +11,17 @@ export function researchMetadata(
     workflowId,
     revision,
     dataset,
-    attribution: dataset.tables.some((t) =>
-      t.rows.some((r) =>
-        Object.values(r.cells).some((c) =>
-          c.evidence.some((e) => e.method === 'worldbank-SP.POP.TOTL-v1'),
-        ),
-      ),
-    )
-      ? 'World Bank, World Development Indicators, SP.POP.TOTL; original URLs and retrieval times are recorded in cell evidence. CC BY 4.0 subject to source terms. Human changes are labeled manual.'
-      : 'User-provided document snapshots; source versions and locators are recorded in cell evidence. Human changes are labeled manual.',
+    attribution: dataset.tables.some((t) => t.id === 'jobs')
+      ? 'Public career-site listings from the explicitly selected sources. Original URLs, retrieval times, snapshot versions and locators are recorded in cell evidence. Listing presence does not guarantee availability. Personal application status and notes are user-maintained; human changes are labeled manual.'
+      : dataset.tables.some((t) =>
+            t.rows.some((r) =>
+              Object.values(r.cells).some((c) =>
+                c.evidence.some((e) => e.method === 'worldbank-SP.POP.TOTL-v1'),
+              ),
+            ),
+          )
+        ? 'World Bank, World Development Indicators, SP.POP.TOTL; original URLs and retrieval times are recorded in cell evidence. CC BY 4.0 subject to source terms. Human changes are labeled manual.'
+        : 'User-provided document snapshots; source versions and locators are recorded in cell evidence. Human changes are labeled manual.',
     tables: dataset.tables.map((t) => ({ id: t.id, name: t.name, columns: t.columns })),
   })
 }

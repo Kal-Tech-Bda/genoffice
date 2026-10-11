@@ -14,6 +14,7 @@
     "./font-store": "./src/font-store.ts",
     "./headless-export": "./src/headless-export.ts",
     "./print-window": "./src/print-window.ts",
+    "./public-html": "./src/public-html.ts",
     "./remote-image": "./src/remote-image.ts",
     "./renderer-protocol": "./src/renderer-protocol.ts",
     "./renderer-scheme": "./src/renderer-scheme.ts",

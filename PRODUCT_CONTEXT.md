@@ -112,3 +112,11 @@ from selected accepted tables are the next workspace increment.
 The [Stages 3–5 contracts and limitations](docs/implementation/research-workflows.md)
 define the current document family, public-source scope, field origins, deletion
 policy and durable executor. No provider credentials are needed for these tasks.
+
+The [Bermuda jobs use case](docs/use-cases/bermuda-jobs-2026-10-11.md) adds a
+bounded public career-site task for technology, data and office listings from
+BMA, Coralisle and Expertise Group. Manual refresh creates a reviewed candidate;
+source facts, missing deadlines and uncertain locations remain visible. Personal
+application status/notes persist independently of source observations. Disappearing
+listings are retained for review, and retrieval/layout failures preserve accepted
+data. This is selected-site tracking, not general web search or an engineering agent.

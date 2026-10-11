@@ -103,7 +103,7 @@ export function EvidenceDetails({
               </small>
               <div>
                 <button onClick={() => void inspect(i, false)}>Inspect snapshot</button>
-                {!e.locator.startsWith('JSON ') && (
+                {!e.locator.startsWith('JSON ') && !e.locator.startsWith('HTML ') && (
                   <button onClick={() => void inspect(i, true)}>Open source snapshot</button>
                 )}
               </div>

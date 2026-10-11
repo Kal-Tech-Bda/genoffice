@@ -1,0 +1,19 @@
+{
+  "profile": "C:\\Users\\Place\\AppData\\Local\\Temp\\genoffice-e2e-FPh8sj",
+  "projectId": "proj-a124d897a064",
+  "workflowId": "fcb3766c-1802-4a4f-a403-0f5ddc58f2b0",
+  "acceptedRevision": 4,
+  "rendererErrors": [],
+  "checks": [
+    "Sample to full",
+    "Three-source collection",
+    "Missing facts and location conflicts",
+    "Verified immutable evidence",
+    "Safe live listing link",
+    "Shortlist and note persistence",
+    "Failed refresh preserves accepted revision",
+    "Disappeared listing retained, not called closed",
+    "Updated deadline",
+    "Fresh-process reopen"
+  ]
+}

@@ -66,6 +66,16 @@ Workflows and research Details have the implemented behavior described in
 
 ## Navigation and state
 
+The Bermuda jobs task confirms BMA, Coralisle and Expertise Group before public
+acquisition. Its default tracker shows role/source/employer context, location,
+closing date, listing observation, application status and notes. Show all job
+fields exposes keys, source URLs and first/last-seen/check times; the XLSX retains
+all fields. Open live listing resolves a trusted stored source route. Personal
+status uses a controlled choice and notes use the persistent tracking action;
+source facts are read-only. Refresh job listings fetches again and stops for
+review. Missing listings stay visible as not found, without a closure claim.
+See the [executed jobs journey](use-cases/bermuda-jobs-2026-10-11.md).
+
 | Location                      | Implemented behavior                                                                                       | Boundary                                                                                                                     |
 | ----------------------------- | ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
 | Home / Projects               | Recent activity, actual research state, Needs review, star/search/sort, New project and Review table       | Ledger counts include related tables; public freshness is acquisition evidence                                               |

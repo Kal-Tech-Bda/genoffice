@@ -17,6 +17,7 @@ import type {
 import './research.css'
 import { isResearchIdentity } from '../../../shared/research-api'
 import { InputReadiness } from './InputReadiness'
+import { JOB_SITES, APPLICATION_STATUSES } from '../../../shared/jobs-api'
 
 declare global {
   interface Window {
@@ -28,6 +29,7 @@ const taskNames = {
   quotes: 'Supplier quotes',
   worldbank: 'Public population',
   enrich: 'Quote enrichment',
+  jobs: 'Bermuda jobs',
 }
 const initial: ResearchConfig = {
   kind: 'quotes',
@@ -95,6 +97,7 @@ export function ResearchPanel({
   const [correction, setCorrection] = useState('')
   const [reason, setReason] = useState('')
   const [schedule, setSchedule] = useState('manual')
+  const [allJobFields, setAllJobFields] = useState(false)
   const [readiness, setReadiness] = useState<ResearchReadiness | null>(null)
   const [checkingInputs, setCheckingInputs] = useState(false)
   const readinessRequest = useRef(0)
@@ -110,8 +113,10 @@ export function ResearchPanel({
     workflow &&
     (workflow.config.kind === 'quotes'
       ? !workflow.config.sourceIds.length
-      : !workflow.config.countries.length ||
-        (workflow.config.kind === 'enrich' && !workflow.config.parentWorkflowId))
+      : workflow.config.kind === 'jobs'
+        ? !workflow.config.jobSiteIds?.length
+        : !workflow.config.countries.length ||
+          (workflow.config.kind === 'enrich' && !workflow.config.parentWorkflowId))
   const identityCell =
     selectedCell && isResearchIdentity(selectedCell.table.id, selectedCell.column)
   const readinessCurrent =
@@ -348,8 +353,8 @@ export function ResearchPanel({
     <section className="im-research">
       <p className="im-muted">
         Build a traceable table, inspect a sample, then process all confirmed inputs. Supported
-        sources: labeled supplier quotes and World Bank population observations. Every refresh
-        creates a candidate for review.
+        sources: labeled supplier quotes, World Bank population and selected Bermuda career sites.
+        Every refresh creates a candidate for review.
       </p>
       {error && (
         <p role="alert" className="im-error">
@@ -384,6 +389,7 @@ export function ResearchPanel({
             <option value="quotes">Supplier quotes → structured sheets</option>
             <option value="worldbank">World Bank population → research table</option>
             <option value="enrich">Enrich accepted quotes by country code</option>
+            <option value="jobs">Bermuda jobs → manual tracker</option>
           </select>
         </label>
         <label>
@@ -449,6 +455,47 @@ export function ResearchPanel({
                 </label>
               ))}
             </fieldset>
+          </>
+        ) : config.kind === 'jobs' ? (
+          <>
+            <p>
+              Technology, data and office roles from the selected public career pages. Title
+              keywords include analyst, systems, data, project, accounting, administration and
+              claims. Bermuda listings and uncertain multi-jurisdiction roles are included for
+              review. This is a bounded search, not all Bermuda vacancies.
+            </p>
+            <p>
+              Only public listing/detail URLs are fetched. No login, résumé, application or paid
+              provider request is sent. Missing deadlines/employers and conflicting locations stay
+              visible. Job facts are read-only; application status and notes persist through
+              refresh.
+            </p>
+            <fieldset>
+              <legend>Confirmed job websites</legend>
+              {JOB_SITES.map((site) => (
+                <label key={site.id}>
+                  <input
+                    type="checkbox"
+                    checked={config.jobSiteIds?.includes(site.id) ?? false}
+                    onChange={(e) =>
+                      setConfig({
+                        ...config,
+                        jobSiteIds: e.target.checked
+                          ? [...(config.jobSiteIds ?? []), site.id]
+                          : (config.jobSiteIds ?? []).filter((id) => id !== site.id),
+                      })
+                    }
+                  />
+                  {site.name} · {site.url}
+                </label>
+              ))}
+            </fieldset>
+            <p>
+              Manual refresh checks the selected pages again, then stops for review. A failed or
+              changed page cannot replace the accepted tracker. A disappearing listing is retained
+              for review; absence does not establish closure. Agency title/location keys cannot
+              reliably distinguish reposts.
+            </p>
           </>
         ) : (
           <>
@@ -543,7 +590,9 @@ export function ResearchPanel({
               <small>
                 {w.config.kind === 'quotes'
                   ? `${w.config.sourceIds.length} input snapshots`
-                  : `${w.config.countries.join(', ')} / ${w.config.fromYear}–${w.config.toYear}`}
+                  : w.config.kind === 'jobs'
+                    ? `${w.config.jobSiteIds?.length ?? 0} confirmed job websites · manual refresh`
+                    : `${w.config.countries.join(', ')} / ${w.config.fromYear}–${w.config.toYear}`}
               </small>
               <p>{latest ? `${latest.status}: ${latest.progress}` : 'No runs yet'}</p>
               {w.acceptedRevision > 0 && (
@@ -652,7 +701,9 @@ export function ResearchPanel({
               }
               onClick={() => void act(() => start(false))}
             >
-              Run all confirmed inputs
+              {workflow.config.kind === 'jobs' && workflow.acceptedRevision
+                ? 'Refresh job listings'
+                : 'Run all confirmed inputs'}
             </button>
             <button
               disabled={!workflow.destination || busy}
@@ -930,7 +981,10 @@ export function ResearchPanel({
                 </p>
               ))}
               {dataset.tables.map((table) => (
-                <div className="im-research-table" key={table.id}>
+                <div
+                  className={`im-research-table ${table.id === 'jobs' ? 'im-jobs-table' : ''}`}
+                  key={table.id}
+                >
                   <h3>
                     {table.name} · {table.totalRows ?? table.rows.length}
                     {needsReview
@@ -944,6 +998,11 @@ export function ResearchPanel({
                     {showAccepted ? ' or record a correction' : ''}.
                   </small>
                   <div className="im-controls">
+                    {table.id === 'jobs' && (
+                      <button disabled={busy} onClick={() => setAllJobFields(!allJobFields)}>
+                        {allJobFields ? 'Show compact job tracker' : 'Show all job fields'}
+                      </button>
+                    )}
                     <button
                       disabled={busy || !table.offset}
                       onClick={() =>
@@ -965,42 +1024,91 @@ export function ResearchPanel({
                     <table>
                       <thead>
                         <tr>
-                          {table.columns.map((c) => (
-                            <th key={c.id}>
-                              {c.name}
-                              <small>{c.type}</small>
-                            </th>
-                          ))}
+                          {table.columns
+                            .filter(
+                              (c) =>
+                                table.id !== 'jobs' ||
+                                allJobFields ||
+                                [
+                                  'title',
+                                  'location',
+                                  'closing_date',
+                                  'listing_status',
+                                  'application_status',
+                                  'notes',
+                                ].includes(c.id),
+                            )
+                            .map((c) => (
+                              <th key={c.id}>
+                                {c.name}
+                                <small>{c.type}</small>
+                              </th>
+                            ))}
                         </tr>
                       </thead>
                       <tbody>
                         {table.rows.slice(0, 100).map((row) => (
                           <tr key={row.id}>
-                            {table.columns.map((column) => {
-                              const c = row.cells[column.id]
-                              const prior = accepted?.tables
-                                .find((t) => t.id === table.id)
-                                ?.rows.find((r) => r.id === row.id)?.cells[column.id]
-                              return (
-                                <td key={column.id}>
-                                  <button
-                                    disabled={busy}
-                                    className={c?.missingReason ? 'im-cell-missing' : ''}
-                                    title={
-                                      !showAccepted && prior && prior.value !== c?.value
-                                        ? `Previous accepted value: ${String(prior.value ?? 'missing')}`
-                                        : c?.origin
-                                    }
-                                    onClick={() =>
-                                      void act(() => selectCell(table, row, column.id))
+                            {table.columns
+                              .filter(
+                                (c) =>
+                                  table.id !== 'jobs' ||
+                                  allJobFields ||
+                                  [
+                                    'title',
+                                    'location',
+                                    'closing_date',
+                                    'listing_status',
+                                    'application_status',
+                                    'notes',
+                                  ].includes(c.id),
+                              )
+                              .map((column) => {
+                                const c = row.cells[column.id]
+                                const prior = accepted?.tables
+                                  .find((t) => t.id === table.id)
+                                  ?.rows.find((r) => r.id === row.id)?.cells[column.id]
+                                return (
+                                  <td
+                                    key={column.id}
+                                    className={
+                                      table.id === 'jobs' && column.type === 'date'
+                                        ? 'im-job-date'
+                                        : undefined
                                     }
                                   >
-                                    {String(c?.value ?? 'Missing')}
-                                    {c?.origin === 'manual' && <small>Manual override</small>}
-                                  </button>
-                                </td>
-                              )
-                            })}
+                                    <button
+                                      disabled={busy}
+                                      className={c?.missingReason ? 'im-cell-missing' : ''}
+                                      title={
+                                        !showAccepted && prior && prior.value !== c?.value
+                                          ? `Previous accepted value: ${String(prior.value ?? 'missing')}`
+                                          : c?.origin
+                                      }
+                                      onClick={() =>
+                                        void act(() => selectCell(table, row, column.id))
+                                      }
+                                    >
+                                      {table.id === 'jobs' &&
+                                      column.id === 'notes' &&
+                                      c?.value === ''
+                                        ? 'Add note'
+                                        : String(c?.value ?? 'Missing')}
+                                      {c?.origin === 'manual' && <small>Manual override</small>}
+                                    </button>
+                                    {table.id === 'jobs' &&
+                                      !allJobFields &&
+                                      column.id === 'title' && (
+                                        <small className="im-job-source">
+                                          {String(row.cells.source_site.value)} ·{' '}
+                                          {String(
+                                            row.cells.employer.value ?? 'Employer not stated',
+                                          )}
+                                        </small>
+                                      )}
+                                  </td>
+                                )
+                              })}
                           </tr>
                         ))}
                       </tbody>
@@ -1012,6 +1120,23 @@ export function ResearchPanel({
           )}
           {selectedCell && (
             <aside className="im-cell-inspector">
+              {selectedCell.table.id === 'jobs' && (
+                <button
+                  disabled={busy}
+                  onClick={() =>
+                    void act(() =>
+                      window.infomonkResearch.visitJob(
+                        project.id,
+                        workflow.id,
+                        showAccepted ? null : runId,
+                        selectedCell.row.id,
+                      ),
+                    )
+                  }
+                >
+                  Open live listing
+                </button>
+              )}
               <h3>
                 {selectedCell.column} · record {selectedCell.row.id.slice(0, 8)}
               </h3>
@@ -1054,7 +1179,7 @@ export function ResearchPanel({
                     <button disabled={busy} onClick={() => void act(() => inspect(e))}>
                       Verify snapshot and locator
                     </button>
-                    {!e.locator.startsWith('JSON ') && (
+                    {!e.locator.startsWith('JSON ') && !e.locator.startsWith('HTML ') && (
                       <button
                         disabled={busy}
                         onClick={() =>
@@ -1077,23 +1202,48 @@ export function ResearchPanel({
               )}
               {showAccepted && identityCell && (
                 <p>
-                  This field defines record identity and links related rows. To change it, update
-                  the source or confirmed scope and review a new run. Ordinary cell corrections
-                  cannot change record keys.
+                  {workflow.config.kind === 'jobs' ? (
+                    'Source facts and observation dates are read-only. Refresh the selected websites to review changes. Track your own application status and notes in their separate fields.'
+                  ) : (
+                    <>
+                      This field defines record identity and links related rows. To change it,
+                      update the source or confirmed scope and review a new run. Ordinary cell
+                      corrections cannot change record keys.
+                    </>
+                  )}
                 </p>
               )}
               {showAccepted && !identityCell && (
                 <>
                   <label>
-                    Corrected value (empty means missing)
-                    <input
-                      aria-label="Corrected value"
-                      value={correction}
-                      onChange={(e) => setCorrection(e.target.value)}
-                    />
+                    {selectedCell.table.id === 'jobs'
+                      ? selectedCell.column === 'application_status'
+                        ? 'Application status'
+                        : 'My notes'
+                      : 'Corrected value (empty means missing)'}
+                    {selectedCell.table.id === 'jobs' &&
+                    selectedCell.column === 'application_status' ? (
+                      <select
+                        aria-label="Corrected value"
+                        value={correction}
+                        onChange={(e) => setCorrection(e.target.value)}
+                      >
+                        {APPLICATION_STATUSES.map((status) => (
+                          <option key={status}>{status}</option>
+                        ))}
+                      </select>
+                    ) : (
+                      <input
+                        aria-label="Corrected value"
+                        value={correction}
+                        onChange={(e) => setCorrection(e.target.value)}
+                      />
+                    )}
                   </label>
                   <label>
-                    Correction reason
+                    {selectedCell.table.id === 'jobs'
+                      ? 'Tracking update reason'
+                      : 'Correction reason'}
                     <input
                       aria-label="Correction reason"
                       value={reason}
@@ -1113,7 +1263,8 @@ export function ResearchPanel({
                           selectedCell.table.id,
                           selectedCell.row.id,
                           selectedCell.column,
-                          correction === ''
+                          correction === '' &&
+                            !(selectedCell.table.id === 'jobs' && selectedCell.column === 'notes')
                             ? null
                             : type === 'number'
                               ? Number(correction)
@@ -1129,7 +1280,9 @@ export function ResearchPanel({
                       })
                     }
                   >
-                    Save persistent correction
+                    {selectedCell.table.id === 'jobs'
+                      ? 'Save tracking update'
+                      : 'Save persistent correction'}
                   </button>
                   <p>
                     Corrections create a new accepted revision and survive refresh. Native

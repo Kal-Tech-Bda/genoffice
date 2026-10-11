@@ -115,3 +115,17 @@
 .im-research small {
   color: var(--text-secondary);
 }
+.im-jobs-table td {
+  vertical-align: top;
+}
+.im-jobs-table td:first-child {
+  min-width: 220px;
+  max-width: 300px;
+}
+.im-jobs-table .im-job-date {
+  white-space: nowrap;
+}
+.im-job-source {
+  display: block;
+  margin-top: 8px;
+}

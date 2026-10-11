@@ -1,0 +1,175 @@
+{
+  "recordedAt": "2026-10-11T22:56:09.478Z",
+  "baseline": "fe5b0c249b4aa073b8dd05aab2d2c59d8ef9e9a3",
+  "branch": "codex/infomonk-workspace",
+  "scope": "Bermuda technology, data and office listings; manual workspace refresh only",
+  "environment": {
+    "platform": "win32",
+    "release": "10.0.26200",
+    "arch": "x64",
+    "node": "v24.13.1",
+    "npm": "11.8.0",
+    "electron": "43.7.6",
+    "vitest": "4.1.11",
+    "playwright": "1.62.1",
+    "parse5": "8.0.1"
+  },
+  "checks": [
+    {
+      "command": "$env:INFOMONK_PROBE_JOBS='1'; npm run test -w @genoffice/shell -- tests/research-jobs.test.ts tests/research-readiness.test.ts tests/research-journeys.test.ts tests/research.test.ts tests/research-hardening.test.ts tests/workspace-flow.test.ts tests/workspace-store.test.ts tests/workspace-portability.test.ts tests/clean-table.test.ts",
+      "outcome": "passed",
+      "passed": 64,
+      "files": 9,
+      "note": "Rerun after final export attribution change; opt-in parser case uses locally captured primary HTML."
+    },
+    {
+      "command": "$env:INFOMONK_LIVE_JOBS='1'; $env:Path='C:\\Program Files\\Git\\usr\\bin;'+$env:Path; npm run test:e2e -- infomonk-jobs.spec.ts infomonk-readiness.spec.ts infomonk-process-journeys.spec.ts infomonk-workspace-flow.spec.ts infomonk-hardening.spec.ts infomonk-research-context.spec.ts sheets-edit-save.spec.ts sheets-open-tsv.spec.ts sheets-csv-inplace-save.spec.ts sheets-csv-export.spec.ts sheets-filter-reopen.spec.ts ai-panel-side-settings.spec.ts theme-pipeline.spec.ts",
+      "outcome": "passed",
+      "passed": 24,
+      "note": "Real native Electron; one live HTTP jobs case and one independent synthetic jobs case, plus 22 regression cases. Videos and raw HTML remain ignored local artifacts."
+    },
+    {
+      "command": "$env:INFOMONK_LIVE_JOBS='1'; npm run test:e2e -- infomonk-jobs.spec.ts",
+      "outcome": "passed",
+      "passed": 2,
+      "note": "Final jobs rerun after public-site export attribution change; e2e/test-results/.last-run.json reports passed with no failed tests. Fresh demo profile saved in live-results.json."
+    },
+    {
+      "command": "npm run typecheck",
+      "outcome": "passed",
+      "workspaces": 26
+    },
+    {
+      "command": "npm run build -w @genoffice/shell",
+      "outcome": "passed",
+      "note": "Main, all editor preloads and Shell renderer rebuilt after final production change."
+    },
+    {
+      "command": "npm run build -w @genoffice/sheets",
+      "outcome": "passed",
+      "note": "Native spreadsheet build used the unchanged cached Rust engine; Sheets renderer includes HTML evidence handling."
+    },
+    {
+      "command": "npm run lint",
+      "outcome": "passed",
+      "errors": 0,
+      "warnings": 12,
+      "note": "Existing warning set; no new dependency installed."
+    },
+    {
+      "command": "npm run check:theme-colors",
+      "outcome": "passed"
+    },
+    {
+      "command": "npm run check:english-comments",
+      "outcome": "passed"
+    },
+    {
+      "command": "npm run licenses",
+      "outcome": "passed"
+    },
+    {
+      "command": "npm run test -w @genoffice/electron-utils",
+      "outcome": "failed",
+      "passed": 254,
+      "failed": 3,
+      "files": 18,
+      "failures": [
+        {
+          "file": "tests/dialog-memory.test.ts",
+          "count": 2,
+          "reason": "Windows path separators differ from POSIX expected paths."
+        },
+        {
+          "file": "tests/default-save-dir.test.ts",
+          "count": 1,
+          "reason": "Windows chmod does not enforce the test POSIX read-only-directory expectation."
+        }
+      ],
+      "note": "These modules/tests are unchanged by this feature. The full repository test suite is not claimed green."
+    },
+    {
+      "command": "node docs/testing/bermuda-jobs-2026-10-11/quality-check.mjs working_dir/bermuda-jobs/Bermuda-Jobs-Tracker.xlsx",
+      "outcome": "passed",
+      "note": "Checks actual accepted metadata attribution, IDs, dates, observation order and missing facts; native evidence and correction guards are verified separately."
+    },
+    {
+      "command": "npm run typecheck -w @genoffice/shell",
+      "outcome": "passed",
+      "note": "Final Shell check after export attribution; full 26-workspace check already passed."
+    },
+    {
+      "command": "npm run format:check",
+      "outcome": "passed"
+    },
+    {
+      "command": "git diff --check",
+      "outcome": "passed"
+    }
+  ],
+  "inheritedLimits": [
+    "Previously recorded broader Shell/Sheets Windows unit failures (21) were not rerun this turn.",
+    "Provider-dependent assistant execution is not required or tested by this public-site workflow.",
+    "No claim of exhaustive discovery, 14 distinct vacancies, qualification fit, guaranteed open applications, or verified job closure."
+  ],
+  "live": {
+    "record": "live-results.json",
+    "acceptedRevision": 3,
+    "sites": 3,
+    "listings": 14,
+    "bermudaLocation": 12,
+    "locationReview": 2,
+    "missingEmployer": 8,
+    "missingDeadline": 8,
+    "manualRefresh": true,
+    "notificationAutomation": false,
+    "applicationsSubmitted": 0,
+    "freshProcessReopen": true,
+    "nativeCellEvidence": true,
+    "htmlExecuted": false
+  },
+  "synthetic": {
+    "record": "synthetic-journey.json",
+    "acceptedRevision": 4,
+    "sourceFailurePreservesAccepted": true,
+    "absentListingRetainedWithTracking": true,
+    "updatedDeadline": true,
+    "freshProcessReopen": true
+  },
+  "evidence": [
+    "live-jobs-light.png",
+    "live-jobs-refreshed-dark.png",
+    "live-native-sheet-evidence-dark.png",
+    "synthetic-refreshed-tracker-dark.png",
+    "quality-results.json",
+    "regression-readiness.json",
+    "regression-source-removal.json"
+  ],
+  "sourceHashes": {
+    "apps/sheets/src/renderer/ai/EvidenceDetails.tsx": "d5f132ddb4a46bfb153b89189f7fa3ab58e7c48dd24ff1da3492c2fe55bf1bc4",
+    "apps/shell/src/main/research/extract.ts": "99c0d4826269283806cb3cabdb1f64af356150b9de4306d2cbcb3769974c7742",
+    "apps/shell/src/main/research/ipc.ts": "4e0641be0f4d191ab60e5102e1e09efc581aee392058956a291406301ef47755",
+    "apps/shell/src/main/research/metadata.ts": "96f16150e24d44c824222db3e45d25127760a5961ff1a1bb9adabcde9b55753c",
+    "apps/shell/src/main/research/service.ts": "6d492aa6fea87d4b4a60cd3ed0350fd99c60061bd335d343789c104e0d486b5b",
+    "apps/shell/src/main/research/store.ts": "f16a36da00643260c8137ea0a552f95c40ab1f3115046ec2a3c085dfc7480708",
+    "apps/shell/src/preload/research.ts": "8285e8778e7db5494e6aaa0a87cb17e147a4c01e5758845c63d9ec7f35d9b580",
+    "apps/shell/src/renderer/src/infomonk/ResearchPanel.tsx": "4871f11adad0c856198ab2680edf810164d25c84c61ffa5c68a7b483a1e358db",
+    "apps/shell/src/renderer/src/infomonk/en.ts": "e860e3e5b6618ca8be1218e0184a50fa79477c4f36bda7c32a78fdeced33464e",
+    "apps/shell/src/renderer/src/infomonk/research.css": "3254caa0f68e3db182f69aadbc022b6c0846f819dd3ebb77bdf71efb1d47332b",
+    "apps/shell/src/shared/research-api.ts": "9d645377302bd4f5e094c5d70bd237ee2928cd551158d02d91a606dfd4a1f4fa",
+    "packages/electron-utils/package.json": "07d7e3acde98fd6157bcb54936996b7d79a4798ec05874668f991723ce4dc969",
+    "apps/shell/src/main/research/jobs.ts": "28c60fa5181fcb6b37976aa5d8ac81c8b4818f7ea54c26bea93ffff1e0c6c689",
+    "apps/shell/src/shared/jobs-api.ts": "81122ee81348548c16bffc4dea8cfb90a32ada75add2885ebe68e0a7752eff66",
+    "apps/shell/tests/research-jobs.test.ts": "89025a5842ddd5511279c47874ef9c56553a8be03ee31fea2832be845fd0ee31",
+    "e2e/infomonk-jobs.spec.ts": "5e7f5ecd9c7bc21c6f8810ae1c55c3fc16a97f8fbe1eb218712e70ed07838b37",
+    "fixtures/infomonk/jobs/pages.json": "d28030ef262edcad1bc989cac148025a23f15796d6e63c745674b5b3d836fd5d",
+    "packages/electron-utils/src/public-html.ts": "b40fd19f94eda113ebde70d59a6c058c888587ae830a3b8832f5e66ee092992d"
+  },
+  "exportSha256": "ffb1ee9971485d1c6f300f105b368d915faa08f6070a77ece7fcf164f2f9650b",
+  "remainingGaps": [
+    "Broader dynamic-site acquisition and discovery need separate measured adapters.",
+    "Agency PDF detail extraction, repost identity and personal suitability are deferred.",
+    "Generic change counts include acquisition timestamps/source versions; a facts-only summary remains future work."
+  ],
+  "engineeringHarness": "Deferred until the final phase; remains disabled."
+}

@@ -1,0 +1,35 @@
+{
+  "grain": "Source listing, not deduplicated real-world vacancy",
+  "checkedAt": "2026-10-11T22:53:04.272Z",
+  "attribution": "Public career-site listings from the explicitly selected sources. Original URLs, retrieval times, snapshot versions and locators are recorded in cell evidence. Listing presence does not guarantee availability. Personal application status and notes are user-maintained; human changes are labeled manual.",
+  "revision": 3,
+  "rows": 14,
+  "uniqueRowIds": 14,
+  "uniqueListingKeys": 14,
+  "emptyListingKeys": 0,
+  "missingEmployer": 8,
+  "missingClosing": 8,
+  "missingEmployerRate": 0.5714285714285714,
+  "missingClosingRate": 0.5714285714285714,
+  "locationReview": [
+    {
+      "title": "Senior Project Manager",
+      "location": "All Jurisdictions"
+    },
+    {
+      "title": "Legal Secretary (Bermuda)",
+      "location": "Cayman"
+    }
+  ],
+  "invalidDates": [],
+  "invalidObservationOrder": 0,
+  "minClosingDate": "2026-10-12",
+  "maxClosingDate": "2026-10-22",
+  "sourceCounts": {
+    "Bermuda Monetary Authority": 3,
+    "Coralisle Group": 3,
+    "Expertise Group": 8
+  },
+  "savedListings": ["Data Analyst"],
+  "notes": "Counts describe accepted XLSX metadata for the checked selected-source sample. Missing agency facts and uncertain locations remain explicit. Correction guards and native cell evidence are tested separately."
+}

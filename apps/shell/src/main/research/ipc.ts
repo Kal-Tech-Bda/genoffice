@@ -1,4 +1,4 @@
-import { app, ipcMain, type BrowserWindow } from 'electron'
+import { app, ipcMain, shell, type BrowserWindow } from 'electron'
 import { z } from 'zod'
 import { RESEARCH_CHANNEL, EVIDENCE_CHANNEL, type ResearchConfig } from '../../shared/research-api'
 import { WorkspaceStore } from '../workspace-store'
@@ -6,6 +6,7 @@ import { ResearchService } from './service'
 import { quoteColumns } from './extract'
 import { datasetPage } from './pages'
 import { ENGINEERING_POLICY } from './engineering-policy'
+import { JOB_SITES } from '../../shared/jobs-api'
 
 const projectId = z.string().regex(/^proj-[a-f0-9]{12}$/)
 const uuid = z.string().uuid()
@@ -22,21 +23,25 @@ const page = z
   .optional()
 const config = z
   .object({
-    kind: z.enum(['quotes', 'worldbank', 'enrich']),
+    kind: z.enum(['quotes', 'worldbank', 'enrich', 'jobs']),
     instructions: z.string().max(4000),
     sourceIds: z.array(uuid).max(20),
-    fields: z
-      .array(z.enum(quoteColumns.map((c) => c.id) as [string, ...string[]]))
-      .min(1)
-      .max(6),
+    fields: z.array(z.enum(quoteColumns.map((c) => c.id) as [string, ...string[]])).max(6),
     countries: z.array(z.string().regex(/^[A-Z]{3}$/)).max(10),
     fromYear: z.number().int().min(1960).max(new Date().getFullYear()),
     toYear: z.number().int().min(1960).max(new Date().getFullYear()),
     parentWorkflowId: uuid.optional(),
+    jobSiteIds: z
+      .array(z.enum(JOB_SITES.map((s) => s.id) as ['bma', 'coralisle', 'expertise']))
+      .max(3)
+      .optional(),
   })
   .strict()
   .refine((c) => c.toYear >= c.fromYear && c.toYear - c.fromYear <= 2, 'Choose at most three years')
-  .refine((c) => c.fields.includes('quote_id'), 'Quote ID is required for stable keys')
+  .refine(
+    (c) => c.kind === 'jobs' || c.fields.includes('quote_id'),
+    'Quote ID is required for stable keys',
+  )
   .refine(
     (c) =>
       [c.sourceIds, c.fields, c.countries].every(
@@ -155,6 +160,7 @@ export function registerResearchIpc(
           sourceIds: [],
           countries: [],
           parentWorkflowId: undefined,
+          jobSiteIds: [],
         })
       }
       case 'accepted': {
@@ -188,6 +194,18 @@ export function registerResearchIpc(
         open(w.destination)
         return
       }
+      case 'visitJob':
+        return shell.openExternal(
+          service.jobListingUrl(
+            id,
+            uuid.parse(args[1]),
+            uuid.nullable().parse(args[2]),
+            z
+              .string()
+              .regex(/^[a-f0-9]{24}$/)
+              .parse(args[3]),
+          ),
+        )
       case 'evidence':
         return service.evidence(id, evidence.parse(args[1]))
       case 'openEvidence':

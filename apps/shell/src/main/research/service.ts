@@ -36,6 +36,16 @@ import { projectDataset } from './projection'
 import { datasetPage, previewCell } from './pages'
 import { RESEARCH_METADATA_LIMIT } from './metadata'
 import { isResearchIdentity } from '../../shared/research-api'
+import { APPLICATION_STATUSES } from '../../shared/jobs-api'
+import {
+  jobSite,
+  jobUrl,
+  parseJobPage,
+  fetchJobPage,
+  jobDataset,
+  type JobPage,
+  type JobObservation,
+} from './jobs'
 import {
   addFinding,
   duplicateKeyFindings,
@@ -454,11 +464,18 @@ export class ResearchService {
       sourceIds: [],
       countries: [],
       parentWorkflowId: undefined,
+      jobSiteIds: [],
     })
     return project.id
   }
   save(projectId: string, name: string, config: ResearchConfig, workflowId?: string) {
     const project = this.workspace.get(projectId)
+    if (config.kind === 'jobs') {
+      const sites = config.jobSiteIds ?? []
+      if (sites.length > 3 || new Set(sites).size !== sites.length)
+        throw new Error('Confirm at most three distinct job sources.')
+      sites.forEach(jobSite)
+    }
     if (workflowId) {
       const prior = this.store.workflow(workflowId, projectId)
       if (prior.acceptedRevision && prior.config.kind !== config.kind)
@@ -493,7 +510,9 @@ export class ResearchService {
     const w = this.store.workflow(workflowId, projectId)
     if (w.config.kind === 'quotes' && !w.config.sourceIds.length)
       throw new Error('Choose quote inputs first.')
-    if (w.config.kind !== 'quotes' && !w.config.countries.length)
+    if (w.config.kind === 'jobs' && !w.config.jobSiteIds?.length)
+      throw new Error('Choose job sources first.')
+    if (['worldbank', 'enrich'].includes(w.config.kind) && !w.config.countries.length)
       throw new Error('Confirm country codes first.')
     const run = this.queue(w, sample, !sample)
     this.tick()
@@ -575,6 +594,10 @@ export class ResearchService {
     const run = this.store.run(runId)
     const w = this.store.workflow(run.workflowId)
     const config = this.store.config(runId)
+    if (config.kind === 'jobs') {
+      await this.executeJobs(runId, signal)
+      return
+    }
     if (
       (config.kind === 'quotes' && !config.sourceIds.length) ||
       (config.kind !== 'quotes' && !config.countries.length)
@@ -765,6 +788,91 @@ export class ResearchService {
     dataset.issues.push(...failures)
     this.store.review(runId, dataset, { complete: completed, failed: failures.length, total })
   }
+  private async executeJobs(runId: string, signal: AbortSignal): Promise<void> {
+    const run = this.store.run(runId),
+      w = this.store.workflow(run.workflowId),
+      config = this.store.config(runId)
+    const sites = config.jobSiteIds ?? []
+    if (!sites.length || sites.length > 3 || new Set(sites).size !== sites.length)
+      throw new Error('Confirm one to three distinct job sources.')
+    sites.forEach(jobSite)
+    const observations: JobObservation[] = [],
+      known = this.store.inputs(runId)
+    this.store.progress(runId, 'acquiring', 'Checking confirmed public career sites', {
+      total: sites.length,
+      complete: 0,
+      failed: 0,
+    })
+    const acquire = async (site: (typeof sites)[number], ordinal: number, raw: string) => {
+      const uri = jobUrl(site, raw)
+      this.store.assertActive(runId)
+      signal.throwIfAborted()
+      let input = known.find((i) => i.ordinal === ordinal)
+      if (input && input.uri !== uri)
+        throw new Error('Durable job input route changed; run a fresh check.')
+      if (!input) {
+        const bytes = await fetchJobPage(site, uri, signal)
+        this.store.assertActive(runId)
+        signal.throwIfAborted()
+        const path = await this.snapshot(w.projectId, `jobs-${site}-${ordinal}.html`, bytes)
+        input = {
+          ordinal,
+          sourceId: hash(uri),
+          sourceVersion: hash(bytes),
+          name: `${jobSite(site).name} page ${(ordinal % 100) + 1}`,
+          uri,
+          retrievedAt: new Date().toISOString(),
+          path,
+          parsed: null,
+          error: null,
+        }
+        this.store.input(runId, input, { ordinal })
+      }
+      const bytes = await this.workspace.boundedRead(input.path)
+      if (hash(bytes) !== input.sourceVersion) throw new Error('Job snapshot integrity failed.')
+      const page = input.parsed
+        ? (JSON.parse(input.parsed) as JobPage)
+        : parseJobPage(site, bytes, uri)
+      this.store.assertActive(runId)
+      signal.throwIfAborted()
+      input.parsed = JSON.stringify(page)
+      this.store.input(runId, input, { ordinal })
+      observations.push({
+        site,
+        page,
+        source: {
+          sourceId: input.sourceId,
+          sourceVersion: input.sourceVersion,
+          sourceName: input.name,
+          uri,
+          retrievedAt: input.retrievedAt,
+        },
+      })
+      return page
+    }
+    for (let i = 0; i < (run.sample ? 1 : sites.length); i++) {
+      const site = sites[i]
+      this.store.progress(runId, 'acquiring', `Checking ${jobSite(site).name}`)
+      const listing = await acquire(site, i * 100, jobSite(site).url)
+      for (const [index, uri] of listing.links.entries())
+        await acquire(site, i * 100 + index + 1, uri)
+      this.store.progress(runId, 'processing', `Checked ${i + 1}/${sites.length} selected sites`, {
+        total: sites.length,
+        complete: i + 1,
+        failed: 0,
+      })
+    }
+    const dataset = jobDataset(
+      observations,
+      run.sample ? null : this.store.accepted(w.id),
+      run.sample ? sites.slice(0, 1) : sites,
+    )
+    this.store.review(runId, dataset, {
+      total: sites.length,
+      complete: run.sample ? 1 : sites.length,
+      failed: 0,
+    })
+  }
   private enrich(
     internal: ResearchDataset,
     external: ResearchDataset,
@@ -872,6 +980,12 @@ export class ResearchService {
         'Record identity cannot be changed by a cell correction. Update the source or confirmed scope, then review a new run; related records must keep their original keys.',
       )
     if (
+      tableId === 'jobs' &&
+      columnId === 'application_status' &&
+      !APPLICATION_STATUSES.includes(value as (typeof APPLICATION_STATUSES)[number])
+    )
+      throw new Error('Choose a supported application status.')
+    if (
       value !== null &&
       (column.type === 'number'
         ? typeof value !== 'number' || !Number.isFinite(value)
@@ -916,6 +1030,29 @@ export class ResearchService {
     )
     this.workspace.projects.moveFileToProject(path, projectId)
     this.workspace.rememberWorkbook(projectId, path)
+  }
+  jobListingUrl(
+    projectId: string,
+    workflowId: string,
+    runId: string | null,
+    rowId: string,
+  ): string {
+    const w = this.store.workflow(workflowId, projectId)
+    if (w.config.kind !== 'jobs') throw new Error('Choose a jobs workflow.')
+    const run = runId ? this.store.run(runId, projectId) : null
+    if (run && run.workflowId !== w.id) throw new Error('Job is outside this workflow.')
+    const dataset = run ? run.candidate : this.store.accepted(w.id)
+    const row = dataset?.tables.find((t) => t.id === 'jobs')?.rows.find((r) => r.id === rowId)
+    if (
+      !row ||
+      typeof row.cells.listing_url.value !== 'string' ||
+      typeof row.cells.job_key.value !== 'string'
+    )
+      throw new Error('Job listing not found.')
+    const site = row.cells.job_key.value.split(':')[0] as NonNullable<
+      ResearchConfig['jobSiteIds']
+    >[number]
+    return jobUrl(site, row.cells.listing_url.value)
   }
   async evidence(
     projectId: string,

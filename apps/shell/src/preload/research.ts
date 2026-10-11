@@ -5,6 +5,7 @@ export function exposeResearchApi(): void {
   const call = (method: string, ...args: unknown[]) =>
     ipcRenderer.invoke(RESEARCH_CHANNEL, method, ...args)
   const api: ResearchApi = {
+    visitJob: (id, workflowId, runId, rowId) => call('visitJob', id, workflowId, runId, rowId),
     readiness: (id, workflowId) => call('readiness', id, workflowId),
     overview: (id) => call('overview', id),
     policy: (id) => call('policy', id),

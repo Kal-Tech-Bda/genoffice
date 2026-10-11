@@ -136,6 +136,25 @@ No new application parser/framework dependency or agent harness was installed.
 The isolated parser experiment is documented separately. The owner puts the
 engineering harness last; it remains disabled.
 
+The later bounded jobs task adds `ResearchConfig.kind = jobs` and confirmed
+`jobSiteIds` for BMA, Coralisle and Expertise Group. `research/jobs.ts` parses
+server HTML/JobPosting data through the existing parse5 dependency, exposed by
+`electron-utils/public-html`; the package export is additive and versions/locks
+are unchanged. Known HTTPS origins/routes, redirect rejection, 2 MiB response
+caps, 20-second requests, DOM bounds and source-specific layout checks constrain
+collection. No website scripts, credentials, résumé or provider are used.
+
+`ResearchService.executeJobs` checkpoints verified raw HTML and parsed evidence
+in the same durable input table. New runs fetch again; retry reuses pinned
+acquisitions and their actual timestamps. Jobs have a separate processing version;
+quote/public versions retain their compatibility. Publication reuses full-coverage
+and revision fences. Source facts are read-only; personal status/notes use existing
+corrections. Missing listings remain with their old last-seen evidence and a new
+not-found observation; absence is not declared closure. Agency title/location
+keys cannot distinguish every repost, and uncertain cross-site duplicates need
+review. `visitJob` opens only a trusted stored listing on a validated source route.
+HTML snapshots are inspected as text/evidence rather than executed in a viewer.
+
 ## Workspace accuracy and source-version seam
 
 - Optional ProjectStore metadata records `startKind` and `workingWorkbook`.
