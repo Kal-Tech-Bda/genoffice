@@ -10,19 +10,23 @@ The [process journey review](../testing/process-journeys-2026-10-11.md) adds nat
 mixed-source failure/conflict review, direct sample-to-full, independent workflow
 reuse and CSV cleanup. Queue rollback/schedule fences, correction identity/validation
 and protected parent/child retention have focused unit coverage. Record keys are
-read-only in the ledger correction UI. Source-backed report generation and general
-input readiness checks remain gaps; the engineering harness remains last/disabled.
+read-only in the ledger correction UI. Saved local quote input readiness is now
+implemented and [native-tested](../testing/input-readiness-2026-10-11.md). General
+document understanding and source-backed report generation remain gaps; the
+engineering harness remains last/disabled.
 
-| Area                                                      | Status                                                                                                          | Main paths                                       |
-| --------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
-| Quote schema/sample/batch extraction and related items    | Runtime-tested PDF/DOCX; simple table/cell locators unit-tested; unsupported families fail visibly              | `research/extract.ts`, ResearchPanel             |
-| Cell evidence / immutable snapshot inspection             | Runtime-tested native sheet → PDF and exact locator; typed text IDs regression-tested                           | EvidenceDetails, research service/projection/IPC |
-| Accepted values, missing facts, corrections and revisions | Runtime-tested restart and correction-preserving refresh; transactional rollback/revision fences unit-tested    | ResearchStore schema 2                           |
-| World Bank bounded live collection                        | Runtime-tested: 18 observations, 2 pages; structured snapshots and pointers; null/scope/rate limits unit-tested | `research/worldbank.ts`                          |
-| Mixed internal/public enrichment                          | Runtime-tested exact country-code matching and internal/manual/external origins                                 | ResearchService enrichment                       |
-| Workflows, refresh, diffs and copy structure              | Runtime-tested versioned workflows, idempotent refresh and copies without inputs/records                        | ResearchPanel / SQLite queue                     |
-| Retry/cancel/interruption and retrieval failures          | Native injected HTTP fixtures distinguish errors and preserve accepted data; unit coverage/fences               | ResearchStore / ResearchService                  |
-| Schedules                                                 | Persistent local app-open scheduling; always stop at review; no hosted/off-computer execution                   | Same authoritative SQLite queue                  |
+| Area                                                      | Status                                                                                                                          | Main paths                                               |
+| --------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
+| Quote schema/sample/batch extraction and related items    | Runtime-tested PDF/DOCX; simple table/cell locators unit-tested; unsupported families fail visibly                              | `research/extract.ts`, ResearchPanel                     |
+| Saved quote input readiness                               | Native mixed-batch repair, stale-check rejection and full IPC block; parser reuse, integrity and item disagreements unit-tested | `research/readiness.ts`, ResearchService, InputReadiness |
+| Candidate business-key publication fence                  | Native repaired key publication; unit-tested missing-key rejection in service and direct store commit; no historic rewrite      | ResearchStore prepare/publish                            |
+| Cell evidence / immutable snapshot inspection             | Runtime-tested native sheet → PDF and exact locator; typed text IDs regression-tested                                           | EvidenceDetails, research service/projection/IPC         |
+| Accepted values, missing facts, corrections and revisions | Runtime-tested restart and correction-preserving refresh; transactional rollback/revision fences unit-tested                    | ResearchStore schema 2                                   |
+| World Bank bounded live collection                        | Runtime-tested: 18 observations, 2 pages; structured snapshots and pointers; null/scope/rate limits unit-tested                 | `research/worldbank.ts`                                  |
+| Mixed internal/public enrichment                          | Runtime-tested exact country-code matching and internal/manual/external origins                                                 | ResearchService enrichment                               |
+| Workflows, refresh, diffs and copy structure              | Runtime-tested versioned workflows, idempotent refresh and copies without inputs/records                                        | ResearchPanel / SQLite queue                             |
+| Retry/cancel/interruption and retrieval failures          | Native injected HTTP fixtures distinguish errors and preserve accepted data; unit coverage/fences                               | ResearchStore / ResearchService                          |
+| Schedules                                                 | Persistent local app-open scheduling; always stop at review; no hosted/off-computer execution                                   | Same authoritative SQLite queue                          |
 
 Full guarantees, native evidence and remaining limits:
 [research contracts](research-workflows.md), [verification](research-verification.md).

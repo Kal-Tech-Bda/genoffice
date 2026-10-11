@@ -25,6 +25,20 @@ export interface DurableInput {
 }
 const now = () => new Date().toISOString()
 const decode = <T>(text: unknown): T => JSON.parse(String(text)) as T
+function assertCandidateQuoteKeys(dataset: ResearchDataset): void {
+  const table = dataset.tables.find(
+    (t) => t.id === 'quotes' && t.columns.some((c) => c.id === 'quote_id'),
+  )
+  if (
+    table?.rows.some(
+      (row) =>
+        typeof row.cells.quote_id?.value !== 'string' || !String(row.cells.quote_id.value).trim(),
+    )
+  )
+    throw new Error(
+      'Missing or conflicting Quote ID prevents publication. Fix the source snapshot and review a new run.',
+    )
+}
 const summaryColumns =
   'id,workflow_id,config_version,processing_version,base_revision,sample,status,progress,error,created_at,updated_at,coverage,(candidate IS NOT NULL) AS has_candidate'
 function runSummary(r: SqlRow): ResearchRunSummary {
@@ -516,6 +530,7 @@ export class ResearchStore {
     )
       throw new Error('Incomplete coverage or changed accepted revision; rerun before publication.')
     let next = this.overlay(w.id, r.candidate)
+    assertCandidateQuoteKeys(next)
     if (
       (next.issues.length ||
         next.tables.some((t) =>
@@ -597,6 +612,7 @@ export class ResearchStore {
       )
         throw new Error('Publication lost its version fence.')
       const revision = w.acceptedRevision + 1
+      if (r.candidate) assertCandidateQuoteKeys(r.candidate)
       checkedResearchMetadata(dataset, w.id, revision)
       this.writeAccepted(w.id, revision, dataset, destination)
       this.event(id, 'published', `Accepted revision ${revision}`)

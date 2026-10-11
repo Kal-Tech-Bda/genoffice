@@ -15,6 +15,14 @@ Workflows and research Details have the implemented behavior described in
 - Workflow cards show actual input/configuration, accepted revision, destination,
   trigger, latest result and pending review. Run sample/full, Edit, History,
   structure copy, Update schedule and pause/resume operate on persistent records.
+- Saved quote workflows show Input readiness. Check input readiness reads all
+  confirmed snapshots and displays selected/unique/ready/review/blocked/copy counts,
+  snapshot hashes, Quote IDs, bounded findings and expandable actual excerpts.
+  Open checked snapshot uses the existing native source viewer. Edit confirmed
+  inputs opens configuration; unsaved edits disable checking/running. A blocked
+  check disables full execution and names the repair/exclusion path. Samples
+  remain diagnostic. A source/configuration change marks the check outdated;
+  full execution checks again in main. No input is silently excluded or repaired.
 - A sample is visibly non-publishable. Candidate status/progress/coverage,
   missing/conflicting cells, related sheets and execution/validation events are
   real stored results. Tables show their complete count and first 100 rows.
@@ -30,7 +38,8 @@ Workflows and research Details have the implemented behavior described in
   cannot create an accepted correction revision.
 - Added/changed/absent counts use stable keys and content hashes. Absent records
   can be inspected; retain is the default. Publication requires a full completed
-  run and review, and is blocked by failed coverage. Reviewed removal preserves
+  run and review, and is blocked by failed coverage or missing/conflicting Quote
+  IDs. Reviewed removal preserves
   overridden records together with their quote and related line items.
 - Details in an accepted research workbook resolves the top-left selected cell.
   A changed sheet value/revision produces an explicit warning. Reload checks
@@ -109,6 +118,8 @@ A cold spreadsheet view remains inert with its opening indicator until both the
 initial range and Univer startup are ready. Name-box navigation cannot run against
 unregistered scroll render modules. Prewarmed views retain their existing path.
 See [the native workspace use case](testing/workspace-flow-2026-10-10.md).
+The [readiness screenshots](testing/input-readiness-2026-10-11.md) show actual
+blocked light-theme inputs and a repaired dark-theme batch.
 
 ## Cleanup interaction
 

@@ -1,0 +1,14 @@
+{
+  "date": "2026-10-11",
+  "profile": "C:\\Users\\Place\\AppData\\Local\\Temp\\genoffice-e2e-9DO9cd",
+  "projectId": "proj-e0b2c37a249e",
+  "workflowId": "fbd283dc-5f43-420b-972d-95f5ffc62aa6",
+  "checks": [
+    "New project opens copied workflow with empty confirmed scope",
+    "Choose inputs opens and scrolls configuration",
+    "New source requires explicit selection",
+    "Sample advances to full without cancellation",
+    "New accepted revision has separate identity; original remains revision 1"
+  ],
+  "rendererErrors": []
+}

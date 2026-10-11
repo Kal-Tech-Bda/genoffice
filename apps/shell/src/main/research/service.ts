@@ -17,15 +17,32 @@ import type {
   ResearchOverview,
   ResearchProjectSummary,
   ResearchWorkflow,
+  ResearchReadiness,
+  ResearchInputReadiness,
 } from '../../shared/research-api'
 import type { WorkspaceProject } from '../../shared/workspace-api'
 import { ResearchStore, type DurableInput } from './store'
-import { cell, extractQuote, hash, mergeDatasets, parseSource, type ParsedSource } from './extract'
+import {
+  cell,
+  extractQuote,
+  hash,
+  mergeDatasets,
+  parseSource,
+  PROCESSING_VERSION,
+  type ParsedSource,
+} from './extract'
 import { fetchPopulation, parsePopulation, worldBankUrl } from './worldbank'
 import { projectDataset } from './projection'
 import { datasetPage, previewCell } from './pages'
 import { RESEARCH_METADATA_LIMIT } from './metadata'
 import { isResearchIdentity } from '../../shared/research-api'
+import {
+  addFinding,
+  duplicateKeyFindings,
+  finding,
+  quoteFindings,
+  READINESS_PARSE_CACHE_BYTES,
+} from './readiness'
 
 export class ResearchService {
   readonly store: ResearchStore
@@ -33,6 +50,9 @@ export class ResearchService {
   private controller: AbortController | null = null
   private activeRun: string | null = null
   private timer: ReturnType<typeof setInterval> | null = null
+  private checkingInputs = false
+  private parsedInputs = new Map<string, string>()
+  private parsedInputBytes = 0
   constructor(
     private readonly userData: string,
     readonly workspace: WorkspaceStore,
@@ -47,6 +67,136 @@ export class ResearchService {
   close(): void {
     if (this.timer) clearInterval(this.timer)
     this.controller?.abort() /* SQLite stays open until Electron exits; interrupted work is fenced on next startup. */
+    this.parsedInputs.clear()
+    this.parsedInputBytes = 0
+  }
+  private parsedKey(version: string, name: string): string {
+    return `${PROCESSING_VERSION}:${version}:${extname(name).toLowerCase()}`
+  }
+  private cacheParsed(version: string, name: string, parsed: ParsedSource): void {
+    const key = this.parsedKey(version, name)
+    if (this.parsedInputs.has(key)) return
+    const serialized = JSON.stringify(parsed),
+      size = Buffer.byteLength(serialized)
+    if (size > READINESS_PARSE_CACHE_BYTES) return
+    if (this.parsedInputBytes + size > READINESS_PARSE_CACHE_BYTES) {
+      this.parsedInputs.clear()
+      this.parsedInputBytes = 0
+    }
+    this.parsedInputs.set(key, serialized)
+    this.parsedInputBytes += size
+  }
+  async readiness(projectId: string, workflowId: string): Promise<ResearchReadiness> {
+    const workflow = this.store.workflow(workflowId, projectId)
+    if (workflow.config.kind !== 'quotes')
+      throw new Error('Input readiness checks saved local supplier quote snapshots only.')
+    if (workflow.config.sourceIds.length > 20 || !workflow.config.fields.includes('quote_id'))
+      throw new Error('Input readiness requires at most 20 saved snapshots and the Quote ID field.')
+    if (this.checkingInputs)
+      throw new Error('Another input readiness check is running. Try again when it finishes.')
+    const sourceSignature = this.freshness(workflow).sourceSignature
+    const sources = this.workspace.get(projectId).workspace.sources
+    const inputs: ResearchInputReadiness[] = [],
+      datasets = new Map<string, ResearchDataset>()
+    const seen = new Map<string, ResearchInputReadiness>()
+    this.checkingInputs = true
+    try {
+      for (const id of workflow.config.sourceIds) {
+        const source = sources.find((s) => s.id === id)
+        const input: ResearchInputReadiness = {
+          sourceId: id,
+          sourceName: source?.name ?? 'Unavailable source',
+          sourceVersion: source?.sha256 ?? null,
+          status: 'ready',
+          quoteId: null,
+          findingCount: 0,
+          findings: [],
+        }
+        inputs.push(input)
+        try {
+          if (!source?.snapshotPath || !source.sha256)
+            throw new Error(
+              'Saved local snapshot is unavailable. Add or update the source in this project.',
+            )
+          const bytes = await this.workspace.boundedRead(source.snapshotPath)
+          if (hash(bytes) !== source.sha256)
+            throw new Error(
+              'Snapshot integrity failure. Update the source snapshot before checking again.',
+            )
+          const duplicate = seen.get(source.sha256)
+          if (duplicate) {
+            input.duplicateOf = duplicate.sourceId
+            input.quoteId = duplicate.quoteId
+            input.status = duplicate.status
+            continue
+          }
+          seen.set(source.sha256, input)
+          const cached = this.parsedInputs.get(this.parsedKey(source.sha256, source.name))
+          const parsed = cached
+            ? (JSON.parse(cached) as ParsedSource)
+            : await parseSource(bytes, source.name)
+          const dataset = mergeDatasets([
+            extractQuote(
+              parsed,
+              {
+                sourceId: source.id,
+                sourceVersion: source.sha256,
+                sourceName: source.name,
+                uri: source.uri,
+                retrievedAt: source.addedAt,
+              },
+              workflow.config.fields,
+            ),
+          ])
+          this.cacheParsed(source.sha256, source.name, parsed)
+          datasets.set(source.id, dataset)
+          input.quoteId = dataset.tables[0].rows[0].cells.quote_id.value as string | null
+          for (const value of quoteFindings(dataset)) addFinding(input, value)
+        } catch (error) {
+          addFinding(input, finding('blocked', String(error)))
+        }
+      }
+      duplicateKeyFindings(inputs, datasets)
+      for (const input of inputs.filter((i) => i.duplicateOf)) {
+        const original = inputs.find((i) => i.sourceId === input.duplicateOf)!
+        input.status = original.status
+        addFinding(
+          input,
+          finding(
+            original.status === 'blocked' ? 'blocked' : 'review',
+            `Identical snapshot bytes to ${original.sourceName}. Processing handles this content once; the original readiness findings apply.`,
+          ),
+        )
+      }
+      const current = this.store.workflow(workflowId, projectId)
+      if (
+        current.configVersion !== workflow.configVersion ||
+        this.freshness(current).sourceSignature !== sourceSignature
+      )
+        throw new Error(
+          'Inputs or configuration changed while checking readiness. Check the current saved inputs again.',
+        )
+      const unique = inputs.filter((i) => !i.duplicateOf)
+      return {
+        workflowId,
+        configVersion: workflow.configVersion,
+        processingVersion: PROCESSING_VERSION,
+        sourceSignature,
+        checkedAt: new Date().toISOString(),
+        readyToRun: inputs.length > 0 && !inputs.some((i) => i.status === 'blocked'),
+        counts: {
+          selected: inputs.length,
+          unique: unique.length,
+          ready: unique.filter((i) => i.status === 'ready').length,
+          review: unique.filter((i) => i.status === 'review').length,
+          blocked: unique.filter((i) => i.status === 'blocked').length,
+          duplicates: inputs.length - unique.length,
+        },
+        inputs,
+      }
+    } finally {
+      this.checkingInputs = false
+    }
   }
   private async folder(projectId: string): Promise<string> {
     this.workspace.get(projectId)
@@ -368,7 +518,7 @@ export class ResearchService {
       uri: s.uri,
       retrievedAt: s.addedAt,
       path: s.snapshotPath!,
-      parsed: null,
+      parsed: this.parsedInputs.get(this.parsedKey(s.sha256!, s.name)) ?? null,
       error: null,
     }))
     return this.store.queue(w.id, sample, inputs, replaceReviewedSample)

@@ -1,6 +1,6 @@
 # Infomonk product context
 
-Updated 10 October 2026. Stages 0–5 are implemented locally on the GenOffice fork
+Updated 11 October 2026. Stages 0–5 are implemented locally on the GenOffice fork
 within bounded supported input/source families. The engineering harness remains
 disabled and will be the final implementation phase, after workspace accuracy,
 usable outputs and end-to-end validation.
@@ -11,6 +11,14 @@ milestone provides project organization, real spreadsheet cleanup, supplier-quot
 extraction, a bounded World Bank adapter and reviewed maintained-table workflows.
 Registering a source alone does not extract it: users confirm a task, schema and
 scope, inspect a sample, process all inputs and review before publication.
+
+Saved quote workflows now offer **Check input readiness** before full execution.
+The check reads all selected snapshots through the existing parsers and rules,
+shows actual excerpts, and distinguishes missing facts, conflicting keys and
+identical copies. Unsupported/unreadable inputs, damaged snapshots and missing
+Quote IDs block a full run. Other missing facts remain explicit review warnings.
+Checks do not create runs or accepted revisions; source/configuration changes
+invalidate them. Samples remain diagnostic. No OCR or model request is added.
 
 ## Owner decisions and scope
 
@@ -94,6 +102,12 @@ correction validation, independent workflow reuse and spreadsheet cleanup.
 Record keys cannot change through ordinary corrections; protected quote/item
 relationships stay together on removal. New projects from workflows open their
 input configuration path instead of an unrelated blank workbook.
+
+The [input readiness journey](docs/testing/input-readiness-2026-10-11.md) verifies
+blocking, snapshot repair, explicit scope changes and reviewed publication of a
+mixed batch. A missing/conflicting Quote ID also blocks new publication through
+retry/schedule paths; existing accepted revisions are not rewritten. Reports
+from selected accepted tables are the next workspace increment.
 
 The [Stages 3–5 contracts and limitations](docs/implementation/research-workflows.md)
 define the current document family, public-source scope, field origins, deletion

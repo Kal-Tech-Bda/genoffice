@@ -82,6 +82,8 @@ export function registerResearchIpc(
     const id = projectId.parse(args[0])
     service.workspace.get(id)
     switch (method) {
+      case 'readiness':
+        return service.readiness(id, uuid.parse(args[1]))
       case 'overview':
         return service.overview(id)
       case 'policy':
@@ -112,7 +114,16 @@ export function registerResearchIpc(
           uuid.optional().parse(args[3]),
         )
       case 'run': {
-        const run = service.run(id, uuid.parse(args[1]), z.boolean().parse(args[2]))
+        const workflowId = uuid.parse(args[1]),
+          sample = z.boolean().parse(args[2])
+        if (!sample && service.store.workflow(workflowId, id).config.kind === 'quotes') {
+          const check = await service.readiness(id, workflowId)
+          if (!check.readyToRun)
+            throw new Error(
+              'Input readiness blocks this full run. Fix or exclude blocked inputs, save the configuration, then check again.',
+            )
+        }
+        const run = service.run(id, workflowId, sample)
         return service.store.summary(run.id, id)
       }
       case 'cancel':

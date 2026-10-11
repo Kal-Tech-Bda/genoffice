@@ -216,7 +216,7 @@ test('spreadsheet cleanup: preview and discard, return to the editor, apply and 
   }
 })
 
-test('mixed documents: sample to full, failed coverage repair, conflicting evidence and a reviewed correction', async () => {
+test('mixed documents: readiness repair, sample to full, conflicting evidence and a reviewed correction', async () => {
   const launched = await launchShell({ onboardingSeen: true, videoDir: 'process-journeys' })
   const { page, app } = launched,
     errors = watch(launched)
@@ -235,21 +235,22 @@ test('mixed documents: sample to full, failed coverage repair, conflicting evide
       page.getByRole('button', { name: 'Run all confirmed inputs', exact: true }),
     ).toBeEnabled()
     await page.getByRole('button', { name: 'Run all confirmed inputs', exact: true }).click()
-    await expect(page.getByText('2/3 complete · 1 failed', { exact: false })).toBeVisible()
+    const readiness = page.getByRole('region', { name: 'Input readiness', exact: true })
+    await expect(readiness).toContainText('1 blocked')
     await expect(
       page.getByRole('button', { name: 'Publish accepted table', exact: true }),
     ).toBeDisabled()
     await expect(
       page.getByRole('button', { name: 'Run all confirmed inputs', exact: true }),
     ).toBeDisabled()
-    await expect(
-      page.getByText(/unsupported.txt: Error: Unsupported document family/),
-    ).toBeVisible()
-    await page.locator('.im-research-publish').scrollIntoViewIfNeeded()
+    await expect(readiness.getByText(/Unsupported document family/)).toBeVisible()
+    await readiness.scrollIntoViewIfNeeded()
     await capture(app, 'mixed-input-coverage-light')
     const { project, workflow: saved } = await ids(page, 'Mixed document review')
     const state = await page.evaluate((id) => window.infomonkResearch.state(id), project.id)
-    expect(state.runs.find((r) => r.sample)?.status).toBe('obsolete')
+    expect(state.runs).toHaveLength(1)
+    expect(state.runs[0].sample).toBe(true)
+    expect(state.runs[0].status).toBe('review')
     expect(saved.acceptedRevision).toBe(0)
     await page.getByRole('button', { name: 'Edit', exact: true }).click()
     await page.getByLabel(/unsupported.txt ·/).uncheck()
@@ -305,8 +306,8 @@ test('mixed documents: sample to full, failed coverage repair, conflicting evide
       saved.id,
       [
         'Sample advances directly to full and stays in history',
-        'Unsupported input blocks publication',
-        'Explicit scope repair obsoletes incomplete candidate',
+        'Unsupported input blocks full execution before a new run exists',
+        'Explicit scope repair obsoletes the earlier sample',
         'Duplicate quote resolves to one row with three conflicting excerpts',
         'Record key is read only',
         'Invalid negative correction is rejected without advancing the accepted revision',

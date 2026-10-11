@@ -1,0 +1,131 @@
+{
+  "recordedAt": "2026-10-11T21:23:59.7157538Z",
+  "platform": "Microsoft Windows NT 10.0.26200.0",
+  "branch": "codex/infomonk-workspace",
+  "baseline": "76a0336bbe16847f912cdf7159eac7756a09d6c2",
+  "sourceSha256": {
+    "apps/shell/src/main/research/readiness.ts": "1114b42f2b6db9361e2a66bde1d335caed5ee8c97483478320f69115aebb22ad",
+    "apps/shell/src/main/research/service.ts": "3ca97d384c052a0eb828bbbae86471a9d9e926f5e04a10e6fb8f71df5d617e81",
+    "apps/shell/src/main/research/store.ts": "15441d49e923f6cbe1bbd2dc5b641b7db518502c6d60b34926fb4d1c029455b0",
+    "apps/shell/src/main/research/ipc.ts": "22b3b248a0ca73d9de47b20fbb35059673bd424cf51ee479eb1f75302a147a08",
+    "apps/shell/src/preload/research.ts": "74206a8fbd860b8ffcf31dc554a4a7cd2e7e438f244e4a314ed75f2e7f556ab2",
+    "apps/shell/src/renderer/src/infomonk/ResearchPanel.tsx": "bd10e22a2a9557fd1eee3d6f92b2e6cc5be799c71a3d404813f0776b44fe404e",
+    "apps/shell/src/renderer/src/infomonk/InputReadiness.tsx": "d24863662794ea2f0322ec4326fc067074b9761e60d4c37ea4a2e9cbfe8ef70b",
+    "apps/shell/src/renderer/src/infomonk/research.css": "59d6441361bc98e1bd269c91ca437f188de9ec2ad6606a5dc7dc6bd992965508",
+    "apps/shell/src/shared/research-api.ts": "06d1ed49e0f697771c4376795ae8dc545688e9b8caac93f8885fa30723578563",
+    "apps/shell/tests/research-readiness.test.ts": "0d16dbdf2b37f586d54f25c32154895daf0489c9dd3e35de6702fde4ab5112b5",
+    "e2e/infomonk-readiness.spec.ts": "9044d711bd91057cf18850a1db3e7ed2f717dc916da519821cbac842cc0620a9",
+    "e2e/infomonk-process-journeys.spec.ts": "7e5131dc582f0ca81cc29f2bafb6dd2e9b09d0986ee6d886b2f7a2579781d4ea",
+    "fixtures/infomonk/readiness/missing-key.txt": "d3619911f487d018c273a970e5e42b245028e5c1db2b6999ad813ce3e20089ae",
+    "fixtures/infomonk/readiness/key-fixed.txt": "303bb1a9e32c0635ad9b7017c17f54ee980e82c7b521580a0d8c1cf0308147b4",
+    "fixtures/infomonk/readiness/no-text-layer.pdf": "80cac2e065dfec68e342e8576186432b9e5bdfcbd74b1f1412fff0424c14d918"
+  },
+  "date": "2026-10-11",
+  "versions": {
+    "node": "24.13.1",
+    "npm": "11.8.0",
+    "electron": "43.7.6",
+    "vitest": "4.1.11",
+    "playwright": "1.62.1"
+  },
+  "checks": [
+    {
+      "command": "node fixtures/infomonk/readiness/generate.mjs",
+      "result": "pass"
+    },
+    {
+      "command": "npm run build -w @genoffice/shell",
+      "result": "pass"
+    },
+    {
+      "command": "npm run typecheck",
+      "result": "pass",
+      "workspaces": 26
+    },
+    {
+      "command": "npm run test -w @genoffice/shell -- tests/research-readiness.test.ts tests/research-journeys.test.ts tests/research.test.ts tests/research-hardening.test.ts tests/workspace-flow.test.ts tests/workspace-store.test.ts tests/workspace-portability.test.ts tests/clean-table.test.ts",
+      "result": "pass",
+      "tests": 57,
+      "files": 8
+    },
+    {
+      "command": "npm run test:e2e -- infomonk-readiness.spec.ts infomonk-process-journeys.spec.ts infomonk-workspace-flow.spec.ts infomonk-hardening.spec.ts infomonk-research-context.spec.ts sheets-edit-save.spec.ts sheets-open-tsv.spec.ts sheets-csv-inplace-save.spec.ts sheets-csv-export.spec.ts sheets-filter-reopen.spec.ts ai-panel-side-settings.spec.ts theme-pipeline.spec.ts",
+      "result": "21 passed, 1 test selector failure",
+      "tests": 22,
+      "note": "Update snapshot uses a source-specific accessible label; the test was corrected without weakening the application assertion."
+    },
+    {
+      "command": "npm run test:e2e -- infomonk-readiness.spec.ts",
+      "result": "pass",
+      "tests": 2,
+      "durationSeconds": 7.5
+    },
+    {
+      "command": "npm run lint",
+      "result": "pass",
+      "errors": 0,
+      "inheritedWarnings": 12
+    },
+    {
+      "command": "npm run format:check",
+      "result": "pass"
+    },
+    {
+      "command": "npm run check:theme-colors",
+      "result": "pass"
+    },
+    {
+      "command": "npm run check:english-comments",
+      "result": "pass"
+    },
+    {
+      "command": "npm run licenses",
+      "result": "pass"
+    }
+  ],
+  "verification": {
+    "distinctSelectedNativeTestsPassed": 22,
+    "retries": 0,
+    "readinessRendererErrors": [],
+    "note": "The combined regression run and focused readiness rerun together verified all 22 selected tests. Full inherited suites and native engine tests were not rerun; the documented 21 Windows baseline failures remain."
+  },
+  "environmentNote": "Existing Git unzip supplied through the test process PATH; no utility or application dependency installed.",
+  "initialCounts": {
+    "selected": 6,
+    "unique": 5,
+    "ready": 0,
+    "review": 3,
+    "blocked": 2,
+    "duplicates": 1
+  },
+  "repairedCounts": {
+    "selected": 5,
+    "unique": 4,
+    "ready": 1,
+    "review": 3,
+    "blocked": 0,
+    "duplicates": 1
+  },
+  "expectedAcceptedTotals": {
+    "Q-100": null,
+    "Q-200": null,
+    "Q-300": 22
+  },
+  "boundaries": [
+    "Saved local quote configurations only",
+    "No OCR, model or web request",
+    "No engineering harness",
+    "No rewrite of existing accepted revisions or retained legacy rows",
+    "Readiness does not certify factual accuracy or publication capacity"
+  ],
+  "artifacts": [
+    "blocked-inputs-light.png",
+    "repaired-inputs-dark.png",
+    "journey.json",
+    "regression-mixed-documents.json",
+    "regression-source-removal.json",
+    "regression-spreadsheet-cleanup.json",
+    "regression-workflow-reuse.json",
+    "regression-supplier-comparison.json"
+  ]
+}

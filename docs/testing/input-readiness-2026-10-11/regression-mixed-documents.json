@@ -1,0 +1,16 @@
+{
+  "date": "2026-10-11",
+  "profile": "C:\\Users\\Place\\AppData\\Local\\Temp\\genoffice-e2e-TtV6Wq",
+  "projectId": "proj-d9ce61ea27b6",
+  "workflowId": "f4e2c19a-0d0c-459e-bed8-0f01c8592ba2",
+  "checks": [
+    "Sample advances directly to full and stays in history",
+    "Unsupported input blocks full execution before a new run exists",
+    "Explicit scope repair obsoletes the earlier sample",
+    "Duplicate quote resolves to one row with three conflicting excerpts",
+    "Record key is read only",
+    "Invalid negative correction is rejected without advancing the accepted revision",
+    "Reviewed correction publishes 130 and preserves evidence"
+  ],
+  "rendererErrors": []
+}

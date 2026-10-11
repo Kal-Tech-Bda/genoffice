@@ -16,7 +16,8 @@ Launch with the existing `npm run dev`, or build all editors and run
    input snapshots and typed fields. Quote ID is the stable business key within
    this workflow. One input contains exactly one quote; items use a related sheet.
 3. Save the workflow and run a sample. Click a value, verify its snapshot/locator,
-   and inspect missing facts. Adjust the configuration if needed, then run all
+   and inspect missing facts. Check input readiness and repair/exclude blocked
+   snapshots explicitly. Save configuration changes if needed, then run all
    confirmed inputs directly. The completed sample stays in history and cannot
    publish; the transition to full is transactional. Running samples and full
    candidates still block another run. Scheduled execution never replaces review.
@@ -50,6 +51,42 @@ ledger revisions; native edits to an XLSX are separately owned file edits.
 Activity links real run events and correction records. Opening a published or
 explicitly selected owned workbook makes it the remembered working workbook;
 cleanup remains attached to the original/cleaned primary workbook.
+
+## Local input readiness
+
+**Check input readiness** checks every selected snapshot against the saved quote
+schema. Findings show the snapshot hash, Quote ID, actual text/structure excerpts
+and ready/review/blocked status. The same inherited DOCX/PDF/text parsers and quote
+rules perform execution. No run, projection, source mutation or accepted revision
+is created by checking. Identical snapshot bytes are reported separately from
+different snapshots sharing a business key; header and numbered-item disagreements
+use the real merge rules. Missing/invalid non-key facts remain review warnings.
+
+Missing/conflicting Quote IDs, unavailable/damaged snapshots, unreadable documents
+and unsupported families block requested full quote runs before queueing. Repair
+the source through Sources → Update snapshot, or explicitly exclude a blocked
+input and save the configuration. The UI never silently drops it. Samples remain
+diagnostic; unsaved configuration edits must be saved before checking/running.
+Main IPC checks again before full queueing. Source/configuration changes invalidate
+displayed checks; changes during checking reject the result.
+
+Findings display at most 12 per snapshot, with the complete finding count. Each
+finding has at most three 500-character excerpt previews. Full evidence remains
+available in the candidate inspector. Parsing is cached in memory by processing
+version, SHA and extension, bounded to 16 MiB of serialized UTF-8 data; this is
+not a measured peak-memory bound. Pinned run inputs reuse verified parsing while
+every check/execution still verifies snapshot bytes. Only one check runs at a
+time; another request is rejected with retry guidance. No OCR, web request or
+provider call is made.
+
+Readiness establishes supported input processing, not fact accuracy or publication
+capacity. Candidate review, complete coverage, version/revision fences and the
+16,777,216-character metadata bound still apply. Incoming quote candidates also
+need nonempty Quote IDs at prepare/commit, including retries and scheduled runs.
+Existing accepted revisions and previously retained legacy rows are not migrated
+by this check; explicit identity repair remains deferred.
+
+See the [native readiness journey](../testing/input-readiness-2026-10-11.md).
 
 ## Supported extraction
 

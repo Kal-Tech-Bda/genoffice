@@ -96,6 +96,22 @@ existing behavior. Correction validation rejects immutable record keys and inval
 facts before file generation. Reviewed removal preserves quote/item relationships
 when any related row has a persistent correction, using the existing ledger.
 
+`ResearchPanel / InputReadiness → window.infomonkResearch.readiness → shell IPC`
+checks saved local quote configurations without queueing or changing accepted data.
+`ResearchService.readiness` verifies snapshot hashes and uses the existing
+`parseSource`, `extractQuote` and `mergeDatasets` rules. Missing/conflicting keys
+and unreadable/unsupported inputs block; other missing facts and duplicate-key
+disagreements require review. Duplicate bytes are processed once. Returned
+findings/excerpts are bounded, and changed configuration/content signatures reject
+a stale check. Requested full quote runs check again in main before queueing.
+
+Verified parses are cached in memory by processing version, hash and extension,
+up to 16 MiB of serialized UTF-8 data, and reused in pinned durable run inputs.
+Every check and execution still verifies source bytes. No second parser, database
+or scheduler is introduced. Store prepare/commit also reject missing Quote IDs
+in incoming candidates, covering retries/schedules without rewriting historical
+accepted revisions. See [the readiness report](docs/testing/input-readiness-2026-10-11.md).
+
 `research/extract.ts` separates source parsing from the supported quote-family
 extractor. `worldbank.ts` is one strictly bounded structured adapter with durable
 HTTP snapshots, pagination/scope/count validation, timeout and rate-limit backoff.

@@ -12,9 +12,11 @@ import type {
   ResearchRun,
   ResearchAbsentPage,
   ResearchCell,
+  ResearchReadiness,
 } from '../../../shared/research-api'
 import './research.css'
 import { isResearchIdentity } from '../../../shared/research-api'
+import { InputReadiness } from './InputReadiness'
 
 declare global {
   interface Window {
@@ -56,6 +58,7 @@ export function ResearchPanel({
   const [historyOffset, setHistoryOffset] = useState(0)
   const [run, setRun] = useState<ResearchRun | null>(null)
   const [absent, setAbsent] = useState<ResearchAbsentPage | null>(null)
+  const absentBasis = useRef('')
   const [editingId, setEditingId] = useState<string | undefined>()
   const [name, setName] = useState(
     project.workspace?.startKind === 'researchWeb' ? 'Public population' : 'Supplier quotes',
@@ -92,6 +95,10 @@ export function ResearchPanel({
   const [correction, setCorrection] = useState('')
   const [reason, setReason] = useState('')
   const [schedule, setSchedule] = useState('manual')
+  const [readiness, setReadiness] = useState<ResearchReadiness | null>(null)
+  const [checkingInputs, setCheckingInputs] = useState(false)
+  const readinessRequest = useRef(0)
+  const readinessElement = useRef<HTMLDivElement>(null)
   const configElement = useRef<HTMLDetailsElement>(null)
   const workflow = state.workflows.find((w) => w.id === selectedId)
   const pending = state.latestRuns.find(
@@ -107,6 +114,17 @@ export function ResearchPanel({
         (workflow.config.kind === 'enrich' && !workflow.config.parentWorkflowId))
   const identityCell =
     selectedCell && isResearchIdentity(selectedCell.table.id, selectedCell.column)
+  const readinessCurrent =
+    !!readiness &&
+    readiness.workflowId === selectedId &&
+    readiness.configVersion === workflow?.configVersion &&
+    readiness.sourceSignature === state.freshness[selectedId ?? '']?.sourceSignature
+  useEffect(
+    () => () => {
+      readinessRequest.current++
+    },
+    [],
+  )
   useEffect(
     () => setSchedule(workflow?.scheduleMinutes?.toString() ?? 'manual'),
     [workflow?.scheduleMinutes, selectedId],
@@ -125,6 +143,7 @@ export function ResearchPanel({
     setRunId(id)
     setRun(null)
     setAbsent(null)
+    absentBasis.current = ''
     cellRequest.current++
     setShowAccepted(false)
     setNeedsReview(false)
@@ -169,7 +188,11 @@ export function ResearchPanel({
       .then((value) => {
         if (live) {
           setRun(value)
-          setAbsent(null)
+          const basis = `${value.id}:${value.updatedAt}:${workflow?.acceptedRevision ?? 0}`
+          if (basis !== absentBasis.current) {
+            absentBasis.current = basis
+            setAbsent(null)
+          }
         }
       })
       .catch((err) => {
@@ -178,7 +201,7 @@ export function ResearchPanel({
     return () => {
       live = false
     }
-  }, [project.id, runId, detailVersion, needsReview])
+  }, [project.id, runId, detailVersion, needsReview, workflow?.acceptedRevision])
   useEffect(() => {
     let live = true
     if (!showAccepted || !selectedId) return
@@ -253,6 +276,8 @@ export function ResearchPanel({
     }
   }
   async function select(w: ResearchWorkflow) {
+    readinessRequest.current++
+    setReadiness(null)
     setSelectedId(w.id)
     setHistoryOffset(0)
     showRun(state.latestRuns.find((r) => r.workflowId === w.id)?.id ?? null)
@@ -282,14 +307,36 @@ export function ResearchPanel({
       editingId,
     )
     setSelectedId(w.id)
+    readinessRequest.current++
+    setReadiness(null)
     setHistoryOffset(0)
     setEditingId(undefined)
     showRun(null)
     setAccepted(await window.infomonkResearch.accepted(project.id, w.id))
     setSchedule(w.scheduleMinutes?.toString() ?? 'manual')
   }
+  async function checkInputs(reveal = false) {
+    if (!workflow) return null
+    const request = ++readinessRequest.current
+    setCheckingInputs(true)
+    try {
+      const report = await window.infomonkResearch.readiness(project.id, workflow.id)
+      if (request !== readinessRequest.current || query.current.workflowId !== report.workflowId)
+        return null
+      setReadiness(report)
+      if (reveal || !report.readyToRun)
+        requestAnimationFrame(() => readinessElement.current?.scrollIntoView({ block: 'start' }))
+      return report
+    } finally {
+      if (request === readinessRequest.current) setCheckingInputs(false)
+    }
+  }
   async function start(sample: boolean) {
     if (!workflow) return
+    if (!sample && workflow.config.kind === 'quotes') {
+      const report = await checkInputs()
+      if (!report || !report.readyToRun) return
+    }
     const next = await window.infomonkResearch.run(project.id, workflow.id, sample)
     setHistoryOffset(0)
     showRun(next.id)
@@ -551,6 +598,26 @@ export function ResearchPanel({
       {workflow && (
         <>
           <h2>{workflow.name}</h2>
+          {workflow.config.kind === 'quotes' && (
+            <div ref={readinessElement}>
+              <InputReadiness
+                report={readiness}
+                current={readinessCurrent}
+                busy={busy}
+                editing={editingId === workflow.id}
+                checking={checkingInputs}
+                onCheck={() =>
+                  void act(async () => {
+                    await checkInputs(true)
+                  })
+                }
+                onEdit={() => edit(workflow)}
+                onOpen={(sourceId, version) =>
+                  void act(() => window.infomonk.openSource(project.id, sourceId, version))
+                }
+              />
+            </div>
+          )}
           {scopeEmpty && (
             <p role="status">
               This workflow needs confirmed inputs before it can run.{' '}
@@ -569,7 +636,7 @@ export function ResearchPanel({
             )}
           <div className="im-controls">
             <button
-              disabled={busy || !!pending || !!scopeEmpty}
+              disabled={busy || !!pending || !!scopeEmpty || editingId === workflow.id}
               onClick={() => void act(() => start(true))}
             >
               Run sample
@@ -579,6 +646,8 @@ export function ResearchPanel({
               disabled={
                 busy ||
                 !!scopeEmpty ||
+                editingId === workflow.id ||
+                (readinessCurrent && !readiness!.readyToRun) ||
                 (!!pending && !(pending.sample && pending.status === 'review'))
               }
               onClick={() => void act(() => start(false))}

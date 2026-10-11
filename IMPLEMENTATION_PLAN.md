@@ -1,6 +1,6 @@
 # Infomonk implementation scope and next milestones
 
-Updated 10 October 2026. The owner authorized Stages 1–2, then Stages 3–5.
+Updated 11 October 2026. The owner authorized Stages 1–2, then Stages 3–5.
 Stages 0–5 are delivered locally within the supported boundaries below;
 Further workspace flow features are authorized; the owner requires the data
 engineering harness to be last. The supplied build prompt is context, and direct user
@@ -26,7 +26,7 @@ No hosted release, installer or provider credential change is part of this work.
 Use the documented npm development route in README. Try the synthetic cleanup
 fixture for Stage 2 and `fixtures/infomonk/research/valid.pdf` for Stages 3–5.
 Sources → Build a table from sources opens explicit task/schema/input selection.
-Run a sample, inspect evidence, cancel the sample, process all confirmed inputs,
+Run a sample, inspect evidence, check input readiness, process all confirmed inputs,
 review issues and publish. Record corrections in the accepted-table inspector.
 Refresh creates candidates; schedules require an open desktop app and never
 publish automatically. The full supported journey is in the contracts document.
@@ -78,10 +78,18 @@ returns to the editor. No engineering runner or additional framework is added.
 
 ## Ranked remaining gaps
 
-The immediate process priorities are a guided input readiness check, a source-backed
-table-to-report workflow, and clearer saved-primary versus working-table operations.
-The full ranked list and evidence boundaries are in the process review. Broader
-roadmap constraints remain below.
+The guided local quote input readiness check is complete. It reuses inherited
+parsing and quote rules, prevents blocked full runs before queueing, preserves
+reviewable missing facts, and rejects checks made stale by source/configuration
+changes. A publication fence also prevents retries or schedules from accepting
+missing/conflicting Quote IDs. The [readiness report](docs/testing/input-readiness-2026-10-11.md)
+records the mixed-batch repair journey and verification limits.
+
+The next process priority is a report from a selected accepted table/revision,
+carrying missing facts and explicit evidence references into the inherited
+Markdown/DOCX writers. Clearer saved-primary versus working-table operations
+follow that. The earlier ranked list is retained in the historical process review.
+Broader roadmap constraints remain below.
 
 1. **Broader input families and semantic extraction.** The deterministic quote
    family and single public adapter are intentional bounds. Scans, handwriting,

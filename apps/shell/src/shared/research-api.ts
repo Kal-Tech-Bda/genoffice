@@ -104,6 +104,39 @@ export interface ResearchFreshness {
   configurationChanged: boolean
   inputsChanged: boolean
 }
+export interface ReadinessFinding {
+  severity: 'review' | 'blocked'
+  message: string
+  field?: string
+  excerpts: { sourceName: string; locator: string; text: string; truncated: boolean }[]
+}
+export interface ResearchInputReadiness {
+  sourceId: string
+  sourceName: string
+  sourceVersion: string | null
+  status: 'ready' | 'review' | 'blocked'
+  quoteId: string | null
+  duplicateOf?: string
+  findingCount: number
+  findings: ReadinessFinding[]
+}
+export interface ResearchReadiness {
+  workflowId: string
+  configVersion: number
+  processingVersion: string
+  sourceSignature: string
+  checkedAt: string
+  readyToRun: boolean
+  counts: {
+    selected: number
+    unique: number
+    ready: number
+    review: number
+    blocked: number
+    duplicates: number
+  }
+  inputs: ResearchInputReadiness[]
+}
 export interface ResearchProjectSummary {
   reviewWorkflowId: string | null
   reviewRunId: string | null
@@ -152,6 +185,7 @@ export interface CellDetails {
   editedInSheet: boolean
 }
 export interface ResearchApi {
+  readiness(projectId: string, workflowId: string): Promise<ResearchReadiness>
   overview(projectId: string): Promise<ResearchOverview>
   policy(projectId: string): Promise<{
     version: number

@@ -13,6 +13,7 @@
   height: 16px;
 }
 .im-research-config,
+.im-input-readiness,
 .im-cell-inspector,
 .im-research-publish {
   padding: 18px;
@@ -100,6 +101,16 @@
   overflow-wrap: anywhere;
   background: var(--hover);
   padding: 12px;
+}
+.im-input-readiness article {
+  padding: 12px 0;
+  border-top: 1px solid var(--border);
+  overflow-wrap: anywhere;
+}
+.im-input-readiness pre {
+  white-space: pre-wrap;
+  padding: 12px;
+  background: var(--hover);
 }
 .im-research small {
   color: var(--text-secondary);
