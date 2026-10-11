@@ -88,6 +88,13 @@ The [workspace use case](docs/testing/workspace-flow-2026-10-10.md) exercises
 three supplier quotes through missing-fact review, correction, source update,
 refresh, native formula, saved export and fresh-process reopen.
 
+The [process journeys](docs/testing/process-journeys-2026-10-11.md) check mixed
+unsupported/conflicting inputs, direct sample-to-full, reviewed source removal,
+correction validation, independent workflow reuse and spreadsheet cleanup.
+Record keys cannot change through ordinary corrections; protected quote/item
+relationships stay together on removal. New projects from workflows open their
+input configuration path instead of an unrelated blank workbook.
+
 The [Stages 3–5 contracts and limitations](docs/implementation/research-workflows.md)
 define the current document family, public-source scope, field origins, deletion
 policy and durable executor. No provider credentials are needed for these tasks.

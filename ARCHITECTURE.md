@@ -89,6 +89,13 @@ revision with configuration, processing, coverage and revision fences. Failed,
 cancelled or obsolete execution cannot replace accepted data. Unreferenced output
 files may remain after interruption before commit; no accepted pointer is advanced.
 
+An explicit full run can atomically supersede a completed review sample while
+retaining its candidate, inputs and history. The transition rolls back if queue
+insertion fails. Scheduled acquisition and active/full review fences retain their
+existing behavior. Correction validation rejects immutable record keys and invalid
+facts before file generation. Reviewed removal preserves quote/item relationships
+when any related row has a persistent correction, using the existing ledger.
+
 `research/extract.ts` separates source parsing from the supported quote-family
 extractor. `worldbank.ts` is one strictly bounded structured adapter with durable
 HTTP snapshots, pagination/scope/count validation, timeout and rate-limit backoff.

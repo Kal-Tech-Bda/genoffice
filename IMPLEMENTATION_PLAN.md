@@ -65,7 +65,23 @@ editing, save, export and restart. It checks a manual value of 108 against an
 incoming source value of 115 without silently replacing the override. No new
 parser, framework, hosted service or provider request is needed.
 
+## Process journey review — 11 October 2026
+
+The [process review](docs/testing/process-journeys-2026-10-11.md) extends the
+workspace checks to mixed unsupported/conflicting documents, direct sample-to-full,
+source scope removal, protected quote/item relationships, invalid corrections,
+independent workflow reuse and CSV cleanup. Corrections cannot change record keys
+or accept negative facts/malformed codes; key reconciliation remains deferred.
+Completed samples remain in history when full execution starts. Copied projects
+open the confirmed-input path. Cleanup names its actual saved input and Close
+returns to the editor. No engineering runner or additional framework is added.
+
 ## Ranked remaining gaps
+
+The immediate process priorities are a guided input readiness check, a source-backed
+table-to-report workflow, and clearer saved-primary versus working-table operations.
+The full ranked list and evidence boundaries are in the process review. Broader
+roadmap constraints remain below.
 
 1. **Broader input families and semantic extraction.** The deterministic quote
    family and single public adapter are intentional bounds. Scans, handwriting,

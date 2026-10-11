@@ -1,0 +1,15 @@
+{
+  "date": "2026-10-11",
+  "profile": "C:\\Users\\Place\\AppData\\Local\\Temp\\genoffice-e2e-6VkwOR",
+  "projectId": "proj-77035e874edc",
+  "workflowId": "",
+  "checks": [
+    "Leading-zero IDs visible in import preview",
+    "Missing duplicate key survives and no ID is invented",
+    "Discard leaves saved bytes unchanged",
+    "Close returns to actual editor",
+    "Apply writes separate cleaned XLSX with independently expected rows",
+    "Previous workbook version restores starter; originals survive"
+  ],
+  "rendererErrors": []
+}

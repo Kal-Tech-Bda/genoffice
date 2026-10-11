@@ -1,0 +1,137 @@
+{
+  "checkedAt": "2026-10-11T17:29:24.171Z",
+  "date": "2026-10-11",
+  "branch": "codex/infomonk-workspace",
+  "testedBaseCommit": "eab87d0cab53a35646061493fc25d2aee4d11b5a",
+  "environment": {
+    "platform": "win32",
+    "release": "10.0.26200",
+    "arch": "x64",
+    "node": "v24.13.1",
+    "npm": "11.8.0",
+    "electron": "43.7.6",
+    "vitest": "4.1.11",
+    "playwright": "1.62.1",
+    "unzipPath": "C:/Program Files/Git/usr/bin/unzip.exe"
+  },
+  "sourceHashes": {
+    "apps/shell/src/main/research/service.ts": "dd7c8a542f5c1f449556429efd6ab9bcbd4704afbf304060f4f3d3ef52dd7d5e",
+    "apps/shell/src/main/research/store.ts": "da914938ee2ef1457ba98aafc4551ea5ba9724711c223df99323241ad5aee9b6",
+    "apps/shell/src/renderer/src/infomonk/CleanupFlow.tsx": "30c4f4d1070509aa39b5eff257169f87e4450dca5ccc354fe5f7a426efe99c98",
+    "apps/shell/src/renderer/src/infomonk/ResearchPanel.tsx": "7c7e96ad71aa9ca510766cfc385a3cc588efbb83ef503b74dcf7eb66bdd09cff",
+    "apps/shell/src/renderer/src/infomonk/Workspace.tsx": "9d97c01b55484a9a9bcf8b5a6ed2f0f1803ce86e9152aac11a10bc8d8be663b4",
+    "apps/shell/src/shared/research-api.ts": "1c0a9380f8ec1e69821cbbe1f0e4c2ae9f49ac4855f1ca24969e10d7082cad0a",
+    "fixtures/infomonk/workspace-flow/README.md": "97c3e1f112ffe192a4867ecb551fef8ccb0d50062ef9c2a9951389d4be4e10e9",
+    "apps/shell/tests/research-journeys.test.ts": "f0d52b8ba23f1c22c452b9a03779f0e976cff8f71f331095f30239a245760a2a",
+    "e2e/infomonk-process-journeys.spec.ts": "c612e3f1a9652fcd37604ccc13691fbcdfcf8ce11181f003008ff785098a4616",
+    "fixtures/infomonk/journeys/README.md": "cfd40704e9e6499fb3e3b0775de4e80ab6538a8cc6b379dbe865bb59a98ec3a5",
+    "fixtures/infomonk/journeys/supplier-register.csv": "a5716c53c35ce4a23cf2761ecab558d78507b890acafa245f7712f0a6df80830",
+    "fixtures/infomonk/journeys/unsupported.txt": "23c3c37b6236fda45fe560b0f84da889cc3e141d60cc6973ca129c7195c0d60c"
+  },
+  "fixtureHashes": {
+    "unsupported.txt": "23c3c37b6236fda45fe560b0f84da889cc3e141d60cc6973ca129c7195c0d60c",
+    "supplier-register.csv": "a5716c53c35ce4a23cf2761ecab558d78507b890acafa245f7712f0a6df80830"
+  },
+  "results": {
+    "focusedUnit": {
+      "passed": 48,
+      "failed": 0,
+      "files": 7
+    },
+    "selectedElectron": {
+      "passed": 20,
+      "failed": 0,
+      "retries": 0,
+      "skipped": 0
+    },
+    "typecheck": {
+      "workspaces": 26,
+      "passed": true
+    },
+    "shellBuild": true,
+    "lint": {
+      "errors": 0,
+      "inheritedWarnings": 12
+    },
+    "format": true,
+    "themeColors": true,
+    "englishComments": true,
+    "licenses": true
+  },
+  "journeys": {
+    "mixed-documents": {
+      "date": "2026-10-11",
+      "profile": "C:\\Users\\Place\\AppData\\Local\\Temp\\genoffice-e2e-hAXAWR",
+      "projectId": "proj-3cd7c8c842f4",
+      "workflowId": "c5bf5433-adbd-4db2-9bc8-e18c7b359660",
+      "checks": [
+        "Sample advances directly to full and stays in history",
+        "Unsupported input blocks publication",
+        "Explicit scope repair obsoletes incomplete candidate",
+        "Duplicate quote resolves to one row with three conflicting excerpts",
+        "Record key is read only",
+        "Invalid negative correction is rejected without advancing the accepted revision",
+        "Reviewed correction publishes 130 and preserves evidence"
+      ],
+      "rendererErrors": []
+    },
+    "source-removal": {
+      "date": "2026-10-11",
+      "profile": "C:\\Users\\Place\\AppData\\Local\\Temp\\genoffice-e2e-lnvY55",
+      "projectId": "proj-a8d2409b3871",
+      "workflowId": "4c106ee6-f36c-49ae-b7fa-842c852aa33f",
+      "checks": [
+        "Default retains all three quote relationships",
+        "Explicit removal deletes unprotected Northwind",
+        "Corrected Cedar item retains its parent quote and siblings",
+        "Maple missing total remains missing",
+        "Four immutable accepted revisions remain"
+      ],
+      "rendererErrors": []
+    },
+    "workflow-reuse": {
+      "date": "2026-10-11",
+      "profile": "C:\\Users\\Place\\AppData\\Local\\Temp\\genoffice-e2e-JjwAq1",
+      "projectId": "proj-b8b236f66557",
+      "workflowId": "74c3aa36-2bd9-412a-8f3f-1b55b10634c0",
+      "checks": [
+        "New project opens copied workflow with empty confirmed scope",
+        "Choose inputs opens and scrolls configuration",
+        "New source requires explicit selection",
+        "Sample advances to full without cancellation",
+        "New accepted revision has separate identity; original remains revision 1"
+      ],
+      "rendererErrors": []
+    },
+    "spreadsheet-cleanup": {
+      "date": "2026-10-11",
+      "profile": "C:\\Users\\Place\\AppData\\Local\\Temp\\genoffice-e2e-6VkwOR",
+      "projectId": "proj-77035e874edc",
+      "workflowId": "",
+      "checks": [
+        "Leading-zero IDs visible in import preview",
+        "Missing duplicate key survives and no ID is invented",
+        "Discard leaves saved bytes unchanged",
+        "Close returns to actual editor",
+        "Apply writes separate cleaned XLSX with independently expected rows",
+        "Previous workbook version restores starter; originals survive"
+      ],
+      "rendererErrors": []
+    }
+  },
+  "limits": [
+    "Supported supplier quotes and bounded public population; no generic accuracy claim",
+    "No generated engineering execution, paid provider or credentials changed",
+    "Full inherited Shell/Sheets suites were not rerun; 21 known Windows baseline failures remain",
+    "Input readiness, source-backed report creation and key/override reconciliation remain gaps"
+  ],
+  "manualReopen": {
+    "profile": "C:/Users/Place/AppData/Local/Temp/genoffice-e2e-vWUuZu",
+    "projectId": "proj-1d467f0d2dfc",
+    "workflowId": "12459227-fde9-42f1-8bac-93c6097aae26",
+    "acceptedRevision": 2,
+    "observedSavedTotal": 130,
+    "appearance": "system-dark",
+    "capture": "manual-reopened-workflow-system-dark.png"
+  }
+}

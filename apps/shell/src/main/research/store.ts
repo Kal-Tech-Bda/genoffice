@@ -217,15 +217,29 @@ export class ResearchStore {
         .all(now()) as SqlRow[]
     ).map((r) => this.workflow(String(r.id)))
   }
-  queue(id: string, sample: boolean, inputs: DurableInput[] = []): ResearchRun {
+  queue(
+    id: string,
+    sample: boolean,
+    inputs: DurableInput[] = [],
+    replaceReviewedSample = false,
+  ): ResearchRun {
     return this.transaction(() => {
       const w = this.workflow(id)
       const pending = this.db
         .prepare(
-          "SELECT id FROM runs WHERE workflow_id=? AND status IN ('queued','acquiring','processing','review')",
+          "SELECT id,sample,status FROM runs WHERE workflow_id=? AND status IN ('queued','acquiring','processing','review')",
         )
         .get(id)
-      if (pending) throw new Error('Review, cancel or finish the current run before another run.')
+      if (pending) {
+        if (!sample && replaceReviewedSample && pending.sample && pending.status === 'review') {
+          this.event(String(pending.id), 'obsolete', 'Reviewed sample superseded by a full run')
+          this.db
+            .prepare(
+              "UPDATE runs SET status='obsolete',progress='Sample retained in history; full run requested',updated_at=? WHERE id=?",
+            )
+            .run(now(), pending.id)
+        } else throw new Error('Review, cancel or finish the current run before another run.')
+      }
       const runId = randomUUID()
       const at = now()
       this.db
@@ -513,13 +527,27 @@ export class ResearchStore {
     )
       throw new Error('Acknowledge missing facts and validation issues before publication.')
     const prior = this.accepted(w.id)
+    const correctedRows = new Set(this.corrections(w.id).map((c) => `${c.table_id}:${c.row_id}`))
+    // Preserve the quote relationship when either a parent or a child has a correction.
+    const protectedQuotes = new Set(
+      prior?.tables
+        .filter((t) => ['quotes', 'line_items'].includes(t.id))
+        .flatMap((t) =>
+          t.rows
+            .filter((row) => correctedRows.has(`${t.id}:${row.id}`))
+            .map((row) => row.cells.quote_id?.value),
+        ) ?? [],
+    )
     if (prior)
       for (const oldTable of prior.tables) {
         let table = next.tables.find((t) => t.id === oldTable.id)
         const retained = oldTable.rows.filter(
           (old) =>
             !table?.rows.some((row) => row.id === old.id) &&
-            (!allowRemovals || this.corrections(w.id, oldTable.id, old.id).length > 0),
+            (!allowRemovals ||
+              correctedRows.has(`${oldTable.id}:${old.id}`) ||
+              (['quotes', 'line_items'].includes(oldTable.id) &&
+                protectedQuotes.has(old.cells.quote_id?.value))),
         )
         if (retained.length) {
           if (!table) {

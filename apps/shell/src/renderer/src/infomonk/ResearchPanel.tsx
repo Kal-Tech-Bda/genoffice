@@ -14,6 +14,7 @@ import type {
   ResearchCell,
 } from '../../../shared/research-api'
 import './research.css'
+import { isResearchIdentity } from '../../../shared/research-api'
 
 declare global {
   interface Window {
@@ -91,7 +92,21 @@ export function ResearchPanel({
   const [correction, setCorrection] = useState('')
   const [reason, setReason] = useState('')
   const [schedule, setSchedule] = useState('manual')
+  const configElement = useRef<HTMLDetailsElement>(null)
   const workflow = state.workflows.find((w) => w.id === selectedId)
+  const pending = state.latestRuns.find(
+    (r) =>
+      r.workflowId === selectedId &&
+      ['queued', 'acquiring', 'processing', 'review'].includes(r.status),
+  )
+  const scopeEmpty =
+    workflow &&
+    (workflow.config.kind === 'quotes'
+      ? !workflow.config.sourceIds.length
+      : !workflow.config.countries.length ||
+        (workflow.config.kind === 'enrich' && !workflow.config.parentWorkflowId))
+  const identityCell =
+    selectedCell && isResearchIdentity(selectedCell.table.id, selectedCell.column)
   useEffect(
     () => setSchedule(workflow?.scheduleMinutes?.toString() ?? 'manual'),
     [workflow?.scheduleMinutes, selectedId],
@@ -251,6 +266,7 @@ export function ResearchPanel({
     setName(w.name)
     setConfig(w.config)
     setCountryText(w.config.countries.join(', '))
+    requestAnimationFrame(() => configElement.current?.scrollIntoView({ block: 'start' }))
   }
   async function save() {
     const w = await window.infomonkResearch.save(
@@ -293,7 +309,11 @@ export function ResearchPanel({
           {error}
         </p>
       )}
-      <details className="im-research-config" open={!!editingId || !state.workflows.length}>
+      <details
+        ref={configElement}
+        className="im-research-config"
+        open={!!editingId || !state.workflows.length}
+      >
         <summary>
           {editingId ? 'Edit workflow configuration' : 'Create a research workflow'}
         </summary>
@@ -531,6 +551,14 @@ export function ResearchPanel({
       {workflow && (
         <>
           <h2>{workflow.name}</h2>
+          {scopeEmpty && (
+            <p role="status">
+              This workflow needs confirmed inputs before it can run.{' '}
+              <button disabled={busy} onClick={() => edit(workflow)}>
+                Choose workflow inputs
+              </button>
+            </p>
+          )}
           {showAccepted &&
             (state.freshness[workflow.id]?.inputsChanged ||
               state.freshness[workflow.id]?.configurationChanged) && (
@@ -540,12 +568,19 @@ export function ResearchPanel({
               </p>
             )}
           <div className="im-controls">
-            <button disabled={busy} onClick={() => void act(() => start(true))}>
+            <button
+              disabled={busy || !!pending || !!scopeEmpty}
+              onClick={() => void act(() => start(true))}
+            >
               Run sample
             </button>
             <button
               className="im-primary"
-              disabled={busy}
+              disabled={
+                busy ||
+                !!scopeEmpty ||
+                (!!pending && !(pending.sample && pending.status === 'review'))
+              }
               onClick={() => void act(() => start(false))}
             >
               Run all confirmed inputs
@@ -574,6 +609,13 @@ export function ResearchPanel({
               Inspect accepted table
             </button>
           </div>
+          {pending && !(pending.sample && pending.status === 'review') && (
+            <p className="im-muted">
+              {pending.status === 'review'
+                ? 'Review and publish this full candidate, edit its configuration, or cancel it before starting another run.'
+                : 'The current run must finish or be cancelled before starting another run.'}
+            </p>
+          )}
           <div className="im-controls">
             <label>
               Schedule
@@ -685,7 +727,7 @@ export function ResearchPanel({
               {run.status} · {run.progress} · added {run.changes.added}, changed{' '}
               {run.changes.changed}, absent {run.changes.removed}.{' '}
               {run.sample &&
-                'Sample only; cannot publish. Cancel the sample, adjust the configuration if needed, then run all confirmed inputs.'}
+                'Sample only; cannot publish. Inspect the sample, adjust the configuration if needed, then run all confirmed inputs. The sample stays in history.'}
             </p>
           )}
           {run?.inputsChanged && !showAccepted && (
@@ -964,7 +1006,14 @@ export function ResearchPanel({
                   <pre>{inspection.text}</pre>
                 </div>
               )}
-              {showAccepted && (
+              {showAccepted && identityCell && (
+                <p>
+                  This field defines record identity and links related rows. To change it, update
+                  the source or confirmed scope and review a new run. Ordinary cell corrections
+                  cannot change record keys.
+                </p>
+              )}
+              {showAccepted && !identityCell && (
                 <>
                   <label>
                     Corrected value (empty means missing)
@@ -1039,6 +1088,12 @@ export function ResearchPanel({
                 />
                 Remove absent records after review (manual overrides are retained)
               </label>
+              {run.changes.removed > 0 && (
+                <p>
+                  Absent rows stay by default. Reviewed removal also retains quotes and related line
+                  items protected by a manual correction.
+                </p>
+              )}
               <button
                 className="im-primary"
                 disabled={busy || run.sample || run.coverage.failed > 0 || run.inputsChanged}

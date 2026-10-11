@@ -14,8 +14,8 @@ node fixtures/infomonk/workspace-flow/generate.mjs
 1. Extract from files → create a project from `northwind.txt`.
 2. Sources → add `cedar.docx` and `maple.pdf`.
 3. Build a table from sources → Supplier quotes → save a workflow.
-4. Run sample; verify one quote and disabled publication. Cancel the sample,
-   then Run all confirmed inputs. Three quotes and three related items result.
+4. Run sample; verify one quote and disabled publication. Run all confirmed inputs
+   directly; the completed sample stays in history. Three quotes and three related items result.
 5. Needs review shows Maple's missing total. The labeled total is blank; the
    extractor must not infer a payable total of 110 from quantity × unit price.
 6. Review and publish. Home → Needs review → Review table opens that missing fact.

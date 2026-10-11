@@ -16,8 +16,10 @@ Launch with the existing `npm run dev`, or build all editors and run
    input snapshots and typed fields. Quote ID is the stable business key within
    this workflow. One input contains exactly one quote; items use a related sheet.
 3. Save the workflow and run a sample. Click a value, verify its snapshot/locator,
-   and inspect missing facts. Cancel the sample, adjust the configuration if
-   needed, then run all confirmed inputs. Samples cannot publish.
+   and inspect missing facts. Adjust the configuration if needed, then run all
+   confirmed inputs directly. The completed sample stays in history and cannot
+   publish; the transition to full is transactional. Running samples and full
+   candidates still block another run. Scheduled execution never replaces review.
 4. Review the candidate, acknowledge issues and publish. Open the accepted XLSX.
    Select a cell and open Details to inspect its evidence or native source copy.
 5. Use **Inspect accepted table** to record a correction and reason. Corrections
@@ -136,8 +138,15 @@ Publication requires explicit review and creates a separate XLSX revision; the
 source and original project workbook remain intact. Diffs compare stable row
 keys, values, missing reasons and source hashes. Absent rows are retained by
 default. Explicit reviewed removal deletes non-overridden absent rows; rows with
-manual corrections are retained. An access failure is never treated as deletion.
+manual corrections are retained together with their parent quote and related
+line items. An access failure is never treated as deletion.
 Fields with corrections cannot be silently removed from a quote schema.
+Quote IDs and population country/year keys are read-only in the correction UI
+and rejected by the service before projection. Correct source/scope keys through
+a reviewed run; key migration is not an ordinary cell correction. Numeric corrections
+must be finite; amounts, quantities and population must also be nonnegative.
+Currency/country codes must be uppercase ISO3-shaped
+codes and date corrections must be real ISO dates. Missing remains an explicit null.
 
 XLSX is a projection, not the ledger. It contains the hidden record ID, readable
 widths and linked `infomonk/research.json` including dataset/evidence metadata.
@@ -155,7 +164,9 @@ prevents overlapping reruns. Template copying retains task/schema/notes but clea
 source IDs, country selections and parent references; it contains no accepted
 records, corrections, schedule or credentials.
 **Start a new project from this workflow** creates a separate project and blank
-workbook with the saved task/schema/notes. Inputs and any enrichment parent must
+workbook with the saved task/schema/notes, then opens the copied workflow and its
+empty-scope guidance. Choose workflow inputs opens and scrolls the saved
+configuration. Inputs and any enrichment parent must
 be selected in that project before running. The same-project copy action remains.
 
 History returns 20 indexed summaries per page plus the latest summary for each
@@ -181,3 +192,7 @@ this service boundary; no second scheduler or PostgreSQL service is added.
 
 See [hardening verification](../testing/hardening-2026-10-10.md) for native paging,
 template creation, restore without the original profile and revised IPC timings.
+
+See the [process journey review](../testing/process-journeys-2026-10-11.md) for
+mixed input failures/conflicts, sample-to-full, independent reuse, protected
+relationships and native cleanup preview/discard/apply/version switching.

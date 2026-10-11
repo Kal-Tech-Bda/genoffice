@@ -1,10 +1,17 @@
 # Infomonk feature status
 
-Updated 10 October 2026. Evidence levels are **runtime-tested**, **unit-tested** and
+Updated 11 October 2026. Evidence levels are **runtime-tested**, **unit-tested** and
 **source-confirmed**. A source trace or enabled button alone is not runtime proof.
 
 Stages 3–5 now implement the bounded research behaviors below; the Stage 1–2
 table following it retains the earlier milestone's evidence.
+
+The [process journey review](../testing/process-journeys-2026-10-11.md) adds native
+mixed-source failure/conflict review, direct sample-to-full, independent workflow
+reuse and CSV cleanup. Queue rollback/schedule fences, correction identity/validation
+and protected parent/child retention have focused unit coverage. Record keys are
+read-only in the ledger correction UI. Source-backed report generation and general
+input readiness checks remain gaps; the engineering harness remains last/disabled.
 
 | Area                                                      | Status                                                                                                          | Main paths                                       |
 | --------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |

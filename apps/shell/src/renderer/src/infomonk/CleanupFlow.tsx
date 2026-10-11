@@ -112,6 +112,17 @@ export function CleanupFlow({
         <div>
           <h1 id="im-clean-title">{mt('cleanupTitle')}</h1>
           <p className="im-muted">{mt('cleanupDescription')}</p>
+          <p className="im-muted">
+            Saved cleanup input: {project.workspace?.primaryWorkbook.split(/[\\/]/).pop()}
+          </p>
+          {project.workspace?.workingWorkbook &&
+            project.workspace.workingWorkbook !== project.workspace.primaryWorkbook && (
+              <p className="im-notice">
+                Your working workbook is {project.workspace.workingWorkbook.split(/[\\/]/).pop()}.
+                This cleanup uses the saved primary input above. Research corrections and refresh
+                belong to Workflows.
+              </p>
+            )}
         </div>
         <button onClick={onClose}>{mt('close')}</button>
       </div>

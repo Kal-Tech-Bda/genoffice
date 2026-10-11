@@ -25,6 +25,7 @@ import { fetchPopulation, parsePopulation, worldBankUrl } from './worldbank'
 import { projectDataset } from './projection'
 import { datasetPage, previewCell } from './pages'
 import { RESEARCH_METADATA_LIMIT } from './metadata'
+import { isResearchIdentity } from '../../shared/research-api'
 
 export class ResearchService {
   readonly store: ResearchStore
@@ -293,7 +294,11 @@ export class ResearchService {
   }
   async createFrom(projectId: string, workflowId: string, name: string, description: string) {
     const w = this.store.workflow(workflowId, projectId)
-    const project = await this.workspace.create({ name, description })
+    const project = await this.workspace.create({
+      name,
+      description,
+      startKind: w.config.kind === 'quotes' ? 'extractFiles' : 'researchWeb',
+    })
     this.store.save(project.id, w.name, {
       ...w.config,
       sourceIds: [],
@@ -340,11 +345,11 @@ export class ResearchService {
       throw new Error('Choose quote inputs first.')
     if (w.config.kind !== 'quotes' && !w.config.countries.length)
       throw new Error('Confirm country codes first.')
-    const run = this.queue(w, sample)
+    const run = this.queue(w, sample, !sample)
     this.tick()
     return run
   }
-  private queue(w: ResearchWorkflow, sample: boolean) {
+  private queue(w: ResearchWorkflow, sample: boolean, replaceReviewedSample = false) {
     const sources = this.workspace.get(w.projectId).workspace.sources
     const selected =
       w.config.kind === 'quotes'
@@ -366,7 +371,7 @@ export class ResearchService {
       parsed: null,
       error: null,
     }))
-    return this.store.queue(w.id, sample, inputs)
+    return this.store.queue(w.id, sample, inputs, replaceReviewedSample)
   }
   cancel(projectId: string, runId: string): void {
     this.store.run(runId, projectId)
@@ -712,6 +717,10 @@ export class ResearchService {
     const target = table?.rows.find((r) => r.id === rowId)?.cells[columnId]
     const column = table?.columns.find((c) => c.id === columnId)
     if (!dataset || !target || !column) throw new Error('Accepted cell not found.')
+    if (isResearchIdentity(tableId, columnId))
+      throw new Error(
+        'Record identity cannot be changed by a cell correction. Update the source or confirmed scope, then review a new run; related records must keep their original keys.',
+      )
     if (
       value !== null &&
       (column.type === 'number'
@@ -719,6 +728,18 @@ export class ResearchService {
         : typeof value !== 'string')
     )
       throw new Error('Correction does not match column type.')
+    if (
+      typeof value === 'number' &&
+      ['total', 'quantity', 'unit_price', 'population'].includes(columnId) &&
+      value < 0
+    )
+      throw new Error('Correction must be a nonnegative amount, quantity or population.')
+    if (
+      value !== null &&
+      ['currency', 'country_code'].includes(columnId) &&
+      !/^[A-Z]{3}$/.test(String(value))
+    )
+      throw new Error('Correction must be a three-letter uppercase code.')
     if (
       column.type === 'date' &&
       value !== null &&

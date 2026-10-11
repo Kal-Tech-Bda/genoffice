@@ -1,4 +1,10 @@
 export type ResearchValue = string | number | null
+export function isResearchIdentity(tableId: string, columnId: string): boolean {
+  return (
+    (['quotes', 'line_items'].includes(tableId) && columnId === 'quote_id') ||
+    (tableId === 'population' && ['country_code', 'year'].includes(columnId))
+  )
+}
 export interface Evidence {
   sourceId: string
   sourceVersion: string

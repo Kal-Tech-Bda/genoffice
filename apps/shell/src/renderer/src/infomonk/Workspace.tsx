@@ -772,7 +772,7 @@ export function Workspace({
                   <CleanupFlow
                     project={project}
                     onChanged={changed}
-                    onClose={() => setSection('sheets')}
+                    onClose={() => void run(() => navigate('sheets'))}
                   />
                   {metadata?.previousWorkbook && (
                     <button
@@ -805,11 +805,19 @@ export function Workspace({
               /\.(pdf|docx|md|txt)$/i.test(source.name),
             )
             void run(() =>
-              item.workspace?.startKind === 'researchWeb'
-                ? navigate('workflows')
-                : documents
-                  ? navigate('sources')
-                  : openProject(item),
+              template
+                ? (async () => {
+                    const copied = await window.infomonkResearch.state(item.id)
+                    await navigate('workflows', {
+                      workflowId: copied.workflows[0].id,
+                      runId: null,
+                    })
+                  })()
+                : item.workspace?.startKind === 'researchWeb'
+                  ? navigate('workflows')
+                  : documents
+                    ? navigate('sources')
+                    : openProject(item),
             )
           }}
         />

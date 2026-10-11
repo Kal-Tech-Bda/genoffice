@@ -1,6 +1,6 @@
 # Infomonk implemented UI specification
 
-Updated 10 October 2026. Stages 1–5 are implemented in the GenOffice Electron
+Updated 11 October 2026. Stages 1–5 are implemented in the GenOffice Electron
 shell. [Actual screenshots](implementation/verification.md#screenshots) show
 executed native windows; [baseline screenshots](audit/verification.md) are historical.
 
@@ -18,14 +18,20 @@ Workflows and research Details have the implemented behavior described in
 - A sample is visibly non-publishable. Candidate status/progress/coverage,
   missing/conflicting cells, related sheets and execution/validation events are
   real stored results. Tables show their complete count and first 100 rows.
+  Run all confirmed inputs advances a completed sample directly, retaining it in
+  history. Buttons and guidance distinguish a running task, a full pending review
+  and an empty scope. A copied project starts at its workflow/input confirmation.
 - Cell inspection shows value/origin, prior accepted value, missing reason,
   source version, locator and excerpt. Snapshot verification resolves the hash
   and locator; native viewers open a copy. Source values do not override manual
   corrections silently.
+  Record keys are inspectable but have no ordinary correction form. Invalid
+  negative numeric facts, malformed country/currency codes and invalid dates
+  cannot create an accepted correction revision.
 - Added/changed/absent counts use stable keys and content hashes. Absent records
   can be inspected; retain is the default. Publication requires a full completed
   run and review, and is blocked by failed coverage. Reviewed removal preserves
-  overridden records.
+  overridden records together with their quote and related line items.
 - Details in an accepted research workbook resolves the top-left selected cell.
   A changed sheet value/revision produces an explicit warning. Reload checks
   again after edits. Corrections are recorded in the accepted-table inspector.
@@ -117,6 +123,9 @@ removals, warnings and before/after samples. Dates render human-readable preview
 Discard writes nothing. Apply creates a separate named cleaned XLSX, then opens it
 in Univer. Previous workbook version swaps the primary pointer with the preceding
 file and can swap back. Native cell undo/redo is separate. Original sources survive.
+Close returns to the actual workbook editor. The cleanup input filename is shown;
+when it differs from the remembered working workbook, a notice names both and
+points research corrections/refresh to Workflows.
 
 Row-changing cleanup requires the entire A1 used worksheet, headers and a supported
 flat sheet. Any formula anywhere in the workbook or unsupported advanced sheet

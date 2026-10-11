@@ -1,0 +1,14 @@
+{
+  "date": "2026-10-11",
+  "profile": "C:\\Users\\Place\\AppData\\Local\\Temp\\genoffice-e2e-lnvY55",
+  "projectId": "proj-a8d2409b3871",
+  "workflowId": "4c106ee6-f36c-49ae-b7fa-842c852aa33f",
+  "checks": [
+    "Default retains all three quote relationships",
+    "Explicit removal deletes unprotected Northwind",
+    "Corrected Cedar item retains its parent quote and siblings",
+    "Maple missing total remains missing",
+    "Four immutable accepted revisions remain"
+  ],
+  "rendererErrors": []
+}

@@ -1,0 +1,3 @@
+Meeting notes
+This synthetic document contains a discussion about stationery.
+It has no labeled supplier quote and must not become a quote row.
