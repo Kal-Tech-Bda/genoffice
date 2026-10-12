@@ -378,3 +378,13 @@ distribution. No new telemetry or hosted service was configured here.
 
 The Stage 0 audit itself changed no application behavior; subsequent Stages 1–5
 implement the local seams above. See [the reuse map](docs/reuse-map.md) for decisions.
+
+The expanded jobs domain splits route/fetch fences (`job-routes.ts`), title-scope
+rules (`job-scope.ts`), measured HTML/JSON adapters (`job-adapters.ts`) and ledger
+projection (`jobs.ts`). Public result pagination and detail links run through
+the existing durable queue; canonical URLs prevent the first results page from
+being collected twice. Workday uses a public read-only POST search with verified
+Bermuda location facets. JSON and HTML proof units resolve from immutable,
+hash-checked stored snapshots. Source checks distinguishes bounded completion,
+partial coverage and uncollected targets; it is not a census of the job market.
+The accepted ledger and native XLSX projection remain authoritative as before.

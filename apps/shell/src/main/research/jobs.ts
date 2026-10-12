@@ -6,8 +6,11 @@ import {
   htmlPath,
   type HtmlNode,
 } from '@genoffice/electron-utils/public-html'
-import { readBodyCapped } from '@genoffice/electron-utils/remote-image'
-import { JOB_SITES, type JobSiteId } from '../../shared/jobs-api'
+import { jobSite, jobUrl } from './job-routes'
+export { jobSite, jobUrl, jobStartUrl, fetchJobPage } from './job-routes'
+import { jobScope } from './job-scope'
+import { parseAdditionalJobs } from './job-adapters'
+import { JOB_SITES, JOB_DISCOVERY_SITES, type JobSiteId } from '../../shared/jobs-api'
 import type {
   Evidence,
   ResearchDataset,
@@ -27,20 +30,24 @@ export interface JobEntry {
   listing_url: string
   proof: Record<string, Proof>
   issues: string[]
+  observation?: string
+  advert_expiry?: string | null
+  advertiser?: string | null
 }
 export interface JobPage {
   units: Proof[]
   entries: JobEntry[]
   links: string[]
   method: string
+  scopeNote?: string
+  advertised?: number
 }
 export interface JobObservation {
   site: JobSiteId
   page: JobPage
   source: Omit<Evidence, 'locator' | 'excerpt' | 'method'>
 }
-const focus =
-  /\b(data|systems?|technology|analyst|administrat(?:or|ion)|account(?:ant|ing)|office|support|claims|project|compliance|secretar(?:y|ies)|audit|risk|operations|director|principal|consultant)\b/i
+const focus = { test: (title: string) => !!jobScope(title) }
 export const JOB_COLUMNS: ResearchTable['columns'] = [
   ['job_key', 'Listing key', 'text'],
   ['title', 'Role', 'text'],
@@ -57,55 +64,11 @@ export const JOB_COLUMNS: ResearchTable['columns'] = [
   ['last_checked', 'Last checked', 'text'],
   ['application_status', 'Application status', 'text'],
   ['notes', 'My notes', 'text'],
+  ['role_group', 'Role group (title rule)', 'text'],
+  ['scope_reason', 'Scope and limitations', 'text'],
+  ['advert_expiry', 'Publication expiry (not employer deadline)', 'date'],
+  ['advertiser', 'Advertiser (may be recruiter)', 'text'],
 ].map(([id, name, type]) => ({ id, name, type: type as 'text' | 'date' }))
-export function jobSite(id: JobSiteId) {
-  const site = JOB_SITES.find((s) => s.id === id)
-  if (!site) throw new Error('Unsupported job source.')
-  return site
-}
-export function jobUrl(siteId: JobSiteId, raw: string): string {
-  const site = jobSite(siteId),
-    url = new URL(raw, site.url)
-  if (url.origin !== new URL(site.url).origin || url.username || url.password || url.hash)
-    throw new Error('Job links must stay on the selected public career site.')
-  if (siteId === 'bma') {
-    if (!/^\/bmacareers\/(?:jobs|job\/[a-zA-Z0-9]+)$/.test(url.pathname) || url.search)
-      throw new Error('Unsupported BMA listing route.')
-  } else if (siteId === 'coralisle') {
-    if (
-      !/^\/recruit\/fRecruit__ApplyJob(?:List)?$/.test(url.pathname) ||
-      [...url.searchParams.keys()].some((k) => !['portal', 'vacancyNo'].includes(k)) ||
-      [...url.searchParams.keys()].some((k) => url.searchParams.getAll(k).length !== 1) ||
-      (url.searchParams.has('portal') && url.searchParams.get('portal') !== 'CGI') ||
-      (url.pathname.endsWith('ApplyJob') &&
-        !/^VN\d+$/.test(url.searchParams.get('vacancyNo') ?? ''))
-    )
-      throw new Error('Unsupported Coralisle listing route.')
-    url.searchParams.sort()
-  } else if (url.href !== site.url)
-    throw new Error('Only the public Expertise listing page is supported.')
-  return url.href
-}
-export async function fetchJobPage(
-  site: JobSiteId,
-  raw: string,
-  signal: AbortSignal,
-): Promise<Buffer> {
-  const url = jobUrl(site, raw)
-  const response = await fetch(url, {
-    signal: AbortSignal.any([signal, AbortSignal.timeout(20_000)]),
-    redirect: 'error',
-    credentials: 'omit',
-    headers: { Accept: 'text/html', 'User-Agent': 'Infomonk/0.11 public-job-check' },
-  })
-  if (!response.ok || !/text\/html/i.test(response.headers.get('content-type') ?? '')) {
-    await response.body?.cancel().catch(() => {})
-    throw new Error(
-      `Job source unavailable or not HTML (HTTP ${response.status}). Previous accepted jobs remain unchanged.`,
-    )
-  }
-  return Buffer.from(await readBodyCapped(response, 2 * 1024 * 1024))
-}
 function date(value: unknown): string | null {
   if (typeof value !== 'string' || !value.trim()) return null
   let iso = value.match(/^\d{4}-\d{2}-\d{2}(?:T|$)/)?.[0].slice(0, 10)
@@ -142,6 +105,7 @@ function elementChildren(node: HtmlNode): HtmlNode[] {
   return 'childNodes' in node ? node.childNodes.filter((n) => htmlTag(n)) : []
 }
 export function parseJobPage(siteId: JobSiteId, bytes: Buffer, uri: string): JobPage {
+  if (jobSite(siteId).adapter) return parseAdditionalJobs(siteId, bytes, uri, date)
   const url = jobUrl(siteId, uri),
     nodes = publicHtml(bytes)
   const page: JobPage = { units: [], entries: [], links: [], method: `bermuda-jobs-${siteId}-v1` }
@@ -187,7 +151,18 @@ export function parseJobPage(siteId: JobSiteId, bytes: Buffer, uri: string): Job
             `An Expertise vacancy has an unrecognized location layout (${htmlText(start).slice(0, 80)}); coverage cannot be confirmed.`,
           )
         const location = htmlText(locationNode),
-          title = htmlText(start)
+          titleNodes = paragraphs
+            .slice(i, paragraphs.indexOf(locationNode))
+            .filter((n) => /font-size:\s*14px/.test(htmlAttr(n, 'style')) && htmlText(n)),
+          title = titleNodes.map(htmlText).join(' ')
+        const titleProof = {
+          locator:
+            titleNodes.length === 1
+              ? htmlPath(start)
+              : `${htmlPath(start)} → ${htmlPath(titleNodes.at(-1)!)}`,
+          text: title,
+        }
+        page.units.push(titleProof)
         recognized++
         const entry: JobEntry = {
           key: `expertise:${title.toLowerCase().replace(/\s+/g, ' ')}:${location.toLowerCase()}`,
@@ -197,7 +172,7 @@ export function parseJobPage(siteId: JobSiteId, bytes: Buffer, uri: string): Job
           closing_date: null,
           posted_date: null,
           listing_url: url,
-          proof: { title: proof(start), location: proof(locationNode) },
+          proof: { title: titleProof, location: proof(locationNode) },
           issues: [
             'Agency client and closing date are not disclosed on this listing page. No vacancy ID is supplied; title/location keys may represent reposts.',
           ],
@@ -405,6 +380,7 @@ export function jobDataset(
       const values: Record<string, string | null> = {
         title: entry.title,
         employer: entry.employer,
+        advertiser: entry.advertiser ?? null,
         location: entry.location,
         closing_date: entry.closing_date,
         posted_date: entry.posted_date,
@@ -412,15 +388,23 @@ export function jobDataset(
         job_key: entry.key,
         source_site: jobSite(observation.site).name,
         listing_status:
-          deadline === 'Past deadline'
+          entry.observation ??
+          (deadline === 'Past deadline'
             ? 'Listed with past deadline — review'
-            : 'Listed at last check; availability unconfirmed',
+            : entry.advert_expiry && entry.advert_expiry < day
+              ? 'Listed after publication expiry — review; employer deadline unconfirmed'
+              : 'Listed at last check; availability unconfirmed'),
         deadline_status: deadline,
         first_seen: (previous?.cells.first_seen.value as string) ?? observation.source.retrievedAt,
         last_seen: observation.source.retrievedAt,
         last_checked: observation.source.retrievedAt,
         application_status: 'To review',
         notes: '',
+        role_group: jobScope(entry.title) ?? 'Scope review',
+        scope_reason:
+          entry.issues.join(' ') ||
+          'Title-rule matching only; confirm requirements and availability.',
+        advert_expiry: entry.advert_expiry ?? null,
       }
       rows.push({
         id,
@@ -434,8 +418,9 @@ export function jobDataset(
                   : derived
             const issues =
               c.id === 'location' &&
-              (/all jurisdictions/i.test(entry.location ?? '') ||
-                entry.issues.some((i) => /location/.test(i)))
+              (/all jurisdictions|not stated|confirm/i.test(entry.location ?? '') ||
+                !/\bBermuda\b|(?:^|[,; ])BM(?:$|[,; ])/i.test(entry.location ?? '') ||
+                entry.issues.some((i) => /^Role has multiple listed locations/i.test(i)))
                 ? ['Confirm the Bermuda location before applying.']
                 : c.id === 'job_key'
                   ? entry.issues
@@ -447,7 +432,9 @@ export function jobDataset(
                 ev,
                 `Not stated on the checked listing`,
                 issues,
-                ['application_status', 'notes'].includes(c.id) ? 'internal' : 'external',
+                ['application_status', 'notes', 'role_group', 'scope_reason'].includes(c.id)
+                  ? 'internal'
+                  : 'external',
               ),
             ]
           }),
@@ -459,6 +446,28 @@ export function jobDataset(
   for (const row of old.values()) {
     const retained = structuredClone(row),
       site = JOB_SITES.find((s) => String(row.cells.job_key.value).startsWith(s.id + ':'))
+    retained.cells.advertiser ??= cell(null, [], 'Not stated on the prior listing', [], 'external')
+    retained.cells.role_group ??= cell(
+      jobScope(String(row.cells.title.value)) ?? 'Scope review',
+      [],
+      null,
+      [],
+      'internal',
+    )
+    retained.cells.scope_reason ??= cell(
+      'Retained prior listing; review source and scope.',
+      [],
+      null,
+      [],
+      'internal',
+    )
+    retained.cells.advert_expiry ??= cell(
+      null,
+      [],
+      'Not established on prior acquisition',
+      [],
+      'external',
+    )
     const check = observations.find((o) => o.site === site?.id)
     const message =
       site && selected.includes(site.id)
@@ -476,6 +485,8 @@ export function jobDataset(
       retained.cells.last_checked = cell(check.source.retrievedAt, ev, null, [], 'external')
     rows.push(retained)
   }
+  if (new Set(rows.map((r) => r.id)).size !== rows.length)
+    throw new Error('Duplicate listing keys across source pages require review.')
   const near = new Map<string, ResearchRow[]>()
   for (const row of rows) {
     if (!row.cells.employer.value) continue
@@ -499,11 +510,21 @@ export function jobDataset(
       id: hash(`job-source:${site}`).slice(0, 24),
       cells: {
         source: cell(jobSite(site).name, [], null, [], 'external'),
-        last_checked: cell(list.source.retrievedAt, [], null, [], 'external'),
+        last_checked: cell(
+          observations
+            .filter((o) => o.site === site)
+            .map((o) => o.source.retrievedAt)
+            .sort()
+            .at(-1)!,
+          [],
+          null,
+          [],
+          'external',
+        ),
         matched_rows: cell(count, [], null, [], 'external'),
         source_url: cell(jobSite(site).url, [], null, [], 'external'),
         status: cell(
-          'Checked selected listing pages',
+          list.page.scopeNote ?? 'Checked selected listing pages',
           list ? [evidenceFor(list, list.page.units.at(-1)!)] : [],
           null,
           [],
@@ -514,14 +535,38 @@ export function jobDataset(
   })
   for (const previous of prior?.tables.find((t) => t.id === 'job_sources')?.rows ?? []) {
     if (sources.some((r) => r.id === previous.id)) continue
+    if (previous.cells.last_checked.value === null) continue
     const retained = structuredClone(previous)
     retained.cells.status = cell('Outside selected sources — retained', [], null, [], 'external')
     sources.push(retained)
+  }
+  for (const site of [...JOB_SITES, ...JOB_DISCOVERY_SITES]) {
+    const id = hash(`job-source:${site.id}`).slice(0, 24)
+    if (sources.some((r) => r.id === id)) continue
+    sources.push({
+      id,
+      cells: {
+        source: cell(site.name, [], null, [], 'internal'),
+        last_checked: cell(null, [], 'Not collected in this run', [], 'internal'),
+        matched_rows: cell(null, [], 'Not searched; this is not a zero-job result', [], 'internal'),
+        source_url: cell(site.url, [], null, [], 'internal'),
+        status: cell(
+          JOB_SITES.some((s) => s.id === site.id)
+            ? 'Not selected — not checked'
+            : 'Manual search / additional adapter needed — not collected',
+          [],
+          null,
+          [],
+          'internal',
+        ),
+      },
+    })
   }
   return {
     schemaVersion: 1,
     issues: [
       'Selected sources and title-based technology/data/office matching only; not an exhaustive Bermuda job search. Listed does not guarantee applications remain open.',
+      'Source checks includes discovery targets that were not collected. Null counts are unsearched coverage, not zero vacancies. Adjacent quantitative, mixed-role and talent-pool listings require review.',
     ],
     tables: [
       {
@@ -535,7 +580,8 @@ export function jobDataset(
       {
         id: 'job_sources',
         name: 'Source checks',
-        rowMeaning: 'Most recent successful selected career-site acquisition',
+        rowMeaning:
+          'Public source coverage: completed bounded checks, partial searches and uncollected targets',
         columns: [
           { id: 'source', name: 'Source', type: 'text' },
           { id: 'last_checked', name: 'Last checked', type: 'text' },

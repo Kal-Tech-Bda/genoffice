@@ -162,6 +162,19 @@ Other manual/agent operations are not a field-evidence or correction ledger.
 
 ## Tokens and accessibility
 
+The Bermuda jobs task lists 19 supported public sites with Select all and Clear
+selection controls. It explains title-rule matching, adjacent roles, partial
+search coverage and uncollected targets. Jobs uses 100-row paging with personal
+status/notes beside role, location, deadline and listing observation. Additional
+fields expose role group, scope limitations, publication expiry and advertiser.
+Source checks includes all 43 current targets; uncollected counts and dates are
+null. Run completion refers to configured acquisition bounds, not whole-site
+coverage. JSON evidence is inspected as stored text in both workflow and native
+Sheets Details. Employer facts cannot be edited through personal tracking.
+Completed review runs have an explicit Review candidate action. Reselecting the
+same run reloads its preview and clears old cell-inspection state; it never
+silently publishes a candidate or changes accepted records.
+
 `infomonk/workspace.css` defines restrained forest accents, warm light canvas and
 charcoal dark canvas with system-theme fallback. Shared semantic tokens supply
 surfaces, text, borders, hover, danger and overlay colors. App tokens cover spacing,

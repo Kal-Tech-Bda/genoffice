@@ -32,8 +32,8 @@ const config = z
     toYear: z.number().int().min(1960).max(new Date().getFullYear()),
     parentWorkflowId: uuid.optional(),
     jobSiteIds: z
-      .array(z.enum(JOB_SITES.map((s) => s.id) as ['bma', 'coralisle', 'expertise']))
-      .max(3)
+      .array(z.enum(JOB_SITES.map((s) => s.id)))
+      .max(JOB_SITES.length)
       .optional(),
   })
   .strict()

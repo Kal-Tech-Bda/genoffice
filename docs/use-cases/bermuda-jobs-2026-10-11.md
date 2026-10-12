@@ -1,5 +1,9 @@
 # Bermuda jobs: full workspace use case
 
+**Historical three-site pilot.** The owner correctly rejected this as insufficient
+coverage. The [expanded search and source audit](bermuda-jobs-wide-2026-10-11.md)
+supersedes this result. The original evidence remains available for comparison.
+
 On 11 October 2026, Infomonk collected **14 source listings from three websites**
 for technology, data and office roles. **Twelve list Bermuda; two need location
 review.** The native desktop journey verified source evidence, published the

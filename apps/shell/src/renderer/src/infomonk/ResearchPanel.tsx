@@ -76,6 +76,7 @@ export function ResearchPanel({
   const [countryText, setCountryText] = useState(initial.countries.join(', '))
   const [selectedId, setSelectedId] = useState<string | null>(initialSelection?.workflowId ?? null)
   const [runId, setRunId] = useState<string | null>(initialSelection?.runId ?? null)
+  const [runReload, setRunReload] = useState(0)
   const [accepted, setAccepted] = useState<ResearchDataset | null>(null)
   const [showAccepted, setShowAccepted] = useState(!!initialSelection && !initialSelection.runId)
   const [needsReview, setNeedsReview] = useState(initialSelection?.needsReview ?? false)
@@ -146,6 +147,7 @@ export function ResearchPanel({
   const dataset = showAccepted ? accepted : run?.candidate
   function showRun(id: string | null) {
     setRunId(id)
+    setRunReload((value) => value + 1)
     setRun(null)
     setAbsent(null)
     absentBasis.current = ''
@@ -206,7 +208,7 @@ export function ResearchPanel({
     return () => {
       live = false
     }
-  }, [project.id, runId, detailVersion, needsReview, workflow?.acceptedRevision])
+  }, [project.id, runId, runReload, detailVersion, needsReview, workflow?.acceptedRevision])
   useEffect(() => {
     let live = true
     if (!showAccepted || !selectedId) return
@@ -459,10 +461,11 @@ export function ResearchPanel({
         ) : config.kind === 'jobs' ? (
           <>
             <p>
-              Technology, data and office roles from the selected public career pages. Title
-              keywords include analyst, systems, data, project, accounting, administration and
-              claims. Bermuda listings and uncertain multi-jurisdiction roles are included for
-              review. This is a bounded search, not all Bermuda vacancies.
+              Search job boards, recruiters and employer portals for technology, data and office
+              roles. Title rules distinguish technology, data/research, office/finance and adjacent
+              quantitative roles. Uncertain locations, mixed-role advertisements, seasonal intakes
+              and talent pools require review. Counts describe source listings, not distinct current
+              vacancies.
             </p>
             <p>
               Only public listing/detail URLs are fetched. No login, résumé, application or paid
@@ -472,6 +475,17 @@ export function ResearchPanel({
             </p>
             <fieldset>
               <legend>Confirmed job websites</legend>
+              <div className="im-controls">
+                <button
+                  type="button"
+                  onClick={() => setConfig({ ...config, jobSiteIds: JOB_SITES.map((s) => s.id) })}
+                >
+                  Select all supported websites
+                </button>
+                <button type="button" onClick={() => setConfig({ ...config, jobSiteIds: [] })}>
+                  Clear website selection
+                </button>
+              </div>
               {JOB_SITES.map((site) => (
                 <label key={site.id}>
                   <input
@@ -495,6 +509,13 @@ export function ResearchPanel({
               changed page cannot replace the accepted tracker. A disappearing listing is retained
               for review; absence does not establish closure. Agency title/location keys cannot
               reliably distinguish reposts.
+            </p>
+            <p>
+              Source checks also lists discovery targets that need manual search or another adapter.
+              Unsearched targets have null counts, never zero-job results. A publication expiry date
+              is stored separately from an employer deadline. This search does not include
+              authenticated portals. Completed inputs mean the configured public view was checked;
+              partial searches do not establish whole-site coverage.
             </p>
           </>
         ) : (
@@ -615,6 +636,11 @@ export function ResearchPanel({
                     : 'Manual trigger'}
               </small>
               <div className="im-controls">
+                {latest?.status === 'review' && (
+                  <button disabled={busy} onClick={() => void act(() => select(w))}>
+                    Review candidate
+                  </button>
+                )}
                 <button
                   disabled={busy}
                   onClick={() => {
@@ -1100,6 +1126,9 @@ export function ResearchPanel({
                                       !allJobFields &&
                                       column.id === 'title' && (
                                         <small className="im-job-source">
+                                          {row.cells.role_group?.value
+                                            ? `${String(row.cells.role_group.value)} · `
+                                            : ''}
                                           {String(row.cells.source_site.value)} ·{' '}
                                           {String(
                                             row.cells.employer.value ?? 'Employer not stated',

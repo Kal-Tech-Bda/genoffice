@@ -9,6 +9,15 @@ candidate; accepted data changes only after publication.
 
 ## Source scope
 
+The owner rejected the three-site pilot as insufficient. The registry now has
+19 supported public checks: the three below plus LinkedIn guest search (partial),
+JobsInBDA, Hamilton, CCS, Clarien, OneComm, Skyport, Artex, Island, Deloitte,
+AXIS, Arch, Hiscox, Athora, Everest and Chubb. `jobs-api.ts` is the exact registry;
+`job-routes.ts` fences routes/fetches, `job-adapters.ts` handles measured HTML/JSON
+shapes, and `job-scope.ts` labels title groups. Source checks contains 24 additional
+uncollected targets with null counts/dates. See the
+[expanded audit](../use-cases/bermuda-jobs-wide-2026-10-11.md) for exact boundaries.
+
 - [BMA](https://jobs.jobvite.com/bmacareers/jobs): one server-rendered current-openings
   list and at most ten selected detail pages. JobPosting data supplies title,
   employer, posted date and country; an explicit deadline sentence supplies closing
@@ -31,7 +40,7 @@ login, application submission, résumé processing or paid model request.
 ## Tracking and evidence
 
 Jobs and Source checks use the same accepted ledger, durable queue and XLSX
-projection as the inherited research tasks. The three sources are explicitly
+projection as the inherited research tasks. Selected sources are explicitly
 confirmed; copied workflows/projects clear that selection. BMA/Coralisle keys
 use provider vacancy IDs. Agency keys use title/location and may represent reposts.
 Exact duplicate keys in a page reject acquisition. Similar named employer/title
@@ -70,16 +79,28 @@ route or arbitrary renderer URL.
 
 No new processing dependency was installed. parse5 was already a dependency of
 electron-utils; only a shared helper export was added. Per response: 2 MiB,
-20-second timeout, HTML-only, redirect rejection, HTTPS allowlisted routes,
+20-second timeout, HTML or declared public JSON, redirect rejection, HTTPS allowlisted routes,
 50,000 DOM nodes and 200 levels. Sites run sequentially through the existing
 queue. HTTP failures have explicit retry/new-check controls, not silent fallback
-to snippets. Complete selected-site coverage is required for publication.
+to snippets. All configured bounded acquisitions must complete before publication;
+partial guest/keyword coverage remains explicit. Public pagination/detail links
+use a canonical-URL queue, at most 900 acquired pages per source. Duplicate source
+keys across pages fail rather than inflate counts. Workday uses only a public
+read-only search POST, then verified Bermuda facets and count-checked pagination.
+No authentication or application endpoint is called. JSON proof units resolve
+from the same immutable hash-checked stored parser output as HTML units.
 
-The separate `bermuda-jobs-1/schema-1` processing version leaves existing quote
+The separate `bermuda-jobs-2/schema-2` processing version leaves existing quote
 and World Bank versions intact. Existing publication limits and profile recovery
 continue to apply; no second database or scheduler is introduced. The demonstrated
 workflow has no schedule, notifications or background automation. The engineering
 harness remains last and disabled.
 
+Old job candidates require a new run; previously accepted revisions are retained.
+New fields distinguish publication expiry from employer deadline and advertiser
+from employer. Analyst domains and actuarial roles are labeled separately from
+technology/data. Talent pools, seasonal intake and already-expired employer
+deadlines require review, even while a listing remains present.
+
 Executed facts, synthetic failure/disappearance tests, screenshots and remaining
-gaps are in [the use case](../use-cases/bermuda-jobs-2026-10-11.md).
+gaps are in [the expanded use case](../use-cases/bermuda-jobs-wide-2026-10-11.md).

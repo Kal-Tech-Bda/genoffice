@@ -120,3 +120,11 @@ source facts, missing deadlines and uncertain locations remain visible. Personal
 application status/notes persist independently of source observations. Disappearing
 listings are retained for review, and retrieval/layout failures preserve accepted
 data. This is selected-site tracking, not general web search or an engineering agent.
+
+The owner rejected the three-site pilot as insufficient. The
+[expanded use case](docs/use-cases/bermuda-jobs-wide-2026-10-11.md) now checks 19
+registered public sources and lists 24 additional targets with uncollected counts.
+Source listings, distinct vacancies and fully searched websites are different
+measures. LinkedIn guest results and Chubb keyword search have explicit coverage
+limits. Employer-browser confirmations remain separate evidence when the app
+does not yet acquire that portal. The engineering harness stays last.

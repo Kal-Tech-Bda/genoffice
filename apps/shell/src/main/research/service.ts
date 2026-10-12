@@ -36,10 +36,11 @@ import { projectDataset } from './projection'
 import { datasetPage, previewCell } from './pages'
 import { RESEARCH_METADATA_LIMIT } from './metadata'
 import { isResearchIdentity } from '../../shared/research-api'
-import { APPLICATION_STATUSES } from '../../shared/jobs-api'
+import { APPLICATION_STATUSES, JOB_SITES } from '../../shared/jobs-api'
 import {
   jobSite,
   jobUrl,
+  jobStartUrl,
   parseJobPage,
   fetchJobPage,
   jobDataset,
@@ -472,8 +473,8 @@ export class ResearchService {
     const project = this.workspace.get(projectId)
     if (config.kind === 'jobs') {
       const sites = config.jobSiteIds ?? []
-      if (sites.length > 3 || new Set(sites).size !== sites.length)
-        throw new Error('Confirm at most three distinct job sources.')
+      if (sites.length > JOB_SITES.length || new Set(sites).size !== sites.length)
+        throw new Error('Confirm distinct supported job sources.')
       sites.forEach(jobSite)
     }
     if (workflowId) {
@@ -793,8 +794,8 @@ export class ResearchService {
       w = this.store.workflow(run.workflowId),
       config = this.store.config(runId)
     const sites = config.jobSiteIds ?? []
-    if (!sites.length || sites.length > 3 || new Set(sites).size !== sites.length)
-      throw new Error('Confirm one to three distinct job sources.')
+    if (!sites.length || sites.length > JOB_SITES.length || new Set(sites).size !== sites.length)
+      throw new Error('Confirm distinct supported job sources.')
     sites.forEach(jobSite)
     const observations: JobObservation[] = [],
       known = this.store.inputs(runId)
@@ -819,7 +820,7 @@ export class ResearchService {
           ordinal,
           sourceId: hash(uri),
           sourceVersion: hash(bytes),
-          name: `${jobSite(site).name} page ${(ordinal % 100) + 1}`,
+          name: `${jobSite(site).name} page ${(ordinal % 1000) + 1}`,
           uri,
           retrievedAt: new Date().toISOString(),
           path,
@@ -853,9 +854,22 @@ export class ResearchService {
     for (let i = 0; i < (run.sample ? 1 : sites.length); i++) {
       const site = sites[i]
       this.store.progress(runId, 'acquiring', `Checking ${jobSite(site).name}`)
-      const listing = await acquire(site, i * 100, jobSite(site).url)
-      for (const [index, uri] of listing.links.entries())
-        await acquire(site, i * 100 + index + 1, uri)
+      const pending = [jobUrl(site, jobStartUrl(site))],
+        seen = new Set<string>()
+      while (pending.length) {
+        const uri = pending.shift()!
+        if (seen.has(uri)) continue
+        if (seen.size >= 900)
+          throw new Error(
+            'Job source exceeds 900 public page acquisitions; coverage remains incomplete.',
+          )
+        const page = await acquire(site, i * 1000 + seen.size, uri)
+        seen.add(uri)
+        for (const link of page.links) {
+          const next = jobUrl(site, link)
+          if (!seen.has(next) && !pending.includes(next)) pending.push(next)
+        }
+      }
       this.store.progress(runId, 'processing', `Checked ${i + 1}/${sites.length} selected sites`, {
         total: sites.length,
         complete: i + 1,
@@ -1062,7 +1076,9 @@ export class ResearchService {
     const bytes = await readFile(input.path)
     if (hash(bytes) !== input.sourceVersion)
       throw new Error('Snapshot integrity failed; evidence cannot be verified.')
-    if (input.parsed && !evidence.locator.startsWith('JSON ')) {
+    const isJobSnapshot =
+      input.parsed && /^bermuda-jobs-/.test((JSON.parse(input.parsed) as JobPage).method ?? '')
+    if (input.parsed && (!evidence.locator.startsWith('JSON ') || isJobSnapshot)) {
       const parsed = JSON.parse(input.parsed) as ParsedSource
       const unit = parsed.units.find(
         (u) => u.locator === evidence.locator && u.text === evidence.excerpt,

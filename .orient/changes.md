@@ -58,3 +58,27 @@ three shared utility tests fail in unchanged Windows path/chmod code. No applica
 notification automation, credential change or engineering harness was added.
 
 ---
+
+## 2026-10-12T02:04:26Z — codex/infomonk-workspace — working tree versus 169da638
+
+Bermuda jobs now checks 19 public sources through the existing research queue,
+records partial and uncollected coverage across 43 targets, and separates
+publication expiry from employer deadlines. The registry, bounded routes,
+source adapters, dataset and ResearchPanel carry the changes. The expanded
+use case contains 138 source listings. Native review, saved status/notes,
+all-page inspection, refresh, restart, HTML/JSON evidence and export passed.
+Tests found and fixed a candidate disappearing when the same run was selected
+again. A manual note preserves the hospital's 20/21 October deadline ambiguity
+in accepted revision 5 without silently changing source-derived facts.
+
+Review found no unrelated deletions or dependency changes. Three limits remain:
+24 targets need acquisition support and LinkedIn guest results remain partial;
+recruiter reposts and title rules prevent a reliable distinct-vacancy count;
+older jobs candidates require a fresh run under the expanded schema. Prior
+accepted history remains preserved. Prioritize reviewed portal/document capture,
+then vacancy reconciliation and broader discovery, and saved filters/facts-only
+refresh summaries. Focused verification passed 61 unit tests and 9 native desktop
+journeys; skipped and historical failures remain explicitly recorded. The data
+engineering harness remains deferred to the final phase.
+
+---

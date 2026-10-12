@@ -134,3 +134,11 @@ formula evaluation or durable execution.
 Its frozen preparation inputs remain useful, but generated execution stays
 disabled. Installer publishing, paid requests and a hosted/team deployment are
 not implied by completing local workspace features.
+
+The expanded Bermuda jobs use case addresses the rejected three-site coverage:
+19 public-source adapters, 24 additional coverage targets, pagination, explicit
+role groups, partial guest search, publication expiry versus employer deadline,
+and JSON snapshot inspection. Next prioritize reviewed browser/document capture
+for Job Connect, government, hospital/bank portals and image/PDF advertisements;
+then evidence-backed cross-site vacancy reconciliation and facts-only refresh
+diffs. See the [ranked gaps](docs/use-cases/bermuda-jobs-wide-2026-10-11.md).

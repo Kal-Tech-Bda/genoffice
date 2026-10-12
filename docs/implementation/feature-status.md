@@ -3,6 +3,11 @@
 Updated 11 October 2026. Evidence levels are **runtime-tested**, **unit-tested** and
 **source-confirmed**. A source trace or enabled button alone is not runtime proof.
 
+The [expanded jobs check](../use-cases/bermuda-jobs-wide-2026-10-11.md) supersedes
+the narrow three-site pilot: 19 registered public sources, pagination, explicit
+partial coverage, 24 uncollected targets, source-listing tracking and immutable
+HTML/JSON evidence. See its manifest for executed Windows tests and exact counts.
+
 Stages 3–5 now implement the bounded research behaviors below; the Stage 1–2
 table following it retains the earlier milestone's evidence.
 

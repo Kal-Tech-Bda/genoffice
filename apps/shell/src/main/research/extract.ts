@@ -12,7 +12,7 @@ import type {
 
 export const PROCESSING_VERSION = 'quotes-1/worldbank-1/schema-1'
 export const processingVersion = (config: ResearchConfig) =>
-  config.kind === 'jobs' ? 'bermuda-jobs-1/schema-1' : PROCESSING_VERSION
+  config.kind === 'jobs' ? 'bermuda-jobs-2/schema-2' : PROCESSING_VERSION
 export const quoteColumns: ResearchTable['columns'] = [
   { id: 'quote_id', name: 'Quote ID', type: 'text' },
   { id: 'supplier', name: 'Supplier', type: 'text' },

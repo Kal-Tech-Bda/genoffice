@@ -1,0 +1,952 @@
+{
+  "recordedAt": "2026-10-12T01:26:59.213Z",
+  "currentCoverageTargets": 43,
+  "configuredPublicSources": 19,
+  "uncollectedAutomaticTargets": 24,
+  "countsAreVacancies": false,
+  "records": [
+    {
+      "source": "LinkedIn Bermuda (partial public guest search)",
+      "url": "https://www.linkedin.com/jobs/search/?keywords=&location=Bermuda",
+      "automatedCheck": "2026-10-12T01:24:16.010Z",
+      "matchingSourceListings": 35,
+      "automatedScope": "PARTIAL guest search: 60 returned public cards checked of 272 reported Bermuda results. Remaining results and full descriptions unverified; no sign-in or application performed.",
+      "researchDisposition": "Measured adapter acquired configured public scope in two native live runs; full-site coverage only where described.",
+      "initialProbe": null
+    },
+    {
+      "source": "Bermuda Monetary Authority",
+      "url": "https://jobs.jobvite.com/bmacareers/jobs",
+      "automatedCheck": "2026-10-12T01:24:16.777Z",
+      "matchingSourceListings": 3,
+      "automatedScope": "Checked selected listing pages",
+      "researchDisposition": "Measured adapter acquired configured public scope in two native live runs; full-site coverage only where described.",
+      "initialProbe": null
+    },
+    {
+      "source": "Coralisle Group",
+      "url": "https://fs-320.my.salesforce-sites.com/recruit/fRecruit__ApplyJobList",
+      "automatedCheck": "2026-10-12T01:24:19.338Z",
+      "matchingSourceListings": 3,
+      "automatedScope": "Checked selected listing pages",
+      "researchDisposition": "Measured adapter acquired configured public scope in two native live runs; full-site coverage only where described.",
+      "initialProbe": null
+    },
+    {
+      "source": "Expertise Group",
+      "url": "https://www.expertisegroup.com/available-jobs",
+      "automatedCheck": "2026-10-12T01:24:19.659Z",
+      "matchingSourceListings": 12,
+      "automatedScope": "Checked selected listing pages",
+      "researchDisposition": "Measured adapter acquired configured public scope in two native live runs; full-site coverage only where described.",
+      "initialProbe": null
+    },
+    {
+      "source": "JobsInBDA / Royal Gazette",
+      "url": "https://www.jobsinbda.com/",
+      "automatedCheck": "2026-10-12T01:24:22.725Z",
+      "matchingSourceListings": 20,
+      "automatedScope": "All returned board advertisements/pages checked; scope uses title rules. Multi-role ads count as one source listing.",
+      "researchDisposition": "Measured adapter acquired configured public scope in two native live runs; full-site coverage only where described.",
+      "initialProbe": {
+        "url": "https://www.jobsinbda.com/",
+        "finalUrl": "https://www.jobsinbda.com/",
+        "status": 200,
+        "at": "2026-10-11T23:55:39.997Z",
+        "error": null,
+        "sha256": "3dbbb2acb21cbc27293a9aefb0618f100ef5e185a1772445b460e726dc51d258"
+      }
+    },
+    {
+      "source": "Hamilton Recruitment",
+      "url": "https://hamilton-recruitment.breezy.hr/",
+      "automatedCheck": "2026-10-12T01:24:23.139Z",
+      "matchingSourceListings": 29,
+      "automatedScope": "All public list cards checked; exact mirrored IDs reconciled, client identity and deadlines remain missing.",
+      "researchDisposition": "Measured adapter acquired configured public scope in two native live runs; full-site coverage only where described.",
+      "initialProbe": {
+        "url": "https://hamilton-recruitment.breezy.hr/",
+        "finalUrl": "https://hamilton-recruitment.breezy.hr/",
+        "status": 200,
+        "at": "2026-10-11T23:55:40.481Z",
+        "error": null,
+        "sha256": "41e7d8ee8173a75731a29a41f21300c5ea62c926a85f8cde03e43d39d3d5ab72"
+      }
+    },
+    {
+      "source": "CCS Group",
+      "url": "https://www.ccs.bm/careers/",
+      "automatedCheck": "2026-10-12T01:24:23.284Z",
+      "matchingSourceListings": 3,
+      "automatedScope": "Checked selected listing pages",
+      "researchDisposition": "Measured adapter acquired configured public scope in two native live runs; full-site coverage only where described.",
+      "initialProbe": {
+        "url": "https://www.ccs.bm/careers/",
+        "finalUrl": "https://www.ccs.bm/careers/",
+        "status": 200,
+        "at": "2026-10-11T23:55:43.109Z",
+        "error": null,
+        "sha256": "0243754fee587ccdadc1e5f3b15faf71e4843005316dda467dd7367d6db2ac8f"
+      }
+    },
+    {
+      "source": "Clarien Bank",
+      "url": "https://clarienbank.com/careers/",
+      "automatedCheck": "2026-10-12T01:24:26.280Z",
+      "matchingSourceListings": 3,
+      "automatedScope": "Checked selected listing pages",
+      "researchDisposition": "Measured adapter acquired configured public scope in two native live runs; full-site coverage only where described.",
+      "initialProbe": {
+        "url": "https://clarienbank.com/careers/",
+        "finalUrl": "https://clarienbank.com/careers/",
+        "status": 200,
+        "at": "2026-10-11T23:55:46.887Z",
+        "error": null,
+        "sha256": "81116970c7a6d98a12ff3eecd466f2876c3375300d955c07e2a53bd96a9f3957"
+      }
+    },
+    {
+      "source": "One Communications",
+      "url": "https://onecomm.bamboohr.com/careers",
+      "automatedCheck": "2026-10-12T01:24:27.800Z",
+      "matchingSourceListings": 3,
+      "automatedScope": "Entire public BambooHR list and role details checked; non-Bermuda or out-of-scope roles excluded.",
+      "researchDisposition": "Measured adapter acquired configured public scope in two native live runs; full-site coverage only where described.",
+      "initialProbe": {
+        "url": "https://onecomm.bm/careers/",
+        "finalUrl": "https://onecomm.bm/careers/",
+        "status": 200,
+        "at": "2026-10-11T23:55:44.429Z",
+        "error": null,
+        "sha256": "89f6a1001105467309106104c6a20ef415de0dd91b519e2d5aeb94913eb3e6d6"
+      }
+    },
+    {
+      "source": "Bermuda Skyport",
+      "url": "https://bermudaskyport.bamboohr.com/careers",
+      "automatedCheck": "2026-10-12T01:24:29.021Z",
+      "matchingSourceListings": 1,
+      "automatedScope": "Entire public BambooHR list and role details checked; non-Bermuda or out-of-scope roles excluded.",
+      "researchDisposition": "Measured adapter acquired configured public scope in two native live runs; full-site coverage only where described.",
+      "initialProbe": {
+        "url": "https://bermudaairport.com/careers/",
+        "finalUrl": "https://bermudaairport.com/careers/",
+        "status": 404,
+        "at": "2026-10-11T23:56:01.732Z",
+        "error": null,
+        "sha256": "9f1ee1823c0816d4364b522104beb4ccf2f3ea0e65529e7d8d7b160177651ba6"
+      }
+    },
+    {
+      "source": "Artex Talent Solutions (formerly Frontier)",
+      "url": "https://phe.tbe.taleo.net/phe03/ats/careers/v2/searchResults?org=FRONTIER&cws=40",
+      "automatedCheck": "2026-10-12T01:24:29.906Z",
+      "matchingSourceListings": 4,
+      "automatedScope": "Checked selected listing pages",
+      "researchDisposition": "Measured adapter acquired configured public scope in two native live runs; full-site coverage only where described.",
+      "initialProbe": null
+    },
+    {
+      "source": "Island Paradise Recruitment",
+      "url": "https://www.islandparadiserecruitment.co.uk/job-openings",
+      "automatedCheck": "2026-10-12T01:24:30.042Z",
+      "matchingSourceListings": 6,
+      "automatedScope": "Checked selected listing pages",
+      "researchDisposition": "Measured adapter acquired configured public scope in two native live runs; full-site coverage only where described.",
+      "initialProbe": {
+        "url": "https://www.islandparadiserecruitment.co.uk/job-openings",
+        "finalUrl": "https://www.islandparadiserecruitment.co.uk/job-openings",
+        "status": 200,
+        "at": "2026-10-11T23:55:43.102Z",
+        "error": null,
+        "sha256": "d9c3ef3317446d3c5185c4d66acee338033518ca2fcf96dcacc05a1371e4242f"
+      }
+    },
+    {
+      "source": "Deloitte Caribbean and Bermuda",
+      "url": "https://talentsourcing.deloitte.com/cbcapply/SearchJobs",
+      "automatedCheck": "2026-10-12T01:24:37.665Z",
+      "matchingSourceListings": 8,
+      "automatedScope": "Every linked result page checked; listings can describe future intake opportunities.",
+      "researchDisposition": "Measured adapter acquired configured public scope in two native live runs; full-site coverage only where described.",
+      "initialProbe": null
+    },
+    {
+      "source": "AXIS",
+      "url": "https://axiscapital.wd1.myworkdayjobs.com/axiscareers",
+      "automatedCheck": "2026-10-12T01:24:39.078Z",
+      "matchingSourceListings": 1,
+      "automatedScope": "Bermuda country/location facet selected; all selected pages and role details checked.",
+      "researchDisposition": "Measured adapter acquired configured public scope in two native live runs; full-site coverage only where described.",
+      "initialProbe": {
+        "url": "https://www.axiscapital.com/bermuda/careers/join-our-team",
+        "finalUrl": "https://www.axiscapital.com/bermuda/careers/join-our-team",
+        "status": 200,
+        "at": "2026-10-11T23:55:55.529Z",
+        "error": null,
+        "sha256": "70c2aa6d4fc00f75d9b8d1435b3ec54e74576948166faa2f5c48b8c1d0529bd9"
+      }
+    },
+    {
+      "source": "Arch Capital",
+      "url": "https://archgroup.wd1.myworkdayjobs.com/careers",
+      "automatedCheck": "2026-10-12T01:24:39.684Z",
+      "matchingSourceListings": 0,
+      "automatedScope": "Public portal did not expose a Bermuda country/location facet at this check. No Bermuda records collected; this is not a market-wide zero-job claim.",
+      "researchDisposition": "Measured adapter acquired configured public scope in two native live runs; full-site coverage only where described.",
+      "initialProbe": {
+        "url": "https://www.archgroup.com/careers/",
+        "finalUrl": "https://www.archgroup.com/careers/",
+        "status": 200,
+        "at": "2026-10-11T23:55:55.355Z",
+        "error": null,
+        "sha256": "7d0aacdf864f44146aeeac991ba2e79e3113b1bb7966dd390a389ec9d43f26d1"
+      }
+    },
+    {
+      "source": "Hiscox",
+      "url": "https://hiscox.wd3.myworkdayjobs.com/Hiscox_External_Site",
+      "automatedCheck": "2026-10-12T01:24:40.584Z",
+      "matchingSourceListings": 0,
+      "automatedScope": "Public portal did not expose a Bermuda country/location facet at this check. No Bermuda records collected; this is not a market-wide zero-job claim.",
+      "researchDisposition": "Measured adapter acquired configured public scope in two native live runs; full-site coverage only where described.",
+      "initialProbe": {
+        "url": "https://www.hiscoxgroup.com/careers",
+        "finalUrl": "https://www.hiscoxgroup.com/careers",
+        "status": 200,
+        "at": "2026-10-11T23:55:57.195Z",
+        "error": null,
+        "sha256": "8c7f838172078860010ff8448182710a12ea75ced6c7f7a67ef1f2f4949708b1"
+      }
+    },
+    {
+      "source": "Athora",
+      "url": "https://athora.wd3.myworkdayjobs.com/athora-careers",
+      "automatedCheck": "2026-10-12T01:24:42.242Z",
+      "matchingSourceListings": 1,
+      "automatedScope": "Bermuda country/location facet selected; all selected pages and role details checked.",
+      "researchDisposition": "Measured adapter acquired configured public scope in two native live runs; full-site coverage only where described.",
+      "initialProbe": {
+        "url": "https://www.athora.com/careers",
+        "finalUrl": "https://www.athora.com/careers",
+        "status": 200,
+        "at": "2026-10-11T23:55:57.503Z",
+        "error": null,
+        "sha256": "97195e105406ad08dc35c4d049c9f518964fd4d37d15cb084cbde138c603ed11"
+      }
+    },
+    {
+      "source": "Everest",
+      "url": "https://wd5.myworkdaysite.com/recruiting/everestre/careers",
+      "automatedCheck": "2026-10-12T01:24:43.623Z",
+      "matchingSourceListings": 1,
+      "automatedScope": "Bermuda country/location facet selected; all selected pages and role details checked.",
+      "researchDisposition": "Measured adapter acquired configured public scope in two native live runs; full-site coverage only where described.",
+      "initialProbe": {
+        "url": "https://www.everestglobal.com/careers",
+        "finalUrl": "https://www.everestglobal.com/us-en/career-opportunities/overview",
+        "status": 200,
+        "at": "2026-10-11T23:55:56.879Z",
+        "error": null,
+        "sha256": "f8de6a218a6eab8c011c7e4d2c74f306d0dd8f43ad707116b5a9e27dbe888878"
+      }
+    },
+    {
+      "source": "Chubb Bermuda",
+      "url": "https://fa-ewgu-saasfaprod1.fa.ocs.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_2001",
+      "automatedCheck": "2026-10-12T01:24:44.273Z",
+      "matchingSourceListings": 5,
+      "automatedScope": "All Bermuda-keyword public search pages checked, then explicit role locations filtered. Keyword scope is not an exhaustive country-filtered census.",
+      "researchDisposition": "Measured adapter acquired configured public scope in two native live runs; full-site coverage only where described.",
+      "initialProbe": {
+        "url": "https://www.chubb.com/bm-en/careers.html",
+        "finalUrl": "https://www.chubb.com/bm-en/careers.html",
+        "status": 200,
+        "at": "2026-10-11T23:55:56.226Z",
+        "error": null,
+        "sha256": "4e2ffcd1a008ff523d0ee10f2763ae0eee291cfe4f4a82a694aa36e22cf23cd2"
+      }
+    },
+    {
+      "source": "BermudaJobFinder (public board; adapter pending)",
+      "url": "https://www.bermudajobfinder.com/",
+      "automatedCheck": null,
+      "matchingSourceListings": null,
+      "automatedScope": "Manual search / additional adapter needed — not collected",
+      "researchDisposition": "Public homepage returned 20 cards and reported 163 listings. Next-page control changed page number but did not produce a verified different card set. Partial only; adapter pending.",
+      "initialProbe": null
+    },
+    {
+      "source": "Bermuda Job Connect",
+      "url": "https://www.bermudajobconnect.bm/",
+      "automatedCheck": null,
+      "matchingSourceListings": null,
+      "automatedScope": "Manual search / additional adapter needed — not collected",
+      "researchDisposition": "Legacy board announces migration after 6 April 2026. New public site leads to a sign-in/register app; no public full listing acquired.",
+      "initialProbe": {
+        "url": "https://www.bermudajobconnect.bm/",
+        "finalUrl": "https://www.bermudajobconnect.bm/",
+        "status": 200,
+        "at": "2026-10-11T23:55:39.707Z",
+        "error": null,
+        "sha256": "3e28a08cd643f711eadab8d30ead2d6d132aca702e79f265ff53fc82a22ea40a"
+      }
+    },
+    {
+      "source": "Government careers",
+      "url": "https://www.govtcareers.gov.bm/",
+      "automatedCheck": null,
+      "matchingSourceListings": null,
+      "automatedScope": "Manual search / additional adapter needed — not collected",
+      "researchDisposition": "Official gov.bm search-government-jobs page links this portal. HTTP timeout/fetch failure and browser net::ERR_ABORTED; not a zero-job result.",
+      "initialProbe": {
+        "url": "https://www.govtcareers.gov.bm/",
+        "status": null,
+        "at": "2026-10-11T23:55:39.866Z",
+        "error": "TypeError: fetch failed",
+        "sha256": null
+      }
+    },
+    {
+      "source": "Platinum Group",
+      "url": "https://www.platinumgroup.bm/jobs/",
+      "automatedCheck": null,
+      "matchingSourceListings": null,
+      "automatedScope": "Manual search / additional adapter needed — not collected",
+      "researchDisposition": "Public jobs page inspected; legacy Top Echelon script acquired as research text. No verified list acquired; adapter pending.",
+      "initialProbe": {
+        "url": "https://www.platinumgroup.bm/jobs/",
+        "finalUrl": "https://www.platinumgroup.bm/jobs/",
+        "status": 200,
+        "at": "2026-10-11T23:55:40.800Z",
+        "error": null,
+        "sha256": "55d0d8b8a2b2da8c511f320d14da612692a66ca5cfb729ff6caaa78d191c16c9"
+      }
+    },
+    {
+      "source": "PwC Executive Search",
+      "url": "https://www.pwc.com/bm/bermudatopjobs",
+      "automatedCheck": null,
+      "matchingSourceListings": null,
+      "automatedScope": "Manual search / additional adapter needed — not collected",
+      "researchDisposition": "Public executive search page inspected; dynamic vacancy/PDF list requires separate acquisition and document verification.",
+      "initialProbe": {
+        "url": "https://www.pwc.com/bm/bermudatopjobs",
+        "finalUrl": "https://www.pwc.com/bm/bermudatopjobs",
+        "status": 200,
+        "at": "2026-10-11T23:55:43.300Z",
+        "error": null,
+        "sha256": "13fabb3af13685f2915908946c116ae60c137401c0309ae1bd8c3914811f0217"
+      }
+    },
+    {
+      "source": "PwC Bermuda careers",
+      "url": "https://www.pwc.com/bm/en/careers/experienced/job-search.html",
+      "automatedCheck": null,
+      "matchingSourceListings": null,
+      "automatedScope": "Manual search / additional adapter needed — not collected",
+      "researchDisposition": "Public career landing inspected; current job-search portal not fully acquired.",
+      "initialProbe": null
+    },
+    {
+      "source": "KPMG Bermuda",
+      "url": "https://kpmg.com/bm/en/careers/experienced-hires/employment-opportunities.html",
+      "automatedCheck": null,
+      "matchingSourceListings": null,
+      "automatedScope": "Manual search / additional adapter needed — not collected",
+      "researchDisposition": "Employment page inspected; outbound PeopleHR routes include Cayman/BVI. No full Bermuda-location acquisition.",
+      "initialProbe": {
+        "url": "https://kpmg.com/bm/en/home/careers.html",
+        "finalUrl": "https://kpmg.com/bm/en/careers.html",
+        "status": 200,
+        "at": "2026-10-11T23:55:58.747Z",
+        "error": null,
+        "sha256": "903e7e4991d5c03375d9355b42435c645801b08975db37a75d844ffde5122c6e"
+      }
+    },
+    {
+      "source": "Bermuda Hospitals Board",
+      "url": "https://bermudahospitals.bm/work-at-bhb/bhb-jobs-now/external-applicants/",
+      "automatedCheck": null,
+      "matchingSourceListings": null,
+      "automatedScope": "Manual search / additional adapter needed — not collected",
+      "researchDisposition": "Public Infor browser list checked across all three pages (20+20+11); final Next Page disabled. BI detail confirms Pembroke, job 737, employer deadline 21 October. Not in automated tracker; see manual-leads.json.",
+      "initialProbe": {
+        "url": "https://bermudahospitals.bm/careers/",
+        "finalUrl": "https://bermudahospitals.bm/careers/",
+        "status": 404,
+        "at": "2026-10-11T23:56:01.123Z",
+        "error": null,
+        "sha256": "8f12b1ba181d98074206472aedc9272f6d1df39b390839f468b8972f87cf3d69"
+      }
+    },
+    {
+      "source": "Butterfield",
+      "url": "https://www.butterfieldgroup.com/careers",
+      "automatedCheck": null,
+      "matchingSourceListings": null,
+      "automatedScope": "Manual search / additional adapter needed — not collected",
+      "researchDisposition": "Official Bermuda page links SuccessFactors. Browser jurisdiction filter Bermuda returned two listings on one page, IDs 1846 and 1874. Trust Administrator detail read. Not in automated tracker.",
+      "initialProbe": {
+        "url": "https://www.butterfieldgroup.com/careers",
+        "finalUrl": "https://www.butterfieldgroup.com/careers",
+        "status": 200,
+        "at": "2026-10-11T23:55:46.210Z",
+        "error": null,
+        "sha256": "eba0f0ca496f286385c578a999ad587d9ea52f8c55a4eb41ded7c96960be04d7"
+      }
+    },
+    {
+      "source": "HSBC Bermuda",
+      "url": "https://www.about.hsbc.bm/careers",
+      "automatedCheck": null,
+      "matchingSourceListings": null,
+      "automatedScope": "Manual search / additional adapter needed — not collected",
+      "researchDisposition": "Public careers landing inspected. Global public jobs/search path not fully acquired.",
+      "initialProbe": {
+        "url": "https://www.about.hsbc.bm/careers",
+        "finalUrl": "https://www.about.hsbc.bm/careers",
+        "status": 200,
+        "at": "2026-10-11T23:55:55.912Z",
+        "error": null,
+        "sha256": "041d51a8c5cd4ed58440e59e1737763847f7366fa4a9535255a01ef8cc8fc0c9"
+      }
+    },
+    {
+      "source": "RenaissanceRe",
+      "url": "https://www.renre.com/careers/",
+      "automatedCheck": null,
+      "matchingSourceListings": null,
+      "automatedScope": "Manual search / additional adapter needed — not collected",
+      "researchDisposition": "Public careers landing inspected; current vacancy child portal remains uncollected.",
+      "initialProbe": {
+        "url": "https://www.renre.com/careers/",
+        "finalUrl": "https://www.renre.com/careers/",
+        "status": 200,
+        "at": "2026-10-11T23:55:56.674Z",
+        "error": null,
+        "sha256": "6ea294c1aed11af787514d5240c8ce22f1f8172e5db47f8e9ebde0cc385e938b"
+      }
+    },
+    {
+      "source": "Aspen",
+      "url": "https://www.aspen.co/",
+      "automatedCheck": null,
+      "matchingSourceListings": null,
+      "automatedScope": "Manual search / additional adapter needed — not collected",
+      "researchDisposition": "Initial guessed careers path returned 404; home is a discovery target. Valid current vacancy route remains unverified.",
+      "initialProbe": {
+        "url": "https://www.aspen.co/careers/",
+        "finalUrl": "https://www.aspen.co/careers/",
+        "status": 404,
+        "at": "2026-10-11T23:55:56.565Z",
+        "error": null,
+        "sha256": "01090111f17c8e376742fb9e68afd4f87fcfbe152c106f6e7063eff023f21864"
+      }
+    },
+    {
+      "source": "SiriusPoint",
+      "url": "https://www.siriuspt.com/",
+      "automatedCheck": null,
+      "matchingSourceListings": null,
+      "automatedScope": "Manual search / additional adapter needed — not collected",
+      "researchDisposition": "Initial guessed careers path returned 404; home is a discovery target. No current list acquired.",
+      "initialProbe": {
+        "url": "https://www.siriuspt.com/careers/",
+        "finalUrl": "https://www.siriuspt.com/careers/",
+        "status": 404,
+        "at": "2026-10-11T23:55:57.027Z",
+        "error": null,
+        "sha256": "91c1c006651d455f3278446d56b57320460d7234615ea121b98d2d41352c9d43"
+      }
+    },
+    {
+      "source": "Fortitude Re",
+      "url": "https://fortitude-re.com/",
+      "automatedCheck": null,
+      "matchingSourceListings": null,
+      "automatedScope": "Manual search / additional adapter needed — not collected",
+      "researchDisposition": "Initial guessed careers path returned 404; home is a discovery target. No current list acquired.",
+      "initialProbe": {
+        "url": "https://fortitude-re.com/careers/",
+        "finalUrl": "https://fortitude-re.com/careers/",
+        "status": 404,
+        "at": "2026-10-11T23:55:58.342Z",
+        "error": null,
+        "sha256": "f7ecab15cfb05316877ffa69b8fc80818c2ac3ff6ff6243f3b5d2ba486043c80"
+      }
+    },
+    {
+      "source": "Athene",
+      "url": "https://www.athene.com/",
+      "automatedCheck": null,
+      "matchingSourceListings": null,
+      "automatedScope": "Manual search / additional adapter needed — not collected",
+      "researchDisposition": "Initial guessed careers path returned 404; home is a discovery target. No current list acquired.",
+      "initialProbe": {
+        "url": "https://www.athene.com/careers.html",
+        "finalUrl": "https://www.athene.com/404?url=/careers.html",
+        "status": 200,
+        "at": "2026-10-11T23:55:57.707Z",
+        "error": null,
+        "sha256": "40b111df217e55bff5a4ec3c65e155e3cad4a78611aadb998a3c01430dc7fe8e"
+      }
+    },
+    {
+      "source": "Fireminds",
+      "url": "https://www.fireminds.com/",
+      "automatedCheck": null,
+      "matchingSourceListings": null,
+      "automatedScope": "Manual search / additional adapter needed — not collected",
+      "researchDisposition": "Direct career/company probe failed to fetch. No current vacancies established.",
+      "initialProbe": {
+        "url": "https://www.fireminds.com/company",
+        "status": null,
+        "at": "2026-10-11T23:55:55.067Z",
+        "error": "TypeError: fetch failed",
+        "sha256": null
+      }
+    },
+    {
+      "source": "Digicel",
+      "url": "https://careers.digicelgroup.com/",
+      "automatedCheck": null,
+      "matchingSourceListings": null,
+      "automatedScope": "Manual search / additional adapter needed — not collected",
+      "researchDisposition": "Public Bermuda-keyword search inspected; returned location examples included Kingston. Do not equate keyword hits with Bermuda roles.",
+      "initialProbe": {
+        "url": "https://careers.digicelgroup.com/search/?q=&locationsearch=Bermuda",
+        "finalUrl": "https://careers.digicelgroup.com/search/?q=&locationsearch=Bermuda",
+        "status": 200,
+        "at": "2026-10-11T23:55:45.099Z",
+        "error": null,
+        "sha256": "08ac2c9521f0b3d4a001c700363fd0b642323e54bda64e0e9115d1897e6f37cb"
+      }
+    },
+    {
+      "source": "EY",
+      "url": "https://www.ey.com/en_gl/careers",
+      "automatedCheck": null,
+      "matchingSourceListings": null,
+      "automatedScope": "Manual search / additional adapter needed — not collected",
+      "researchDisposition": "Regional careers discovery inspected; global employer jobs not fully acquired.",
+      "initialProbe": null
+    },
+    {
+      "source": "Conyers",
+      "url": "https://www.conyers.com/about-us/careers/",
+      "automatedCheck": null,
+      "matchingSourceListings": null,
+      "automatedScope": "Manual search / additional adapter needed — not collected",
+      "researchDisposition": "Public careers/business recruitment pages inspected; checked PDF links included Hong Kong roles. No full Bermuda list acquired.",
+      "initialProbe": {
+        "url": "https://www.conyers.com/careers/",
+        "finalUrl": "https://www.conyers.com/about-us/careers/",
+        "status": 200,
+        "at": "2026-10-11T23:56:00.917Z",
+        "error": null,
+        "sha256": "5c0e346682dfcf3d93094c469a0688606bc60d9066f33c56ec1caa412facd337"
+      }
+    },
+    {
+      "source": "Appleby",
+      "url": "https://www.applebyglobal.com/careers/",
+      "automatedCheck": null,
+      "matchingSourceListings": null,
+      "automatedScope": "Manual search / additional adapter needed — not collected",
+      "researchDisposition": "Public careers page inspected; dynamic vacancy results uncollected.",
+      "initialProbe": {
+        "url": "https://www.applebyglobal.com/careers/",
+        "finalUrl": "https://www.applebyglobal.com/careers/",
+        "status": 200,
+        "at": "2026-10-11T23:56:00.374Z",
+        "error": null,
+        "sha256": "6baeaa8583f0c246ea78c648a11aab0d53b8a8570aa6a56d5e7b4819d80effdd"
+      }
+    },
+    {
+      "source": "BELCO",
+      "url": "https://belco.bm/opportunities/",
+      "automatedCheck": null,
+      "matchingSourceListings": null,
+      "automatedScope": "Manual search / additional adapter needed — not collected",
+      "researchDisposition": "Public opportunities page provides recruitment information; absence of a checked list is not a zero-vacancy claim.",
+      "initialProbe": {
+        "url": "https://belco.bm/opportunities/",
+        "finalUrl": "https://belco.bm/opportunities/",
+        "status": 200,
+        "at": "2026-10-11T23:56:00.508Z",
+        "error": null,
+        "sha256": "77ada2641674edf587ac42351df2705a34efd3568b4503641bf654cf707074e2"
+      }
+    },
+    {
+      "source": "Saltus",
+      "url": "https://www.saltus.bm/explore/careers",
+      "automatedCheck": null,
+      "matchingSourceListings": null,
+      "automatedScope": "Manual search / additional adapter needed — not collected",
+      "researchDisposition": "Public careers page inspected; vacancy scope unestablished.",
+      "initialProbe": {
+        "url": "https://www.saltus.bm/explore/careers",
+        "finalUrl": "https://www.saltus.bm/explore/careers",
+        "status": 200,
+        "at": "2026-10-11T23:56:01.332Z",
+        "error": null,
+        "sha256": "07b837fa517afb554023a89101e115cf2deb6b54c4acc67bcdcacf26947f25ab"
+      }
+    },
+    {
+      "source": "Hamilton Princess / Accor",
+      "url": "https://www.thehamiltonprincess.com/careers/",
+      "automatedCheck": null,
+      "matchingSourceListings": null,
+      "automatedScope": "Manual search / additional adapter needed — not collected",
+      "researchDisposition": "Official careers page links an Accor search; portal results uncollected.",
+      "initialProbe": {
+        "url": "https://www.thehamiltonprincess.com/careers/",
+        "finalUrl": "https://www.thehamiltonprincess.com/careers/",
+        "status": 200,
+        "at": "2026-10-11T23:56:01.537Z",
+        "error": null,
+        "sha256": "5a7497a5e1ea8d2ddd06468876e3a06c1c2c83311e6c39b824e2f622d2da65bb"
+      }
+    },
+    {
+      "source": "Bermuda Executive Services",
+      "url": "https://www.bermudaemployment.com/",
+      "automatedCheck": null,
+      "matchingSourceListings": null,
+      "automatedScope": "Manual search / additional adapter needed — not collected",
+      "researchDisposition": "Supplied candidate domain returned a default blog. Current official career route remains unverified; not a confirmed live source.",
+      "initialProbe": {
+        "url": "https://www.bermudaemployment.com/",
+        "finalUrl": "https://www.bermudaemployment.com/",
+        "status": 200,
+        "at": "2026-10-11T23:55:42.848Z",
+        "error": null,
+        "sha256": "633d6127f941b9d3c796d5ebcfe35f7a73ee0909e37a3c06035a341b0e208a40"
+      }
+    }
+  ],
+  "legacy": {
+    "name": "Bermuda Job Board",
+    "url": "https://bermudajobboard.bm/",
+    "status": "Retired/migrated source, excluded from current-source count"
+  },
+  "initialProbeAttempts": [
+    {
+      "name": "Bermuda Job Connect",
+      "url": "https://www.bermudajobconnect.bm/",
+      "status": 200,
+      "at": "2026-10-11T23:55:39.707Z",
+      "error": null,
+      "sha256": "3e28a08cd643f711eadab8d30ead2d6d132aca702e79f265ff53fc82a22ea40a"
+    },
+    {
+      "name": "Bermuda Job Board (legacy)",
+      "url": "https://bermudajobboard.bm/",
+      "status": null,
+      "at": "2026-10-11T23:55:39.656Z",
+      "error": "TypeError: fetch failed",
+      "sha256": null
+    },
+    {
+      "name": "Government careers",
+      "url": "https://www.govtcareers.gov.bm/",
+      "status": null,
+      "at": "2026-10-11T23:55:39.866Z",
+      "error": "TypeError: fetch failed",
+      "sha256": null
+    },
+    {
+      "name": "JobsInBDA / Royal Gazette",
+      "url": "https://www.jobsinbda.com/",
+      "status": 200,
+      "at": "2026-10-11T23:55:39.997Z",
+      "error": null,
+      "sha256": "3dbbb2acb21cbc27293a9aefb0618f100ef5e185a1772445b460e726dc51d258"
+    },
+    {
+      "name": "Hamilton Recruitment",
+      "url": "https://hamilton-recruitment.breezy.hr/",
+      "status": 200,
+      "at": "2026-10-11T23:55:40.481Z",
+      "error": null,
+      "sha256": "41e7d8ee8173a75731a29a41f21300c5ea62c926a85f8cde03e43d39d3d5ab72"
+    },
+    {
+      "name": "Platinum Group",
+      "url": "https://www.platinumgroup.bm/jobs/",
+      "status": 200,
+      "at": "2026-10-11T23:55:40.800Z",
+      "error": null,
+      "sha256": "55d0d8b8a2b2da8c511f320d14da612692a66ca5cfb729ff6caaa78d191c16c9"
+    },
+    {
+      "name": "Frontier Bermuda",
+      "url": "https://www.frontier.bm/",
+      "status": 200,
+      "at": "2026-10-11T23:55:40.818Z",
+      "error": null,
+      "sha256": "6e7dab39ddfab8320157d08f758a98a9a3e2b2950409b6c061911dea7e810b84"
+    },
+    {
+      "name": "Bermuda Executive Services",
+      "url": "https://www.bermudaemployment.com/",
+      "status": 200,
+      "at": "2026-10-11T23:55:42.848Z",
+      "error": null,
+      "sha256": "633d6127f941b9d3c796d5ebcfe35f7a73ee0909e37a3c06035a341b0e208a40"
+    },
+    {
+      "name": "Island Paradise Recruitment",
+      "url": "https://www.islandparadiserecruitment.co.uk/job-openings",
+      "status": 200,
+      "at": "2026-10-11T23:55:43.102Z",
+      "error": null,
+      "sha256": "d9c3ef3317446d3c5185c4d66acee338033518ca2fcf96dcacc05a1371e4242f"
+    },
+    {
+      "name": "PwC Executive Search",
+      "url": "https://www.pwc.com/bm/bermudatopjobs",
+      "status": 200,
+      "at": "2026-10-11T23:55:43.300Z",
+      "error": null,
+      "sha256": "13fabb3af13685f2915908946c116ae60c137401c0309ae1bd8c3914811f0217"
+    },
+    {
+      "name": "CCS Group",
+      "url": "https://www.ccs.bm/careers/",
+      "status": 200,
+      "at": "2026-10-11T23:55:43.109Z",
+      "error": null,
+      "sha256": "0243754fee587ccdadc1e5f3b15faf71e4843005316dda467dd7367d6db2ac8f"
+    },
+    {
+      "name": "One Communications",
+      "url": "https://onecomm.bm/careers/",
+      "status": 200,
+      "at": "2026-10-11T23:55:44.429Z",
+      "error": null,
+      "sha256": "89f6a1001105467309106104c6a20ef415de0dd91b519e2d5aeb94913eb3e6d6"
+    },
+    {
+      "name": "Digicel",
+      "url": "https://careers.digicelgroup.com/search/?q=&locationsearch=Bermuda",
+      "status": 200,
+      "at": "2026-10-11T23:55:45.099Z",
+      "error": null,
+      "sha256": "08ac2c9521f0b3d4a001c700363fd0b642323e54bda64e0e9115d1897e6f37cb"
+    },
+    {
+      "name": "Fireminds",
+      "url": "https://www.fireminds.com/company",
+      "status": null,
+      "at": "2026-10-11T23:55:55.067Z",
+      "error": "TypeError: fetch failed",
+      "sha256": null
+    },
+    {
+      "name": "Butterfield",
+      "url": "https://www.butterfieldgroup.com/careers",
+      "status": 200,
+      "at": "2026-10-11T23:55:46.210Z",
+      "error": null,
+      "sha256": "eba0f0ca496f286385c578a999ad587d9ea52f8c55a4eb41ded7c96960be04d7"
+    },
+    {
+      "name": "Clarien",
+      "url": "https://clarienbank.com/careers/",
+      "status": 200,
+      "at": "2026-10-11T23:55:46.887Z",
+      "error": null,
+      "sha256": "81116970c7a6d98a12ff3eecd466f2876c3375300d955c07e2a53bd96a9f3957"
+    },
+    {
+      "name": "HSBC Bermuda",
+      "url": "https://www.about.hsbc.bm/careers",
+      "status": 200,
+      "at": "2026-10-11T23:55:55.912Z",
+      "error": null,
+      "sha256": "041d51a8c5cd4ed58440e59e1737763847f7366fa4a9535255a01ef8cc8fc0c9"
+    },
+    {
+      "name": "AXIS",
+      "url": "https://www.axiscapital.com/bermuda/careers/join-our-team",
+      "status": 200,
+      "at": "2026-10-11T23:55:55.529Z",
+      "error": null,
+      "sha256": "70c2aa6d4fc00f75d9b8d1435b3ec54e74576948166faa2f5c48b8c1d0529bd9"
+    },
+    {
+      "name": "Chubb Bermuda",
+      "url": "https://www.chubb.com/bm-en/careers.html",
+      "status": 200,
+      "at": "2026-10-11T23:55:56.226Z",
+      "error": null,
+      "sha256": "4e2ffcd1a008ff523d0ee10f2763ae0eee291cfe4f4a82a694aa36e22cf23cd2"
+    },
+    {
+      "name": "Arch Capital",
+      "url": "https://www.archgroup.com/careers/",
+      "status": 200,
+      "at": "2026-10-11T23:55:55.355Z",
+      "error": null,
+      "sha256": "7d0aacdf864f44146aeeac991ba2e79e3113b1bb7966dd390a389ec9d43f26d1"
+    },
+    {
+      "name": "Aspen",
+      "url": "https://www.aspen.co/careers/",
+      "status": 404,
+      "at": "2026-10-11T23:55:56.565Z",
+      "error": null,
+      "sha256": "01090111f17c8e376742fb9e68afd4f87fcfbe152c106f6e7063eff023f21864"
+    },
+    {
+      "name": "RenaissanceRe",
+      "url": "https://www.renre.com/careers/",
+      "status": 200,
+      "at": "2026-10-11T23:55:56.674Z",
+      "error": null,
+      "sha256": "6ea294c1aed11af787514d5240c8ce22f1f8172e5db47f8e9ebde0cc385e938b"
+    },
+    {
+      "name": "SiriusPoint",
+      "url": "https://www.siriuspt.com/careers/",
+      "status": 404,
+      "at": "2026-10-11T23:55:57.027Z",
+      "error": null,
+      "sha256": "91c1c006651d455f3278446d56b57320460d7234615ea121b98d2d41352c9d43"
+    },
+    {
+      "name": "Everest",
+      "url": "https://www.everestglobal.com/careers",
+      "status": 200,
+      "at": "2026-10-11T23:55:56.879Z",
+      "error": null,
+      "sha256": "f8de6a218a6eab8c011c7e4d2c74f306d0dd8f43ad707116b5a9e27dbe888878"
+    },
+    {
+      "name": "Hiscox",
+      "url": "https://www.hiscoxgroup.com/careers",
+      "status": 200,
+      "at": "2026-10-11T23:55:57.195Z",
+      "error": null,
+      "sha256": "8c7f838172078860010ff8448182710a12ea75ced6c7f7a67ef1f2f4949708b1"
+    },
+    {
+      "name": "Fortitude Re",
+      "url": "https://fortitude-re.com/careers/",
+      "status": 404,
+      "at": "2026-10-11T23:55:58.342Z",
+      "error": null,
+      "sha256": "f7ecab15cfb05316877ffa69b8fc80818c2ac3ff6ff6243f3b5d2ba486043c80"
+    },
+    {
+      "name": "Athene",
+      "url": "https://www.athene.com/careers.html",
+      "status": 200,
+      "at": "2026-10-11T23:55:57.707Z",
+      "error": null,
+      "sha256": "40b111df217e55bff5a4ec3c65e155e3cad4a78611aadb998a3c01430dc7fe8e"
+    },
+    {
+      "name": "Athora",
+      "url": "https://www.athora.com/careers",
+      "status": 200,
+      "at": "2026-10-11T23:55:57.503Z",
+      "error": null,
+      "sha256": "97195e105406ad08dc35c4d049c9f518964fd4d37d15cb084cbde138c603ed11"
+    },
+    {
+      "name": "PwC Bermuda",
+      "url": "https://www.pwc.com/bm/en/careers.html",
+      "status": 200,
+      "at": "2026-10-11T23:55:59.897Z",
+      "error": null,
+      "sha256": "846402ebe18ef500f8e328c55a6b97ebfa766468246b37f2a91c95d87eee1cb9"
+    },
+    {
+      "name": "KPMG Bermuda",
+      "url": "https://kpmg.com/bm/en/home/careers.html",
+      "status": 200,
+      "at": "2026-10-11T23:55:58.747Z",
+      "error": null,
+      "sha256": "903e7e4991d5c03375d9355b42435c645801b08975db37a75d844ffde5122c6e"
+    },
+    {
+      "name": "Deloitte Bermuda",
+      "url": "https://www.deloitte.com/bm/en/careers.html",
+      "status": 404,
+      "at": "2026-10-11T23:56:00.108Z",
+      "error": null,
+      "sha256": "0e219863427e5dfd4e1100f12a7352b9067e73630769c58cbfbc1295c88d81ec"
+    },
+    {
+      "name": "EY Bermuda",
+      "url": "https://www.ey.com/en_bm/careers",
+      "status": 404,
+      "at": "2026-10-11T23:55:58.706Z",
+      "error": null,
+      "sha256": "ec9f0eb1a49fa7459af055b7df46b3947ed64a67f86574125807b5bf4bad7a27"
+    },
+    {
+      "name": "Conyers",
+      "url": "https://www.conyers.com/careers/",
+      "status": 200,
+      "at": "2026-10-11T23:56:00.917Z",
+      "error": null,
+      "sha256": "5c0e346682dfcf3d93094c469a0688606bc60d9066f33c56ec1caa412facd337"
+    },
+    {
+      "name": "Appleby",
+      "url": "https://www.applebyglobal.com/careers/",
+      "status": 200,
+      "at": "2026-10-11T23:56:00.374Z",
+      "error": null,
+      "sha256": "6baeaa8583f0c246ea78c648a11aab0d53b8a8570aa6a56d5e7b4819d80effdd"
+    },
+    {
+      "name": "BELCO",
+      "url": "https://belco.bm/opportunities/",
+      "status": 200,
+      "at": "2026-10-11T23:56:00.508Z",
+      "error": null,
+      "sha256": "77ada2641674edf587ac42351df2705a34efd3568b4503641bf654cf707074e2"
+    },
+    {
+      "name": "Bermuda Hospitals Board",
+      "url": "https://bermudahospitals.bm/careers/",
+      "status": 404,
+      "at": "2026-10-11T23:56:01.123Z",
+      "error": null,
+      "sha256": "8f12b1ba181d98074206472aedc9272f6d1df39b390839f468b8972f87cf3d69"
+    },
+    {
+      "name": "Saltus",
+      "url": "https://www.saltus.bm/explore/careers",
+      "status": 200,
+      "at": "2026-10-11T23:56:01.332Z",
+      "error": null,
+      "sha256": "07b837fa517afb554023a89101e115cf2deb6b54c4acc67bcdcacf26947f25ab"
+    },
+    {
+      "name": "Bermuda Skyport",
+      "url": "https://bermudaairport.com/careers/",
+      "status": 404,
+      "at": "2026-10-11T23:56:01.732Z",
+      "error": null,
+      "sha256": "9f1ee1823c0816d4364b522104beb4ccf2f3ea0e65529e7d8d7b160177651ba6"
+    },
+    {
+      "name": "Hamilton Princess",
+      "url": "https://www.thehamiltonprincess.com/careers/",
+      "status": 200,
+      "at": "2026-10-11T23:56:01.537Z",
+      "error": null,
+      "sha256": "5a7497a5e1ea8d2ddd06468876e3a06c1c2c83311e6c39b824e2f622d2da65bb"
+    }
+  ],
+  "limit": "Landing-page inspection, manual browser collection and automated bounded acquisition are distinct evidence levels. Current target URLs are not all verified current career portals."
+}

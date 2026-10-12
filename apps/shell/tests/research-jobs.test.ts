@@ -306,3 +306,54 @@ it.skipIf(process.env.INFOMONK_PROBE_JOBS !== '1')(
     }
   },
 )
+it('resolves public JSON job evidence through immutable stored units and rejects a forged locator', async () => {
+  const root = mkdtempSync(join(tmpdir(), 'infomonk-json-jobs-')),
+    workspace = new WorkspaceStore(root)
+  const project = await workspace.create({
+    name: 'Public JSON jobs',
+    description: 'Synthetic evidence test',
+    startKind: 'researchWeb',
+  })
+  const service = new ResearchService(root, workspace)
+  services.push(service)
+  const workflow = service.save(project.id, 'JSON Jobs', {
+    kind: 'jobs',
+    instructions: 'Data roles',
+    sourceIds: [],
+    fields: [],
+    countries: [],
+    fromYear: 2023,
+    toYear: 2024,
+    jobSiteIds: ['onecomm'],
+  })
+  vi.stubGlobal(
+    'fetch',
+    vi.fn(
+      async (url: string) =>
+        new Response(
+          JSON.stringify(
+            url.endsWith('/list')
+              ? { meta: { totalCount: 1 }, result: [{ id: '124' }] }
+              : {
+                  result: {
+                    jobOpening: {
+                      jobOpeningName: 'Data Analyst',
+                      jobOpeningShareUrl: 'https://onecomm.bamboohr.com/careers/124',
+                      jobOpeningStatus: 'Open',
+                      location: { city: 'Hamilton', addressCountry: 'Bermuda' },
+                    },
+                  },
+                },
+          ),
+          { headers: { 'content-type': 'application/json' } },
+        ),
+    ),
+  )
+  const run = service.run(project.id, workflow.id, false)
+  await vi.waitFor(() => expect(service.store.run(run.id).status).toBe('review'))
+  const evidence = service.store.run(run.id).candidate!.tables[0].rows[0].cells.title.evidence[0]
+  expect((await service.evidence(project.id, evidence)).text).toBe('"Data Analyst"')
+  await expect(
+    service.evidence(project.id, { ...evidence, excerpt: '"Fabricated"' }),
+  ).rejects.toThrow('locator')
+})

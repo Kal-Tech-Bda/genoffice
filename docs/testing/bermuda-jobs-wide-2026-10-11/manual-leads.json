@@ -1,0 +1,78 @@
+{
+  "method": "Signed-out public browser inspection; separate from automated tracker acquisition",
+  "leads": [
+    {
+      "source": "Bermuda Hospitals Board",
+      "title": "Business Intelligence Specialist",
+      "jobId": "737",
+      "location": "BM:Pembroke",
+      "postedDate": "2026-10-09",
+      "employerDeadline": "2026-10-21",
+      "url": "https://css-bermudahospitals-prd.inforcloudsuite.com/hcm/Jobs/navigation/JobPosting%5BJobPostingSet%5D%281%2C737%2C1%29.JobPostingDisplayNav?csk.JobBoard=EXTERNAL&csk.HROrganization=1",
+      "detailReviewed": true,
+      "note": "Image confirms BHB and role; printed deadline 20 October differs from portal wording/description (21 October). Board publication expiry 11 October is a separate date. Preserve both observations and plan for the earlier date pending confirmation.",
+      "imageAdvertisement": {
+        "url": "https://www.jobsinbda.com/job/business-intelligence-specialist-full-time/",
+        "employerConfirmed": "Bermuda Hospitals Board",
+        "roleConfirmed": true,
+        "printedDeadline": "2026-10-20",
+        "method": "Public browser image visually read",
+        "recordedAt": "2026-10-12T01:46:29.475Z"
+      },
+      "deadlineAmbiguity": {
+        "portalHeadline": "Apply before October 21, 2026",
+        "portalDescriptionDeadline": "2026-10-21",
+        "imageDeadline": "2026-10-20",
+        "planningDate": "2026-10-20",
+        "resolved": false,
+        "note": "Dates/cutoff wording differ; confirm the exact cutoff. No extension inferred."
+      }
+    },
+    {
+      "source": "Bermuda Hospitals Board",
+      "title": "Employee Relations Manager",
+      "jobId": "644",
+      "location": "BM:Paget",
+      "postedDate": "2026-10-09",
+      "employerDeadline": null,
+      "url": "https://bermudahospitals.bm/work-at-bhb/bhb-jobs-now/",
+      "detailReviewed": false
+    },
+    {
+      "source": "Bermuda Hospitals Board",
+      "title": "Director Learning & Talent Development",
+      "jobId": "994",
+      "location": "BM:Paget",
+      "postedDate": "2026-10-09",
+      "employerDeadline": null,
+      "url": "https://bermudahospitals.bm/work-at-bhb/bhb-jobs-now/",
+      "detailReviewed": false,
+      "note": "HR-adjacent lead: current automated title rules do not collect this title."
+    },
+    {
+      "source": "Butterfield",
+      "title": "Lending Assistant",
+      "jobId": "1846",
+      "location": "Bermuda — Head Office/Reid St Banking Ctr",
+      "postedDate": "2026-10-06",
+      "employerDeadline": null,
+      "url": "https://career5.successfactors.eu/career?company=Butterfield",
+      "detailReviewed": false
+    },
+    {
+      "source": "Butterfield",
+      "title": "Trust Administrator",
+      "jobId": "1874",
+      "location": "Bermuda — Head Office/Reid St Banking Ctr",
+      "postedDate": "2026-10-02",
+      "employerDeadline": null,
+      "url": "https://career5.successfactors.eu/career?company=Butterfield",
+      "detailReviewed": true,
+      "note": "Employer describes transactional and administrative support for Trust Services. No closing date established. Search UI returned two Bermuda listings on one page."
+    }
+  ],
+  "hospitalCoverage": "All three public result pages inspected: 20 + 20 + 11 rows; Next Page disabled on final page. Only BI detail reviewed.",
+  "applicationStatus": "No application, external shortlist, account creation or notification subscription performed",
+  "observationDate": "2026-10-11 Atlantic/Bermuda",
+  "recordedAt": "2026-10-12T00:53:35.888Z"
+}

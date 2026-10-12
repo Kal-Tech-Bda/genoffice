@@ -1,0 +1,148 @@
+{
+  "recordedAt": "2026-10-12T02:05:10.457Z",
+  "baseline": "169da63832165c23f2d1da864c89c1e1ab1c871d",
+  "branch": "codex/infomonk-workspace",
+  "environment": {
+    "platform": "Windows",
+    "osBuild": "10.0.26200.0",
+    "node": "v24.13.1",
+    "npm": "11.8.0",
+    "electron": "43.7.6",
+    "vitest": "4.1.11",
+    "playwright": "1.62.1",
+    "parse5": "8.0.1",
+    "timezone": "America/Halifax; deadlines use Atlantic/Bermuda"
+  },
+  "checks": [
+    {
+      "command": "npm run build -w @genoffice/shell",
+      "result": "passed",
+      "notes": "Existing native Sheets build exercised; no Sheets code changed."
+    },
+    {
+      "command": "npm run typecheck",
+      "result": "passed",
+      "workspaces": 26
+    },
+    {
+      "command": "npm run typecheck -w @genoffice/shell",
+      "result": "passed",
+      "notes": "Repeated after final production edits."
+    },
+    {
+      "command": "INFOMONK_WIDE_PROBE=1 npm exec -w @genoffice/shell -- vitest run tests/research.test.ts tests/research-readiness.test.ts tests/research-journeys.test.ts tests/research-hardening.test.ts tests/research-jobs.test.ts tests/research-job-sources.test.ts",
+      "passed": 61,
+      "skipped": 1,
+      "result": "passed",
+      "notes": "Old three-site cached probe not opted in; permanent failures/coverage and new independently captured primary shapes tested."
+    },
+    {
+      "command": "INFOMONK_WIDE_JOBS=1 npm run test:e2e -- infomonk-jobs-wide.spec.ts infomonk-jobs.spec.ts infomonk-research-context.spec.ts infomonk-process-journeys.spec.ts --workers=1",
+      "passed": 8,
+      "skipped": 2,
+      "result": "passed",
+      "notes": "Full 19-source live run and seven regression journeys passed after final review reload fix; old live pilot and attachment test were not opted in for this batch."
+    },
+    {
+      "command": "INFOMONK_WIDE_ATTACH=1 npm run test:e2e -- infomonk-jobs-wide.spec.ts --grep \"attach manually\" --workers=1",
+      "passed": 1,
+      "result": "passed",
+      "notes": "Report saved as a project source; a separate personal note preserves the image/portal 20/21 October deadline ambiguity in revision 5. Saved status, unchanged employer/deadline metadata, restart and native Sheets Details verified."
+    },
+    {
+      "command": "node docs/testing/bermuda-jobs-wide-2026-10-11/quality-check.mjs",
+      "result": "passed",
+      "notes": "Entire exported revision 5 XLSX metadata reconciled to all 138 source listings and 43 coverage targets; saved note, missing facts and timestamps verified."
+    },
+    {
+      "command": "npm run lint",
+      "result": "passed",
+      "warnings": 12,
+      "notes": "Existing upstream warnings; research bundles are ignored text artifacts, not executable source."
+    },
+    {
+      "command": "npm run check:theme-colors",
+      "result": "passed"
+    },
+    {
+      "command": "npm run check:english-comments",
+      "result": "passed"
+    },
+    {
+      "command": "npm run licenses",
+      "result": "passed"
+    },
+    {
+      "command": "npm run format:check",
+      "result": "passed"
+    }
+  ],
+  "live": {
+    "checkedAt": "2026-10-12T01:24:55.699Z",
+    "sourceListings": 138,
+    "configuredChecks": 19,
+    "coverageTargets": 43,
+    "automaticUncollected": 24,
+    "acceptedRevision": 5,
+    "manualSchedule": true,
+    "rendererErrors": [],
+    "freshProcessReopen": true,
+    "nativeHtmlAndJsonEvidence": true,
+    "manualResearchAttachment": {
+      "sourceId": "2f699c41-152e-4cfa-8c8e-ca89eae7e3d8",
+      "sha256": "44480d20cfbebe68a40687c5efdcaa93023f1933652e3dedbf9a79f2da4b17bf",
+      "restartVerified": true
+    },
+    "launcher": "working_dir/bermuda-jobs/Open-Bermuda-Jobs.ps1",
+    "launchCommand": "$env:INFOMONK_USER_DATA=<live.profile>; $env:GENOFFICE_USER_DATA=<live.profile>; $env:GENOFFICE_LANG=\"en\"; & node_modules/electron/dist/electron.exe apps/shell <live.destination>",
+    "refreshAcceptedRevision": 4,
+    "destination": "C:\\Users\\Place\\Documents\\ChatGPT\\Socrates\\e2e\\artifacts\\bermuda-jobs-wide-demo-gbad1f\\projects\\proj-f6320280aae0\\workspace\\research\\Research-Bermuda jobs  broad source coverage-r5-08ae3fe9.xlsx",
+    "output": "C:\\Users\\Place\\Documents\\ChatGPT\\Socrates\\working_dir\\bermuda-jobs\\Bermuda-Jobs-Tracker-Wide.xlsx",
+    "manualDeadlineReview": {
+      "imageDeadline": "2026-10-20",
+      "portalDescriptionDeadline": "2026-10-21",
+      "planningDate": "2026-10-20",
+      "resolved": false,
+      "restartAndNativeSheetVerified": true,
+      "acceptedRevision": 5
+    }
+  },
+  "limits": [
+    "Partial LinkedIn guest search; remaining 212 reported results unverified at this check.",
+    "Chubb keyword results are not an exhaustive country census.",
+    "24 targets not acquired by the automated task, including manually checked BHB and Butterfield.",
+    "Source listings are not confirmed distinct or currently open vacancies.",
+    "Manual browser confirmations are in the project report, not automatic job-field enrichment.",
+    "All configured scopes must complete; source failures preserve accepted data."
+  ],
+  "knownHistoricalFailuresNotRerun": [
+    "Prior electron-utils full suite: 254 passed, 3 failures in unchanged Windows path/chmod tests.",
+    "Historical broad Shell/Sheets suites have 21 baseline failures; no full-suite green claim."
+  ],
+  "dependenciesChanged": false,
+  "harnessEnabled": false,
+  "sourceHashes": {
+    "apps/shell/src/main/research/job-adapters.ts": "6d6fc03c4d1e6e548eb8be0709a954e6b4ba0e8f189312ebcd6e6542998dd217",
+    "apps/shell/src/main/research/job-routes.ts": "d3aa701340c1297177715915d2e013f0c6b79253ab5f7c01f5f84755e280cad6",
+    "apps/shell/src/main/research/job-scope.ts": "1c2f7737c4eab3b2022cca586d9773d77e46b9181337758f85ae82c9a675cff7",
+    "apps/shell/src/main/research/jobs.ts": "9bff676cd1a74a6bf44ed282d34a8937f770399d883fa7b9ea78a691dcff9d9e",
+    "apps/shell/src/main/research/service.ts": "f5e914ce230cac15418a940bdab1ddffb99babf7fab9e2d78ed6d103277367e3",
+    "apps/shell/src/main/research/extract.ts": "52747af412092533c61be9d9a07ee5759a790bece3bd2d8356b103e8ab5aa474",
+    "apps/shell/src/main/research/ipc.ts": "246eea7a0ef9383de85b3e9919d59fd6257b41ad65d747f1db7759800c8639db",
+    "apps/shell/src/shared/jobs-api.ts": "69c93d4cbcc4e623ce6306f94eb23ad2ec392d470ebac76e58bc6ec6f4c9dc7f",
+    "apps/shell/src/renderer/src/infomonk/ResearchPanel.tsx": "429d25fc04440ede746683583fde6e957bdc7edbe8fdf746d0fe45e2d737f6b6",
+    "apps/shell/tests/research-jobs.test.ts": "627889af7d3715c44a552287774227ef67cadd199968eefe32bdc452d8394973",
+    "apps/shell/tests/research-job-sources.test.ts": "307a841733276a43026c0e0f1eab62a0699edb0e7168ad37985c61604a70638d",
+    "e2e/infomonk-jobs-wide.spec.ts": "02b832320bc4168e4c321304a99b28566914475b786fca40ea80cc9a889b5b40"
+  },
+  "fixedDuringUseCase": [
+    "Combined multiline agency titles without duplicate keys",
+    "Ignored pagination-shaped login links and canonicalized repeated first pages",
+    "Separated publication expiry from employer deadlines",
+    "Read employer deadline spans and flagged already-past deadlines",
+    "Resolved public JSON proof units through immutable stored snapshots",
+    "Collected every accepted table page into the evidence manifest",
+    "Removed location warnings caused only by generic repost-key wording",
+    "Reloaded the same selected run instead of clearing its candidate permanently"
+  ]
+}
