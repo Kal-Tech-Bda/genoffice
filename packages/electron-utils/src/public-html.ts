@@ -1,11 +1,14 @@
 import { parse, type DefaultTreeAdapterTypes as T } from 'parse5'
 
 export type HtmlNode = T.Node
-export function publicHtml(bytes: Buffer): HtmlNode[] {
+export function publicHtml(
+  bytes: Buffer,
+  options: { sourceCodeLocationInfo?: boolean } = {},
+): HtmlNode[] {
   if (bytes.length > 2 * 1024 * 1024) throw new Error('HTML exceeds the 2 MiB source limit.')
   const result: HtmlNode[] = [],
     pending: { node: HtmlNode; depth: number }[] = [
-      { node: parse(bytes.toString('utf8')), depth: 0 },
+      { node: parse(bytes.toString('utf8'), options), depth: 0 },
     ]
   while (pending.length) {
     const { node, depth } = pending.pop()!

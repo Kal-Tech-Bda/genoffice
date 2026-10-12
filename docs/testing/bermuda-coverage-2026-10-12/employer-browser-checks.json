@@ -1,0 +1,157 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-10-12 04:06:57 UTC",
+  "evidenceMethod": "Fresh visible browser DOM of primary employer public vacancy pages; only vacancy facts recorded. No application, profile or private account pages read.",
+  "scope": "Technology, data and office roles; workspace manual refresh",
+  "checks": [
+    {
+      "site": "bhb",
+      "url": "https://bermudahospitals.bm/work-at-bhb/bhb-jobs-now/external-applicants/",
+      "listingUrl": "https://css-bermudahospitals-prd.inforcloudsuite.com/hcm/Jobs/form/JobBoard%281,EXTERNAL%29.JobSearchCompositeForm?navigation=JobBoard%281,EXTERNAL%29.JobSearchCompositeFormNav&csk.JobBoard=EXTERNAL&csk.HROrganization=1",
+      "status": "complete visible public listing pagination; selected details",
+      "pages": 3,
+      "rowsByPage": [20, 20, 11],
+      "listingsReviewed": 51,
+      "lastPageNextDisabled": true,
+      "selectedLeads": [
+        {
+          "sourceId": "737",
+          "title": "Business Intelligence Specialist",
+          "location": "BM:Pembroke",
+          "postedLiteral": "10/9/2026",
+          "url": "https://css-bermudahospitals-prd.inforcloudsuite.com/hcm/Jobs/navigation/JobPosting%5BJobPostingSet%5D%281%2C737%2C1%29.JobPostingDisplayNav?csk.JobBoard=EXTERNAL&csk.HROrganization=1",
+          "employerDeadline": "2026-10-21",
+          "detailVerified": true,
+          "notes": "Employer detail banner and body agree 21 October; prior newspaper advertisement said 20 October. Preserve both sources and resolve before relying on the later date."
+        },
+        {
+          "sourceId": "994",
+          "title": "Director Learning & Talent Development",
+          "location": "BM:Paget",
+          "postedLiteral": "10/9/2026",
+          "url": "https://css-bermudahospitals-prd.inforcloudsuite.com/hcm/Jobs/navigation/JobPosting%5BJobPostingSet%5D%281%2C994%2C1%29.JobPostingDisplayNav?csk.JobBoard=EXTERNAL&csk.HROrganization=1",
+          "employerDeadline": "2026-10-21",
+          "detailVerified": true,
+          "notes": "Employer describes full-time administration and learning/talent leadership; requirements include ten years training/development experience."
+        },
+        {
+          "sourceId": "644",
+          "title": "Employee Relations Manager",
+          "location": "BM:Paget",
+          "postedLiteral": "10/9/2026",
+          "url": "https://css-bermudahospitals-prd.inforcloudsuite.com/hcm/Jobs/navigation/JobPosting%5BJobPostingSet%5D%281%2C644%2C2%29.JobPostingDisplayNav?csk.JobBoard=EXTERNAL&csk.HROrganization=1",
+          "employerDeadline": null,
+          "detailVerified": false
+        },
+        {
+          "sourceId": "1044",
+          "title": "Cashier",
+          "location": "BM:Paget",
+          "postedLiteral": "10/6/2026",
+          "url": "https://css-bermudahospitals-prd.inforcloudsuite.com/hcm/Jobs/navigation/JobPosting%5BJobPostingSet%5D%281%2C1044%2C1%29.JobPostingDisplayNav?csk.JobBoard=EXTERNAL&csk.HROrganization=1",
+          "employerDeadline": null,
+          "detailVerified": false,
+          "notes": "Adjacent administrative/finance lead; title-rule scope does not presently include cashier."
+        }
+      ],
+      "trackerIntegration": "Employer portal adapter pending; manual evidence is attached separately, not represented as automatically refreshable jobs."
+    },
+    {
+      "site": "government",
+      "url": "https://govtcareers.gov.bm/",
+      "status": "complete visible public listing pagination; administrative assistant detail verified",
+      "pages": 2,
+      "rowsByPage": [10, 3],
+      "listingsReviewed": 13,
+      "lastPageNextDisabled": true,
+      "selectedLeads": [
+        {
+          "sourceId": "6945",
+          "title": "MANAGEMENT ACCOUNTANT",
+          "department": "Public Works & Environment HQ",
+          "closingDate": "2026-10-21",
+          "detailVerified": false,
+          "url": "https://govtcareers.gov.bm/details.html?jobId=6945&jobTitle=MANAGEMENT%20ACCOUNTANT"
+        },
+        {
+          "sourceId": "6933",
+          "title": "ADMINISTRATIVE ASSISTANT",
+          "department": "Home Affairs HQ",
+          "closingDate": "2026-10-14",
+          "detailVerified": true,
+          "jobNumber": "DHR04038",
+          "salaryLiteral": "73697.80 - 73697.80 BMD per Year",
+          "contract": "Permanent",
+          "url": "https://govtcareers.gov.bm/details.html?jobId=6933&jobTitle=ADMINISTRATIVE%20ASSISTANT"
+        },
+        {
+          "sourceId": "6963",
+          "title": "ADMINISTRATIVE ASSISTANT - CHILD HEALTH",
+          "department": "Health Department",
+          "closingDate": "2026-10-14",
+          "detailVerified": false,
+          "url": "https://govtcareers.gov.bm/details.html?jobId=6963&jobTitle=ADMINISTRATIVE%20ASSISTANT%20-%20CHILD%20HEALTH"
+        },
+        {
+          "sourceId": "6935",
+          "title": "CUSTOMER SERVICE REPRESENTATIVE",
+          "department": "Attorney General's Chambers",
+          "closingDate": "2026-10-14",
+          "detailVerified": false,
+          "url": "https://govtcareers.gov.bm/details.html?jobId=6935&jobTitle=CUSTOMER%20SERVICE%20REPRESENTATIVE"
+        }
+      ],
+      "deadlineTimeLiteral": "7:00pm Bermuda time (AST - Atlantic Standard Time) on the stated closing date",
+      "notes": "Redirect initially reported navigation ERR_ABORTED, but canonical page rendered and both result pages were inspected. API adapter verification recorded separately."
+    },
+    {
+      "site": "aon",
+      "url": "https://jobs.aon.com/jobs/locations/country/Bermuda",
+      "status": "complete visible Bermuda-filtered public results; detail/fit unverified",
+      "pages": 1,
+      "listingsReviewed": 2,
+      "lastPageNextDisabled": true,
+      "selectedLeads": [
+        {
+          "sourceId": "102372",
+          "title": "Managing Director - Life Solutions - Bermuda",
+          "location": "Hamilton, BM",
+          "category": "Reinsurance",
+          "url": "https://jobs.aon.com/jobs/102372?lang=en-us&previousLocale=en-US",
+          "deadline": null,
+          "scope": "Senior business/reinsurance lead; domain and personal fit review required"
+        },
+        {
+          "sourceId": "102894",
+          "title": "Property Broker - Bermuda",
+          "location": "Hamilton, BM",
+          "category": "Broker",
+          "url": "https://jobs.aon.com/jobs/102894?lang=en-us&previousLocale=en-US",
+          "deadline": null,
+          "scope": "Brokerage adjacent to office/finance; title-rule scope presently excludes broker"
+        }
+      ],
+      "trackerIntegration": "Manual result-page evidence; supported adapter pending."
+    }
+  ],
+  "additionalBoundaryChecks": [
+    {
+      "site": "jobconnect",
+      "checkedAtUTC": "2026-10-12 04:20:52 UTC",
+      "url": "https://www.bermudajobconnect.bm/",
+      "status": "Fresh public browser boundary inspected; vacancy enumeration uncollected",
+      "evidenceMethod": "Visible browser DOM",
+      "observation": "Public landing-page sign-up, sign-in, pathway and post-a-job links point to https://app.bermudajobconnect.bm/login. No public vacancy listing is visible on the inspected landing page.",
+      "limits": [
+        "No account, login or application route opened.",
+        "This does not establish zero vacancies or exclude a different public route."
+      ]
+    }
+  ],
+  "countingRules": [
+    "Counts are inspected source listings, not distinct real-world openings or guaranteed accepting applications.",
+    "Selected leads are a subset of inspected listings, not additional source organizations.",
+    "Only explicitly verified details establish deadlines; absent facts remain null.",
+    "No account-dependent availability or eligibility inferred."
+  ]
+}

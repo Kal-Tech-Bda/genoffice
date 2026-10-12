@@ -12,7 +12,59 @@ import type {
 
 export const PROCESSING_VERSION = 'quotes-1/worldbank-1/schema-1'
 export const processingVersion = (config: ResearchConfig) =>
-  config.kind === 'jobs' ? 'bermuda-jobs-2/schema-2' : PROCESSING_VERSION
+  config.kind === 'jobs'
+    ? 'bermuda-jobs-3/schema-2'
+    : config.kind === 'htmlTables'
+      ? 'html-tables-1/schema-1'
+      : PROCESSING_VERSION
+
+/** HTML refresh compares source facts, independently of acquisition times and byte versions. */
+export function diffHtmlTables(prior: ResearchDataset | null, next: ResearchDataset) {
+  const old = new Map(
+    prior?.tables.flatMap((table) =>
+      table.rows.map((row) => [
+        `${table.id}:${row.id}`,
+        JSON.stringify(
+          Object.entries(row.cells)
+            .map(([column, entry]) => [column, entry.value])
+            .sort(([a], [b]) => String(a).localeCompare(String(b))),
+        ),
+      ]),
+    ) ?? [],
+  )
+  let added = 0,
+    changed = 0
+  for (const table of next.tables)
+    for (const row of table.rows) {
+      const key = `${table.id}:${row.id}`,
+        facts = JSON.stringify(
+          Object.entries(row.cells)
+            .map(([column, entry]) => [column, entry.value])
+            .sort(([a], [b]) => String(a).localeCompare(String(b))),
+        )
+      if (!old.has(key)) added++
+      else if (old.get(key) !== facts) changed++
+      old.delete(key)
+    }
+  return { added, changed, removed: old.size }
+}
+export function htmlContextChanged(prior: ResearchDataset | null, next: ResearchDataset): boolean {
+  if (!prior) return false
+  const context = (dataset: ResearchDataset) =>
+    JSON.stringify(
+      dataset.issues
+        .filter(
+          (issue) =>
+            !/absent .+ records retained by deletion\/override policy$/.test(issue) &&
+            !issue.startsWith('Sample shows at most 20 rows per selected table'),
+        )
+        .map((issue) =>
+          issue.replace(/: Outside-table context \(HTML \/[\d/]+\): /, ': Outside-table context: '),
+        )
+        .sort(),
+    )
+  return context(prior) !== context(next)
+}
 export const quoteColumns: ResearchTable['columns'] = [
   { id: 'quote_id', name: 'Quote ID', type: 'text' },
   { id: 'supplier', name: 'Supplier', type: 'text' },

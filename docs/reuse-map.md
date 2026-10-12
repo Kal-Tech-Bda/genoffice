@@ -138,3 +138,19 @@ its extension recommendations; execution is recorded separately in
 Current limitations and evidence: [research contracts](implementation/research-workflows.md),
 [verification](implementation/research-verification.md). Historical Stage 0/1–2
 dispositions below retain their original scope.
+
+## 12 October workflow iteration
+
+| Existing function                                    | Extension and avoided duplicate work                                                                                      | Evidence                                                                            |
+| ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| Authoritative SQLite ledger and bounded table paging | Schema 3 adds saved views; filter/sort full stored rows before the same 100-row preview                                   | Native 205-row search, saved shortlist and restart                                  |
+| Existing accepted/candidate comparison               | Adds a separate vacancy-fact summary while retaining evidence/version history                                             | No-op refresh, changed date and newly absent listing verified                       |
+| Existing parse5 public HTML and source snapshots     | Whole rectangular tables, context units, chosen keys and full immutable cell proof                                        | Native 205-row synthetic and four official holiday tables/40 rows                   |
+| Existing research queue/review/projection            | Adds HTML-table input to the same review/publication/correction route, readable worksheet headers mapped to canonical IDs | Sample blocked; corrections survive refresh; native save/reopen evidence            |
+| Existing Workday/BambooHR jobs acquisition           | Reuses declared public pagination/detail paths for Apex, Sompo, Ariel and Performance Solutions                           | Live probes; automatic tracker collection and refresh manifest                      |
+| Existing HTTP bounds and JSON locators               | Fixed public Greenhouse boards and government anonymous vacancy endpoints; no unrestricted generated browser runner       | Route/schema regressions and live source checks                                     |
+| Existing project-owned source library                | Stores manual discovery reports separately until reviewed observations can join job identity and refresh                  | Coverage inventory explicitly distinguishes manual checks from automatic collection |
+
+See the [coverage report](use-cases/bermuda-coverage-2026-10-12.md) and
+[persona verification](testing/persona-iteration-2026-10-11/results.json).
+The data engineering harness remains disabled and last.

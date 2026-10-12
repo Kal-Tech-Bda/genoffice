@@ -142,3 +142,13 @@ and JSON snapshot inspection. Next prioritize reviewed browser/document capture
 for Job Connect, government, hospital/bank portals and image/PDF advertisements;
 then evidence-backed cross-site vacancy reconciliation and facts-only refresh
 diffs. See the [ranked gaps](docs/use-cases/bermuda-jobs-wide-2026-10-11.md).
+
+The [12 October iteration](docs/use-cases/persona-iteration-2026-10-12.md) now
+implements whole-table job search/sort/filtering, named saved views, one-action
+shortlisting and facts-only refresh summaries. It also implements bounded static
+HTML-table discovery and maintained-sheet publication, with native full-row,
+correction, refresh, context, restart and evidence checks. Reuse of Workday and
+BambooHR plus two bounded Greenhouse feeds expands the supported jobs list to
+26; the 78-row coverage registry includes 52 targets outside automatic collection.
+These increments do not complete the market search. Reviewed employer browser
+captures and cross-site observation reconciliation remain the next accuracy gaps.

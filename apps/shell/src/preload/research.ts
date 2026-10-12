@@ -5,6 +5,11 @@ export function exposeResearchApi(): void {
   const call = (method: string, ...args: unknown[]) =>
     ipcRenderer.invoke(RESEARCH_CHANNEL, method, ...args)
   const api: ResearchApi = {
+    discoverTables: (id, input) => call('discoverTables', id, input),
+    views: (id, workflowId) => call('views', id, workflowId),
+    saveView: (id, workflowId, name, view, viewId) =>
+      call('saveView', id, workflowId, name, view, viewId),
+    deleteView: (id, workflowId, viewId) => call('deleteView', id, workflowId, viewId),
     visitJob: (id, workflowId, runId, rowId) => call('visitJob', id, workflowId, runId, rowId),
     readiness: (id, workflowId) => call('readiness', id, workflowId),
     overview: (id) => call('overview', id),

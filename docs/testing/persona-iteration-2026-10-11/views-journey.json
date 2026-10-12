@@ -1,0 +1,19 @@
+{
+  "profile": "C:\\Users\\Place\\AppData\\Local\\Temp\\genoffice-e2e-ZWtdFa",
+  "projectId": "proj-cd432a82078c",
+  "workflowId": "90e1013b-925d-4e67-9452-81b1abadf551",
+  "syntheticSourceListings": 205,
+  "matchingNeedleRoles": 2,
+  "searchActions": 2,
+  "searchElapsedMs": 212,
+  "shortlistActions": 1,
+  "shortlistRestoreActions": 2,
+  "unchangedRefreshFacts": 0,
+  "postedDateChanges": 1,
+  "newlyNotFound": 1,
+  "acceptedRevision": 4,
+  "rendererErrors": [],
+  "allRecordsRetained": 205,
+  "savedViewSurvivesRestart": true,
+  "notes": "Times include Playwright interaction/assertion overhead; one synthetic run, not human usability measurement"
+}

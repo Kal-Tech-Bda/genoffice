@@ -1,5 +1,5 @@
 import { mkdir, readFile, writeFile, copyFile } from 'node:fs/promises'
-import { join, extname } from 'node:path'
+import { join, extname, relative, isAbsolute } from 'node:path'
 import { randomUUID } from 'node:crypto'
 import JSZip from 'jszip'
 import { writeXlsxAtomically, XLSX_ZIP_LIMITS } from '@genoffice/xlsx-gateway/gateway/xlsx-gateway'
@@ -19,6 +19,8 @@ import type {
   ResearchWorkflow,
   ResearchReadiness,
   ResearchInputReadiness,
+  HtmlTableInput,
+  HtmlTableDiscovery,
 } from '../../shared/research-api'
 import type { WorkspaceProject } from '../../shared/workspace-api'
 import { ResearchStore, type DurableInput } from './store'
@@ -29,11 +31,16 @@ import {
   mergeDatasets,
   parseSource,
   PROCESSING_VERSION,
+  diffHtmlTables,
+  htmlContextChanged,
   type ParsedSource,
 } from './extract'
 import { fetchPopulation, parsePopulation, worldBankUrl } from './worldbank'
 import { projectDataset } from './projection'
 import { datasetPage, previewCell } from './pages'
+import { jobChanges } from './job-changes'
+import { parseHtmlTables, htmlTablesDataset, type ParsedHtmlTables } from './html-tables'
+import { fetchTableSource, tableSourceUrl } from './table-fetch'
 import { RESEARCH_METADATA_LIMIT } from './metadata'
 import { isResearchIdentity } from '../../shared/research-api'
 import { APPLICATION_STATUSES, JOB_SITES } from '../../shared/jobs-api'
@@ -64,6 +71,18 @@ export class ResearchService {
   private checkingInputs = false
   private parsedInputs = new Map<string, string>()
   private parsedInputBytes = 0
+  private tableCaptures = new Map<
+    string,
+    {
+      projectId: string
+      input: HtmlTableInput
+      durable: DurableInput
+      parsed: ParsedHtmlTables
+      created: number
+      usedByFullRun: boolean
+    }
+  >()
+  private tableDiscoveries = new Set<AbortController>()
   constructor(
     private readonly userData: string,
     readonly workspace: WorkspaceStore,
@@ -80,6 +99,133 @@ export class ResearchService {
     this.controller?.abort() /* SQLite stays open until Electron exits; interrupted work is fenced on next startup. */
     this.parsedInputs.clear()
     this.parsedInputBytes = 0
+    for (const controller of this.tableDiscoveries) controller.abort()
+    this.tableDiscoveries.clear()
+    this.tableCaptures.clear()
+  }
+  private htmlInput(projectId: string, input: HtmlTableInput): HtmlTableInput {
+    this.workspace.get(projectId)
+    if (!!input.url === !!input.sourceId)
+      throw new Error('Choose exactly one public URL or immutable saved HTML source.')
+    if (input.url) return { url: tableSourceUrl(input.url) }
+    this.htmlSource(projectId, input.sourceId!)
+    return { sourceId: input.sourceId }
+  }
+  private htmlSource(projectId: string, sourceId: string) {
+    const source = this.workspace.get(projectId).workspace.sources.find((s) => s.id === sourceId)
+    if (!source?.snapshotPath || !source.sha256 || !/\.html?$/i.test(source.name))
+      throw new Error('Choose a saved .html or .htm snapshot belonging to this project.')
+    const inside = relative(
+      join(this.userData, 'projects', projectId, 'workspace', 'sources'),
+      source.snapshotPath,
+    )
+    if (
+      !inside ||
+      isAbsolute(inside) ||
+      inside === '..' ||
+      inside.startsWith('..\\') ||
+      inside.startsWith('../')
+    )
+      throw new Error('HTML snapshot is outside this project source folder.')
+    return source
+  }
+  private pruneTableCaptures(): void {
+    for (const [id, capture] of this.tableCaptures)
+      if (Date.now() - capture.created > 15 * 60_000) this.tableCaptures.delete(id)
+  }
+  private async acquireHtmlInput(
+    projectId: string,
+    input: HtmlTableInput,
+    signal: AbortSignal,
+  ): Promise<DurableInput> {
+    const scope = this.htmlInput(projectId, input)
+    signal.throwIfAborted()
+    if (scope.sourceId) {
+      const source = this.htmlSource(projectId, scope.sourceId),
+        bytes = await this.workspace.boundedRead(source.snapshotPath!)
+      signal.throwIfAborted()
+      if (hash(bytes) !== source.sha256)
+        throw new Error('Immutable HTML snapshot integrity failed.')
+      if (this.htmlSource(projectId, source.id).sha256 !== source.sha256)
+        throw new Error(
+          'HTML source changed during discovery. Discover the current snapshot again.',
+        )
+      return {
+        ordinal: 0,
+        sourceId: source.id,
+        sourceVersion: source.sha256!,
+        name: source.name,
+        uri: source.uri,
+        retrievedAt: new Date().toISOString(),
+        path: source.snapshotPath!,
+        parsed: null,
+        error: null,
+      }
+    }
+    const fetched = await fetchTableSource(scope.url!, signal)
+    signal.throwIfAborted()
+    return {
+      ordinal: 0,
+      sourceId: hash(`html-url:${scope.url}`),
+      sourceVersion: hash(fetched.bytes),
+      name: `Public table - ${new URL(scope.url!).hostname.slice(0, 200)}.html`,
+      uri: fetched.uri,
+      retrievedAt: fetched.retrievedAt,
+      path: await this.snapshot(projectId, 'html-tables.html', fetched.bytes),
+      parsed: null,
+      error: null,
+    }
+  }
+  async discoverTables(projectId: string, input: HtmlTableInput): Promise<HtmlTableDiscovery> {
+    const scope = this.htmlInput(projectId, input)
+    this.pruneTableCaptures()
+    if (this.tableDiscoveries.size >= 10)
+      throw new Error('Too many table discoveries are running. Wait for a current check to finish.')
+    const controller = new AbortController()
+    this.tableDiscoveries.add(controller)
+    try {
+      const durable = await this.acquireHtmlInput(projectId, scope, controller.signal),
+        bytes = await this.workspace.boundedRead(durable.path)
+      controller.signal.throwIfAborted()
+      if (hash(bytes) !== durable.sourceVersion)
+        throw new Error('HTML snapshot integrity failed during discovery.')
+      const parsed = parseHtmlTables(bytes),
+        captureId = randomUUID()
+      durable.parsed = JSON.stringify(parsed)
+      this.workspace.get(projectId)
+      this.pruneTableCaptures()
+      while (this.tableCaptures.size >= 10)
+        this.tableCaptures.delete(this.tableCaptures.keys().next().value!)
+      this.tableCaptures.set(captureId, {
+        projectId,
+        input: scope,
+        durable,
+        parsed,
+        created: Date.now(),
+        usedByFullRun: false,
+      })
+      return {
+        captureId,
+        uri: durable.uri,
+        sourceVersion: durable.sourceVersion,
+        retrievedAt: durable.retrievedAt,
+        tables: parsed.tables.map((table) => ({
+          id: table.id,
+          name: table.name,
+          rowCount: table.rowCount,
+          columns: table.columns.map((column) => ({ id: column.id, name: column.text })),
+          sample: table.rows.slice(0, 10).map((row) => row.cells.map((entry) => entry.text)),
+          supported: table.supported,
+          blockers: table.blockers,
+          warnings: table.warnings,
+          notes: table.notes,
+          headerNeedsConfirmation: table.headerNeedsConfirmation,
+        })),
+        issues: parsed.issues,
+      }
+    } finally {
+      this.tableDiscoveries.delete(controller)
+    }
   }
   private parsedKey(version: string, name: string): string {
     return `${PROCESSING_VERSION}:${version}:${extname(name).toLowerCase()}`
@@ -231,11 +377,25 @@ export class ResearchService {
   }
   detail(projectId: string, runId: string, page: ResearchPageRequest = {}) {
     const r = this.store.run(runId, projectId)
+    const config = this.store.config(runId)
+    const facts = r.candidate?.tables.some((t) => t.id === 'jobs')
+      ? jobChanges(this.store.accepted(r.workflowId), r.candidate)
+      : undefined
+    const summary = facts ? (({ rows: _rows, ...counts }) => counts)(facts) : undefined
     return {
       ...r,
       inputsChanged: this.inputsChanged(this.store.workflow(r.workflowId), runId, r.sample),
       events: r.events.slice(-100),
-      candidate: datasetPage(r.candidate, page),
+      candidate: datasetPage(r.candidate, page, facts),
+      jobChanges: summary,
+      htmlContextChanged:
+        config.kind === 'htmlTables' && r.candidate
+          ? htmlContextChanged(this.store.accepted(r.workflowId), r.candidate)
+          : undefined,
+      changes:
+        config.kind === 'htmlTables' && r.candidate
+          ? diffHtmlTables(this.store.accepted(r.workflowId), r.candidate)
+          : r.changes,
     }
   }
   private inputVersions(runId: string): { sourceId: string; sourceVersion: string; uri: string }[] {
@@ -252,6 +412,12 @@ export class ResearchService {
   }
   private inputsChanged(w: ResearchWorkflow, runId: string, sample = false): boolean {
     const known = this.inputVersions(runId)
+    if (w.config.kind === 'htmlTables' && w.config.htmlTables?.sourceId) {
+      const source = this.workspace
+        .get(w.projectId)
+        .workspace.sources.find((s) => s.id === w.config.htmlTables!.sourceId)
+      return known.some((input) => input.sourceVersion !== source?.sha256)
+    }
     if (w.config.kind === 'quotes') {
       if (!known.length) return false
       const sources = this.workspace.get(w.projectId).workspace.sources
@@ -288,7 +454,10 @@ export class ResearchService {
     return {
       sourceSignature: hash(
         JSON.stringify({
-          sources: w.config.sourceIds.map((id) => sources.find((s) => s.id === id)?.sha256 ?? null),
+          sources: (w.config.kind === 'htmlTables' && w.config.htmlTables?.sourceId
+            ? [w.config.htmlTables.sourceId]
+            : w.config.sourceIds
+          ).map((id) => sources.find((s) => s.id === id)?.sha256 ?? null),
           parentRevision:
             w.config.kind === 'enrich' && w.config.parentWorkflowId
               ? this.store.workflow(w.config.parentWorkflowId, w.projectId).acceptedRevision
@@ -466,11 +635,57 @@ export class ResearchService {
       countries: [],
       parentWorkflowId: undefined,
       jobSiteIds: [],
+      htmlTables: undefined,
     })
     return project.id
   }
   save(projectId: string, name: string, config: ResearchConfig, workflowId?: string) {
     const project = this.workspace.get(projectId)
+    if (config.kind === 'htmlTables') {
+      if (!config.htmlTables) throw new Error('Discover and select whole HTML tables first.')
+      const input = this.htmlInput(projectId, config.htmlTables),
+        selections = config.htmlTables.selections
+      if (
+        !selections.length ||
+        selections.length > 20 ||
+        new Set(selections.map((selection) => selection.tableId)).size !== selections.length ||
+        selections.some(
+          (selection) =>
+            !/^html_[a-f0-9]{24}$/.test(selection.tableId) ||
+            !selection.keyColumns.length ||
+            selection.keyColumns.length > 50 ||
+            new Set(selection.keyColumns).size !== selection.keyColumns.length ||
+            selection.keyColumns.some((column) => !/^column_[1-9]\d*$/.test(column)),
+        )
+      )
+        throw new Error('Choose distinct HTML tables and explicit stable key columns.')
+      this.pruneTableCaptures()
+      const capture = config.htmlTables.captureId
+        ? this.tableCaptures.get(config.htmlTables.captureId)
+        : undefined
+      if (capture) {
+        if (
+          capture.projectId !== projectId ||
+          JSON.stringify(capture.input) !== JSON.stringify(input)
+        )
+          throw new Error('Table preview belongs to another project or source.')
+        if (
+          input.sourceId &&
+          this.htmlSource(projectId, input.sourceId).sha256 !== capture.durable.sourceVersion
+        )
+          throw new Error(
+            'Saved HTML changed after discovery. Discover the current snapshot again.',
+          )
+        htmlTablesDataset(capture.parsed, selections, {
+          sourceId: capture.durable.sourceId,
+          sourceVersion: capture.durable.sourceVersion,
+          sourceName: capture.durable.name,
+          uri: capture.durable.uri,
+          retrievedAt: capture.durable.retrievedAt,
+        })
+      }
+      config = { ...config, htmlTables: { ...config.htmlTables, ...input } }
+    }
     if (config.kind === 'jobs') {
       const sites = config.jobSiteIds ?? []
       if (sites.length > JOB_SITES.length || new Set(sites).size !== sites.length)
@@ -483,6 +698,27 @@ export class ResearchService {
         throw new Error(
           'Create a new workflow for a different task kind; accepted table identities cannot be repurposed.',
         )
+      if (
+        prior.acceptedRevision &&
+        prior.config.kind === 'htmlTables' &&
+        config.kind === 'htmlTables'
+      ) {
+        const previous = prior.config.htmlTables!,
+          next = config.htmlTables!
+        if (
+          previous.url !== next.url ||
+          previous.sourceId !== next.sourceId ||
+          previous.selections.some((selection) => {
+            const match = next.selections.find((item) => item.tableId === selection.tableId)
+            return (
+              match && JSON.stringify(match.keyColumns) !== JSON.stringify(selection.keyColumns)
+            )
+          })
+        )
+          throw new Error(
+            'Keep the accepted HTML source and key columns. Create a new workflow for a different row identity.',
+          )
+      }
     }
     if (
       workflowId &&
@@ -520,6 +756,46 @@ export class ResearchService {
     return run
   }
   private queue(w: ResearchWorkflow, sample: boolean, replaceReviewedSample = false) {
+    if (w.config.kind === 'htmlTables') {
+      const config = w.config.htmlTables
+      if (!config) throw new Error('Choose confirmed HTML tables first.')
+      const scope = this.htmlInput(w.projectId, config)
+      this.pruneTableCaptures()
+      const capture = config.captureId ? this.tableCaptures.get(config.captureId) : undefined
+      if (
+        capture &&
+        (capture.projectId !== w.projectId ||
+          JSON.stringify(capture.input) !== JSON.stringify(scope))
+      )
+        throw new Error('Table preview belongs to another project or source.')
+      const reusable =
+        capture &&
+        !capture.usedByFullRun &&
+        !w.acceptedRevision &&
+        (!scope.sourceId ||
+          this.htmlSource(w.projectId, scope.sourceId).sha256 === capture.durable.sourceVersion)
+      let inputs: DurableInput[] = []
+      if (reusable) inputs = [structuredClone(capture.durable)]
+      else if (scope.sourceId) {
+        const source = this.htmlSource(w.projectId, scope.sourceId)
+        inputs = [
+          {
+            ordinal: 0,
+            sourceId: source.id,
+            sourceVersion: source.sha256!,
+            name: source.name,
+            uri: source.uri,
+            retrievedAt: new Date().toISOString(),
+            path: source.snapshotPath!,
+            parsed: null,
+            error: null,
+          },
+        ]
+      }
+      const run = this.store.queue(w.id, sample, inputs, replaceReviewedSample)
+      if (reusable && !sample) capture.usedByFullRun = true
+      return run
+    }
     const sources = this.workspace.get(w.projectId).workspace.sources
     const selected =
       w.config.kind === 'quotes'
@@ -597,6 +873,10 @@ export class ResearchService {
     const config = this.store.config(runId)
     if (config.kind === 'jobs') {
       await this.executeJobs(runId, signal)
+      return
+    }
+    if (config.kind === 'htmlTables') {
+      await this.executeHtmlTables(runId, signal)
       return
     }
     if (
@@ -788,6 +1068,68 @@ export class ResearchService {
     }
     dataset.issues.push(...failures)
     this.store.review(runId, dataset, { complete: completed, failed: failures.length, total })
+  }
+  private async executeHtmlTables(runId: string, signal: AbortSignal): Promise<void> {
+    const run = this.store.run(runId),
+      workflow = this.store.workflow(run.workflowId),
+      config = this.store.config(runId).htmlTables
+    if (!config?.selections.length) throw new Error('Choose confirmed whole HTML tables.')
+    this.store.progress(runId, 'acquiring', 'Acquiring one complete static HTML snapshot', {
+      total: 1,
+      complete: 0,
+      failed: 0,
+    })
+    this.store.assertActive(runId)
+    signal.throwIfAborted()
+    let input = this.store.inputs(runId).find((item) => item.ordinal === 0)
+    try {
+      input ??= await this.acquireHtmlInput(workflow.projectId, config, signal)
+      this.store.assertActive(runId)
+      signal.throwIfAborted()
+      // Persist acquisition before parsing/conversion so a failed/cancelled retry keeps its exact input.
+      this.store.input(runId, input, { acquired: 1 })
+      const bytes = await this.workspace.boundedRead(input.path)
+      this.store.assertActive(runId)
+      signal.throwIfAborted()
+      if (hash(bytes) !== input.sourceVersion)
+        throw new Error('Durable HTML snapshot integrity failed. Acquire a new run.')
+      const parsed = input.parsed
+        ? (JSON.parse(input.parsed) as ParsedHtmlTables)
+        : parseHtmlTables(bytes)
+      if (parsed.sourceVersion !== input.sourceVersion || parsed.method !== 'html-tables-v1')
+        throw new Error('Stored HTML parse does not match its immutable snapshot.')
+      input.parsed = JSON.stringify(parsed)
+      input.error = null
+      this.store.input(runId, input, { acquired: 1 })
+      this.store.progress(runId, 'processing', 'Converting every row of the selected tables', {
+        total: 1,
+        complete: 1,
+        failed: 0,
+      })
+      const dataset = htmlTablesDataset(parsed, config.selections, {
+        sourceId: input.sourceId,
+        sourceVersion: input.sourceVersion,
+        sourceName: input.name,
+        uri: input.uri,
+        retrievedAt: input.retrievedAt,
+      })
+      this.store.assertActive(runId)
+      signal.throwIfAborted()
+      if (run.sample) {
+        for (const table of dataset.tables) table.rows = table.rows.slice(0, 20)
+        dataset.issues.push('Sample shows at most 20 rows per selected table and cannot publish.')
+      }
+      this.store.review(runId, dataset, { total: 1, complete: 1, failed: 0 })
+    } catch (error) {
+      this.store.assertActive(runId)
+      if (input) this.store.input(runId, { ...input, error: String(error) }, { acquired: 1 })
+      this.store.progress(runId, 'processing', 'HTML snapshot or table validation failed', {
+        total: 1,
+        complete: 0,
+        failed: 1,
+      })
+      throw error
+    }
   }
   private async executeJobs(runId: string, signal: AbortSignal): Promise<void> {
     const run = this.store.run(runId),
@@ -989,6 +1331,23 @@ export class ResearchService {
     const target = table?.rows.find((r) => r.id === rowId)?.cells[columnId]
     const column = table?.columns.find((c) => c.id === columnId)
     if (!dataset || !target || !column) throw new Error('Accepted cell not found.')
+    if (w.config.kind === 'htmlTables') {
+      const keyScopes = this.store.db
+        .prepare("SELECT config FROM runs WHERE workflow_id=? AND status='published'")
+        .all(w.id)
+        .map((row) => JSON.parse(String(row.config)) as ResearchConfig)
+        .concat(w.config)
+      if (
+        keyScopes.some((config) =>
+          config.htmlTables?.selections.some(
+            (selection) => selection.tableId === tableId && selection.keyColumns.includes(columnId),
+          ),
+        )
+      )
+        throw new Error(
+          'HTML source key columns are read-only in their selected table. Update the source and review a new run.',
+        )
+    }
     if (isResearchIdentity(tableId, columnId))
       throw new Error(
         'Record identity cannot be changed by a cell correction. Update the source or confirmed scope, then review a new run; related records must keep their original keys.',
@@ -1138,7 +1497,12 @@ export class ResearchService {
     const metadata = JSON.parse(json) as {
       workflowId: string
       revision: number
-      tables: { id: string; name: string }[]
+      tables: {
+        id: string
+        name: string
+        headerMode?: string
+        columns?: { id: string; name: string }[]
+      }[]
     }
     const w = this.store.workflow(metadata.workflowId)
     if (
@@ -1147,28 +1511,36 @@ export class ResearchService {
         .files.some((file) => file.toLowerCase() === path.toLowerCase())
     )
       throw new Error('Workbook is outside this project.')
-    const tableId =
-      metadata.tables.find((t) => t.name === selection.tableId)?.id ?? selection.tableId
+    const projectionTable = metadata.tables.find((t) => t.name === selection.tableId)
+    const tableId = projectionTable?.id ?? selection.tableId
+    const columnId =
+      projectionTable?.headerMode === 'labels'
+        ? projectionTable.columns?.find((c) => c.name === selection.columnId)?.id
+        : selection.columnId
+    if (!columnId) return null
     const dataset = this.store.accepted(w.id)
     const cell = dataset?.tables
       .find((t) => t.id === tableId)
-      ?.rows.find((r) => r.id === selection.rowId)?.cells[selection.columnId]
+      ?.rows.find((r) => r.id === selection.rowId)?.cells[columnId]
     if (!cell) return null
     return {
       workflowId: w.id,
       tableId,
       rowId: selection.rowId,
-      columnId: selection.columnId,
+      columnId,
+      columnName:
+        projectionTable?.headerMode === 'labels'
+          ? dataset?.tables.find((t) => t.id === tableId)?.columns.find((c) => c.id === columnId)
+              ?.name
+          : undefined,
       revision: w.acceptedRevision,
       cell,
       editedInSheet: metadata.revision !== w.acceptedRevision || selection.value !== cell.value,
-      corrections: this.store
-        .corrections(w.id, tableId, selection.rowId, selection.columnId)
-        .map((c) => ({
-          value: JSON.parse(String(c.value)),
-          reason: String(c.reason),
-          at: String(c.at),
-        })),
+      corrections: this.store.corrections(w.id, tableId, selection.rowId, columnId).map((c) => ({
+        value: JSON.parse(String(c.value)),
+        reason: String(c.reason),
+        at: String(c.at),
+      })),
     }
   }
 }

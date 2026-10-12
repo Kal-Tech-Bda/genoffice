@@ -171,6 +171,19 @@ Source checks includes all 43 current targets; uncollected counts and dates are
 null. Run completion refers to configured acquisition bounds, not whole-site
 coverage. JSON evidence is inspected as stored text in both workflow and native
 Sheets Details. Employer facts cannot be edited through personal tracking.
+
+The next iteration expands that source selector to 26 public sources and exposes
+the full 78-target coverage table with uncollected counts left blank. Whole-table
+search, role/source/status/availability filters and sorting submit together; named
+views survive restart and shortlist actions create personal tracking updates.
+Refresh summaries show changed vacancy facts separately from new check times.
+
+Website tables start with a public HTTPS page or saved HTML source, discovery,
+row counts, preview, headers and explicit unique keys. Source context is visible
+before publication. Switching tasks, workflows or source versions invalidates
+pending discovery. Native sheets display readable HTML headings while evidence
+retains canonical identities. Unsupported layouts and failed refreshes explain
+their bounds and retain accepted data.
 Completed review runs have an explicit Review candidate action. Reselecting the
 same run reloads its preview and clears old cell-inspection state; it never
 silently publishes a candidate or changes accepted records.

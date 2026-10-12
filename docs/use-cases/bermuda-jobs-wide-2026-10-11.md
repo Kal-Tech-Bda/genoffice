@@ -1,5 +1,10 @@
 # Bermuda jobs: expanded search and coverage audit
 
+**Historical 19-source run.** The [12 October coverage review](bermuda-coverage-2026-10-12.md)
+supersedes its counts with 26 supported source checks, 137 source listings and
+an individually evidenced 78-target inventory. This earlier demo and its personal
+deadline note remain intact.
+
 The original result was **14 listings from only three websites**, and the owner
 correctly rejected its breadth. This run expands the tracker to **138 source
 listings from 19 configured public-source checks**, with **43 coverage targets**

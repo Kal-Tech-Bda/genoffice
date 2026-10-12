@@ -29,6 +29,7 @@ export interface ResearchCell {
 export interface ResearchRow {
   id: string
   cells: Record<string, ResearchCell>
+  change?: { kind: string; fields: string[] }
 }
 export interface ResearchTable {
   id: string
@@ -39,6 +40,7 @@ export interface ResearchTable {
   totalRows?: number
   offset?: number
   allRows?: number
+  facets?: Record<string, { value: string; count: number }[]>
 }
 export interface ResearchDataset {
   schemaVersion: 1
@@ -46,7 +48,7 @@ export interface ResearchDataset {
   issues: string[]
 }
 export interface ResearchConfig {
-  kind: 'quotes' | 'worldbank' | 'enrich' | 'jobs'
+  kind: 'quotes' | 'worldbank' | 'enrich' | 'jobs' | 'htmlTables'
   instructions: string
   sourceIds: string[]
   fields: string[]
@@ -55,6 +57,35 @@ export interface ResearchConfig {
   toYear: number
   parentWorkflowId?: string
   jobSiteIds?: JobSiteId[]
+  htmlTables?: HtmlTableInput & { captureId?: string; selections: HtmlTableSelection[] }
+}
+export interface HtmlTableInput {
+  url?: string
+  sourceId?: string
+}
+export interface HtmlTableSelection {
+  tableId: string
+  keyColumns: string[]
+  confirmFirstRowAsHeader?: boolean
+}
+export interface HtmlTableDiscovery {
+  captureId: string
+  uri: string
+  sourceVersion: string
+  retrievedAt: string
+  tables: {
+    id: string
+    name: string
+    rowCount: number
+    columns: { id: string; name: string }[]
+    sample: string[][]
+    supported: boolean
+    blockers: string[]
+    warnings: string[]
+    notes: { text: string; locator: string }[]
+    headerNeedsConfirmation: boolean
+  }[]
+  issues: string[]
 }
 export interface ResearchWorkflow {
   id: string
@@ -93,6 +124,16 @@ export interface ResearchRun {
   coverage: { complete: number; failed: number; total: number }
   candidate: ResearchDataset | null
   changes: { added: number; changed: number; removed: number }
+  htmlContextChanged?: boolean
+  jobChanges?: {
+    added: number
+    changed: number
+    unchanged: number
+    notFound: number
+    returned: number
+    outsideSources: number
+    trackingPreserved: number
+  }
 }
 export interface ResearchState {
   workflows: ResearchWorkflow[]
@@ -172,6 +213,22 @@ export interface ResearchPageRequest {
   tableId?: string
   offset?: number
   needsReview?: boolean
+  view?: ResearchTableView
+}
+export interface ResearchTableView {
+  tableId: string
+  query?: string
+  roleGroups?: string[]
+  sourceSites?: string[]
+  applicationStatus?: string
+  availability?: 'all' | 'listed' | 'review' | 'not-found' | 'past-deadline' | 'talent-pool'
+  sort?: { columnId: string; direction: 'asc' | 'desc' }
+  changesOnly?: boolean
+}
+export interface ResearchSavedView {
+  id: string
+  name: string
+  view: ResearchTableView
 }
 export interface ResearchAbsentPage {
   rows: { table: string; row: ResearchRow }[]
@@ -184,11 +241,22 @@ export interface CellDetails {
   rowId: string
   columnId: string
   revision: number
+  columnName?: string
   cell: ResearchCell
   corrections: { value: ResearchValue; reason: string; at: string }[]
   editedInSheet: boolean
 }
 export interface ResearchApi {
+  discoverTables(projectId: string, input: HtmlTableInput): Promise<HtmlTableDiscovery>
+  views(projectId: string, workflowId: string): Promise<ResearchSavedView[]>
+  saveView(
+    projectId: string,
+    workflowId: string,
+    name: string,
+    view: ResearchTableView,
+    id?: string,
+  ): Promise<ResearchSavedView>
+  deleteView(projectId: string, workflowId: string, id: string): Promise<void>
   readiness(projectId: string, workflowId: string): Promise<ResearchReadiness>
   overview(projectId: string): Promise<ResearchOverview>
   policy(projectId: string): Promise<{

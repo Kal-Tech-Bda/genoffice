@@ -1,0 +1,889 @@
+{
+  "reviewedAt": "2026-10-12T03:48:29.763Z",
+  "sourceCapture": "results.json and cached role detail snapshots",
+  "listingPages": 4,
+  "detailsReviewed": 56,
+  "unrecognizedDetails": 0,
+  "bermudaRecords": [
+    {
+      "url": "https://careers.partnerre.com/job/Hamilton-CAT-Underwriter/1445523133/",
+      "sourceVersion": "dc6276874c1e2d64977c4c843e2118c2376a81199bf9b7156d7a15512e06c767",
+      "title": "CAT Underwriter",
+      "locations": [
+        {
+          "streetAddress": "Hamilton, BM"
+        }
+      ],
+      "posted": ["Thu Oct 08 00:00:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": null,
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    }
+  ],
+  "matching": [],
+  "records": [
+    {
+      "url": "https://careers.partnerre.com/job/Dublin-Group-Tax-Senior-Manager/1408671233/",
+      "sourceVersion": "06d01e4ecb90f7f79fc745ca2f756fc8f596e144c9f4a21c3a0eccdbbce4cc83",
+      "title": "Group Tax Senior Manager",
+      "locations": [
+        {
+          "streetAddress": "Dublin, IE"
+        }
+      ],
+      "posted": ["Mon Sep 21 02:00:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": "Office / finance",
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/Dublin-Technical-Accounting-Analyst/1423803933/",
+      "sourceVersion": "08f1f14bf85b83f172267b001463f289239c1d2b62b3383456f70c90277dc175",
+      "title": "Technical Accounting Analyst",
+      "locations": [
+        {
+          "streetAddress": "Dublin, IE"
+        }
+      ],
+      "posted": ["Sat Oct 03 02:00:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": "Analyst — domain review",
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/Zurich-Direct-&-Facultative-Senior-Underwriter-PropertyDownstream-Zuri/1443294133/",
+      "sourceVersion": "0ac61f7d5ef9d258c6d210d1507558a0c61bf53606e3aa52dea8e39d0a630798",
+      "title": "Direct & Facultative Senior Underwriter Property/Downstream",
+      "locations": [
+        {
+          "addressLocality": "Zurich",
+          "addressRegion": "Zuri",
+          "addressCountry": "CH"
+        }
+      ],
+      "posted": ["Thu Oct 01 00:00:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": null,
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/Toronto-Life-and-Health-Actuaries-North-America-ON/1272501501/",
+      "sourceVersion": "0cf54348e220ea91856fb8fc439fb9f5d0654fc45069297a6b6552f7091fd95c",
+      "title": "Life and Health Actuaries - North America",
+      "locations": [
+        {
+          "addressLocality": "Toronto",
+          "addressRegion": "ON",
+          "addressCountry": "CA"
+        }
+      ],
+      "posted": ["Fri Sep 18 02:00:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": "Quantitative / actuarial — adjacent",
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/Charlotte-Senior-Structuring-and-Pricing-Actuary-NC-28201/1272500101/",
+      "sourceVersion": "11b2278d1dea0afb3040fa9585ca535c7de51e7253683548a47ad51958df037b",
+      "title": "Senior Structuring and Pricing Actuary",
+      "locations": [
+        {
+          "addressLocality": "Charlotte",
+          "addressRegion": "NC",
+          "addressCountry": "US"
+        }
+      ],
+      "posted": ["Fri Sep 18 02:00:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": "Quantitative / actuarial — adjacent",
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/Toronto-Senior-Actuarial-AssociateActuary-ON/1436244433/",
+      "sourceVersion": "15f467ad40e290380de529bd9c6fff1c93324e649eb7599f556069384f0f78c7",
+      "title": "Senior Actuarial Associate/Actuary",
+      "locations": [
+        {
+          "addressLocality": "Toronto",
+          "addressRegion": "ON",
+          "addressCountry": "CA"
+        }
+      ],
+      "posted": ["Sat Oct 10 02:01:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": "Quantitative / actuarial — adjacent",
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/Singapore-Senior-Client-Partner%2C-Southeast-Asia%2C-Life-&-Health/1387085633/",
+      "sourceVersion": "1bf117546a1eef38459fbb41039c82c31c1a9e98a26470463a77c43712833753",
+      "title": "Senior Client Partner, Southeast Asia, Life & Health",
+      "locations": [
+        {
+          "streetAddress": "Singapore, SG"
+        }
+      ],
+      "posted": ["Wed Sep 16 02:00:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": null,
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/Dublin-Reserving-Actuary/1429743833/",
+      "sourceVersion": "1cebfee49f1c3b73d06171b10e0e3bd53260ca357fa1927764806985a6db82c8",
+      "title": "Reserving Actuary",
+      "locations": [
+        {
+          "streetAddress": "Dublin, IE"
+        }
+      ],
+      "posted": ["Wed Sep 23 02:00:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": "Quantitative / actuarial — adjacent",
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/Toronto-Internal-Auditor-ON/1432085133/",
+      "sourceVersion": "38784190def05ee051494b0c536170827a3a560447e41e7173fd9fd24a0730a4",
+      "title": "Internal Auditor",
+      "locations": [
+        {
+          "addressLocality": "Toronto",
+          "addressRegion": "ON",
+          "addressCountry": "CA"
+        }
+      ],
+      "posted": ["Tue Sep 29 02:00:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": null,
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/Dublin-Reinsurance-Accountants-Talent-Pool/1270908001/",
+      "sourceVersion": "45e5a82808f510da9718f095628e8abfb16b2b4b4dd842f10458a0b2162daf89",
+      "title": "Reinsurance Accountants Talent Pool",
+      "locations": [
+        {
+          "addressLocality": "Toronto",
+          "addressRegion": "ON",
+          "addressCountry": "CA",
+          "streetAddress": "Dublin, IE"
+        }
+      ],
+      "posted": ["Fri Sep 18 02:00:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": "Office / finance",
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/Dublin-Senior-Reserving-Actuary/1403828333/",
+      "sourceVersion": "474892cad3bc745ace0c91ae07db8f7c06b8dfc80155d0ac0b3987513360b4bc",
+      "title": "Senior Reserving Actuary",
+      "locations": [
+        {
+          "streetAddress": "Dublin, IE"
+        }
+      ],
+      "posted": ["Tue Oct 06 02:00:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": "Quantitative / actuarial — adjacent",
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/Dublin-Senior-Reporting-Specialist/1404402133/",
+      "sourceVersion": "47bcbb2840b81ad4d35fe19b15272d1210294d2ecd28b8eca48620df4f4badc6",
+      "title": "Senior Reporting Specialist",
+      "locations": [
+        {
+          "streetAddress": "Dublin, IE"
+        }
+      ],
+      "posted": ["Fri Oct 09 02:00:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": null,
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/Stamford-AVP%2C-Casualty-Underwriter-CT-06901/1405161233/",
+      "sourceVersion": "4c9a4ac360cb43b3f4118cf518dda27892b8c6da1ad15b948879c7fcfc933fb8",
+      "title": "AVP, Casualty Underwriter",
+      "locations": [
+        {
+          "addressLocality": "Stamford",
+          "addressRegion": "CT",
+          "addressCountry": "US"
+        }
+      ],
+      "posted": ["Sat Oct 10 02:00:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": null,
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/London-Senior-Structuring-and-Pricing-Actuary/1436316333/",
+      "sourceVersion": "62bdb401ddfe67ed5e18fcdc9e145853af012aca9b6f8a56ecaa1262b03a86df",
+      "title": "Senior Structuring and Pricing Actuary",
+      "locations": [
+        {
+          "addressLocality": "Zurich",
+          "addressRegion": "Zuri",
+          "addressCountry": "CH",
+          "streetAddress": "London, GB"
+        }
+      ],
+      "posted": ["Sat Oct 10 02:01:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": "Quantitative / actuarial — adjacent",
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/Toronto-Head-of-Global-Benefits-and-Retirement-Savings-Programs-ON/1440181133/",
+      "sourceVersion": "6773356489cf0e984f69a234982823fdc1f02769b4aa6efcfdc14526496134ac",
+      "title": "Head of Global Benefits and Retirement Savings Programs",
+      "locations": [
+        {
+          "streetAddress": "Dublin, IE",
+          "addressLocality": "Toronto",
+          "addressRegion": "ON",
+          "addressCountry": "CA"
+        }
+      ],
+      "posted": ["Tue Sep 22 00:00:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": null,
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/Fu-Tei-Kok-Senior-Client-Partner%2C-Hong-Kong-&-Taiwan-Wanc/1396177833/",
+      "sourceVersion": "67b8c01e5784c18fb749d73ae2351f9a982a86bc859af8f18a51c556d9f01b0c",
+      "title": "Senior Client Partner, Hong Kong & Taiwan",
+      "locations": [
+        {
+          "addressLocality": "Fu Tei Kok",
+          "addressRegion": "Wanc",
+          "addressCountry": "HK"
+        }
+      ],
+      "posted": ["Mon Sep 14 02:00:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": null,
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/Dublin-Corporate-Accountants-Talent-Pool/1273637001/",
+      "sourceVersion": "6d6d3f2333f2b9b4aa7fc71debf25b60cbe7abf11bfd98b298654ee48addb60c",
+      "title": "Corporate Accountants Talent Pool",
+      "locations": [
+        {
+          "streetAddress": "Dublin, IE"
+        }
+      ],
+      "posted": ["Fri Sep 18 02:00:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": "Office / finance",
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/Toronto-Actuarial-Student-Co-op-Program-2027-Life-&-Health-ON/1272020101/",
+      "sourceVersion": "738a1a071044f3ea9474b84c660749d3583ccf4191a6e2b5611a34ae17813012",
+      "title": "Actuarial Student Co-op Program 2027 - Life & Health",
+      "locations": [
+        {
+          "addressLocality": "Toronto",
+          "addressRegion": "ON",
+          "addressCountry": "CA"
+        }
+      ],
+      "posted": ["Fri Sep 18 02:00:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": "Quantitative / actuarial — adjacent",
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/Fu-Tei-Kok-Client-Partner%2C-Korea-Wanc/1420754933/",
+      "sourceVersion": "7a9b2ee37d01f4e9b44580d405577842f183b30b3c9f7c2327390d8b29881b44",
+      "title": "Client Partner, Korea",
+      "locations": [
+        {
+          "addressLocality": "Fu Tei Kok",
+          "addressRegion": "Wanc",
+          "addressCountry": "HK"
+        }
+      ],
+      "posted": ["Sat Sep 26 02:00:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": null,
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/Singapore-Cat-Portfolio-Specialist/1435902633/",
+      "sourceVersion": "7dc596873062337b28619536c2d21f339e07335cd48eff31afbf89027eb5dca2",
+      "title": "Cat Portfolio Specialist",
+      "locations": [
+        {
+          "streetAddress": "Singapore, SG"
+        }
+      ],
+      "posted": ["Fri Oct 09 02:01:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": null,
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/Dublin-Reinsurance-Accountant/1435706433/",
+      "sourceVersion": "7e8cb61c5d516801db603da4fcdc7b03dfbb3f24f2727da92b568c162790190f",
+      "title": "Reinsurance Accountant",
+      "locations": [
+        {
+          "streetAddress": "Dublin, IE"
+        }
+      ],
+      "posted": ["Fri Oct 09 02:01:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": "Office / finance",
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/Dublin-Data-Scientist/1423589933/",
+      "sourceVersion": "861555dbeeb104642633379133bb6ea9e260d85fb24dcb9390fb5d4575374801",
+      "title": "Data Scientist",
+      "locations": [
+        {
+          "streetAddress": "Dublin, IE"
+        }
+      ],
+      "posted": ["Fri Oct 02 02:01:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": "Data / research",
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/Toronto-HR-Specialist-%286-Month-Contract%29-ON/1438200133/",
+      "sourceVersion": "86ff9671f1bffcdde16e5c21c406744021315b8a43ac393fe27aa3016894fb40",
+      "title": "HR Specialist (6 Month Contract)",
+      "locations": [
+        {
+          "addressLocality": "Toronto",
+          "addressRegion": "ON",
+          "addressCountry": "CA"
+        }
+      ],
+      "posted": ["Thu Sep 17 00:00:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": "Office / finance",
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/Singapore-Business-Data-Analyst/1416131133/",
+      "sourceVersion": "8f6b708ec59f3d0e28b960d1a3bc55c77f3b5ebd0954f2a04c9b7a08ca4ac326",
+      "title": "Business Data Analyst",
+      "locations": [
+        {
+          "streetAddress": "Singapore, SG"
+        }
+      ],
+      "posted": ["Mon Oct 12 02:00:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": "Data / research",
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/Dublin-Valuation-Actuaries%2C-Life-&-Health/1272673101/",
+      "sourceVersion": "9742a4fe9f5c6728cc3690a08828b530561d7acedc58bc019808ace6a25c6c20",
+      "title": "Valuation Actuaries, Life & Health",
+      "locations": [
+        {
+          "streetAddress": "Dublin, IE"
+        }
+      ],
+      "posted": ["Fri Sep 18 02:00:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": "Quantitative / actuarial — adjacent",
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/Stamford-VP%2C-Program-Underwriter-CT-06901/1272838701/",
+      "sourceVersion": "975b8770daf3b28711e9704bda2b48f146afe372b113be0aa90fccdcb4d8c4f0",
+      "title": "VP, Program Underwriter",
+      "locations": [
+        {
+          "addressLocality": "Stamford",
+          "addressRegion": "CT",
+          "addressCountry": "US"
+        }
+      ],
+      "posted": ["Fri Sep 18 02:00:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": null,
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/Dublin-Insurance-Operations-Analyst/1272015901/",
+      "sourceVersion": "988a54135b8ae46b738e768a4f99567b4e26412ff13fa2e797ae7a0e614bd0b9",
+      "title": "Insurance Operations Analyst",
+      "locations": [
+        {
+          "streetAddress": "Dublin, IE"
+        }
+      ],
+      "posted": ["Tue Sep 15 02:00:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": "Analyst — domain review",
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/Toronto-Senior-Compensation-Partner-North-America-ON/1435487833/",
+      "sourceVersion": "99f60326d824d577c71c5dd478efe7aaea92ca80b0c437a8c6a689d68dbbb021",
+      "title": "Senior Compensation Partner - North America",
+      "locations": [
+        {
+          "addressLocality": "Toronto",
+          "addressRegion": "ON",
+          "addressCountry": "CA"
+        }
+      ],
+      "posted": ["Thu Oct 08 02:01:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": null,
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/Toronto-Manager-Assumed-Administration%2C-North-America-Life-%28NAL%29-ON/1428488933/",
+      "sourceVersion": "9abedea1a1739f32c9ed0dd0482da70ebe7e325c5a1cd49667db52e7b1057c3f",
+      "title": "Manager - Assumed Administration, North America Life (NAL)",
+      "locations": [
+        {
+          "addressLocality": "Toronto",
+          "addressRegion": "ON",
+          "addressCountry": "CA"
+        }
+      ],
+      "posted": ["Fri Sep 18 02:00:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": "Office / finance",
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/Fu-Tei-Kok-Product-Development-Manager-Wanc/1427317833/",
+      "sourceVersion": "a0155d08761fa906ab24381fed1d10f0d11358200551b8a8ee31b04de2a986fa",
+      "title": "Product Development Manager",
+      "locations": [
+        {
+          "addressLocality": "Fu Tei Kok",
+          "addressRegion": "Wanc",
+          "addressCountry": "HK"
+        }
+      ],
+      "posted": ["Wed Sep 16 02:00:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": null,
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/Toronto-Actuarial-Associate-ON/1399468033/",
+      "sourceVersion": "a1d76b8ca33e7300c41c73c1f9e854e6f79fca83234f9a7d61e75f5df910e747",
+      "title": "Actuarial Associate",
+      "locations": [
+        {
+          "addressLocality": "Toronto",
+          "addressRegion": "ON",
+          "addressCountry": "CA"
+        }
+      ],
+      "posted": ["Fri Sep 25 02:00:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": "Quantitative / actuarial — adjacent",
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/Stamford-VP%2C-Professional-Liability-Treaty-Underwriter-CT-06901/1272499801/",
+      "sourceVersion": "a27e85894fc53b3a445e39d9540e2513fb25b3f610614acc6435e5401dbdcba7",
+      "title": "VP, Professional Liability Treaty Underwriter",
+      "locations": [
+        {
+          "addressLocality": "Stamford",
+          "addressRegion": "CT",
+          "addressCountry": "US"
+        }
+      ],
+      "posted": ["Fri Sep 18 02:00:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": null,
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/Maple-Grove-Account-Executive%2C-ESL-MN/1438138733/",
+      "sourceVersion": "a8d51a0da469cdfb217f295b8323eace7070a09962077d72e2b6bd784aea23d7",
+      "title": "Account Executive, ESL",
+      "locations": [
+        {
+          "addressLocality": "Maple Grove",
+          "addressRegion": "MN",
+          "addressCountry": "US"
+        }
+      ],
+      "posted": ["Thu Sep 17 00:00:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": null,
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/Dublin-Actuarial-Intern-Non-Life-Economic-Valuation/1434913133/",
+      "sourceVersion": "ae5d2153917c3b9cbb30153fa7d29c1990cdd6002d27392b3a2c3e396ab7006e",
+      "title": "Actuarial Intern - Non-Life Economic Valuation",
+      "locations": [
+        {
+          "streetAddress": "Dublin, IE"
+        }
+      ],
+      "posted": ["Wed Oct 07 02:01:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": "Quantitative / actuarial — adjacent",
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/Stamford-Head-of-Underwriting-Insurance-Programs-CT-06901/1385757933/",
+      "sourceVersion": "b7142bda23b45526d3f802cad6d8eadb8a112e54788c3bf79a8e091e1a52b72c",
+      "title": "Head of Underwriting Insurance Programs",
+      "locations": [
+        {
+          "addressLocality": "Stamford",
+          "addressRegion": "CT",
+          "addressCountry": "US"
+        }
+      ],
+      "posted": ["Mon Oct 12 02:00:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": null,
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/Dublin-Actuarial-Intern-Life-Reserving/1435869533/",
+      "sourceVersion": "bd9d73f6683dcace4502390b0c1825796495be188a953815864c627b11d1c10f",
+      "title": "Actuarial Intern - Life Reserving",
+      "locations": [
+        {
+          "streetAddress": "Dublin, IE"
+        }
+      ],
+      "posted": ["Fri Oct 09 02:01:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": "Quantitative / actuarial — adjacent",
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/Toronto-Full-Stack-Developer-%28_NET%2C-C%2C-Angular%29-ON/1286398901/",
+      "sourceVersion": "c05b3bfb0fbdee4aac1a95c7f85be91cedd419cd6befa60facb6cc39c34947d1",
+      "title": "Full-Stack Developer (.NET, C#, Angular)",
+      "locations": [
+        {
+          "addressLocality": "Toronto",
+          "addressRegion": "ON",
+          "addressCountry": "CA"
+        }
+      ],
+      "posted": ["Tue Sep 22 02:00:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": "Technology",
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/Toronto-Business-Data-Analyst-Retro-Administration-ON/1418822133/",
+      "sourceVersion": "c218b6806018e670bcf3f7666692144a5229a438987c21c6bf1f67225c9e5560",
+      "title": "Business Data Analyst - Retro Administration",
+      "locations": [
+        {
+          "addressLocality": "Toronto",
+          "addressRegion": "ON",
+          "addressCountry": "CA"
+        }
+      ],
+      "posted": ["Sun Sep 20 02:00:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": "Data / research",
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/Dublin-Pricing-Actuaries%2C-Life-&-Health/1272670801/",
+      "sourceVersion": "c9ba1f921767654998da9e6190848f6c63ace990abd2645f6930f02c7b6256e2",
+      "title": "Pricing Actuaries, Life & Health",
+      "locations": [
+        {
+          "streetAddress": "Dublin, IE"
+        }
+      ],
+      "posted": ["Fri Sep 18 02:00:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": "Quantitative / actuarial — adjacent",
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/Toronto-Head-Risk-Management-North-America%2C-L&H-ON/1439091533/",
+      "sourceVersion": "ca161fc104fed6ef122e0f2cbdcabc41268ac99a28c37a472f7cb2dbf2c28ae7",
+      "title": "Head Risk Management North America, L&H",
+      "locations": [
+        {
+          "addressLocality": "Toronto",
+          "addressRegion": "ON",
+          "addressCountry": "CA"
+        }
+      ],
+      "posted": ["Fri Sep 18 00:00:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": "Office / finance",
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/Stamford-VP%2C-Pricing-Actuary-CT-06901/1426222133/",
+      "sourceVersion": "cba9c87f23a3f1e36ce2747a81cf31533442758cfeecb0e7e53cdf1858708590",
+      "title": "VP, Pricing Actuary",
+      "locations": [
+        {
+          "addressLocality": "Stamford",
+          "addressRegion": "CT",
+          "addressCountry": "US"
+        }
+      ],
+      "posted": ["Sat Oct 10 02:00:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": "Quantitative / actuarial — adjacent",
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/Dublin-Non-Life-Insurance-Underwriter/1442920733/",
+      "sourceVersion": "cc06de584d0c88a25c8613eb93e3d09a78d3b2aa2ab235198efe2d558213d4f0",
+      "title": "Non-Life Insurance Underwriter",
+      "locations": [
+        {
+          "streetAddress": "Dublin, IE"
+        }
+      ],
+      "posted": ["Wed Sep 30 00:00:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": null,
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/Stamford-VP-Underwriter-Agriculture-CT-06901/1425323133/",
+      "sourceVersion": "cde1b3215e7eadf84cc789e2675ccd7b30f59003a1649bc4f1df4acd00d96c9f",
+      "title": "VP Underwriter Agriculture",
+      "locations": [
+        {
+          "addressLocality": "Stamford",
+          "addressRegion": "CT",
+          "addressCountry": "US"
+        }
+      ],
+      "posted": ["Thu Oct 08 02:00:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": null,
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/Charlotte-AVP%2C-Accelerated-Underwriting-and-Analytics-NC-28201/1397389133/",
+      "sourceVersion": "cde45aeb6e77022aea893da0a0f0115e2aa9fba92246f3623bb861a6909c09e4",
+      "title": "AVP, Accelerated Underwriting and Analytics",
+      "locations": [
+        {
+          "addressLocality": "Charlotte",
+          "addressRegion": "NC",
+          "addressCountry": "US"
+        }
+      ],
+      "posted": ["Sat Sep 19 02:00:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": "Data / research",
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/Toronto-Technical-Lead-Actuarial-Systems-ON/1393301933/",
+      "sourceVersion": "d2ae6a711c7fa7a64131d8ca6fd74be1d4bf5417192ea7ed00aeb1e9c4f88ed6",
+      "title": "Technical Lead - Actuarial Systems",
+      "locations": [
+        {
+          "addressLocality": "Toronto",
+          "addressRegion": "ON",
+          "addressCountry": "CA"
+        }
+      ],
+      "posted": ["Mon Oct 05 02:00:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": "Quantitative / actuarial — adjacent",
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/Toronto-Global-Payroll-Manager-ON/1435439533/",
+      "sourceVersion": "d723f4dbe8495cdf4c6c2d38bfe25b0efb56d17d3eb8161216227f5d644b9a97",
+      "title": "Global Payroll Manager",
+      "locations": [
+        {
+          "streetAddress": "Dublin, IE",
+          "addressLocality": "Toronto",
+          "addressRegion": "ON",
+          "addressCountry": "CA"
+        }
+      ],
+      "posted": ["Thu Oct 08 02:01:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": "Office / finance",
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/Toronto-HEAD-OF-ADMINISTRATION-AND-OPERATIONS-LIFE-&-HEALTH%2C-NORTH-AMERICA-ON/1428485233/",
+      "sourceVersion": "dbb4588b2b9abcf6bb361423a432c0151ebce4a47214e423ec8d6addb3ec2c55",
+      "title": "HEAD OF ADMINISTRATION AND OPERATIONS - LIFE & HEALTH, NORTH AMERICA",
+      "locations": [
+        {
+          "addressLocality": "Toronto",
+          "addressRegion": "ON",
+          "addressCountry": "CA"
+        }
+      ],
+      "posted": ["Fri Sep 18 02:00:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": "Office / finance",
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/Hamilton-CAT-Underwriter/1445523133/",
+      "sourceVersion": "dc6276874c1e2d64977c4c843e2118c2376a81199bf9b7156d7a15512e06c767",
+      "title": "CAT Underwriter",
+      "locations": [
+        {
+          "streetAddress": "Hamilton, BM"
+        }
+      ],
+      "posted": ["Thu Oct 08 00:00:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": null,
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/Charlotte-Actuarial-Intern-NC-28201/1435508633/",
+      "sourceVersion": "de0d8af4cf35437288dd722bf2f40955f485e248c207b44b807729d43cb2c5dc",
+      "title": "Actuarial Intern",
+      "locations": [
+        {
+          "addressLocality": "Charlotte",
+          "addressRegion": "NC",
+          "addressCountry": "US"
+        }
+      ],
+      "posted": ["Thu Oct 08 02:01:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": "Quantitative / actuarial — adjacent",
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/Stamford-SVP%2C-Casualty-Underwriter-CT-06901/1397902133/",
+      "sourceVersion": "deb5717b5182d3d5301892e9741f9c39d9375f56cc562403cba5d0330222bb16",
+      "title": "SVP, Casualty Underwriter",
+      "locations": [
+        {
+          "addressLocality": "Stamford",
+          "addressRegion": "CT",
+          "addressCountry": "US"
+        }
+      ],
+      "posted": ["Sun Sep 20 02:00:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": null,
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/Dublin-Actuarial-Intern-Longevity-Pricing/1434893333/",
+      "sourceVersion": "e6f667f6c55f597c405b06df9dde14ceb5815b3800557a5d9fc455587188cbfb",
+      "title": "Actuarial Intern - Longevity Pricing",
+      "locations": [
+        {
+          "streetAddress": "Dublin, IE"
+        }
+      ],
+      "posted": ["Wed Oct 07 02:01:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": "Quantitative / actuarial — adjacent",
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/Charlotte-Senior-Underwriting-Consultant-%28Underwriting-Director-level%29-NC-28201/1436338533/",
+      "sourceVersion": "ea1b5177b71a0ff22ff2dc789b86d67f29db9833a55884679079967ca8b05cf2",
+      "title": "Senior Underwriting Consultant (Underwriting Director level)",
+      "locations": [
+        {
+          "addressLocality": "Charlotte",
+          "addressRegion": "NC",
+          "addressCountry": "US"
+        }
+      ],
+      "posted": ["Sat Oct 10 02:01:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": null,
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/Dublin-Scrum-Master-and-IT-Project-Manager/1274866501/",
+      "sourceVersion": "ec2b7cff86d4057bfb01547266a473867ea91d195afe85bea1a8491a5247bd0c",
+      "title": "Scrum Master and IT Project Manager",
+      "locations": [
+        {
+          "addressLocality": "Toronto",
+          "addressRegion": "ON",
+          "addressCountry": "CA",
+          "streetAddress": "Dublin, IE"
+        }
+      ],
+      "posted": ["Sat Sep 19 02:00:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": "Technology",
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/Stamford-AVP%2C-Professional-Liability-Treaty-Underwriter-CT-06901/1423491433/",
+      "sourceVersion": "f5f2da429d3114568e745be07d6e6689cc3df60227bad5ef28b96c5e849300c9",
+      "title": "AVP, Professional Liability Treaty Underwriter",
+      "locations": [
+        {
+          "addressLocality": "Stamford",
+          "addressRegion": "CT",
+          "addressCountry": "US"
+        }
+      ],
+      "posted": ["Fri Oct 02 02:01:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": null,
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/Charlotte-Actuarial-Associate-NC-28201/1435881833/",
+      "sourceVersion": "f62cdc49a967684042623ffce2f8f959aa0bf58cf99abb7eb3874e1e01452866",
+      "title": "Actuarial Associate",
+      "locations": [
+        {
+          "addressLocality": "Charlotte",
+          "addressRegion": "NC",
+          "addressCountry": "US"
+        }
+      ],
+      "posted": ["Fri Oct 09 02:01:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": "Quantitative / actuarial — adjacent",
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    },
+    {
+      "url": "https://careers.partnerre.com/job/Zurich-Head-of-DACH-Zuri/1408060733/",
+      "sourceVersion": "ff26ee0cea6a620cfa56f0c5c70849fad73370cadbc77aa36c3736524e407972",
+      "title": "Head of DACH",
+      "locations": [
+        {
+          "addressLocality": "Zurich",
+          "addressRegion": "Zuri",
+          "addressCountry": "CH"
+        }
+      ],
+      "posted": ["Sat Sep 19 02:00:00 UTC 2026"],
+      "employer": ["PartnerRE Ltd."],
+      "roleGroup": null,
+      "proofMethod": "Exact primary HTML microdata; not inferred from description or URL"
+    }
+  ]
+}

@@ -1,0 +1,207 @@
+{
+  "recordedAt": "2026-10-12T04:41:24.134Z",
+  "baseline": "bd316fe341a9078c3e9ae84bb339d7ae4624f27f",
+  "branch": "codex/infomonk-workspace",
+  "environment": {
+    "platform": "Windows",
+    "osBuild": "10.0.26200",
+    "node": "v24.13.1",
+    "npm": "11.8.0",
+    "electron": "43.7.6",
+    "playwright": "1.62.1",
+    "vitest": "4.1.11",
+    "timezone": "America/Halifax; calendar deadline checks use Atlantic/Bermuda unless an explicit source timezone is preserved"
+  },
+  "nativeJobsProcessingVersions": ["bermuda-jobs-3/schema-2"],
+  "codeHashes": {
+    "apps/sheets/src/renderer/ai/EvidenceDetails.tsx": "eeca90b57f1c2da0df950fce86b19e1d68240e598f606cc57f902db71b7d19f5",
+    "apps/shell/src/main/research/extract.ts": "916208b182a69ca9098c92fc5f103ba095d2a0462897a807c749901376d61734",
+    "apps/shell/src/main/research/ipc.ts": "644a706142c9ab33c14238939c5673fa16729040646cb47a81f9fd9b753c07d1",
+    "apps/shell/src/main/research/job-adapters.ts": "fe040e500c6f1335748c6bb0b3a4c32dfb52d0f30bde91b2c1f643cbe3765202",
+    "apps/shell/src/main/research/job-routes.ts": "79ba21fa0bbc59086e347e563926ca23a31cd9400a46260971384ebdafb170af",
+    "apps/shell/src/main/research/job-scope.ts": "7b14e464eb927dc8a91825559e9718d2774121f9f024c0feedb61531cce7627d",
+    "apps/shell/src/main/research/jobs.ts": "8bb208a46608690ca345a6d2f05003c7cf6393b84555ed906c588ed4fbc57253",
+    "apps/shell/src/main/research/metadata.ts": "15fb581b195c2b0017d70c14b77a01fbb815e8fe5af025b56f4c7b9272447d25",
+    "apps/shell/src/main/research/pages.ts": "59643617dad1f3f1ae2da800c88338e7a071818ee0bf0652374ca61cc45e0f8d",
+    "apps/shell/src/main/research/projection.ts": "76c6e47348dc4ec1408af686f44d72644b8e5da4f38098b8b44397f506fc0ee2",
+    "apps/shell/src/main/research/service.ts": "96630522ed4e7eea607f4ceb8ed61927cc1531ec7801fc9423be9a9a01db14a1",
+    "apps/shell/src/main/research/store.ts": "e56d68fd4c8e0735bdc329251128edb8ca763c99f0c7db3290c29ec8a4a971ef",
+    "apps/shell/src/main/workspace-ipc.ts": "4b2e224cb1aba682248d369633d40391b4f816ad872f77fea53d9bde8d465b74",
+    "apps/shell/src/main/workspace-store.ts": "b4b74c1296480c1d1c49029a102dcd460d2d753168f612366ea42165b2c6bcd1",
+    "apps/shell/src/preload/research.ts": "35027a88fe29308d73056af5d7039c3b04689374ce800a89ae11aa1496313575",
+    "apps/shell/src/renderer/src/infomonk/ResearchPanel.tsx": "cb9c19a38483b2ea3c967f6a21a4b82ecffb1e152ebadc05bdc5891b95679a23",
+    "apps/shell/src/renderer/src/infomonk/research.css": "35df2ddda964626943ed0339b4db340aaf312b00067d191198b6d7fe2c3ddd77",
+    "apps/shell/src/shared/jobs-api.ts": "2301a1cccb31646e5d9f9ca6cd206b54ae6a04f1b235d2d00793f78a627e3427",
+    "apps/shell/src/shared/research-api.ts": "49a69b0726ad731a2a723785a106c855ceed8a8c48c91795b13ea4042ebf9094",
+    "apps/shell/tests/research-job-sources.test.ts": "4cbacd3f458ffca86714e84785a6a3791a3f8fc6e8f38ec8d3a026b8800fb931",
+    "apps/shell/tests/research-jobs.test.ts": "616770d037568d27236a32317d7b6e268279cefa5621396aefcadfe856f93320",
+    "packages/electron-utils/src/public-html.ts": "82a33e177cebeb142c337ed2b53e5011a599e5aa07156af895b00ea364fc3cb9",
+    "apps/shell/src/main/research/html-tables.ts": "b3053588a228b848810de71f5edd210e12c83bd33cc75bfe1eeb63c4e3df11a7",
+    "apps/shell/src/main/research/job-changes.ts": "ec917a048a88a0568e177075bd2c9fdf84d419e000c54818ca333a158bc85f1d",
+    "apps/shell/src/main/research/table-fetch.ts": "4dc9586a4e7ddea76c12686a3529aa4f7c7d3fe3a6a95a678373203379dab57d",
+    "apps/shell/src/renderer/src/infomonk/HtmlTableInput.tsx": "86197805d5c0807bbd952acd08755071cc3cb534ebdd99d13056175641c67bee",
+    "apps/shell/src/renderer/src/infomonk/TableFilters.tsx": "b5cd00b3bf2e0ccd8dfb919e56b6de974e41486dbcbeb870b3e6ae9c60144bfa",
+    "apps/shell/tests/research-employer-expansion.test.ts": "216031c01e0beb6fe04b6a82b170844fa8785e383b4004b5a66652b3cc8c4208",
+    "apps/shell/tests/research-html-service.test.ts": "fb1a7926cd28f9c71e8c6e5957ca0509a40fe7d9aef6c0a1734c674cd452f0d2",
+    "apps/shell/tests/research-html-tables.test.ts": "0682d1ad24bdcbc26645b52d09c9bd9e80b9055b323e1b82c08fd279233da420",
+    "apps/shell/tests/research-job-changes.test.ts": "2e0601e839fd68ed2efeac742f9681af9996a0ad5533186f2049a4d8325ac518",
+    "apps/shell/tests/research-job-government.test.ts": "6dd1ad0dd32d127c50fd621c090b96a9a047ac08448d9706929a538ae8aa21e7",
+    "apps/shell/tests/research-job-greenhouse.test.ts": "db6e01457fc85da0806e95a5008b1bb84329d3377acbe108799ff57389182d1c",
+    "apps/shell/tests/research-table-fetch.test.ts": "9364fb666d4ff734aa7a931ffcb4108adccc6fe14dd700d20aaceb7a3e242651",
+    "apps/shell/tests/research-views.test.ts": "8605455c0f1e0f509de57a6b8b208dc201a189b0459e916fa1e64c4eb5f5a3c4",
+    "e2e/infomonk-html-discovery-state.spec.ts": "cac011381c2c6eb21904f9982aadfcc035c3a9f18d6ed052f7788a7e59d34a41",
+    "e2e/infomonk-html-tables.spec.ts": "837b23b3985a03bbe6e04620b8638bceb4ffdb43bc1597cc1d7989e2fd6bd2cf",
+    "e2e/infomonk-jobs-coverage.spec.ts": "c274f20de0f64e1e68879b776a3a9fbb8be4bcf386549a98b4b9ec44646b8f8f",
+    "e2e/infomonk-views.spec.ts": "18e5aabed40f1ff7caff443bd9c5764cf25d69f34aa62fdb466648fa2643073d"
+  },
+  "limits": [
+    "Source checks have bounded query scopes; queue completion does not prove all vacancies found.",
+    "52targets have manual/research evidence but remain outside automatic tracker collection.",
+    "Source listings may duplicate vacancies across boards, recruiters and employers.",
+    "Provider-dependent behavior, account-dependent listings, physical OS drop, packaging and non-Windows execution remain unverified.",
+    "Earlier unchanged Windows utility/broad unit failures were not rerun; no completely green full-suite claim.",
+    "The data engineering harness remains disabled and last."
+  ],
+  "scope": "Bermuda public coverage expansion and native workspace validation",
+  "counts": {
+    "sourceChecks": 26,
+    "registeredTargets": 78,
+    "outsideAutomaticCollection": 52,
+    "sourceListings": 137
+  },
+  "launch": {
+    "executable": "node_modules/electron/dist/electron.exe",
+    "app": "apps/shell",
+    "GENOFFICE_USER_DATA": "C:\\Users\\Place\\Documents\\ChatGPT\\Socrates\\e2e\\artifacts\\bermuda-coverage-demo-FIVH3k",
+    "GENOFFICE_NO_SPARE_VIEW": "1",
+    "GENOFFICE_LANG": "en",
+    "portableExport": "C:\\Users\\Place\\Documents\\ChatGPT\\Socrates\\working_dir\\bermuda-jobs\\Bermuda-Jobs-Tracker-Coverage.xlsx",
+    "ownedDestination": "C:\\Users\\Place\\Documents\\ChatGPT\\Socrates\\e2e\\artifacts\\bermuda-coverage-demo-FIVH3k\\projects\\proj-5b6c1ad2e71c\\workspace\\research\\Research-Bermuda jobs  broad source coverage-r4-8f47c362.xlsx",
+    "localLauncher": "working_dir/bermuda-jobs/Open-Bermuda-Coverage.ps1"
+  },
+  "checks": [
+    {
+      "command": "npm run typecheck",
+      "result": "passed",
+      "workspaces": 26,
+      "notes": "Executed earlier in this iteration; final Shell and Sheets checks repeated after affected edits."
+    },
+    {
+      "command": "npm run typecheck -w @genoffice/shell",
+      "result": "passed",
+      "log": "e2e/artifacts/coverage-final-typecheck.log"
+    },
+    {
+      "command": "npm run typecheck -w @genoffice/sheets",
+      "result": "passed",
+      "log": "e2e/artifacts/coverage-typecheck.log"
+    },
+    {
+      "command": "npm run build -w @genoffice/shell",
+      "result": "passed",
+      "log": "e2e/artifacts/coverage-final-build.log"
+    },
+    {
+      "command": "npm run build -w @genoffice/sheets",
+      "result": "passed",
+      "notes": "Rebuilt for HTML readable-header/canonical evidence mapping; native reopened sheet verified."
+    },
+    {
+      "command": "npm exec -w @genoffice/shell -- vitest run tests/research.test.ts tests/research-readiness.test.ts tests/research-journeys.test.ts tests/research-hardening.test.ts tests/research-jobs.test.ts tests/research-job-sources.test.ts tests/research-job-changes.test.ts tests/research-views.test.ts tests/research-html-tables.test.ts tests/research-table-fetch.test.ts tests/research-html-service.test.ts tests/research-employer-expansion.test.ts tests/research-job-greenhouse.test.ts tests/research-job-government.test.ts",
+      "result": "passed",
+      "files": 14,
+      "passed": 178,
+      "skipped": 5,
+      "log": "e2e/artifacts/coverage-final-unit.log",
+      "notes": "Network-only probes require separate opt-in. Inherited research regressions included."
+    },
+    {
+      "command": "$env:INFOMONK_EMPLOYER_PROBE='1'; npm exec -w @genoffice/shell -- vitest run tests/research-employer-expansion.test.ts",
+      "result": "passed",
+      "notes": "Earlier public probe: complete bounded Apex/Sompo/Ariel/Performance graphs; later actual26-source native run exercises the final title/duties/provenance edits."
+    },
+    {
+      "command": "$env:INFOMONK_GREENHOUSE_LIVE='1'; npm exec -w @genoffice/shell -- vitest run tests/research-job-greenhouse.test.ts",
+      "result": "passed",
+      "notes": "All 27 SiriusPoint / all 35 Fortitude posts checked; immutable JSON snapshots."
+    },
+    {
+      "command": "$env:INFOMONK_GOVERNMENT_LIVE='1'; npm exec -w @genoffice/shell -- vitest run tests/research-job-government.test.ts",
+      "result": "passed",
+      "notes": "10 tests including live seven-capture government journey; see government-live.json."
+    },
+    {
+      "command": "npm run lint",
+      "result": "passed",
+      "errors": 0,
+      "warnings": 12,
+      "notes": "Existing upstream warnings; no new dependencies.",
+      "log": "e2e/artifacts/coverage-final-lint.log"
+    },
+    {
+      "command": "npm run check:theme-colors",
+      "result": "passed"
+    },
+    {
+      "command": "npm run check:english-comments",
+      "result": "passed"
+    },
+    {
+      "command": "npm run licenses",
+      "result": "passed"
+    },
+    {
+      "command": "$env:INFOMONK_COVERAGE_JOBS='1'; npm run test:e2e -- e2e/infomonk-jobs-coverage.spec.ts",
+      "result": "passed",
+      "passed": 1,
+      "skipped": 1,
+      "elapsed": "1.7 minutes",
+      "log": "e2e/artifacts/coverage-final-native.log",
+      "notes": "Fresh native create/collect/review/publish/track/refresh/all-page restart/evidence; zero renderer errors. Attachment test opted in separately."
+    },
+    {
+      "command": "$env:INFOMONK_COVERAGE_ATTACH='1'; npm run test:e2e -- e2e/infomonk-jobs-coverage.spec.ts --grep 'attach expanded'",
+      "result": "passed",
+      "passed": 1,
+      "log": "e2e/artifacts/coverage-attach-native.log",
+      "notes": "Two research sources persist across restart; revision and listings unchanged."
+    },
+    {
+      "command": "node docs/testing/bermuda-coverage-2026-10-12/quality-check.mjs working_dir/bermuda-jobs/Bermuda-Jobs-Tracker-Coverage.xlsx",
+      "result": "passed",
+      "notes": "Entire137-row metadata checked, not only first100preview."
+    }
+  ],
+  "qualitySummary": {
+    "uniqueKeys": 137,
+    "missingEmployer": 101,
+    "configuredPublisherEmployerNames": 26,
+    "missingClosingDate": 124,
+    "locationReview": 16
+  },
+  "failedAttemptsResolved": [
+    "Live test assumed an old newspaper BI listing was on the first preview page; replaced with a fresh stable employer key and whole-table search.",
+    "Test used an obsolete Apply filters button name; actual form uses Apply view / Enter.",
+    "Old shortlist-note expected text remained in copied test; corrected to this journey note.",
+    "Exact Listing source label omitted embedded selected-option text; corrected to the observed accessible combobox prefix.",
+    "Source-count invariant originally included retained absent rows and selected firstAXISrow; corrected current-count/source-key assertions.",
+    "Attachment check confused filtered row total1with accepted total137; checks both separately."
+  ],
+  "manualResearchAttachments": {
+    "sources": [
+      {
+        "sourceId": "7adf983e-b1cb-4f66-b1f0-976db5c82c14",
+        "name": "bermuda-coverage-2026-10-12.md",
+        "sha256": "e8798ef845b39417651ed6525bd2b64dc9f3ea9d11e24eef838831d6b59d64e6"
+      },
+      {
+        "sourceId": "51df4c46-3e8f-4540-a208-7a816dfacc31",
+        "name": "bermuda-source-discovery-2026-10-12.md",
+        "sha256": "b7f285c0f3f65d4853529cca512d1ebfb0c8a740ae2d85179707455b3bb4dc3e"
+      }
+    ],
+    "restartVerified": true,
+    "acceptedRevisionUnchanged": true,
+    "manualListingsNotSilentlyInserted": true
+  }
+}

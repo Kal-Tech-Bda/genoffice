@@ -1,0 +1,178 @@
+[
+  {
+    "id": "partnerre",
+    "url": "https://careers.partnerre.com/go/Open-Positions/9690501/",
+    "finalUrl": "https://careers.partnerre.com/go/Open-Positions/9690501/",
+    "status": 200,
+    "started": "2026-10-12T03:41:24.762Z",
+    "checkedAt": "2026-10-12T03:41:25.955Z",
+    "sha256": "6c1537d8a29f1ac0f9147c56b0faba2765003f2f1571f43e2511b01b411b53f2",
+    "error": null,
+    "evidenceLevel": "HTTP response captured; human listing review recorded separately"
+  },
+  {
+    "id": "partnerre-page2",
+    "url": "https://careers.partnerre.com/go/Open-Positions/9690501/15/?q=&sortColumn=referencedate&sortDirection=desc",
+    "finalUrl": "https://careers.partnerre.com/go/Open-Positions/9690501/15/?q=&sortColumn=referencedate&sortDirection=desc",
+    "status": 200,
+    "started": "2026-10-12T03:41:24.789Z",
+    "checkedAt": "2026-10-12T03:41:25.946Z",
+    "sha256": "fa3aaf299b2be2b7a25419ffedbe6811b53ee53f3aa390704a1a583d2211dfc8",
+    "error": null,
+    "evidenceLevel": "HTTP response captured; human listing review recorded separately"
+  },
+  {
+    "id": "partnerre-page3",
+    "url": "https://careers.partnerre.com/go/Open-Positions/9690501/30/?q=&sortColumn=referencedate&sortDirection=desc",
+    "finalUrl": "https://careers.partnerre.com/go/Open-Positions/9690501/30/?q=&sortColumn=referencedate&sortDirection=desc",
+    "status": 200,
+    "started": "2026-10-12T03:41:24.789Z",
+    "checkedAt": "2026-10-12T03:41:25.932Z",
+    "sha256": "360280d1da578c7faaf485f890f78364a96a55be6007a215e876f1dd02d24d50",
+    "error": null,
+    "evidenceLevel": "HTTP response captured; human listing review recorded separately"
+  },
+  {
+    "id": "partnerre-page4",
+    "url": "https://careers.partnerre.com/go/Open-Positions/9690501/45/?q=&sortColumn=referencedate&sortDirection=desc",
+    "finalUrl": "https://careers.partnerre.com/go/Open-Positions/9690501/45/?q=&sortColumn=referencedate&sortDirection=desc",
+    "status": 200,
+    "started": "2026-10-12T03:41:24.79Z",
+    "checkedAt": "2026-10-12T03:41:25.975Z",
+    "sha256": "84d7ee5dfa714627e62ab8e6504cb2c890117dc040fa693b9dd954505c58f936",
+    "error": null,
+    "evidenceLevel": "HTTP response captured; human listing review recorded separately"
+  },
+  {
+    "id": "convex",
+    "url": "https://convexin.pinpointhq.com/",
+    "finalUrl": "https://convexin.pinpointhq.com/",
+    "status": 200,
+    "started": "2026-10-12T03:41:25.975Z",
+    "checkedAt": "2026-10-12T03:41:26.535Z",
+    "sha256": "a7041e470640faf3133d8c11bee4a8b65f22e60a8ca1e0120e0230719d70648a",
+    "error": null,
+    "evidenceLevel": "HTTP response captured; human listing review recorded separately"
+  },
+  {
+    "id": "hamilton-insurance",
+    "url": "https://www.hamiltongroup.com/careers/",
+    "finalUrl": "https://www.hamiltongroup.com/careers/",
+    "status": 200,
+    "started": "2026-10-12T03:41:25.976Z",
+    "checkedAt": "2026-10-12T03:41:26.837Z",
+    "sha256": "29e701b6659c87dea9ff27c21dbff0e8d22e4a79094f385e23157b79076131d3",
+    "error": null,
+    "evidenceLevel": "HTTP response captured; human listing review recorded separately"
+  },
+  {
+    "id": "walkers",
+    "url": "https://www.walkersglobal.com/en/Join-Us",
+    "finalUrl": "https://www.walkersglobal.com/en/Join-Us",
+    "status": 200,
+    "started": "2026-10-12T03:41:25.977Z",
+    "checkedAt": "2026-10-12T03:41:26.418Z",
+    "sha256": "d1eacd2d3c0fc1287ed8e536552d8dd8d1e056d825d1af0e8018d9b89afc9358",
+    "error": null,
+    "evidenceLevel": "HTTP response captured; human listing review recorded separately"
+  },
+  {
+    "id": "citco",
+    "url": "https://www.citco.com/careers",
+    "finalUrl": "https://www.citco.com/careers",
+    "status": 200,
+    "started": "2026-10-12T03:41:25.977Z",
+    "checkedAt": "2026-10-12T03:41:26.721Z",
+    "sha256": "c622493908ac5a2e14046569d4656bf93a676cf4e77c8f1c0c7712dfe0d4c611",
+    "error": null,
+    "evidenceLevel": "HTTP response captured; human listing review recorded separately"
+  },
+  {
+    "id": "marsh",
+    "url": "https://careers.marsh.com/global/en",
+    "finalUrl": "https://careers.marsh.com/global/en",
+    "status": 200,
+    "started": "2026-10-12T03:41:26.837Z",
+    "checkedAt": "2026-10-12T03:41:28.204Z",
+    "sha256": "0bd7983b5645ec89f9db0fc8c6765f372e4bbc63e88f9400793b6fd3ee1a296c",
+    "error": null,
+    "evidenceLevel": "HTTP response captured; human listing review recorded separately"
+  },
+  {
+    "id": "wtw",
+    "url": "https://careers.wtwco.com/jobs/search",
+    "finalUrl": "https://careers.wtwco.com/jobs/search",
+    "status": 200,
+    "started": "2026-10-12T03:41:26.838Z",
+    "checkedAt": "2026-10-12T03:41:27.382Z",
+    "sha256": "d559ac2f682c620ddfa7a353030a24f68255c92d6becd6ac75cded4759454fac",
+    "error": null,
+    "evidenceLevel": "HTTP response captured; human listing review recorded separately"
+  },
+  {
+    "id": "aon",
+    "url": "https://jobs.aon.com/jobs/locations",
+    "finalUrl": "https://jobs.aon.com/jobs/locations",
+    "status": 200,
+    "started": "2026-10-12T03:41:26.838Z",
+    "checkedAt": "2026-10-12T03:41:27.286Z",
+    "sha256": "5cd49b0d78df6cdd6b5102f164ba7504172a5bd750cb5c4412c203d0bb3b334a",
+    "error": null,
+    "evidenceLevel": "HTTP response captured; human listing review recorded separately"
+  },
+  {
+    "id": "advantage",
+    "url": "https://advantagelife.com/careers/",
+    "finalUrl": "https://advantagelife.com/careers/",
+    "status": 200,
+    "started": "2026-10-12T03:41:26.839Z",
+    "checkedAt": "2026-10-12T03:41:27.45Z",
+    "sha256": "7ca10382f39f8467f4febbc040fe9c71a5a09881eeb96d948b7347b7f81b96a8",
+    "error": null,
+    "evidenceLevel": "HTTP response captured; human listing review recorded separately"
+  },
+  {
+    "id": "carrick",
+    "url": "https://www.carrickholdings.com/careers",
+    "finalUrl": "https://www.carrickholdings.com/careers",
+    "status": 200,
+    "started": "2026-10-12T03:41:28.204Z",
+    "checkedAt": "2026-10-12T03:41:28.461Z",
+    "sha256": "541fe1ab0a9aaa42f03cf55c212ed413c2741830107b1d9f04afb8748bd2b82f",
+    "error": null,
+    "evidenceLevel": "HTTP response captured; human listing review recorded separately"
+  },
+  {
+    "id": "renre",
+    "url": "https://www.renre.com/careers/careers-home/",
+    "finalUrl": null,
+    "status": null,
+    "started": "2026-10-12T03:41:28.205Z",
+    "checkedAt": "2026-10-12T03:41:28.82Z",
+    "sha256": null,
+    "error": "Over 2MiB boundary",
+    "evidenceLevel": "Failed retrieval; no zero vacancy claim"
+  },
+  {
+    "id": "lancashire",
+    "url": "https://www.lancashiregroup.com/en/careers/current-vacancies.html",
+    "finalUrl": "https://careers.lancashiregroup.com/",
+    "status": 200,
+    "started": "2026-10-12T03:41:28.206Z",
+    "checkedAt": "2026-10-12T03:41:30.553Z",
+    "sha256": "a52b045b0ccff0e032dcd5855bfaf9ef2fdefaa369113564e8531afd99f7ad8f",
+    "error": null,
+    "evidenceLevel": "HTTP response captured; human listing review recorded separately"
+  },
+  {
+    "id": "abir-membership",
+    "url": "https://www.abir.bm/about/",
+    "finalUrl": "https://www.abir.bm/about/",
+    "status": 200,
+    "started": "2026-10-12T03:41:28.206Z",
+    "checkedAt": "2026-10-12T03:41:28.53Z",
+    "sha256": "8b8608208a6a58f193465e641289e1b550caaa140d8569c7226ecbca16d78acf",
+    "error": null,
+    "evidenceLevel": "HTTP response captured; human listing review recorded separately"
+  }
+]

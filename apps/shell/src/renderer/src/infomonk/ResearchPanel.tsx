@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { WorkspaceProject } from '../../../shared/workspace-api'
 import type {
   Evidence,
@@ -13,10 +13,13 @@ import type {
   ResearchAbsentPage,
   ResearchCell,
   ResearchReadiness,
+  ResearchTableView,
 } from '../../../shared/research-api'
 import './research.css'
 import { isResearchIdentity } from '../../../shared/research-api'
 import { InputReadiness } from './InputReadiness'
+import { TableFilters } from './TableFilters'
+import { HtmlTableInput } from './HtmlTableInput'
 import { JOB_SITES, APPLICATION_STATUSES } from '../../../shared/jobs-api'
 
 declare global {
@@ -30,6 +33,7 @@ const taskNames = {
   worldbank: 'Public population',
   enrich: 'Quote enrichment',
   jobs: 'Bermuda jobs',
+  htmlTables: 'Website tables',
 }
 const initial: ResearchConfig = {
   kind: 'quotes',
@@ -99,12 +103,23 @@ export function ResearchPanel({
   const [reason, setReason] = useState('')
   const [schedule, setSchedule] = useState('manual')
   const [allJobFields, setAllJobFields] = useState(false)
+  const [viewState, setViewState] = useState<{
+    workflowId: string
+    view: ResearchTableView
+  } | null>(null)
   const [readiness, setReadiness] = useState<ResearchReadiness | null>(null)
   const [checkingInputs, setCheckingInputs] = useState(false)
   const readinessRequest = useRef(0)
   const readinessElement = useRef<HTMLDivElement>(null)
   const configElement = useRef<HTMLDetailsElement>(null)
   const workflow = state.workflows.find((w) => w.id === selectedId)
+  const activeView = useMemo(
+    () =>
+      viewState?.workflowId === selectedId
+        ? { ...viewState.view, changesOnly: showAccepted ? false : viewState.view.changesOnly }
+        : undefined,
+    [viewState, selectedId, showAccepted],
+  )
   const pending = state.latestRuns.find(
     (r) =>
       r.workflowId === selectedId &&
@@ -116,10 +131,23 @@ export function ResearchPanel({
       ? !workflow.config.sourceIds.length
       : workflow.config.kind === 'jobs'
         ? !workflow.config.jobSiteIds?.length
-        : !workflow.config.countries.length ||
-          (workflow.config.kind === 'enrich' && !workflow.config.parentWorkflowId))
+        : workflow.config.kind === 'htmlTables'
+          ? !workflow.config.htmlTables?.selections.length
+          : !workflow.config.countries.length ||
+            (workflow.config.kind === 'enrich' && !workflow.config.parentWorkflowId))
   const identityCell =
-    selectedCell && isResearchIdentity(selectedCell.table.id, selectedCell.column)
+    selectedCell &&
+    (isResearchIdentity(selectedCell.table.id, selectedCell.column) ||
+      workflow?.config.htmlTables?.selections.some(
+        (s) => s.tableId === selectedCell.table.id && s.keyColumns.includes(selectedCell.column),
+      ))
+  const htmlInputReady =
+    config.kind !== 'htmlTables' ||
+    (!!(config.htmlTables?.url || config.htmlTables?.sourceId) &&
+      !!config.htmlTables?.selections.length &&
+      config.htmlTables.selections.every(
+        (s) => s.keyColumns.length > 0 && s.confirmFirstRowAsHeader !== false,
+      ))
   const readinessCurrent =
     !!readiness &&
     readiness.workflowId === selectedId &&
@@ -144,8 +172,10 @@ export function ResearchPanel({
   query.current = { offset: historyOffset, workflowId: selectedId }
   const requestNumber = useRef(0)
   const cellRequest = useRef(0)
+  const pageRequest = useRef(0)
   const dataset = showAccepted ? accepted : run?.candidate
   function showRun(id: string | null) {
+    pageRequest.current++
     setRunId(id)
     setRunReload((value) => value + 1)
     setRun(null)
@@ -190,10 +220,11 @@ export function ResearchPanel({
   useEffect(() => {
     let live = true
     if (!runId) return
+    const request = ++pageRequest.current
     void window.infomonkResearch
-      .detail(project.id, runId, { needsReview })
+      .detail(project.id, runId, { needsReview, view: activeView })
       .then((value) => {
-        if (live) {
+        if (live && request === pageRequest.current) {
           setRun(value)
           const basis = `${value.id}:${value.updatedAt}:${workflow?.acceptedRevision ?? 0}`
           if (basis !== absentBasis.current) {
@@ -208,14 +239,23 @@ export function ResearchPanel({
     return () => {
       live = false
     }
-  }, [project.id, runId, runReload, detailVersion, needsReview, workflow?.acceptedRevision])
+  }, [
+    project.id,
+    runId,
+    runReload,
+    detailVersion,
+    needsReview,
+    workflow?.acceptedRevision,
+    activeView,
+  ])
   useEffect(() => {
     let live = true
     if (!showAccepted || !selectedId) return
+    const request = ++pageRequest.current
     void window.infomonkResearch
-      .accepted(project.id, selectedId, { needsReview })
+      .accepted(project.id, selectedId, { needsReview, view: activeView })
       .then((value) => {
-        if (live) setAccepted(value)
+        if (live && request === pageRequest.current) setAccepted(value)
       })
       .catch((err) => {
         if (live) setError(String(err))
@@ -223,7 +263,7 @@ export function ResearchPanel({
     return () => {
       live = false
     }
-  }, [project.id, selectedId, showAccepted, needsReview, workflow?.acceptedRevision])
+  }, [project.id, selectedId, showAccepted, needsReview, workflow?.acceptedRevision, activeView])
   async function selectCell(table: ResearchTable, row: ResearchRow, column: string) {
     if (!workflow) return
     const request = ++cellRequest.current
@@ -244,19 +284,28 @@ export function ResearchPanel({
     })
     setInspection(null)
     setCorrection(String(result.cell.value ?? ''))
-    setReason('')
+    setReason(table.id === 'jobs' ? 'Personal tracking update from the job tracker' : '')
   }
   async function pageTable(tableId: string, offset: number) {
     if (!workflow) return
+    const request = ++pageRequest.current
     cellRequest.current++
     const page = showAccepted
       ? await window.infomonkResearch.accepted(project.id, workflow.id, {
           tableId,
           offset,
           needsReview,
+          view: activeView,
         })
-      : (await window.infomonkResearch.detail(project.id, runId!, { tableId, offset, needsReview }))
-          .candidate
+      : (
+          await window.infomonkResearch.detail(project.id, runId!, {
+            tableId,
+            offset,
+            needsReview,
+            view: activeView,
+          })
+        ).candidate
+    if (request !== pageRequest.current) return
     const merge = (current: ResearchDataset | null) =>
       current && page
         ? {
@@ -269,6 +318,33 @@ export function ResearchPanel({
     cellRequest.current++
     setSelectedCell(null)
     setInspection(null)
+  }
+  async function applyView(view: ResearchTableView) {
+    if (!workflow) return
+    pageRequest.current++
+    cellRequest.current++
+    setSelectedCell(null)
+    setInspection(null)
+    setNeedsReview(false)
+    setViewState({ workflowId: workflow.id, view })
+  }
+  async function shortlist(row: ResearchRow) {
+    if (!workflow || !showAccepted) return
+    await window.infomonkResearch.correct(
+      project.id,
+      workflow.id,
+      'jobs',
+      row.id,
+      'application_status',
+      'Saved',
+      'Saved to shortlist from the job tracker; no application sent',
+    )
+    setAccepted(
+      await window.infomonkResearch.accepted(project.id, workflow.id, {
+        needsReview,
+        view: activeView,
+      }),
+    )
   }
   async function act(fn: () => Promise<void>) {
     setBusy(true)
@@ -355,8 +431,8 @@ export function ResearchPanel({
     <section className="im-research">
       <p className="im-muted">
         Build a traceable table, inspect a sample, then process all confirmed inputs. Supported
-        sources: labeled supplier quotes, World Bank population and selected Bermuda career sites.
-        Every refresh creates a candidate for review.
+        sources: labeled supplier quotes, World Bank population, ordinary HTML tables and selected
+        Bermuda career sites. Every refresh creates a candidate for review.
       </p>
       {error && (
         <p role="alert" className="im-error">
@@ -384,14 +460,17 @@ export function ResearchPanel({
           <select
             aria-label="Research task"
             value={config.kind}
-            onChange={(e) =>
-              setConfig({ ...config, kind: e.target.value as ResearchConfig['kind'] })
-            }
+            onChange={(e) => {
+              const kind = e.target.value as ResearchConfig['kind']
+              setConfig({ ...config, kind })
+              if (['Supplier quotes', 'Public population'].includes(name)) setName(taskNames[kind])
+            }}
           >
             <option value="quotes">Supplier quotes → structured sheets</option>
             <option value="worldbank">World Bank population → research table</option>
             <option value="enrich">Enrich accepted quotes by country code</option>
             <option value="jobs">Bermuda jobs → manual tracker</option>
+            <option value="htmlTables">Website tables → maintained sheets</option>
           </select>
         </label>
         <label>
@@ -458,6 +537,13 @@ export function ResearchPanel({
               ))}
             </fieldset>
           </>
+        ) : config.kind === 'htmlTables' ? (
+          <HtmlTableInput
+            key={editingId ?? 'new'}
+            project={project}
+            config={config}
+            onChange={setConfig}
+          />
         ) : config.kind === 'jobs' ? (
           <>
             <p>
@@ -585,7 +671,7 @@ export function ResearchPanel({
           </>
         )}
         <button
-          disabled={busy || !name.trim()}
+          disabled={busy || !name.trim() || !htmlInputReady}
           className="im-primary"
           onClick={() => void act(save)}
         >
@@ -613,7 +699,9 @@ export function ResearchPanel({
                   ? `${w.config.sourceIds.length} input snapshots`
                   : w.config.kind === 'jobs'
                     ? `${w.config.jobSiteIds?.length ?? 0} confirmed job websites · manual refresh`
-                    : `${w.config.countries.join(', ')} / ${w.config.fromYear}–${w.config.toYear}`}
+                    : w.config.kind === 'htmlTables'
+                      ? `${w.config.htmlTables?.selections.length ?? 0} confirmed tables · ${w.config.htmlTables?.url ? new URL(w.config.htmlTables.url).hostname : 'saved HTML snapshot'}`
+                      : `${w.config.countries.join(', ')} / ${w.config.fromYear}–${w.config.toYear}`}
               </small>
               <p>{latest ? `${latest.status}: ${latest.progress}` : 'No runs yet'}</p>
               {w.acceptedRevision > 0 && (
@@ -622,7 +710,8 @@ export function ResearchPanel({
                   {state.freshness[w.id]?.inputsChanged ||
                   state.freshness[w.id]?.configurationChanged
                     ? 'Inputs or configuration changed · run a reviewed refresh'
-                    : w.config.kind === 'worldbank'
+                    : w.config.kind === 'worldbank' ||
+                        (w.config.kind === 'htmlTables' && w.config.htmlTables?.url)
                       ? 'Public snapshot · refresh to check for new observations'
                       : 'Selected input snapshots match the accepted run'}
                 </p>
@@ -729,7 +818,9 @@ export function ResearchPanel({
             >
               {workflow.config.kind === 'jobs' && workflow.acceptedRevision
                 ? 'Refresh job listings'
-                : 'Run all confirmed inputs'}
+                : workflow.config.kind === 'htmlTables' && workflow.acceptedRevision
+                  ? 'Refresh website tables'
+                  : 'Run all confirmed inputs'}
             </button>
             <button
               disabled={!workflow.destination || busy}
@@ -868,14 +959,60 @@ export function ResearchPanel({
                 </article>
               ))}
           </details>
-          {run && !showAccepted && (
-            <p role="status">
-              {run.status} · {run.progress} · added {run.changes.added}, changed{' '}
-              {run.changes.changed}, absent {run.changes.removed}.{' '}
-              {run.sample &&
-                'Sample only; cannot publish. Inspect the sample, adjust the configuration if needed, then run all confirmed inputs. The sample stays in history.'}
-            </p>
-          )}
+          {run &&
+            !showAccepted &&
+            (run.jobChanges ? (
+              <section className="im-refresh-summary" aria-label="Job refresh summary">
+                <h3>
+                  {run.sample ? 'Sample listing changes' : 'Listing changes since accepted data'}
+                </h3>
+                <div className="im-refresh-counts" role="status">
+                  <span>
+                    <strong>{run.jobChanges.added}</strong> new listings
+                  </span>
+                  <span>
+                    <strong>{run.jobChanges.changed}</strong> fact changes
+                  </span>
+                  <span>
+                    <strong>{run.jobChanges.notFound}</strong> newly not found
+                  </span>
+                  <span>
+                    <strong>{run.jobChanges.returned}</strong> returned
+                  </span>
+                  <span>
+                    <strong>{run.jobChanges.unchanged}</strong> unchanged
+                  </span>
+                  <span>
+                    <strong>{run.jobChanges.outsideSources}</strong> outside selected sources
+                  </span>
+                </div>
+                <p className="im-muted">
+                  A new check time or snapshot does not count as a vacancy-fact change. Not found
+                  does not mean closed. Personal tracking retained for{' '}
+                  {run.jobChanges.trackingPreserved} listings.
+                </p>
+                <button
+                  disabled={busy}
+                  onClick={() =>
+                    void act(() =>
+                      applyView({
+                        ...(activeView ?? { tableId: 'jobs' }),
+                        changesOnly: !activeView?.changesOnly,
+                      }),
+                    )
+                  }
+                >
+                  {activeView?.changesOnly ? 'Show all matching listings' : 'Show refresh changes'}
+                </button>
+              </section>
+            ) : (
+              <p role="status">
+                {run.status} · {run.progress} · added {run.changes.added}, changed{' '}
+                {run.changes.changed}, absent {run.changes.removed}.{' '}
+                {run.sample &&
+                  'Sample only; cannot publish. Inspect the sample, adjust the configuration if needed, then run all confirmed inputs. The sample stays in history.'}
+              </p>
+            ))}
           {run?.inputsChanged && !showAccepted && (
             <p role="alert" className="im-error">
               Source inputs changed since this run. Accepted data is unchanged. Cancel this
@@ -956,6 +1093,12 @@ export function ResearchPanel({
               </p>
             </details>
           )}
+          {run?.htmlContextChanged && !showAccepted && (
+            <p role="status" className="im-source-context">
+              Source context notes changed. Review them even when row facts are unchanged; accepted
+              notes stay intact until publication.
+            </p>
+          )}
           {dataset && (
             <>
               <h3>
@@ -981,12 +1124,14 @@ export function ResearchPanel({
                         setAccepted(
                           await window.infomonkResearch.accepted(project.id, workflow.id, {
                             needsReview: next,
+                            view: activeView,
                           }),
                         )
                       else if (runId)
                         setRun(
                           await window.infomonkResearch.detail(project.id, runId, {
                             needsReview: next,
+                            view: activeView,
                           }),
                         )
                     })
@@ -1001,11 +1146,16 @@ export function ResearchPanel({
                   records.
                 </p>
               )}
-              {dataset.issues.map((issue, i) => (
-                <p className="im-error" key={i}>
-                  {issue}
-                </p>
-              ))}
+              {dataset.issues.length > 0 && (
+                <details className="im-source-context" open={workflow.config.kind === 'htmlTables'}>
+                  <summary>Source context and validation notes · {dataset.issues.length}</summary>
+                  {dataset.issues.map((issue, i) => (
+                    <p className="im-muted" key={i}>
+                      {issue}
+                    </p>
+                  ))}
+                </details>
+              )}
               {dataset.tables.map((table) => (
                 <div
                   className={`im-research-table ${table.id === 'jobs' ? 'im-jobs-table' : ''}`}
@@ -1015,9 +1165,21 @@ export function ResearchPanel({
                     {table.name} · {table.totalRows ?? table.rows.length}
                     {needsReview
                       ? ` of ${table.allRows ?? table.totalRows} rows need review`
-                      : ' rows'}
+                      : activeView?.tableId === table.id
+                        ? ` of ${table.allRows ?? table.totalRows} rows`
+                        : ' rows'}
                   </h3>
                   <p>{table.rowMeaning}</p>
+                  {table.id === 'jobs' && (
+                    <TableFilters
+                      projectId={project.id}
+                      workflowId={workflow.id}
+                      table={table}
+                      view={activeView?.tableId === table.id ? activeView : undefined}
+                      busy={busy}
+                      onApply={(view) => act(() => applyView(view))}
+                    />
+                  )}
                   <small>
                     Showing rows {(table.offset ?? 0) + (table.rows.length ? 1 : 0)}–
                     {(table.offset ?? 0) + table.rows.length}. Click a cell to inspect its evidence
@@ -1073,6 +1235,14 @@ export function ResearchPanel({
                         </tr>
                       </thead>
                       <tbody>
+                        {table.rows.length === 0 && (
+                          <tr className="im-empty-view">
+                            <td colSpan={table.columns.length}>
+                              No rows match this view. Adjust the filters or choose All listings;
+                              accepted records remain intact.
+                            </td>
+                          </tr>
+                        )}
                         {table.rows.slice(0, 100).map((row) => (
                           <tr key={row.id}>
                             {table.columns
@@ -1126,6 +1296,16 @@ export function ResearchPanel({
                                       !allJobFields &&
                                       column.id === 'title' && (
                                         <small className="im-job-source">
+                                          {!showAccepted &&
+                                            row.change &&
+                                            row.change.kind !== 'unchanged' && (
+                                              <span className="im-change-label">
+                                                {row.change.kind.replaceAll('-', ' ')}
+                                                {row.change.fields.length
+                                                  ? ` · ${row.change.fields.join(', ')}`
+                                                  : ''}
+                                              </span>
+                                            )}
                                           {row.cells.role_group?.value
                                             ? `${String(row.cells.role_group.value)} · `
                                             : ''}
@@ -1133,6 +1313,16 @@ export function ResearchPanel({
                                           {String(
                                             row.cells.employer.value ?? 'Employer not stated',
                                           )}
+                                          {showAccepted &&
+                                            row.cells.application_status?.value === 'To review' && (
+                                              <button
+                                                className="im-shortlist-action"
+                                                disabled={busy}
+                                                onClick={() => void act(() => shortlist(row))}
+                                              >
+                                                Save to shortlist
+                                              </button>
+                                            )}
                                         </small>
                                       )}
                                   </td>
@@ -1303,6 +1493,7 @@ export function ResearchPanel({
                         setAccepted(
                           await window.infomonkResearch.accepted(project.id, workflow.id, {
                             needsReview,
+                            view: activeView,
                           }),
                         )
                         setSelectedCell(null)
@@ -1354,6 +1545,7 @@ export function ResearchPanel({
                     setAccepted(
                       await window.infomonkResearch.accepted(project.id, workflow.id, {
                         needsReview,
+                        view: activeView ? { ...activeView, changesOnly: false } : undefined,
                       }),
                     )
                     setShowAccepted(true)

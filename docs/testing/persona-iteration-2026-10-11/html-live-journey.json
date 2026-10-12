@@ -1,0 +1,19 @@
+{
+  "profile": "C:\\Users\\Place\\AppData\\Local\\Temp\\genoffice-e2e-qFHNb7",
+  "projectId": "proj-62e8c575f48c",
+  "workflowId": "797b7882-1a00-4628-8e35-91bce67f3696",
+  "destination": "C:\\Users\\Place\\AppData\\Local\\Temp\\genoffice-e2e-qFHNb7\\projects\\proj-62e8c575f48c\\workspace\\research\\Research-Official holidays-r1-7adb914c.xlsx",
+  "output": "C:\\Users\\Place\\Documents\\ChatGPT\\Socrates\\working_dir\\Bermuda-Official-Holiday-Tables.xlsx",
+  "url": "https://www.gov.bm/public-holidays",
+  "sourceTables": 4,
+  "sourceRows": 40,
+  "rowsByYear": [10, 10, 10, 10],
+  "sourceContextNotes": 4,
+  "initialHttpRequests": 1,
+  "collectElapsedMs": 2815,
+  "acceptedRevision": 1,
+  "nativeEvidenceVerified": true,
+  "restartVerified": true,
+  "rendererErrors": [],
+  "limitations": "Static source dates remain text; no inferred substitute dates. Initial capture reuse measured; no exhaustive website or browser-table claim."
+}

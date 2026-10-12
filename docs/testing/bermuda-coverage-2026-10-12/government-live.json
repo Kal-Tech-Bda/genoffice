@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 1,
+  "startedAt": "2026-10-12T04:18:13.746Z",
+  "completedAt": "2026-10-12T04:18:17.648Z",
+  "scope": "Independent public government careers probe; no login or application endpoints",
+  "portalNotice": "Closing time to apply for any job is 7:00pm Bermuda time (AST - Atlantic Standard Time) on the stated closing date",
+  "advertisedTotal": 13,
+  "listPageCounts": [10, 3],
+  "matchingSourceRecords": 4,
+  "captureCount": 7,
+  "captures": [
+    {
+      "uri": "https://govtcareers.gov.bm/",
+      "kind": "portal",
+      "method": "GET",
+      "retrievedAt": "2026-10-12T04:18:13.985Z",
+      "httpStatus": 200,
+      "contentType": "text/html",
+      "bytes": 4297,
+      "sourceVersion": "26d1d56ef7aba1897dd37d3c0d80a32090c1d2d42a849612c884329f48eed529"
+    },
+    {
+      "uri": "https://emea3.recruitmentplatform.com/fo/rest/jobs?firstResult=0&maxResults=10&sortBy=jobTitle&sortOrder=asc",
+      "kind": "list",
+      "method": "POST",
+      "retrievedAt": "2026-10-12T04:18:15.390Z",
+      "httpStatus": 200,
+      "contentType": "application/json",
+      "bytes": 77535,
+      "sourceVersion": "4ab50fb5c2017f8a7783cad6cf2f25b54d3eee4c2d72dd0b6ce4c5fd3f8c6cf7"
+    },
+    {
+      "uri": "https://emea3.recruitmentplatform.com/fo/rest/jobs?firstResult=10&maxResults=10&sortBy=jobTitle&sortOrder=asc",
+      "kind": "list",
+      "method": "POST",
+      "retrievedAt": "2026-10-12T04:18:16.312Z",
+      "httpStatus": 200,
+      "contentType": "application/json",
+      "bytes": 23190,
+      "sourceVersion": "6e26bb59c4594f245f9dc915e57d885d3376edf7b24a2c6f89fa6152ae735dab"
+    },
+    {
+      "uri": "https://emea3.recruitmentplatform.com/fo/rest/jobs/6933/details",
+      "kind": "detail",
+      "method": "GET",
+      "retrievedAt": "2026-10-12T04:18:16.606Z",
+      "httpStatus": 200,
+      "contentType": "application/json",
+      "bytes": 6192,
+      "sourceVersion": "48c7828df55f41edb080691c14a21aa6a0b5ed09f39c4a8fdaf66fcc1f71de12"
+    },
+    {
+      "uri": "https://emea3.recruitmentplatform.com/fo/rest/jobs/6963/details",
+      "kind": "detail",
+      "method": "GET",
+      "retrievedAt": "2026-10-12T04:18:16.902Z",
+      "httpStatus": 200,
+      "contentType": "application/json",
+      "bytes": 11529,
+      "sourceVersion": "6bf3eed6742bd61e557b2276b63087d654e52c6eae504719c24f1989649f7e85"
+    },
+    {
+      "uri": "https://emea3.recruitmentplatform.com/fo/rest/jobs/6935/details",
+      "kind": "detail",
+      "method": "GET",
+      "retrievedAt": "2026-10-12T04:18:17.431Z",
+      "httpStatus": 200,
+      "contentType": "application/json",
+      "bytes": 7368,
+      "sourceVersion": "219c78fac6fe2e904f0b180b447cfba408128685a9607c758b3fe810d8882084"
+    },
+    {
+      "uri": "https://emea3.recruitmentplatform.com/fo/rest/jobs/6945/details",
+      "kind": "detail",
+      "method": "GET",
+      "retrievedAt": "2026-10-12T04:18:17.648Z",
+      "httpStatus": 200,
+      "contentType": "application/json",
+      "bytes": 9512,
+      "sourceVersion": "e484ab8bc60a2992249e7bae487cc58b8ef04168b7bfc985fb29aeefc2dee362"
+    }
+  ],
+  "records": [
+    {
+      "key": "government:6933",
+      "title": "ADMINISTRATIVE ASSISTANT",
+      "jobNumber": "DHR04038",
+      "department": "Home Affairs HQ",
+      "closingDate": "2026-10-14",
+      "rawPostingEnd": 1792033199000,
+      "postingTimezone": "Atlantic/Bermuda",
+      "roleLocation": null,
+      "reportedEmployer": null
+    },
+    {
+      "key": "government:6963",
+      "title": "ADMINISTRATIVE ASSISTANT - CHILD HEALTH",
+      "jobNumber": "DHR04056",
+      "department": "Health Department",
+      "closingDate": "2026-10-14",
+      "rawPostingEnd": 1792015199000,
+      "postingTimezone": "Europe/Paris",
+      "roleLocation": null,
+      "reportedEmployer": null
+    },
+    {
+      "key": "government:6935",
+      "title": "CUSTOMER SERVICE REPRESENTATIVE",
+      "jobNumber": "DHR04039",
+      "department": "Attorney General's Chambers",
+      "closingDate": "2026-10-14",
+      "rawPostingEnd": 1792033199000,
+      "postingTimezone": "Atlantic/Bermuda",
+      "roleLocation": null,
+      "reportedEmployer": null
+    },
+    {
+      "key": "government:6945",
+      "title": "MANAGEMENT ACCOUNTANT",
+      "jobNumber": "DHR03847",
+      "department": "Public Works & Environment HQ",
+      "closingDate": "2026-10-21",
+      "rawPostingEnd": 1792637999000,
+      "postingTimezone": "Atlantic/Bermuda",
+      "roleLocation": null,
+      "reportedEmployer": null
+    }
+  ],
+  "limitations": [
+    "Title matching is technology/data/office scope, not qualification or eligibility fit.",
+    "Government portal jurisdiction does not establish per-role location or employer: those API fields are absent.",
+    "Closing dates use the literal source posting timezone; the API timestamp is not a verified application cutoff. Preserve the portal 7:00pm Bermuda-time notice without guessing a UTC offset.",
+    "Pages are separate immutable captures; this is not an atomic or market-wide census."
+  ]
+}

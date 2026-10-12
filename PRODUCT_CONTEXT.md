@@ -128,3 +128,10 @@ Source listings, distinct vacancies and fully searched websites are different
 measures. LinkedIn guest results and Chubb keyword search have explicit coverage
 limits. Employer-browser confirmations remain separate evidence when the app
 does not yet acquire that portal. The engineering harness stays last.
+
+The [next persona iteration](docs/use-cases/persona-iteration-2026-10-12.md) adds
+full-table job views, a persistent shortlist and facts-only refresh summaries.
+Ordinary HTML tables can become maintained sheets with explicit unique keys,
+readable headings, immutable field evidence and preserved source context. The
+broader careers registry now contains 26 supported public sources and 52
+additional discovery targets; a target is not a completed vacancy search.

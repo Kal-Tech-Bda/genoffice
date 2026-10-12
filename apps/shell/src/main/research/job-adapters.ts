@@ -8,7 +8,7 @@ import {
 } from '@genoffice/electron-utils/public-html'
 import type { JobEntry, JobPage } from './jobs'
 import type { JobSiteId } from '../../shared/jobs-api'
-import { jobSite, jobStartUrl, jobUrl, jobIsJson } from './job-routes'
+import { jobSite, jobStartUrl, jobUrl, jobIsJson, GOVERNMENT_PORTAL_TENANT } from './job-routes'
 import { jobScope } from './job-scope'
 
 type ObjectValue = Record<string, unknown>
@@ -212,6 +212,222 @@ export function parseAdditionalJobs(
         'This advertisement can represent several roles; do not count it as one distinct vacancy.',
       )
     add(row, true)
+  } else if (site.adapter === 'greenhouse' && data) {
+    const rows = array(data.jobs),
+      meta = object(data.meta),
+      total = count(meta.total)
+    if (rows.length !== total || meta.next || meta.next_page || Number(meta.pages ?? 1) > 1)
+      throw Error('Greenhouse list coverage is incomplete or unexpectedly paginated.')
+    const seen = new Set<number>()
+    let officeOnly = 0
+    for (let index = 0; index < rows.length; index++) {
+      const value = object(rows[index]),
+        title = string(value.title),
+        location = string(object(value.location).name),
+        listing = string(value.absolute_url),
+        offices = array(value.offices).map(object)
+      if (
+        !Number.isSafeInteger(value.id) ||
+        Number(value.id) <= 0 ||
+        !title ||
+        !location ||
+        !listing
+      )
+        throw Error('Greenhouse post identity, title, location or listing URL is missing.')
+      const key = Number(value.id)
+      if (seen.has(key)) throw Error('Duplicate Greenhouse job post IDs require source review.')
+      seen.add(key)
+      const canonical = jobUrl(id, listing)
+      if (!new URL(canonical).pathname.endsWith('/' + key))
+        throw Error('Greenhouse listing URL does not match its post ID.')
+      const officeLabels = offices.map((office) => {
+        const label = [string(office.name), string(office.location)].filter(Boolean).join(' — ')
+        if (!label) throw Error('Greenhouse job-office location metadata is missing.')
+        return label
+      })
+      const headlineBermuda = bermuda(location),
+        officeBermuda = officeLabels.some(bermuda)
+      if (!headlineBermuda && !officeBermuda) continue
+      if (!jobScope(title)) continue
+      const row = entry(String(key), title, location, canonical),
+        path = `/jobs/${index}`
+      row.employer = string(value.company_name)
+      // updated_at is a mutation timestamp, not publication or application expiry.
+      row.posted_date = date(value.first_published)
+      row.closing_date = date(value.application_deadline)
+      if (value.application_deadline != null && !row.closing_date)
+        throw Error('Greenhouse application deadline shape needs explicit source review.')
+      row.proof.title = jp(path + '/title', value.title)
+      row.proof.location = jp(path, value)
+      if (row.employer) row.proof.employer = jp(path + '/company_name', value.company_name)
+      if (row.posted_date)
+        row.proof.posted_date = jp(path + '/first_published', value.first_published)
+      if (row.closing_date)
+        row.proof.closing_date = jp(path + '/application_deadline', value.application_deadline)
+      if (!headlineBermuda && officeBermuda) {
+        officeOnly++
+        row.observation =
+          'Listed with conflicting location fields — review; Bermuda option unconfirmed'
+        row.issues.push(
+          `Role has multiple listed locations or conflicting job-office metadata: headline is ${location}; offices are ${officeLabels.join('; ')}. Confirm the Bermuda option; office metadata does not override the headline or eligibility.`,
+        )
+      } else if (
+        officeLabels.some((label) => !bermuda(label)) ||
+        /;|\b(?:or|and)\b/i.test(location)
+      ) {
+        row.issues.push(
+          `Role has multiple listed locations; headline is ${location}; offices are ${officeLabels.join('; ')}. Confirm the Bermuda option.`,
+        )
+      }
+      // A literal Bermuda office is retained as a review lead even when the headline conflicts.
+      add(row, officeBermuda)
+    }
+    page.advertised = total
+    page.scopeNote =
+      `Entire public Greenhouse board checked (${total} published posts, including explicit job-office fields). ` +
+      (page.entries.length
+        ? `${page.entries.length} matching source listings; ${officeOnly} have Bermuda office metadata with a conflicting non-Bermuda headline and require location review. `
+        : 'No matching posts carried an explicit Bermuda headline or job-office field at this check. ') +
+      'Generic remote roles and corporate/description mentions of Bermuda are not treated as Bermuda availability. This is not a market-wide zero-job claim.'
+    jp('/meta', data.meta)
+  } else if (site.adapter === 'government') {
+    if (!data) {
+      const title = nodes.find((n) => htmlTag(n) === 'title'),
+        widget = nodes.find(
+          (n) =>
+            htmlTag(n) === 'script' &&
+            htmlAttr(n, 'data-lumesse-site-tech-id') === GOVERNMENT_PORTAL_TENANT &&
+            htmlAttr(n, 'data-lumesse-fo-host') === 'emea3.recruitmentplatform.com',
+        ),
+        cutoff = nodes.find(
+          (n) =>
+            htmlTag(n) === 'label' &&
+            htmlText(n) ===
+              'Closing time to apply for any job is 7:00pm Bermuda time (AST - Atlantic Standard Time) on the stated closing date',
+        )
+      if (
+        url.pathname !== '/' ||
+        !title ||
+        htmlText(title) !== 'Government of Bermuda - Careers' ||
+        !widget ||
+        !cutoff ||
+        !nodes.some((n) => htmlAttr(n, 'id') === 'lumesseJobsListWidget')
+      )
+        throw Error('Government portal identity, public tenant or closing notice changed.')
+      hp(title)
+      hp(widget, `public tenant: ${GOVERNMENT_PORTAL_TENANT}; host: emea3.recruitmentplatform.com`)
+      hp(cutoff)
+      page.links.push(jobUrl(id, site.feed!))
+      page.scopeNote =
+        htmlText(cutoff) +
+        '. Capture the public list and scoped vacancy details; no application or login.'
+    } else {
+      const total = count(object(data.globals).jobsCount)
+      const fields = (value: ObjectValue) => {
+        const v = object(value.jobFields),
+          key = value.id,
+          title = string(v.jobTitle)
+        if (
+          typeof key !== 'number' ||
+          !Number.isInteger(key) ||
+          key < 1 ||
+          key > 99_999_999 ||
+          v.id !== key ||
+          !title ||
+          (v.sJobTitle != null && string(v.sJobTitle) !== title)
+        )
+          throw Error('Government vacancy identity/title missing or conflicting.')
+        return { key, title, v }
+      }
+      if (url.pathname === '/fo/rest/jobs') {
+        const rows = array(data.jobs),
+          offset = Number(url.searchParams.get('firstResult'))
+        if (
+          total > 300 ||
+          (offset && offset >= total) ||
+          rows.length !== Math.min(10, Math.max(0, total - offset))
+        )
+          throw Error('Government public vacancy pagination is incomplete or exceeds bounds.')
+        const seen = new Set<number>()
+        for (const [index, value] of rows.entries()) {
+          const { key, title, v } = fields(object(value))
+          if (seen.has(key)) throw Error('Duplicate government vacancy ID.')
+          seen.add(key)
+          jp(`/jobs/${index}/jobFields`, v)
+          if (jobScope(title))
+            page.links.push(jobUrl(id, new URL(site.feed!).origin + `/fo/rest/jobs/${key}/details`))
+        }
+        if (offset === 0)
+          for (let next = 10; next < total; next += 10) {
+            const link = new URL(site.feed!)
+            link.searchParams.set('firstResult', String(next))
+            page.links.push(jobUrl(id, link.href))
+          }
+        page.advertised = rows.length
+        page.scopeNote = `Government public list reports ${total} vacancies; checked ${rows.length} records at offset ${offset}, queueing all result pages and title-matching details. Pages are independent captures and the portal may change during acquisition. Portal jurisdiction is not an explicit role location.`
+        jp('/globals/jobsCount', total)
+      } else {
+        const { key, title, v } = fields(data)
+        if (total !== 1 || String(key) !== url.pathname.split('/')[4])
+          throw Error('Government public vacancy detail identity/count conflict.')
+        const custom = array(data.customFields)
+        for (const value of custom) {
+          const field = object(value)
+          if (
+            !string(field.title) ||
+            typeof field.content !== 'string' ||
+            field.content.length > 100_000
+          )
+            throw Error('Government vacancy description fields changed or exceed bounds.')
+        }
+        const link = new URL('/details.html', site.url)
+        link.searchParams.set('jobId', String(key))
+        link.searchParams.set('jobTitle', title)
+        const row = entry(String(key), title, null, link.href)
+        row.proof.title = jp('/jobFields/jobTitle', v.jobTitle)
+        row.proof.listing_status = jp('/jobFields', v)
+        jp('/customFields', custom)
+        row.issues.push(
+          'Role location and employer are not explicitly reported in the public vacancy JSON. Government of Bermuda portal jurisdiction is context only; confirm the role location and department before applying.',
+        )
+        if (v.DPOSTINGEND != null) {
+          const timezone = string(v.POSTINGTIMEZONE)
+          if (
+            typeof v.DPOSTINGEND !== 'number' ||
+            !Number.isSafeInteger(v.DPOSTINGEND) ||
+            v.DPOSTINGEND < 946684800000 ||
+            v.DPOSTINGEND > 4102444800000 ||
+            !timezone ||
+            !['Atlantic/Bermuda', 'Europe/Paris'].includes(timezone)
+          )
+            throw Error(
+              'Government deadline timestamp/timezone changed; date conversion needs review.',
+            )
+          const parts = new Intl.DateTimeFormat('en-CA', {
+            timeZone: timezone,
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+          }).formatToParts(v.DPOSTINGEND)
+          const part = (kind: string) => parts.find((p) => p.type === kind)?.value
+          row.closing_date = date(`${part('year')}-${part('month')}-${part('day')}`)
+          row.proof.closing_date = jp('/jobFields', v)
+          row.issues.push(
+            `Closing date is the calendar date of DPOSTINGEND ${v.DPOSTINGEND} in the source's literal POSTINGTIMEZONE ${timezone}. Portal notice states 7:00pm Bermuda time (AST - Atlantic Standard Time); the API posting timestamp is not a verified application cutoff. Confirm the literal portal notice and date; no UTC offset is inferred.`,
+          )
+        }
+        if (data.hideApplyButton === true || data.generalApplication === true) {
+          row.observation = 'Portal application availability/type requires review'
+          row.issues.push(
+            'Portal reports a hidden application button or general application; current vacancy availability requires review.',
+          )
+          row.proof.listing_status = jp('/', data)
+        }
+        add(row, true)
+        page.scopeNote =
+          'Public government vacancy detail captured. Deadline retains the source calendar date/timezone, with the portal cutoff notice requiring review; salary, qualifications and department remain in immutable evidence.'
+      }
+    }
   } else if (site.adapter === 'workday' && data) {
     if (url.pathname.endsWith('/jobs')) {
       const total = count(data.total),
@@ -300,19 +516,19 @@ export function parseAdditionalJobs(
         country === 'Bermuda' ? [locations, country].filter(Boolean).join('; ') : locations,
         String(v.externalUrl),
       )
-      row.employer = string(optionalObject(data.hiringOrganization).name) ?? site.employer ?? null
+      const reportedEmployer = string(optionalObject(data.hiringOrganization).name)
+      row.employer = reportedEmployer ?? site.employer ?? null
       row.posted_date = date(v.startDate)
       row.proof.title = jp('/jobPostingInfo/title', title)
       row.proof.location = jp('/jobPostingInfo', v)
       row.proof.posted_date = jp('/jobPostingInfo/startDate', v.startDate)
-      if (data.hiringOrganization)
-        row.proof.employer = jp('/hiringOrganization', data.hiringOrganization)
+      if (reportedEmployer) row.proof.employer = jp('/hiringOrganization', data.hiringOrganization)
       if ((v.additionalLocations as unknown[] | undefined)?.length)
         row.issues.push('Role has multiple listed locations; confirm the Bermuda option.')
       if (v.canApply === false || v.posted === false) {
         row.observation = 'Portal reports unavailable for application — review'
         row.issues.push('Public portal availability flags require review.')
-        row.proof.listing_status = jp('/jobPostingInfo/canApply', v.canApply)
+        row.proof.listing_status = jp('/jobPostingInfo', v)
       }
       add(row)
     }
@@ -343,6 +559,20 @@ export function parseAdditionalJobs(
       row.proof.title = jp('/result/jobOpening/jobOpeningName', title)
       row.proof.location = jp('/result/jobOpening/location', loc)
       row.proof.posted_date = jp('/result/jobOpening/datePosted', v.datePosted)
+      if (typeof v.description === 'string') {
+        if (v.description.length > 100_000) throw Error('Oversized public BambooHR description.')
+        const descriptionNodes = publicHtml(Buffer.from(v.description)),
+          body = descriptionNodes.find((n) => htmlTag(n) === 'body'),
+          description = body ? htmlText(body) : ''
+        if (
+          /\bwarehouse\b|\blogistics\b|\bfork-?lifts?\b|\bpickup and delivery\b/i.test(description)
+        ) {
+          row.issues.push(
+            'Public description includes warehouse/logistics or physical operational duties. Title-based scope is a review lead; confirm role duties before treating it as an office fit.',
+          )
+          row.proof.scope_reason = jp('/result/jobOpening/description', v.description)
+        }
+      }
       if (v.jobOpeningStatus !== 'Open') {
         row.observation = `Portal reports ${String(v.jobOpeningStatus)} — review`
         row.issues.push('Role is not reported Open by the public portal.')
@@ -364,7 +594,8 @@ export function parseAdditionalJobs(
         key = string(v.Id)
       if (!title || !key || !/^\d+$/.test(key)) throw Error('Oracle role identity missing.')
       const row = entry(key, title, string(v.PrimaryLocation), site.url + '/job/' + key)
-      row.employer = string(v.LegalEmployer) ?? site.employer ?? null
+      const reportedEmployer = string(v.LegalEmployer)
+      row.employer = reportedEmployer ?? site.employer ?? null
       row.posted_date = date(v.PostedDate)
       row.advert_expiry = date(v.PostingEndDate)
       for (const [field, key] of [
@@ -373,8 +604,10 @@ export function parseAdditionalJobs(
         ['employer', 'LegalEmployer'],
         ['posted_date', 'PostedDate'],
         ['advert_expiry', 'PostingEndDate'],
-      ] as const)
+      ] as const) {
+        if (field === 'employer' && !reportedEmployer) continue
         row.proof[field] = jp(`/items/0/requisitionList/${i}/${key}`, v[key])
+      }
       add(row)
     }
     if (offset === 0)

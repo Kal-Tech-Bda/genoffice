@@ -388,3 +388,30 @@ Bermuda location facets. JSON and HTML proof units resolve from immutable,
 hash-checked stored snapshots. Source checks distinguishes bounded completion,
 partial coverage and uncollected targets; it is not a census of the job market.
 The accepted ledger and native XLSX projection remain authoritative as before.
+
+SQLite schema 3 adds workflow-scoped saved views. `pages.ts` filters and sorts
+the complete ledger before paging; view state never changes publication scope.
+`job-changes.ts` compares vacancy facts separately from observation timestamps,
+snapshot versions and personal tracking. Greenhouse reads one exact registered
+public feed per board; conflicting office/location metadata remains a review lead.
+
+`html-tables.ts` discovers and validates complete static rectangular tables;
+`table-fetch.ts` fences public HTTPS acquisition. Preview captures are bounded,
+project-owned and temporary; executed inputs are durable hash-checked snapshots.
+Table selections and explicit unique key columns define stable row identity.
+Source text, outside context and exact HTML proof locators survive projection.
+HTML-specific readable labels map back to canonical column IDs through package
+metadata; legacy canonical-header workbooks remain supported. The reserved
+hidden record-ID label is rejected at acquisition. Dynamic browser capture and
+arbitrary generated execution are not implemented by this path.
+
+Government careers captures its recognized public portal/cutoff notice before
+the exact anonymous vacancy POST/list and GET/detail routes published by its
+widget. Fixed public guest tenant selectors are distinct from user credentials;
+account/application routes and extra parameters are rejected. Source calendar
+deadlines retain API timezone context and the portal's literal Bermuda cutoff
+warning. Configured publisher identities without captured employer fields are
+internal cells with empty source evidence; reported employer fields retain their
+exact JSON/HTML proof. Description-based operational duties remain review flags.
+Jobs processing version 3 rejects older pending candidates at publication;
+accepted history remains readable and a new run uses the current rules.

@@ -1,0 +1,1058 @@
+{
+  "checkedAt": "2026-10-12T04:39:42.464Z",
+  "workbook": "working_dir/bermuda-jobs/Bermuda-Jobs-Tracker-Coverage.xlsx",
+  "grain": "One source listing per source key; cross-site postings may describe the same vacancy.",
+  "revision": 4,
+  "acceptedSourceListings": 137,
+  "currentObservedSourceListings": 137,
+  "retainedAbsentOrUnselectedListings": 0,
+  "uniqueRecordIds": 137,
+  "uniqueListingKeys": 137,
+  "sourceTargets": 78,
+  "acquiredSourceChecks": 26,
+  "retainedHistoricalSourceChecks": 0,
+  "uncollectedTrackerTargets": [
+    "BermudaJobFinder (public board; adapter pending)",
+    "Bermuda Job Connect",
+    "Platinum Group",
+    "PwC Executive Search",
+    "PwC Bermuda careers",
+    "KPMG Bermuda",
+    "Bermuda Hospitals Board",
+    "Butterfield",
+    "HSBC Bermuda",
+    "RenaissanceRe",
+    "Aspen",
+    "Athene",
+    "Fireminds",
+    "Digicel",
+    "EY",
+    "Conyers",
+    "Appleby",
+    "BELCO",
+    "Saltus",
+    "Hamilton Princess / Accor",
+    "Bermuda Executive Services",
+    "Applied Computer Technologies (ACT)",
+    "Ocorian",
+    "Steph Brown / O My Word recruitment",
+    "Island Employment Partners (IEP)",
+    "CML Offshore Recruitment",
+    "Bermuda College",
+    "Bermuda Civil Aviation Authority",
+    "Regulatory Authority of Bermuda",
+    "Bermuda Tourism Authority",
+    "ASU BIOS / Bermuda Institute of Ocean Sciences",
+    "Carey Olsen",
+    "Elevate Executive Selection Bermuda",
+    "Somersfield Academy",
+    "Warwick Academy",
+    "Bermuda High School (BHS)",
+    "Ontru",
+    "Bermuda Cancer and Health Centre",
+    "Bermuda Health Council",
+    "Harneys",
+    "Teneo",
+    "PartnerRe",
+    "Convex",
+    "Hamilton Insurance Group",
+    "Walkers",
+    "Citco",
+    "Marsh",
+    "WTW",
+    "Aon",
+    "Advantage Insurance",
+    "Carrick Holdings",
+    "Lancashire"
+  ],
+  "sourceMatchTotal": 137,
+  "sourceCounts": {
+    "LinkedIn Bermuda (partial public guest search)": 39,
+    "Bermuda Monetary Authority": 3,
+    "Coralisle Group": 3,
+    "Expertise Group": 12,
+    "Hamilton Recruitment": 30,
+    "CCS Group": 3,
+    "Clarien Bank": 3,
+    "One Communications": 3,
+    "Bermuda Skyport": 1,
+    "Artex Talent Solutions (formerly Frontier)": 4,
+    "Island Paradise Recruitment": 6,
+    "Deloitte Caribbean and Bermuda": 8,
+    "AXIS": 1,
+    "Athora": 1,
+    "Everest": 1,
+    "Chubb Bermuda": 5,
+    "Apex Group": 1,
+    "Sompo": 1,
+    "Ariel Re": 1,
+    "SiriusPoint": 1,
+    "Performance Solutions (recruiter)": 6,
+    "Government of Bermuda careers": 4
+  },
+  "missingEmployer": 101,
+  "configuredPublisherEmployerNames": 26,
+  "missingClosingDate": 124,
+  "explicitEmployerDeadlines": 13,
+  "publicationExpiries": 0,
+  "locationReview": [
+    {
+      "key": "coralisle:VN596",
+      "title": "Senior Project Manager",
+      "location": "All Jurisdictions",
+      "issues": ["Confirm the Bermuda location before applying."]
+    },
+    {
+      "key": "expertise:legal secretary (bermuda):cayman",
+      "title": "Legal Secretary (Bermuda)",
+      "location": "Cayman",
+      "issues": ["Confirm the Bermuda location before applying."]
+    },
+    {
+      "key": "hamilton:86e06226b3cc",
+      "title": "HR251: US Tax Senior | Caribbean/Bermuda | US$60-80,000",
+      "location": "George Town, KY",
+      "issues": ["Confirm the Bermuda location before applying."]
+    },
+    {
+      "key": "hamilton:dfdd8a35fe52",
+      "title": "HR201: Audit Seniors | Bermuda, BVI & Cayman Islands | US$70-80,000",
+      "location": "%LABEL_MULTIPLE_LOCATIONS% (3)",
+      "issues": ["Confirm the Bermuda location before applying."]
+    },
+    {
+      "key": "clarien:associate relationship manager",
+      "title": "Associate Relationship Manager",
+      "location": "Bermuda career page; confirm role location",
+      "issues": ["Confirm the Bermuda location before applying."]
+    },
+    {
+      "key": "clarien:intermediate infrastructure engineer",
+      "title": "Intermediate Infrastructure Engineer",
+      "location": "Bermuda career page; confirm role location",
+      "issues": ["Confirm the Bermuda location before applying."]
+    },
+    {
+      "key": "clarien:vp, brokerage & advisory",
+      "title": "VP, Brokerage & Advisory",
+      "location": "Bermuda career page; confirm role location",
+      "issues": ["Confirm the Bermuda location before applying."]
+    },
+    {
+      "key": "artex:186",
+      "title": "Audit Senior",
+      "location": "Bermuda talent-solutions page; confirm role location",
+      "issues": ["Confirm the Bermuda location before applying."]
+    },
+    {
+      "key": "artex:618",
+      "title": "Claims Consultants",
+      "location": "Bermuda talent-solutions page; confirm role location",
+      "issues": ["Confirm the Bermuda location before applying."]
+    },
+    {
+      "key": "artex:7",
+      "title": "Non-Designated Bermudian Accountants",
+      "location": "Bermuda talent-solutions page; confirm role location",
+      "issues": ["Confirm the Bermuda location before applying."]
+    },
+    {
+      "key": "artex:222",
+      "title": "Underwriting Assistant",
+      "location": "Bermuda talent-solutions page; confirm role location",
+      "issues": ["Confirm the Bermuda location before applying."]
+    },
+    {
+      "key": "sirius:4971299101",
+      "title": "VP, Catastrophe Modeler",
+      "location": "New York City",
+      "issues": ["Confirm the Bermuda location before applying."]
+    },
+    {
+      "key": "government:6933",
+      "title": "ADMINISTRATIVE ASSISTANT",
+      "location": null,
+      "issues": ["Confirm the Bermuda location before applying."]
+    },
+    {
+      "key": "government:6963",
+      "title": "ADMINISTRATIVE ASSISTANT - CHILD HEALTH",
+      "location": null,
+      "issues": ["Confirm the Bermuda location before applying."]
+    },
+    {
+      "key": "government:6935",
+      "title": "CUSTOMER SERVICE REPRESENTATIVE",
+      "location": null,
+      "issues": ["Confirm the Bermuda location before applying."]
+    },
+    {
+      "key": "government:6945",
+      "title": "MANAGEMENT ACCOUNTANT",
+      "location": null,
+      "issues": ["Confirm the Bermuda location before applying."]
+    }
+  ],
+  "domainReview": [
+    {
+      "key": "linkedin:4476306574",
+      "title": "Senior M&A Actuary [Bermuda based]",
+      "roleGroup": "Quantitative / actuarial — adjacent",
+      "reason": "Partial signed-out search: only returned public cards checked. Advertiser may be a recruiter; employer, deadline and full description are unconfirmed. May duplicate an employer/agency listing on another site."
+    },
+    {
+      "key": "linkedin:4447711072",
+      "title": "Actuary (FCIA/FSA), Pricing - Savings & Retirement",
+      "roleGroup": "Quantitative / actuarial — adjacent",
+      "reason": "Partial signed-out search: only returned public cards checked. Advertiser may be a recruiter; employer, deadline and full description are unconfirmed. May duplicate an employer/agency listing on another site."
+    },
+    {
+      "key": "linkedin:4477859186",
+      "title": "Actuary (FCIA/FSA), Pricing - Savings & Retirement",
+      "roleGroup": "Quantitative / actuarial — adjacent",
+      "reason": "Partial signed-out search: only returned public cards checked. Advertiser may be a recruiter; employer, deadline and full description are unconfirmed. May duplicate an employer/agency listing on another site."
+    },
+    {
+      "key": "linkedin:4477481037",
+      "title": "Associate Actuary, Valuation",
+      "roleGroup": "Quantitative / actuarial — adjacent",
+      "reason": "Partial signed-out search: only returned public cards checked. Advertiser may be a recruiter; employer, deadline and full description are unconfirmed. May duplicate an employer/agency listing on another site."
+    },
+    {
+      "key": "linkedin:4466904246",
+      "title": "Senior Actuarial Analyst - Bermuda",
+      "roleGroup": "Quantitative / actuarial — adjacent",
+      "reason": "Partial signed-out search: only returned public cards checked. Advertiser may be a recruiter; employer, deadline and full description are unconfirmed. May duplicate an employer/agency listing on another site."
+    },
+    {
+      "key": "linkedin:4466879637",
+      "title": "Actuarial Pricing Associate",
+      "roleGroup": "Quantitative / actuarial — adjacent",
+      "reason": "Partial signed-out search: only returned public cards checked. Advertiser may be a recruiter; employer, deadline and full description are unconfirmed. May duplicate an employer/agency listing on another site."
+    },
+    {
+      "key": "linkedin:4440182891",
+      "title": "Associate, Actuary",
+      "roleGroup": "Quantitative / actuarial — adjacent",
+      "reason": "Partial signed-out search: only returned public cards checked. Advertiser may be a recruiter; employer, deadline and full description are unconfirmed. May duplicate an employer/agency listing on another site."
+    },
+    {
+      "key": "linkedin:4450255723",
+      "title": "AVP & Actuary-Bermuda Risk-Financial",
+      "roleGroup": "Quantitative / actuarial — adjacent",
+      "reason": "Partial signed-out search: only returned public cards checked. Advertiser may be a recruiter; employer, deadline and full description are unconfirmed. May duplicate an employer/agency listing on another site."
+    },
+    {
+      "key": "linkedin:4452514168",
+      "title": "Principal, Valuation and Approved Actuary",
+      "roleGroup": "Quantitative / actuarial — adjacent",
+      "reason": "Partial signed-out search: only returned public cards checked. Advertiser may be a recruiter; employer, deadline and full description are unconfirmed. May duplicate an employer/agency listing on another site."
+    },
+    {
+      "key": "linkedin:4472629033",
+      "title": "Senior Analyst, Non-Life – Bermuda",
+      "roleGroup": "Analyst — domain review",
+      "reason": "Partial signed-out search: only returned public cards checked. Advertiser may be a recruiter; employer, deadline and full description are unconfirmed. May duplicate an employer/agency listing on another site."
+    },
+    {
+      "key": "linkedin:4371302464",
+      "title": "Actuarial Associate",
+      "roleGroup": "Quantitative / actuarial — adjacent",
+      "reason": "Partial signed-out search: only returned public cards checked. Advertiser may be a recruiter; employer, deadline and full description are unconfirmed. May duplicate an employer/agency listing on another site."
+    },
+    {
+      "key": "linkedin:4464355806",
+      "title": "VP , Pricing Actuary",
+      "roleGroup": "Quantitative / actuarial — adjacent",
+      "reason": "Partial signed-out search: only returned public cards checked. Advertiser may be a recruiter; employer, deadline and full description are unconfirmed. May duplicate an employer/agency listing on another site."
+    },
+    {
+      "key": "linkedin:4464581818",
+      "title": "Investment Operations Analyst",
+      "roleGroup": "Analyst — domain review",
+      "reason": "Partial signed-out search: only returned public cards checked. Advertiser may be a recruiter; employer, deadline and full description are unconfirmed. May duplicate an employer/agency listing on another site."
+    },
+    {
+      "key": "linkedin:4428141831",
+      "title": "Actuary",
+      "roleGroup": "Quantitative / actuarial — adjacent",
+      "reason": "Partial signed-out search: only returned public cards checked. Advertiser may be a recruiter; employer, deadline and full description are unconfirmed. May duplicate an employer/agency listing on another site."
+    },
+    {
+      "key": "linkedin:4451238931",
+      "title": "(Senior) Actuarial Associates & Qualified Actuaries – Life & Annuities",
+      "roleGroup": "Quantitative / actuarial — adjacent",
+      "reason": "Partial signed-out search: only returned public cards checked. Advertiser may be a recruiter; employer, deadline and full description are unconfirmed. May duplicate an employer/agency listing on another site."
+    },
+    {
+      "key": "linkedin:4477860084",
+      "title": "Actuarial Analyst, Pricing - Savings & Retirement",
+      "roleGroup": "Quantitative / actuarial — adjacent",
+      "reason": "Partial signed-out search: only returned public cards checked. Advertiser may be a recruiter; employer, deadline and full description are unconfirmed. May duplicate an employer/agency listing on another site."
+    },
+    {
+      "key": "linkedin:4267344183",
+      "title": "Senior Actuarial Associate, Reporting",
+      "roleGroup": "Quantitative / actuarial — adjacent",
+      "reason": "Partial signed-out search: only returned public cards checked. Advertiser may be a recruiter; employer, deadline and full description are unconfirmed. May duplicate an employer/agency listing on another site."
+    },
+    {
+      "key": "linkedin:4461997794",
+      "title": "Actuarial Associate",
+      "roleGroup": "Quantitative / actuarial — adjacent",
+      "reason": "Partial signed-out search: only returned public cards checked. Advertiser may be a recruiter; employer, deadline and full description are unconfirmed. May duplicate an employer/agency listing on another site."
+    },
+    {
+      "key": "linkedin:4465347801",
+      "title": "Manager, Corporate Actuarial (FCIA), Actuarial Analytics & Insights",
+      "roleGroup": "Quantitative / actuarial — adjacent",
+      "reason": "Partial signed-out search: only returned public cards checked. Advertiser may be a recruiter; employer, deadline and full description are unconfirmed. May duplicate an employer/agency listing on another site."
+    },
+    {
+      "key": "linkedin:4467578769",
+      "title": "Investment Analyst",
+      "roleGroup": "Analyst — domain review",
+      "reason": "Partial signed-out search: only returned public cards checked. Advertiser may be a recruiter; employer, deadline and full description are unconfirmed. May duplicate an employer/agency listing on another site."
+    },
+    {
+      "key": "linkedin:4466941417",
+      "title": "Senior Analyst, Fund Management",
+      "roleGroup": "Analyst — domain review",
+      "reason": "Partial signed-out search: only returned public cards checked. Advertiser may be a recruiter; employer, deadline and full description are unconfirmed. May duplicate an employer/agency listing on another site."
+    },
+    {
+      "key": "bma:ohrTAfwV",
+      "title": "Senior Analyst Supervision (Anti-Money Laundering/Anti-Terrorist Financing) Department",
+      "roleGroup": "Analyst — domain review",
+      "reason": "Title-rule matching only; confirm requirements and availability."
+    },
+    {
+      "key": "expertise:reinsurance professionals:bermuda",
+      "title": "Reinsurance Professionals",
+      "roleGroup": "Broad recruiter pool — scope review",
+      "reason": "Agency client and closing date are not disclosed on this listing page. No vacancy ID is supplied; title/location keys may represent reposts."
+    },
+    {
+      "key": "expertise:(senior) actuarial associates & qualified actuaries - p&c:bermuda",
+      "title": "(Senior) Actuarial Associates & Qualified Actuaries - P&C",
+      "roleGroup": "Quantitative / actuarial — adjacent",
+      "reason": "Agency client and closing date are not disclosed on this listing page. No vacancy ID is supplied; title/location keys may represent reposts."
+    },
+    {
+      "key": "expertise:(senior) actuarial associates & qualified actuaries - life & annuities:bermuda",
+      "title": "(Senior) Actuarial Associates & Qualified Actuaries - Life & Annuities",
+      "roleGroup": "Quantitative / actuarial — adjacent",
+      "reason": "Agency client and closing date are not disclosed on this listing page. No vacancy ID is supplied; title/location keys may represent reposts."
+    },
+    {
+      "key": "hamilton:8dc2a17c71e6",
+      "title": "HR101: Actuarial Manager, Life Consulting | Bermuda",
+      "roleGroup": "Quantitative / actuarial — adjacent",
+      "reason": "Agency client and closing date are unstated on the checked list. Mirrored multi-location cards count once."
+    },
+    {
+      "key": "hamilton:c6888524f938",
+      "title": "HR102: Actuarial Director, P&C | Bermuda",
+      "roleGroup": "Quantitative / actuarial — adjacent",
+      "reason": "Agency client and closing date are unstated on the checked list. Mirrored multi-location cards count once."
+    },
+    {
+      "key": "hamilton:d44e579b622a",
+      "title": "HR104: Marketing Actuary, Life | Bermuda",
+      "roleGroup": "Quantitative / actuarial — adjacent",
+      "reason": "Agency client and closing date are unstated on the checked list. Mirrored multi-location cards count once."
+    },
+    {
+      "key": "hamilton:8c7105ec461e",
+      "title": "HR107: Actuarial Consultant | Bermuda",
+      "roleGroup": "Quantitative / actuarial — adjacent",
+      "reason": "Agency client and closing date are unstated on the checked list. Mirrored multi-location cards count once."
+    },
+    {
+      "key": "hamilton:1602615eea2f",
+      "title": "HR110: Actuarial Manager, P&C Consulting | Bermuda",
+      "roleGroup": "Quantitative / actuarial — adjacent",
+      "reason": "Agency client and closing date are unstated on the checked list. Mirrored multi-location cards count once."
+    },
+    {
+      "key": "hamilton:02301d5b8047",
+      "title": "HR120: Contract Actuaries, Secondments | Bermuda",
+      "roleGroup": "Quantitative / actuarial — adjacent",
+      "reason": "Agency client and closing date are unstated on the checked list. Mirrored multi-location cards count once."
+    },
+    {
+      "key": "hamilton:6a4df5b8b6e5",
+      "title": "HR124: Chief Actuary, Life | Bermuda",
+      "roleGroup": "Quantitative / actuarial — adjacent",
+      "reason": "Agency client and closing date are unstated on the checked list. Mirrored multi-location cards count once."
+    },
+    {
+      "key": "hamilton:055efbdbfa13",
+      "title": "HR126: Chief Actuary, P&C | Bermuda",
+      "roleGroup": "Quantitative / actuarial — adjacent",
+      "reason": "Agency client and closing date are unstated on the checked list. Mirrored multi-location cards count once."
+    },
+    {
+      "key": "hamilton:c5868901f57b",
+      "title": "HR129: Credit Research and Pricing Analyst | Bermuda",
+      "roleGroup": "Analyst — domain review",
+      "reason": "Agency client and closing date are unstated on the checked list. Mirrored multi-location cards count once."
+    },
+    {
+      "key": "hamilton:f870664e70f3",
+      "title": "HR131: Senior Manager, Life Actuary | Bermuda",
+      "roleGroup": "Quantitative / actuarial — adjacent",
+      "reason": "Agency client and closing date are unstated on the checked list. Mirrored multi-location cards count once."
+    },
+    {
+      "key": "hamilton:ae4c55c8803a",
+      "title": "HR134: Actuarial Associate, Life & Annuity | Bermuda",
+      "roleGroup": "Quantitative / actuarial — adjacent",
+      "reason": "Agency client and closing date are unstated on the checked list. Mirrored multi-location cards count once."
+    },
+    {
+      "key": "hamilton:187e0355ea73",
+      "title": "HR135: Risk Actuary, L&H | Bermuda",
+      "roleGroup": "Quantitative / actuarial — adjacent",
+      "reason": "Agency client and closing date are unstated on the checked list. Mirrored multi-location cards count once."
+    },
+    {
+      "key": "hamilton:c6a359f878c8",
+      "title": "HR325: Senior Financial Reporting Analyst | Bermuda",
+      "roleGroup": "Analyst — domain review",
+      "reason": "Agency client and closing date are unstated on the checked list. Mirrored multi-location cards count once."
+    },
+    {
+      "key": "hamilton:693d01cb5c45",
+      "title": "HR700: Senior Analyst, Insurance, Funds & Corporate Authorisations | Bermuda",
+      "roleGroup": "Analyst — domain review",
+      "reason": "Agency client and closing date are unstated on the checked list. Mirrored multi-location cards count once."
+    },
+    {
+      "key": "hamilton:a6d5228cf9e0",
+      "title": "HR750: Senior Analyst, Insurance Supervision | Bermuda",
+      "roleGroup": "Analyst — domain review",
+      "reason": "Agency client and closing date are unstated on the checked list. Mirrored multi-location cards count once."
+    },
+    {
+      "key": "island:senior actuarial consultant (bermuda)",
+      "title": "Senior Actuarial Consultant (Bermuda)",
+      "roleGroup": "Quantitative / actuarial — adjacent",
+      "reason": "Agency client/deadline are unstated on this list. Title-based key may conflate reposts."
+    },
+    {
+      "key": "deloitte:250219",
+      "title": "Consulting – Manager (Actuarial & Insurance Solutions) – Bermuda",
+      "roleGroup": "Quantitative / actuarial — adjacent",
+      "reason": "Title-rule matching only; confirm requirements and availability."
+    },
+    {
+      "key": "deloitte:250977",
+      "title": "Consulting – Senior Consultant (Actuarial & Insurance Solutions P&C) – Bermuda",
+      "roleGroup": "Quantitative / actuarial — adjacent",
+      "reason": "Title-rule matching only; confirm requirements and availability."
+    },
+    {
+      "key": "axis:REQ06727",
+      "title": "Investment Operations Analyst",
+      "roleGroup": "Analyst — domain review",
+      "reason": "Title-rule matching only; confirm requirements and availability."
+    },
+    {
+      "key": "sompo:R4501",
+      "title": "Actuarial Pricing Associate",
+      "roleGroup": "Quantitative / actuarial — adjacent",
+      "reason": "Title-rule matching only; confirm requirements and availability."
+    },
+    {
+      "key": "ariel:161",
+      "title": "Enterprise Governance and Compliance Analyst",
+      "roleGroup": "Analyst — domain review",
+      "reason": "Title-rule matching only; confirm requirements and availability."
+    },
+    {
+      "key": "performance:178",
+      "title": "CUSTOMER SERVICE & WAREHOUSE OPERATIONS",
+      "roleGroup": "Mixed operational role — domain review",
+      "reason": "Public description includes warehouse/logistics or physical operational duties. Title-based scope is a review lead; confirm role duties before treating it as an office fit."
+    },
+    {
+      "key": "performance:179",
+      "title": "TEAM LEAD, OPERATIONS",
+      "roleGroup": "Office / finance",
+      "reason": "Public description includes warehouse/logistics or physical operational duties. Title-based scope is a review lead; confirm role duties before treating it as an office fit."
+    },
+    {
+      "key": "performance:181",
+      "title": "Director of Strategic Partnerships and Operations",
+      "roleGroup": "Office / finance",
+      "reason": "Public description includes warehouse/logistics or physical operational duties. Title-based scope is a review lead; confirm role duties before treating it as an office fit."
+    }
+  ],
+  "savedListings": [
+    {
+      "key": "ariel:161",
+      "title": "Enterprise Governance and Compliance Analyst",
+      "notes": "Review primary employer requirements and availability; no application sent."
+    }
+  ],
+  "sourceChecks": [
+    {
+      "source": "LinkedIn Bermuda (partial public guest search)",
+      "last_checked": "2026-10-12T04:37:54.531Z",
+      "matched_rows": 39,
+      "source_url": "https://www.linkedin.com/jobs/search/?keywords=&location=Bermuda",
+      "status": "PARTIAL guest search: 60 returned public cards checked of 275 reported Bermuda results. Remaining results and full descriptions unverified; no sign-in or application performed."
+    },
+    {
+      "source": "Bermuda Monetary Authority",
+      "last_checked": "2026-10-12T04:37:55.358Z",
+      "matched_rows": 3,
+      "source_url": "https://jobs.jobvite.com/bmacareers/jobs",
+      "status": "Checked selected listing pages"
+    },
+    {
+      "source": "Coralisle Group",
+      "last_checked": "2026-10-12T04:37:58.132Z",
+      "matched_rows": 3,
+      "source_url": "https://fs-320.my.salesforce-sites.com/recruit/fRecruit__ApplyJobList",
+      "status": "Checked selected listing pages"
+    },
+    {
+      "source": "Expertise Group",
+      "last_checked": "2026-10-12T04:37:59.419Z",
+      "matched_rows": 12,
+      "source_url": "https://www.expertisegroup.com/available-jobs",
+      "status": "Checked selected listing pages"
+    },
+    {
+      "source": "JobsInBDA / Royal Gazette",
+      "last_checked": "2026-10-12T04:37:59.769Z",
+      "matched_rows": 0,
+      "source_url": "https://www.jobsinbda.com/",
+      "status": "All returned board advertisements/pages checked; scope uses title rules. Multi-role ads count as one source listing."
+    },
+    {
+      "source": "Hamilton Recruitment",
+      "last_checked": "2026-10-12T04:38:00.240Z",
+      "matched_rows": 30,
+      "source_url": "https://hamilton-recruitment.breezy.hr/",
+      "status": "All public list cards checked; exact mirrored IDs reconciled, client identity and deadlines remain missing."
+    },
+    {
+      "source": "CCS Group",
+      "last_checked": "2026-10-12T04:38:00.411Z",
+      "matched_rows": 3,
+      "source_url": "https://www.ccs.bm/careers/",
+      "status": "Checked selected listing pages"
+    },
+    {
+      "source": "Clarien Bank",
+      "last_checked": "2026-10-12T04:38:03.611Z",
+      "matched_rows": 3,
+      "source_url": "https://clarienbank.com/careers/",
+      "status": "Checked selected listing pages"
+    },
+    {
+      "source": "One Communications",
+      "last_checked": "2026-10-12T04:38:05.289Z",
+      "matched_rows": 3,
+      "source_url": "https://onecomm.bamboohr.com/careers",
+      "status": "Entire public BambooHR list and role details checked; non-Bermuda or out-of-scope roles excluded."
+    },
+    {
+      "source": "Bermuda Skyport",
+      "last_checked": "2026-10-12T04:38:06.439Z",
+      "matched_rows": 1,
+      "source_url": "https://bermudaskyport.bamboohr.com/careers",
+      "status": "Entire public BambooHR list and role details checked; non-Bermuda or out-of-scope roles excluded."
+    },
+    {
+      "source": "Artex Talent Solutions (formerly Frontier)",
+      "last_checked": "2026-10-12T04:38:07.324Z",
+      "matched_rows": 4,
+      "source_url": "https://phe.tbe.taleo.net/phe03/ats/careers/v2/searchResults?org=FRONTIER&cws=40",
+      "status": "Checked selected listing pages"
+    },
+    {
+      "source": "Island Paradise Recruitment",
+      "last_checked": "2026-10-12T04:38:07.452Z",
+      "matched_rows": 6,
+      "source_url": "https://www.islandparadiserecruitment.co.uk/job-openings",
+      "status": "Checked selected listing pages"
+    },
+    {
+      "source": "Deloitte Caribbean and Bermuda",
+      "last_checked": "2026-10-12T04:38:15.318Z",
+      "matched_rows": 8,
+      "source_url": "https://talentsourcing.deloitte.com/cbcapply/SearchJobs",
+      "status": "Every linked result page checked; listings can describe future intake opportunities."
+    },
+    {
+      "source": "AXIS",
+      "last_checked": "2026-10-12T04:38:16.628Z",
+      "matched_rows": 1,
+      "source_url": "https://axiscapital.wd1.myworkdayjobs.com/axiscareers",
+      "status": "Bermuda country/location facet selected; all selected pages and role details checked."
+    },
+    {
+      "source": "Arch Capital",
+      "last_checked": "2026-10-12T04:38:17.299Z",
+      "matched_rows": 0,
+      "source_url": "https://archgroup.wd1.myworkdayjobs.com/careers",
+      "status": "Public portal did not expose a Bermuda country/location facet at this check. No Bermuda records collected; this is not a market-wide zero-job claim."
+    },
+    {
+      "source": "Hiscox",
+      "last_checked": "2026-10-12T04:38:18.346Z",
+      "matched_rows": 0,
+      "source_url": "https://hiscox.wd3.myworkdayjobs.com/Hiscox_External_Site",
+      "status": "Public portal did not expose a Bermuda country/location facet at this check. No Bermuda records collected; this is not a market-wide zero-job claim."
+    },
+    {
+      "source": "Athora",
+      "last_checked": "2026-10-12T04:38:20.017Z",
+      "matched_rows": 1,
+      "source_url": "https://athora.wd3.myworkdayjobs.com/athora-careers",
+      "status": "Bermuda country/location facet selected; all selected pages and role details checked."
+    },
+    {
+      "source": "Everest",
+      "last_checked": "2026-10-12T04:38:21.882Z",
+      "matched_rows": 1,
+      "source_url": "https://wd5.myworkdaysite.com/recruiting/everestre/careers",
+      "status": "Bermuda country/location facet selected; all selected pages and role details checked."
+    },
+    {
+      "source": "Chubb Bermuda",
+      "last_checked": "2026-10-12T04:38:22.453Z",
+      "matched_rows": 5,
+      "source_url": "https://fa-ewgu-saasfaprod1.fa.ocs.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_2001",
+      "status": "All Bermuda-keyword public search pages checked, then explicit role locations filtered. Keyword scope is not an exhaustive country-filtered census."
+    },
+    {
+      "source": "Apex Group",
+      "last_checked": "2026-10-12T04:38:24.070Z",
+      "matched_rows": 1,
+      "source_url": "https://theapexgroup.wd3.myworkdayjobs.com/apexgroupcareers",
+      "status": "Bermuda country/location facet selected; all selected pages and role details checked."
+    },
+    {
+      "source": "Sompo",
+      "last_checked": "2026-10-12T04:38:26.493Z",
+      "matched_rows": 1,
+      "source_url": "https://endurance.wd103.myworkdayjobs.com/SompoInternational",
+      "status": "Bermuda country/location facet selected; all selected pages and role details checked."
+    },
+    {
+      "source": "Ariel Re",
+      "last_checked": "2026-10-12T04:38:27.088Z",
+      "matched_rows": 1,
+      "source_url": "https://arielre.bamboohr.com/careers",
+      "status": "Entire public BambooHR list and role details checked; non-Bermuda or out-of-scope roles excluded."
+    },
+    {
+      "source": "SiriusPoint",
+      "last_checked": "2026-10-12T04:38:27.235Z",
+      "matched_rows": 1,
+      "source_url": "https://job-boards.eu.greenhouse.io/siriuspoint",
+      "status": "Entire public Greenhouse board checked (27 published posts, including explicit job-office fields). 1 matching source listings; 1 have Bermuda office metadata with a conflicting non-Bermuda headline and require location review. Generic remote roles and corporate/description mentions of Bermuda are not treated as Bermuda availability. This is not a market-wide zero-job claim."
+    },
+    {
+      "source": "Fortitude Re",
+      "last_checked": "2026-10-12T04:38:27.330Z",
+      "matched_rows": 0,
+      "source_url": "https://app.careerpuck.com/job-board/fortitudegroupholdingsllc",
+      "status": "Entire public Greenhouse board checked (35 published posts, including explicit job-office fields). No matching posts carried an explicit Bermuda headline or job-office field at this check. Generic remote roles and corporate/description mentions of Bermuda are not treated as Bermuda availability. This is not a market-wide zero-job claim."
+    },
+    {
+      "source": "Performance Solutions (recruiter)",
+      "last_checked": "2026-10-12T04:38:30.216Z",
+      "matched_rows": 6,
+      "source_url": "https://performancesolutions.bamboohr.com/careers",
+      "status": "Entire public BambooHR list and role details checked; non-Bermuda or out-of-scope roles excluded."
+    },
+    {
+      "source": "Government of Bermuda careers",
+      "last_checked": "2026-10-12T04:38:33.981Z",
+      "matched_rows": 4,
+      "source_url": "https://govtcareers.gov.bm/",
+      "status": "Closing time to apply for any job is 7:00pm Bermuda time (AST - Atlantic Standard Time) on the stated closing date. Capture the public list and scoped vacancy details; no application or login."
+    },
+    {
+      "source": "BermudaJobFinder (public board; adapter pending)",
+      "last_checked": null,
+      "matched_rows": null,
+      "source_url": "https://www.bermudajobfinder.com/",
+      "status": "Manual search / additional adapter needed — not collected"
+    },
+    {
+      "source": "Bermuda Job Connect",
+      "last_checked": null,
+      "matched_rows": null,
+      "source_url": "https://www.bermudajobconnect.bm/",
+      "status": "Manual search / additional adapter needed — not collected"
+    },
+    {
+      "source": "Platinum Group",
+      "last_checked": null,
+      "matched_rows": null,
+      "source_url": "https://www.platinumgroup.bm/jobs/",
+      "status": "Manual search / additional adapter needed — not collected"
+    },
+    {
+      "source": "PwC Executive Search",
+      "last_checked": null,
+      "matched_rows": null,
+      "source_url": "https://www.pwc.com/bm/bermudatopjobs",
+      "status": "Manual search / additional adapter needed — not collected"
+    },
+    {
+      "source": "PwC Bermuda careers",
+      "last_checked": null,
+      "matched_rows": null,
+      "source_url": "https://www.pwc.com/bm/en/careers/experienced/job-search.html",
+      "status": "Manual search / additional adapter needed — not collected"
+    },
+    {
+      "source": "KPMG Bermuda",
+      "last_checked": null,
+      "matched_rows": null,
+      "source_url": "https://kpmg.com/bm/en/careers/experienced-hires/employment-opportunities.html",
+      "status": "Manual search / additional adapter needed — not collected"
+    },
+    {
+      "source": "Bermuda Hospitals Board",
+      "last_checked": null,
+      "matched_rows": null,
+      "source_url": "https://bermudahospitals.bm/work-at-bhb/bhb-jobs-now/external-applicants/",
+      "status": "Manual search / additional adapter needed — not collected"
+    },
+    {
+      "source": "Butterfield",
+      "last_checked": null,
+      "matched_rows": null,
+      "source_url": "https://www.butterfieldgroup.com/careers",
+      "status": "Manual search / additional adapter needed — not collected"
+    },
+    {
+      "source": "HSBC Bermuda",
+      "last_checked": null,
+      "matched_rows": null,
+      "source_url": "https://www.about.hsbc.bm/careers",
+      "status": "Manual search / additional adapter needed — not collected"
+    },
+    {
+      "source": "RenaissanceRe",
+      "last_checked": null,
+      "matched_rows": null,
+      "source_url": "https://www.renre.com/careers/",
+      "status": "Manual search / additional adapter needed — not collected"
+    },
+    {
+      "source": "Aspen",
+      "last_checked": null,
+      "matched_rows": null,
+      "source_url": "https://www.aspen.co/",
+      "status": "Manual search / additional adapter needed — not collected"
+    },
+    {
+      "source": "Athene",
+      "last_checked": null,
+      "matched_rows": null,
+      "source_url": "https://www.athene.com/",
+      "status": "Manual search / additional adapter needed — not collected"
+    },
+    {
+      "source": "Fireminds",
+      "last_checked": null,
+      "matched_rows": null,
+      "source_url": "https://www.fireminds.com/",
+      "status": "Manual search / additional adapter needed — not collected"
+    },
+    {
+      "source": "Digicel",
+      "last_checked": null,
+      "matched_rows": null,
+      "source_url": "https://careers.digicelgroup.com/",
+      "status": "Manual search / additional adapter needed — not collected"
+    },
+    {
+      "source": "EY",
+      "last_checked": null,
+      "matched_rows": null,
+      "source_url": "https://www.ey.com/en_gl/careers",
+      "status": "Manual search / additional adapter needed — not collected"
+    },
+    {
+      "source": "Conyers",
+      "last_checked": null,
+      "matched_rows": null,
+      "source_url": "https://www.conyers.com/about-us/careers/",
+      "status": "Manual search / additional adapter needed — not collected"
+    },
+    {
+      "source": "Appleby",
+      "last_checked": null,
+      "matched_rows": null,
+      "source_url": "https://www.applebyglobal.com/careers/",
+      "status": "Manual search / additional adapter needed — not collected"
+    },
+    {
+      "source": "BELCO",
+      "last_checked": null,
+      "matched_rows": null,
+      "source_url": "https://belco.bm/opportunities/",
+      "status": "Manual search / additional adapter needed — not collected"
+    },
+    {
+      "source": "Saltus",
+      "last_checked": null,
+      "matched_rows": null,
+      "source_url": "https://www.saltus.bm/explore/careers",
+      "status": "Manual search / additional adapter needed — not collected"
+    },
+    {
+      "source": "Hamilton Princess / Accor",
+      "last_checked": null,
+      "matched_rows": null,
+      "source_url": "https://www.thehamiltonprincess.com/careers/",
+      "status": "Manual search / additional adapter needed — not collected"
+    },
+    {
+      "source": "Bermuda Executive Services",
+      "last_checked": null,
+      "matched_rows": null,
+      "source_url": "https://www.bermudaemployment.com/",
+      "status": "Manual search / additional adapter needed — not collected"
+    },
+    {
+      "source": "Applied Computer Technologies (ACT)",
+      "last_checked": null,
+      "matched_rows": null,
+      "source_url": "https://www.act.bm/careers/",
+      "status": "Manual search / additional adapter needed — not collected"
+    },
+    {
+      "source": "Ocorian",
+      "last_checked": null,
+      "matched_rows": null,
+      "source_url": "https://www.ocorian.com/careers/search",
+      "status": "Manual search / additional adapter needed — not collected"
+    },
+    {
+      "source": "Steph Brown / O My Word recruitment",
+      "last_checked": null,
+      "matched_rows": null,
+      "source_url": "https://www.recruitment.bm/projects",
+      "status": "Manual search / additional adapter needed — not collected"
+    },
+    {
+      "source": "Island Employment Partners (IEP)",
+      "last_checked": null,
+      "matched_rows": null,
+      "source_url": "https://www.iep.bm/jobs",
+      "status": "Manual search / additional adapter needed — not collected"
+    },
+    {
+      "source": "CML Offshore Recruitment",
+      "last_checked": null,
+      "matched_rows": null,
+      "source_url": "https://www.cml.ky/bermuda",
+      "status": "Manual search / additional adapter needed — not collected"
+    },
+    {
+      "source": "Bermuda College",
+      "last_checked": null,
+      "matched_rows": null,
+      "source_url": "https://www.college.bm/index.php/job-postings",
+      "status": "Manual search / additional adapter needed — not collected"
+    },
+    {
+      "source": "Bermuda Civil Aviation Authority",
+      "last_checked": null,
+      "matched_rows": null,
+      "source_url": "https://www.bcaa.bm/careers",
+      "status": "Manual search / additional adapter needed — not collected"
+    },
+    {
+      "source": "Regulatory Authority of Bermuda",
+      "last_checked": null,
+      "matched_rows": null,
+      "source_url": "https://www.ra.bm/about/careers",
+      "status": "Manual search / additional adapter needed — not collected"
+    },
+    {
+      "source": "Bermuda Tourism Authority",
+      "last_checked": null,
+      "matched_rows": null,
+      "source_url": "https://www.gotobermuda.com/bta/employment-opportunities",
+      "status": "Manual search / additional adapter needed — not collected"
+    },
+    {
+      "source": "ASU BIOS / Bermuda Institute of Ocean Sciences",
+      "last_checked": null,
+      "matched_rows": null,
+      "source_url": "https://www.bios.asu.edu/careers",
+      "status": "Manual search / additional adapter needed — not collected"
+    },
+    {
+      "source": "Carey Olsen",
+      "last_checked": null,
+      "matched_rows": null,
+      "source_url": "https://www.careyolsen.com/careers/vacancies",
+      "status": "Manual search / additional adapter needed — not collected"
+    },
+    {
+      "source": "Elevate Executive Selection Bermuda",
+      "last_checked": null,
+      "matched_rows": null,
+      "source_url": "https://www.elevateselection.com/for-job-seekers",
+      "status": "Manual search / additional adapter needed — not collected"
+    },
+    {
+      "source": "Somersfield Academy",
+      "last_checked": null,
+      "matched_rows": null,
+      "source_url": "https://mysomersfield.com/careers",
+      "status": "Manual search / additional adapter needed — not collected"
+    },
+    {
+      "source": "Warwick Academy",
+      "last_checked": null,
+      "matched_rows": null,
+      "source_url": "https://www.warwick.bm/job-opportunities",
+      "status": "Manual search / additional adapter needed — not collected"
+    },
+    {
+      "source": "Bermuda High School (BHS)",
+      "last_checked": null,
+      "matched_rows": null,
+      "source_url": "https://www.bhs.bm/about/careers",
+      "status": "Manual search / additional adapter needed — not collected"
+    },
+    {
+      "source": "Ontru",
+      "last_checked": null,
+      "matched_rows": null,
+      "source_url": "https://www.ontru.bm/",
+      "status": "Manual search / additional adapter needed — not collected"
+    },
+    {
+      "source": "Bermuda Cancer and Health Centre",
+      "last_checked": null,
+      "matched_rows": null,
+      "source_url": "https://www.cancer.bm/about-us/employment-opportunities",
+      "status": "Manual search / additional adapter needed — not collected"
+    },
+    {
+      "source": "Bermuda Health Council",
+      "last_checked": null,
+      "matched_rows": null,
+      "source_url": "https://healthcouncil.bm/about-us/",
+      "status": "Manual search / additional adapter needed — not collected"
+    },
+    {
+      "source": "Harneys",
+      "last_checked": null,
+      "matched_rows": null,
+      "source_url": "https://www.harneys.com/careers/",
+      "status": "Manual search / additional adapter needed — not collected"
+    },
+    {
+      "source": "Teneo",
+      "last_checked": null,
+      "matched_rows": null,
+      "source_url": "https://www.teneo.com/careers/open-positions/",
+      "status": "Manual search / additional adapter needed — not collected"
+    },
+    {
+      "source": "PartnerRe",
+      "last_checked": null,
+      "matched_rows": null,
+      "source_url": "https://careers.partnerre.com/go/Open-Positions/9690501/",
+      "status": "Manual search / additional adapter needed — not collected"
+    },
+    {
+      "source": "Convex",
+      "last_checked": null,
+      "matched_rows": null,
+      "source_url": "https://convexin.pinpointhq.com/",
+      "status": "Manual search / additional adapter needed — not collected"
+    },
+    {
+      "source": "Hamilton Insurance Group",
+      "last_checked": null,
+      "matched_rows": null,
+      "source_url": "https://www.hamiltongroup.com/careers/",
+      "status": "Manual search / additional adapter needed — not collected"
+    },
+    {
+      "source": "Walkers",
+      "last_checked": null,
+      "matched_rows": null,
+      "source_url": "https://www.walkersglobal.com/en/Join-Us",
+      "status": "Manual search / additional adapter needed — not collected"
+    },
+    {
+      "source": "Citco",
+      "last_checked": null,
+      "matched_rows": null,
+      "source_url": "https://www.citco.com/careers",
+      "status": "Manual search / additional adapter needed — not collected"
+    },
+    {
+      "source": "Marsh",
+      "last_checked": null,
+      "matched_rows": null,
+      "source_url": "https://careers.marsh.com/global/en",
+      "status": "Manual search / additional adapter needed — not collected"
+    },
+    {
+      "source": "WTW",
+      "last_checked": null,
+      "matched_rows": null,
+      "source_url": "https://careers.wtwco.com/jobs/search",
+      "status": "Manual search / additional adapter needed — not collected"
+    },
+    {
+      "source": "Aon",
+      "last_checked": null,
+      "matched_rows": null,
+      "source_url": "https://jobs.aon.com/jobs/locations",
+      "status": "Manual search / additional adapter needed — not collected"
+    },
+    {
+      "source": "Advantage Insurance",
+      "last_checked": null,
+      "matched_rows": null,
+      "source_url": "https://advantagelife.com/careers/",
+      "status": "Manual search / additional adapter needed — not collected"
+    },
+    {
+      "source": "Carrick Holdings",
+      "last_checked": null,
+      "matched_rows": null,
+      "source_url": "https://www.carrickholdings.com/careers",
+      "status": "Manual search / additional adapter needed — not collected"
+    },
+    {
+      "source": "Lancashire",
+      "last_checked": null,
+      "matched_rows": null,
+      "source_url": "https://lancashire-group.pinpointhq.com/vacancies",
+      "status": "Manual search / additional adapter needed — not collected"
+    }
+  ],
+  "invalidDates": [],
+  "invalidObservationOrder": 0,
+  "invalidEvidence": [],
+  "falseEmployerProof": 0,
+  "invalidUncollectedCounts": 0,
+  "limits": [
+    "Listed at check is not guaranteed still accepting applications.",
+    "Adapter completion covers its declared bounded query, not all possible jobs.",
+    "Manual browser discoveries are separate evidence and are not silently inserted into this automatic tracker.",
+    "No personal suitability, salary estimate or permit eligibility is inferred."
+  ]
+}

@@ -1,0 +1,1829 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-12T04:39:42.541Z",
+  "scope": "Bermuda technology, data and office roles; workspace manual refresh",
+  "targetCount": 78,
+  "automaticSourceChecks": 26,
+  "targetsOutsideAutomaticAcquisition": 52,
+  "method": "Combine executed Infomonk source checks with separately identified primary boundary, selected-role, paginated-browser and unresolved evidence. This audits every registered target, not every vacancy in the Bermuda market.",
+  "countingRules": [
+    "Targets include separate purposes and overlapping employer brands; do not equate78targets to78independent employers or completed vacancy searches.",
+    "26queue checks complete their declared bounded acquisition; LinkedIn and keyword/global portal scopes remain partial.",
+    "The52remaining targets are outside automatic tracker acquisition even when manually inspected.",
+    "HTTP200, careers navigation and primary search-index evidence do not establish a complete vacancy list.",
+    "Source listings are not deduplicated real-world openings; manual and automatic lead counts must not be blindly summed."
+  ],
+  "targets": [
+    {
+      "id": "linkedin",
+      "name": "LinkedIn Bermuda (partial public guest search)",
+      "url": "https://www.linkedin.com/jobs/search/?keywords=&location=Bermuda",
+      "automaticRefreshSupported": true,
+      "automaticRun": {
+        "checkedAt": "2026-10-12T04:37:54.531Z",
+        "matchingSourceListings": 39,
+        "declaredScope": "PARTIAL guest search: 60 returned public cards checked of 275 reported Bermuda results. Remaining results and full descriptions unverified; no sign-in or application performed.",
+        "queueCheckCompleted": true
+      },
+      "manualEvidence": null,
+      "overlap": null
+    },
+    {
+      "id": "bma",
+      "name": "Bermuda Monetary Authority",
+      "url": "https://jobs.jobvite.com/bmacareers/jobs",
+      "automaticRefreshSupported": true,
+      "automaticRun": {
+        "checkedAt": "2026-10-12T04:37:55.358Z",
+        "matchingSourceListings": 3,
+        "declaredScope": "Checked selected listing pages",
+        "queueCheckCompleted": true
+      },
+      "manualEvidence": null,
+      "overlap": null
+    },
+    {
+      "id": "coralisle",
+      "name": "Coralisle Group",
+      "url": "https://fs-320.my.salesforce-sites.com/recruit/fRecruit__ApplyJobList",
+      "automaticRefreshSupported": true,
+      "automaticRun": {
+        "checkedAt": "2026-10-12T04:37:58.132Z",
+        "matchingSourceListings": 3,
+        "declaredScope": "Checked selected listing pages",
+        "queueCheckCompleted": true
+      },
+      "manualEvidence": null,
+      "overlap": null
+    },
+    {
+      "id": "expertise",
+      "name": "Expertise Group",
+      "url": "https://www.expertisegroup.com/available-jobs",
+      "automaticRefreshSupported": true,
+      "automaticRun": {
+        "checkedAt": "2026-10-12T04:37:59.419Z",
+        "matchingSourceListings": 12,
+        "declaredScope": "Checked selected listing pages",
+        "queueCheckCompleted": true
+      },
+      "manualEvidence": null,
+      "overlap": null
+    },
+    {
+      "id": "jobsinbda",
+      "name": "JobsInBDA / Royal Gazette",
+      "url": "https://www.jobsinbda.com/",
+      "automaticRefreshSupported": true,
+      "automaticRun": {
+        "checkedAt": "2026-10-12T04:37:59.769Z",
+        "matchingSourceListings": 0,
+        "declaredScope": "All returned board advertisements/pages checked; scope uses title rules. Multi-role ads count as one source listing.",
+        "queueCheckCompleted": true
+      },
+      "manualEvidence": null,
+      "overlap": null
+    },
+    {
+      "id": "hamilton",
+      "name": "Hamilton Recruitment",
+      "url": "https://hamilton-recruitment.breezy.hr/",
+      "automaticRefreshSupported": true,
+      "automaticRun": {
+        "checkedAt": "2026-10-12T04:38:00.240Z",
+        "matchingSourceListings": 30,
+        "declaredScope": "All public list cards checked; exact mirrored IDs reconciled, client identity and deadlines remain missing.",
+        "queueCheckCompleted": true
+      },
+      "manualEvidence": null,
+      "overlap": null
+    },
+    {
+      "id": "ccs",
+      "name": "CCS Group",
+      "url": "https://www.ccs.bm/careers/",
+      "automaticRefreshSupported": true,
+      "automaticRun": {
+        "checkedAt": "2026-10-12T04:38:00.411Z",
+        "matchingSourceListings": 3,
+        "declaredScope": "Checked selected listing pages",
+        "queueCheckCompleted": true
+      },
+      "manualEvidence": null,
+      "overlap": null
+    },
+    {
+      "id": "clarien",
+      "name": "Clarien Bank",
+      "url": "https://clarienbank.com/careers/",
+      "automaticRefreshSupported": true,
+      "automaticRun": {
+        "checkedAt": "2026-10-12T04:38:03.611Z",
+        "matchingSourceListings": 3,
+        "declaredScope": "Checked selected listing pages",
+        "queueCheckCompleted": true
+      },
+      "manualEvidence": null,
+      "overlap": null
+    },
+    {
+      "id": "onecomm",
+      "name": "One Communications",
+      "url": "https://onecomm.bamboohr.com/careers",
+      "automaticRefreshSupported": true,
+      "automaticRun": {
+        "checkedAt": "2026-10-12T04:38:05.289Z",
+        "matchingSourceListings": 3,
+        "declaredScope": "Entire public BambooHR list and role details checked; non-Bermuda or out-of-scope roles excluded.",
+        "queueCheckCompleted": true
+      },
+      "manualEvidence": null,
+      "overlap": null
+    },
+    {
+      "id": "skyport",
+      "name": "Bermuda Skyport",
+      "url": "https://bermudaskyport.bamboohr.com/careers",
+      "automaticRefreshSupported": true,
+      "automaticRun": {
+        "checkedAt": "2026-10-12T04:38:06.439Z",
+        "matchingSourceListings": 1,
+        "declaredScope": "Entire public BambooHR list and role details checked; non-Bermuda or out-of-scope roles excluded.",
+        "queueCheckCompleted": true
+      },
+      "manualEvidence": null,
+      "overlap": null
+    },
+    {
+      "id": "artex",
+      "name": "Artex Talent Solutions (formerly Frontier)",
+      "url": "https://phe.tbe.taleo.net/phe03/ats/careers/v2/searchResults?org=FRONTIER&cws=40",
+      "automaticRefreshSupported": true,
+      "automaticRun": {
+        "checkedAt": "2026-10-12T04:38:07.324Z",
+        "matchingSourceListings": 4,
+        "declaredScope": "Checked selected listing pages",
+        "queueCheckCompleted": true
+      },
+      "manualEvidence": null,
+      "overlap": null
+    },
+    {
+      "id": "island",
+      "name": "Island Paradise Recruitment",
+      "url": "https://www.islandparadiserecruitment.co.uk/job-openings",
+      "automaticRefreshSupported": true,
+      "automaticRun": {
+        "checkedAt": "2026-10-12T04:38:07.452Z",
+        "matchingSourceListings": 6,
+        "declaredScope": "Checked selected listing pages",
+        "queueCheckCompleted": true
+      },
+      "manualEvidence": null,
+      "overlap": null
+    },
+    {
+      "id": "deloitte",
+      "name": "Deloitte Caribbean and Bermuda",
+      "url": "https://talentsourcing.deloitte.com/cbcapply/SearchJobs",
+      "automaticRefreshSupported": true,
+      "automaticRun": {
+        "checkedAt": "2026-10-12T04:38:15.318Z",
+        "matchingSourceListings": 8,
+        "declaredScope": "Every linked result page checked; listings can describe future intake opportunities.",
+        "queueCheckCompleted": true
+      },
+      "manualEvidence": null,
+      "overlap": null
+    },
+    {
+      "id": "axis",
+      "name": "AXIS",
+      "url": "https://axiscapital.wd1.myworkdayjobs.com/axiscareers",
+      "automaticRefreshSupported": true,
+      "automaticRun": {
+        "checkedAt": "2026-10-12T04:38:16.628Z",
+        "matchingSourceListings": 1,
+        "declaredScope": "Bermuda country/location facet selected; all selected pages and role details checked.",
+        "queueCheckCompleted": true
+      },
+      "manualEvidence": null,
+      "overlap": null
+    },
+    {
+      "id": "arch",
+      "name": "Arch Capital",
+      "url": "https://archgroup.wd1.myworkdayjobs.com/careers",
+      "automaticRefreshSupported": true,
+      "automaticRun": {
+        "checkedAt": "2026-10-12T04:38:17.299Z",
+        "matchingSourceListings": 0,
+        "declaredScope": "Public portal did not expose a Bermuda country/location facet at this check. No Bermuda records collected; this is not a market-wide zero-job claim.",
+        "queueCheckCompleted": true
+      },
+      "manualEvidence": null,
+      "overlap": null
+    },
+    {
+      "id": "hiscox",
+      "name": "Hiscox",
+      "url": "https://hiscox.wd3.myworkdayjobs.com/Hiscox_External_Site",
+      "automaticRefreshSupported": true,
+      "automaticRun": {
+        "checkedAt": "2026-10-12T04:38:18.346Z",
+        "matchingSourceListings": 0,
+        "declaredScope": "Public portal did not expose a Bermuda country/location facet at this check. No Bermuda records collected; this is not a market-wide zero-job claim.",
+        "queueCheckCompleted": true
+      },
+      "manualEvidence": null,
+      "overlap": null
+    },
+    {
+      "id": "athora",
+      "name": "Athora",
+      "url": "https://athora.wd3.myworkdayjobs.com/athora-careers",
+      "automaticRefreshSupported": true,
+      "automaticRun": {
+        "checkedAt": "2026-10-12T04:38:20.017Z",
+        "matchingSourceListings": 1,
+        "declaredScope": "Bermuda country/location facet selected; all selected pages and role details checked.",
+        "queueCheckCompleted": true
+      },
+      "manualEvidence": null,
+      "overlap": null
+    },
+    {
+      "id": "everest",
+      "name": "Everest",
+      "url": "https://wd5.myworkdaysite.com/recruiting/everestre/careers",
+      "automaticRefreshSupported": true,
+      "automaticRun": {
+        "checkedAt": "2026-10-12T04:38:21.882Z",
+        "matchingSourceListings": 1,
+        "declaredScope": "Bermuda country/location facet selected; all selected pages and role details checked.",
+        "queueCheckCompleted": true
+      },
+      "manualEvidence": null,
+      "overlap": null
+    },
+    {
+      "id": "chubb",
+      "name": "Chubb Bermuda",
+      "url": "https://fa-ewgu-saasfaprod1.fa.ocs.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_2001",
+      "automaticRefreshSupported": true,
+      "automaticRun": {
+        "checkedAt": "2026-10-12T04:38:22.453Z",
+        "matchingSourceListings": 5,
+        "declaredScope": "All Bermuda-keyword public search pages checked, then explicit role locations filtered. Keyword scope is not an exhaustive country-filtered census.",
+        "queueCheckCompleted": true
+      },
+      "manualEvidence": null,
+      "overlap": null
+    },
+    {
+      "id": "apex",
+      "name": "Apex Group",
+      "url": "https://theapexgroup.wd3.myworkdayjobs.com/apexgroupcareers",
+      "automaticRefreshSupported": true,
+      "automaticRun": {
+        "checkedAt": "2026-10-12T04:38:24.070Z",
+        "matchingSourceListings": 1,
+        "declaredScope": "Bermuda country/location facet selected; all selected pages and role details checked.",
+        "queueCheckCompleted": true
+      },
+      "manualEvidence": null,
+      "overlap": null
+    },
+    {
+      "id": "sompo",
+      "name": "Sompo",
+      "url": "https://endurance.wd103.myworkdayjobs.com/SompoInternational",
+      "automaticRefreshSupported": true,
+      "automaticRun": {
+        "checkedAt": "2026-10-12T04:38:26.493Z",
+        "matchingSourceListings": 1,
+        "declaredScope": "Bermuda country/location facet selected; all selected pages and role details checked.",
+        "queueCheckCompleted": true
+      },
+      "manualEvidence": null,
+      "overlap": null
+    },
+    {
+      "id": "ariel",
+      "name": "Ariel Re",
+      "url": "https://arielre.bamboohr.com/careers",
+      "automaticRefreshSupported": true,
+      "automaticRun": {
+        "checkedAt": "2026-10-12T04:38:27.088Z",
+        "matchingSourceListings": 1,
+        "declaredScope": "Entire public BambooHR list and role details checked; non-Bermuda or out-of-scope roles excluded.",
+        "queueCheckCompleted": true
+      },
+      "manualEvidence": null,
+      "overlap": null
+    },
+    {
+      "id": "sirius",
+      "name": "SiriusPoint",
+      "url": "https://job-boards.eu.greenhouse.io/siriuspoint",
+      "automaticRefreshSupported": true,
+      "automaticRun": {
+        "checkedAt": "2026-10-12T04:38:27.235Z",
+        "matchingSourceListings": 1,
+        "declaredScope": "Entire public Greenhouse board checked (27 published posts, including explicit job-office fields). 1 matching source listings; 1 have Bermuda office metadata with a conflicting non-Bermuda headline and require location review. Generic remote roles and corporate/description mentions of Bermuda are not treated as Bermuda availability. This is not a market-wide zero-job claim.",
+        "queueCheckCompleted": true
+      },
+      "manualEvidence": null,
+      "overlap": null
+    },
+    {
+      "id": "fortitude",
+      "name": "Fortitude Re",
+      "url": "https://app.careerpuck.com/job-board/fortitudegroupholdingsllc",
+      "automaticRefreshSupported": true,
+      "automaticRun": {
+        "checkedAt": "2026-10-12T04:38:27.330Z",
+        "matchingSourceListings": 0,
+        "declaredScope": "Entire public Greenhouse board checked (35 published posts, including explicit job-office fields). No matching posts carried an explicit Bermuda headline or job-office field at this check. Generic remote roles and corporate/description mentions of Bermuda are not treated as Bermuda availability. This is not a market-wide zero-job claim.",
+        "queueCheckCompleted": true
+      },
+      "manualEvidence": null,
+      "overlap": null
+    },
+    {
+      "id": "performance",
+      "name": "Performance Solutions (recruiter)",
+      "url": "https://performancesolutions.bamboohr.com/careers",
+      "automaticRefreshSupported": true,
+      "automaticRun": {
+        "checkedAt": "2026-10-12T04:38:30.216Z",
+        "matchingSourceListings": 6,
+        "declaredScope": "Entire public BambooHR list and role details checked; non-Bermuda or out-of-scope roles excluded.",
+        "queueCheckCompleted": true
+      },
+      "manualEvidence": null,
+      "overlap": null
+    },
+    {
+      "id": "government",
+      "name": "Government of Bermuda careers",
+      "url": "https://govtcareers.gov.bm/",
+      "automaticRefreshSupported": true,
+      "automaticRun": {
+        "checkedAt": "2026-10-12T04:38:33.981Z",
+        "matchingSourceListings": 4,
+        "declaredScope": "Closing time to apply for any job is 7:00pm Bermuda time (AST - Atlantic Standard Time) on the stated closing date. Capture the public list and scoped vacancy details; no application or login.",
+        "queueCheckCompleted": true
+      },
+      "manualEvidence": {
+        "status": "complete visible public listing pagination; administrative assistant detail verified",
+        "evidenceLevel": "Fresh visible browser DOM of primary employer public vacancy pages; only vacancy facts recorded. No application, profile or private account pages read.",
+        "checkedAt": "2026-10-12 04:06:57 UTC",
+        "counts": {
+          "pages": 2,
+          "listingsReviewed": 13
+        },
+        "selectedLeads": [
+          {
+            "sourceId": "6945",
+            "title": "MANAGEMENT ACCOUNTANT",
+            "department": "Public Works & Environment HQ",
+            "closingDate": "2026-10-21",
+            "detailVerified": false,
+            "url": "https://govtcareers.gov.bm/details.html?jobId=6945&jobTitle=MANAGEMENT%20ACCOUNTANT"
+          },
+          {
+            "sourceId": "6933",
+            "title": "ADMINISTRATIVE ASSISTANT",
+            "department": "Home Affairs HQ",
+            "closingDate": "2026-10-14",
+            "detailVerified": true,
+            "jobNumber": "DHR04038",
+            "salaryLiteral": "73697.80 - 73697.80 BMD per Year",
+            "contract": "Permanent",
+            "url": "https://govtcareers.gov.bm/details.html?jobId=6933&jobTitle=ADMINISTRATIVE%20ASSISTANT"
+          },
+          {
+            "sourceId": "6963",
+            "title": "ADMINISTRATIVE ASSISTANT - CHILD HEALTH",
+            "department": "Health Department",
+            "closingDate": "2026-10-14",
+            "detailVerified": false,
+            "url": "https://govtcareers.gov.bm/details.html?jobId=6963&jobTitle=ADMINISTRATIVE%20ASSISTANT%20-%20CHILD%20HEALTH"
+          },
+          {
+            "sourceId": "6935",
+            "title": "CUSTOMER SERVICE REPRESENTATIVE",
+            "department": "Attorney General's Chambers",
+            "closingDate": "2026-10-14",
+            "detailVerified": false,
+            "url": "https://govtcareers.gov.bm/details.html?jobId=6935&jobTitle=CUSTOMER%20SERVICE%20REPRESENTATIVE"
+          }
+        ],
+        "limits": "Redirect initially reported navigation ERR_ABORTED, but canonical page rendered and both result pages were inspected. API adapter verification recorded separately.",
+        "record": "employer-browser-checks.json"
+      },
+      "overlap": null
+    },
+    {
+      "id": "jobfinder",
+      "name": "BermudaJobFinder (public board; adapter pending)",
+      "url": "https://www.bermudajobfinder.com/",
+      "automaticRefreshSupported": false,
+      "automaticRun": null,
+      "manualEvidence": {
+        "status": "selected board item examined earlier; current exact item fetch404",
+        "evidenceLevel": "Primary public-notice classification in discovery evidence; new web fetch404 on12October",
+        "primaryURL": "https://www.bermudajobfinder.com/job/wakefield-quin-limited-barristers-and-attorneys-20260721100641",
+        "limits": [
+          "Estate/caveat notice is not a vacancy.",
+          "No current full board enumeration; removal404 is not proof a job closed."
+        ],
+        "record": "discovery-additions.json"
+      },
+      "overlap": null
+    },
+    {
+      "id": "jobconnect",
+      "name": "Bermuda Job Connect",
+      "url": "https://www.bermudajobconnect.bm/",
+      "automaticRefreshSupported": false,
+      "automaticRun": null,
+      "manualEvidence": {
+        "status": "Fresh public browser boundary inspected; vacancy enumeration uncollected",
+        "evidenceLevel": "Visible browser DOM",
+        "checkedAt": "2026-10-12 04:20:52 UTC",
+        "counts": {},
+        "limits": [
+          "No account, login or application route opened.",
+          "This does not establish zero vacancies or exclude a different public route."
+        ],
+        "record": "employer-browser-checks.json"
+      },
+      "overlap": null
+    },
+    {
+      "id": "platinum",
+      "name": "Platinum Group",
+      "url": "https://www.platinumgroup.bm/jobs/",
+      "automaticRefreshSupported": false,
+      "automaticRun": null,
+      "manualEvidence": {
+        "status": "boundary-only",
+        "evidenceLevel": "Read-only web search and opening primary public recruitment pages; no Infomonk runtime execution.",
+        "checkedDate": "2026-10-12",
+        "primaryURLs": [
+          "https://www.platinumgroup.bm/jobs/",
+          "https://www.platinumgroup.bm/platinum-search/"
+        ],
+        "counts": {
+          "vacanciesInspected": null,
+          "employerReportedTotal": null
+        },
+        "limits": [
+          "Public extraction exposes the site shell, not the legacy embedded listings.",
+          "The indexed Corporate Administrators page supplies no verified vacancy date, deadline, employer or location field."
+        ],
+        "nextCheck": "Manually enumerate the public job widget or obtain a dated public vacancy export; do not record zero openings.",
+        "record": "remaining-discovery-checks.json"
+      },
+      "overlap": null
+    },
+    {
+      "id": "pwc-search",
+      "name": "PwC Executive Search",
+      "url": "https://www.pwc.com/bm/bermudatopjobs",
+      "automaticRefreshSupported": false,
+      "automaticRun": null,
+      "manualEvidence": {
+        "status": "selected roles",
+        "evidenceLevel": "Read-only web search and opening primary public recruitment pages; no Infomonk runtime execution.",
+        "checkedDate": "2026-10-12",
+        "primaryURLs": [
+          "https://www.pwc.com/bm/bermudatopjobs",
+          "https://www.pwc.com/bm/en/bermudatopjobs/treasury-operations-manager.html",
+          "https://www.pwc.com/bm/en/bermudatopjobs/financial-reporting-director.html",
+          "https://www.pwc.com/bm/en/bermudatopjobs/bermuda-financial-controller.html"
+        ],
+        "counts": {
+          "selectedRoleDetailsInspected": 3,
+          "employerReportedTotal": null
+        },
+        "limits": [
+          "Dynamic Load more list not traversed; older dated postings are also indexed.",
+          "Anonymous recruiter clients prevent reliable employer-level deduplication.",
+          "Unrelated historical Bermuda/immigration text on this page is visibly stale and was not used as current guidance."
+        ],
+        "nextCheck": "Capture the complete public client-role list with dates, inspect PDFs/details, and confirm open status before import.",
+        "record": "remaining-discovery-checks.json"
+      },
+      "overlap": "PwC client recruitment and employer recruitment are separate target purposes, not different companies."
+    },
+    {
+      "id": "pwc",
+      "name": "PwC Bermuda careers",
+      "url": "https://www.pwc.com/bm/en/careers/experienced/job-search.html",
+      "automaticRefreshSupported": false,
+      "automaticRun": null,
+      "manualEvidence": {
+        "status": "selected roles",
+        "evidenceLevel": "Read-only web search and opening primary public recruitment pages; no Infomonk runtime execution.",
+        "checkedDate": "2026-10-12",
+        "primaryURLs": [
+          "https://www.pwc.com/bm/careers",
+          "https://www.pwc.com/bm/en/careers/experienced/job-search.html",
+          "https://www.pwc.com/gx/en/careers/job-results/description.html?wdcountry=BMU&wdjobreqid=754691WD"
+        ],
+        "counts": {
+          "indexedRowsInspected": 10,
+          "employerReportedTotal": 13,
+          "jobDetailsOpenedSuccessfully": 0
+        },
+        "limits": [
+          "Dynamic results differ between index and opened extraction.",
+          "Remaining three rows, individual availability and closing dates unverified.",
+          "Multi-location remote eligibility differs from the Bermuda country label."
+        ],
+        "nextCheck": "Complete the employer-linked public listing pagination and confirm individual role IDs/location eligibility, keeping recruiter client jobs separate.",
+        "record": "remaining-discovery-checks.json"
+      },
+      "overlap": "PwC client recruitment and employer recruitment are separate target purposes, not different companies."
+    },
+    {
+      "id": "kpmg",
+      "name": "KPMG Bermuda",
+      "url": "https://kpmg.com/bm/en/careers/experienced-hires/employment-opportunities.html",
+      "automaticRefreshSupported": false,
+      "automaticRun": null,
+      "manualEvidence": {
+        "status": "selected roles",
+        "evidenceLevel": "Read-only web search and opening primary public recruitment pages; no Infomonk runtime execution.",
+        "checkedDate": "2026-10-12",
+        "primaryURLs": [
+          "https://kpmg.com/bm/en/careers/experienced-hires/employment-opportunities.html"
+        ],
+        "counts": {
+          "landingRoleLinksEnumerated": 19,
+          "jobDetailsAttempted": 19,
+          "jobDetailsInspected": 18,
+          "explicitlyClosedDetails": 2,
+          "unresolvedDetailLinks": 1
+        },
+        "limits": [
+          "The first Tax-section Senior Manager detail link failed twice; its URL/details were not exposed by the tool.",
+          "Several roles lack closing dates; FY27 roles still mention a September 2026 start.",
+          "Similar titles across departments and different posting IDs require deduplication rather than title-only counting."
+        ],
+        "nextCheck": "Recheck availability near the 14/16 October deadlines and resolve the one failed detail. Preserve closed and future-cycle status in any tracker.",
+        "record": "remaining-discovery-checks.json"
+      },
+      "overlap": null
+    },
+    {
+      "id": "bhb",
+      "name": "Bermuda Hospitals Board",
+      "url": "https://bermudahospitals.bm/work-at-bhb/bhb-jobs-now/external-applicants/",
+      "automaticRefreshSupported": false,
+      "automaticRun": null,
+      "manualEvidence": {
+        "status": "complete visible public listing pagination; selected details",
+        "evidenceLevel": "Fresh visible browser DOM of primary employer public vacancy pages; only vacancy facts recorded. No application, profile or private account pages read.",
+        "checkedAt": "2026-10-12 04:06:57 UTC",
+        "counts": {
+          "pages": 3,
+          "listingsReviewed": 51
+        },
+        "selectedLeads": [
+          {
+            "sourceId": "737",
+            "title": "Business Intelligence Specialist",
+            "location": "BM:Pembroke",
+            "postedLiteral": "10/9/2026",
+            "url": "https://css-bermudahospitals-prd.inforcloudsuite.com/hcm/Jobs/navigation/JobPosting%5BJobPostingSet%5D%281%2C737%2C1%29.JobPostingDisplayNav?csk.JobBoard=EXTERNAL&csk.HROrganization=1",
+            "employerDeadline": "2026-10-21",
+            "detailVerified": true,
+            "notes": "Employer detail banner and body agree 21 October; prior newspaper advertisement said 20 October. Preserve both sources and resolve before relying on the later date."
+          },
+          {
+            "sourceId": "994",
+            "title": "Director Learning & Talent Development",
+            "location": "BM:Paget",
+            "postedLiteral": "10/9/2026",
+            "url": "https://css-bermudahospitals-prd.inforcloudsuite.com/hcm/Jobs/navigation/JobPosting%5BJobPostingSet%5D%281%2C994%2C1%29.JobPostingDisplayNav?csk.JobBoard=EXTERNAL&csk.HROrganization=1",
+            "employerDeadline": "2026-10-21",
+            "detailVerified": true,
+            "notes": "Employer describes full-time administration and learning/talent leadership; requirements include ten years training/development experience."
+          },
+          {
+            "sourceId": "644",
+            "title": "Employee Relations Manager",
+            "location": "BM:Paget",
+            "postedLiteral": "10/9/2026",
+            "url": "https://css-bermudahospitals-prd.inforcloudsuite.com/hcm/Jobs/navigation/JobPosting%5BJobPostingSet%5D%281%2C644%2C2%29.JobPostingDisplayNav?csk.JobBoard=EXTERNAL&csk.HROrganization=1",
+            "employerDeadline": null,
+            "detailVerified": false
+          },
+          {
+            "sourceId": "1044",
+            "title": "Cashier",
+            "location": "BM:Paget",
+            "postedLiteral": "10/6/2026",
+            "url": "https://css-bermudahospitals-prd.inforcloudsuite.com/hcm/Jobs/navigation/JobPosting%5BJobPostingSet%5D%281%2C1044%2C1%29.JobPostingDisplayNav?csk.JobBoard=EXTERNAL&csk.HROrganization=1",
+            "employerDeadline": null,
+            "detailVerified": false,
+            "notes": "Adjacent administrative/finance lead; title-rule scope does not presently include cashier."
+          }
+        ],
+        "limits": "Employer portal adapter pending; manual evidence is attached separately, not represented as automatically refreshable jobs.",
+        "record": "employer-browser-checks.json"
+      },
+      "overlap": null
+    },
+    {
+      "id": "butterfield",
+      "name": "Butterfield",
+      "url": "https://www.butterfieldgroup.com/careers",
+      "automaticRefreshSupported": false,
+      "automaticRun": null,
+      "manualEvidence": {
+        "status": "boundary-only",
+        "evidenceLevel": "Read-only web search and opening primary public recruitment pages; no Infomonk runtime execution.",
+        "checkedDate": "2026-10-12",
+        "primaryURLs": [
+          "https://www.butterfieldgroup.com/careers/our-locations/bermuda",
+          "https://career5.successfactors.eu/career?company=Butterfield"
+        ],
+        "counts": {
+          "vacanciesInspected": null,
+          "employerReportedTotal": null
+        },
+        "limits": ["Dynamic SuccessFactors search/pagination unavailable in extracted text."],
+        "nextCheck": "Use the public portal's Bermuda location filter and inspect all result pages, rechecking the two previously observed roles.",
+        "record": "remaining-discovery-checks.json"
+      },
+      "overlap": null
+    },
+    {
+      "id": "hsbc",
+      "name": "HSBC Bermuda",
+      "url": "https://www.about.hsbc.bm/careers",
+      "automaticRefreshSupported": false,
+      "automaticRun": null,
+      "manualEvidence": {
+        "status": "boundary-only",
+        "evidenceLevel": "Read-only web search and opening primary public recruitment pages; no Infomonk runtime execution.",
+        "checkedDate": "2026-10-12",
+        "primaryURLs": [
+          "https://www.about.hsbc.bm/careers",
+          "https://portal.careers.hsbc.com/careers?location=Bermuda"
+        ],
+        "counts": {
+          "vacanciesInspected": null,
+          "employerReportedTotal": null
+        },
+        "limits": [
+          "Dynamic portal result list not available through web extraction; no pagination or location-field validation."
+        ],
+        "nextCheck": "Read the complete public Bermuda results and individual role details; do not use login or talent-network submission.",
+        "record": "remaining-discovery-checks.json"
+      },
+      "overlap": null
+    },
+    {
+      "id": "renre",
+      "name": "RenaissanceRe",
+      "url": "https://www.renre.com/careers/",
+      "automaticRefreshSupported": false,
+      "automaticRun": null,
+      "manualEvidence": {
+        "httpCheck": {
+          "id": "renre",
+          "url": "https://www.renre.com/careers/careers-home/",
+          "finalUrl": null,
+          "status": null,
+          "started": "2026-10-12T03:41:28.205Z",
+          "checkedAt": "2026-10-12T03:41:28.82Z",
+          "sha256": null,
+          "error": "Over 2MiB boundary",
+          "evidenceLevel": "Failed retrieval; no zero vacancy claim"
+        },
+        "status": "primary retrieval failed or exceeded bounds; vacancy enumeration unresolved",
+        "record": "primary-http-checks.json"
+      },
+      "overlap": null
+    },
+    {
+      "id": "aspen",
+      "name": "Aspen",
+      "url": "https://www.aspen.co/",
+      "automaticRefreshSupported": false,
+      "automaticRun": null,
+      "manualEvidence": {
+        "status": "boundary-only",
+        "evidenceLevel": "Read-only web search and opening primary public recruitment pages; no Infomonk runtime execution.",
+        "checkedDate": "2026-10-12",
+        "primaryURLs": ["https://www.aspen.co/", "https://www.sompo.com/"],
+        "counts": {
+          "vacanciesInspected": null,
+          "employerReportedTotal": null
+        },
+        "limits": [
+          "Old careers route obsolete; actual job coverage now overlaps the independently checked Sompo target."
+        ],
+        "nextCheck": "Use the employer-linked Sompo recruitment path and retain Aspen as an alias, avoiding duplicate source and vacancy counts.",
+        "record": "remaining-discovery-checks.json"
+      },
+      "overlap": "Primary Aspen route redirects to Sompo; brand target overlaps the supported Sompo source, not an independent employer vacancy count."
+    },
+    {
+      "id": "athene",
+      "name": "Athene",
+      "url": "https://www.athene.com/",
+      "automaticRefreshSupported": false,
+      "automaticRun": null,
+      "manualEvidence": {
+        "status": "boundary-only",
+        "evidenceLevel": "Read-only web search and opening primary public recruitment pages; no Infomonk runtime execution.",
+        "checkedDate": "2026-10-12",
+        "primaryURLs": [
+          "https://www.athene.com/careers",
+          "https://athene.wd5.myworkdayjobs.com/athene_careers"
+        ],
+        "counts": {
+          "vacanciesInspected": null,
+          "employerReportedTotal": null
+        },
+        "limits": [
+          "Workday content requires dynamic rendering; Bermuda filter and pagination not executed.",
+          "Featured roles on global careers page lack explicit local location fields."
+        ],
+        "nextCheck": "Enumerate employer-linked Workday Bermuda results rather than matching Bermuda text in the global employer description.",
+        "record": "remaining-discovery-checks.json"
+      },
+      "overlap": null
+    },
+    {
+      "id": "fireminds",
+      "name": "Fireminds",
+      "url": "https://www.fireminds.com/",
+      "automaticRefreshSupported": false,
+      "automaticRun": null,
+      "manualEvidence": {
+        "status": "unresolved/not-open",
+        "evidenceLevel": "Read-only web search and opening primary public recruitment pages; no Infomonk runtime execution.",
+        "checkedDate": "2026-10-12",
+        "primaryURLs": [],
+        "counts": {
+          "vacanciesInspected": null,
+          "employerReportedTotal": null
+        },
+        "limits": [
+          "Production routes could not be inspected.",
+          "A development mirror's generic opportunities claim cannot establish current vacancies."
+        ],
+        "nextCheck": "Establish the live employer-linked public recruitment route before importing any role.",
+        "record": "remaining-discovery-checks.json"
+      },
+      "overlap": null
+    },
+    {
+      "id": "digicel",
+      "name": "Digicel",
+      "url": "https://careers.digicelgroup.com/",
+      "automaticRefreshSupported": false,
+      "automaticRun": null,
+      "manualEvidence": {
+        "status": "boundary-only",
+        "evidenceLevel": "Read-only web search and opening primary public recruitment pages; no Infomonk runtime execution.",
+        "checkedDate": "2026-10-12",
+        "primaryURLs": [
+          "https://careers.digicelgroup.com/",
+          "https://careers.digicelgroup.com/search/",
+          "https://careers.digicelgroup.com/go/Featured-Jobs/767702/",
+          "https://careers.digicelgroup.com/go/Featured-Jobs/767702/25/?q=&sortColumn=referencedate&sortDirection=desc"
+        ],
+        "counts": {
+          "featuredPageRowObservations": 33,
+          "pageReportedTotals": [32, 33],
+          "bermudaLocationMatchesWithinObservedRows": 0,
+          "employerBermudaVacancyTotal": null
+        },
+        "limits": [
+          "No Bermuda location-filter result was established.",
+          "Featured Jobs is a subset of recruitment, and totals differ between retrieved pages.",
+          "Keyword references to Bermuda on roles located in Kingston must not be treated as Bermuda vacancies."
+        ],
+        "nextCheck": "Run the public actual-location Bermuda search, traverse its complete results and verify job-location fields. Zero observed featured matches does not mean zero Bermuda openings.",
+        "record": "remaining-discovery-checks.json"
+      },
+      "overlap": null
+    },
+    {
+      "id": "ey",
+      "name": "EY",
+      "url": "https://www.ey.com/en_gl/careers",
+      "automaticRefreshSupported": false,
+      "automaticRun": null,
+      "manualEvidence": {
+        "status": "selected roles",
+        "evidenceLevel": "Read-only web search and opening primary public recruitment pages; no Infomonk runtime execution.",
+        "checkedDate": "2026-10-12",
+        "primaryURLs": [
+          "https://www.ey.com/en_us/bbc",
+          "https://careers.ey.com/",
+          "https://careers.ey.com/ey/job/Bermuda-FSO-EY-Parthenon-Transaction-Diligence-Senior-HM08/1421428833",
+          "https://careers.ey.com/ey/job/Bermuda-FSO-Core-Business-Services-Executive-Assistant-HM08/1428066833/"
+        ],
+        "counts": {
+          "selectedRoleDetailsInspected": 2,
+          "employerReportedTotal": null
+        },
+        "limits": [
+          "Full country-filtered result universe not enumerated.",
+          "Broad technology/data searches also surface Mauritius roles; these were excluded using actual location fields.",
+          "Old FY26 job pages/search entries cannot establish current openings."
+        ],
+        "nextCheck": "Complete the public Bermuda country/location search and inspect all role details, retaining posted date separately from deadline.",
+        "record": "remaining-discovery-checks.json"
+      },
+      "overlap": null
+    },
+    {
+      "id": "conyers",
+      "name": "Conyers",
+      "url": "https://www.conyers.com/about-us/careers/",
+      "automaticRefreshSupported": false,
+      "automaticRun": null,
+      "manualEvidence": {
+        "status": "boundary-only",
+        "evidenceLevel": "Read-only web search and opening primary public recruitment pages; no Infomonk runtime execution.",
+        "checkedDate": "2026-10-12",
+        "primaryURLs": [
+          "https://www.conyers.com/about-us/careers/",
+          "https://www.conyers.com/about-us/careers/corporate-services-professionals/",
+          "https://www.conyers.com/about-us/careers/business-services-teams/",
+          "https://www.conyers.com/about-us/careers/graduates-students/"
+        ],
+        "counts": {
+          "departmentRoleCardsInspected": 3,
+          "bermudaVacancyTotal": null
+        },
+        "limits": [
+          "Visible department roles are other jurisdictions; Bermuda office text appears on every page.",
+          "General rolling student/gap-year recruitment has no dated current vacancy confirmation.",
+          "Experienced-lawyer opportunities and future student deadlines not completely checked."
+        ],
+        "nextCheck": "Inspect dated Bermuda-specific opportunities across relevant department/programme pages; keep evergreen student recruitment separate from active vacancies.",
+        "record": "remaining-discovery-checks.json"
+      },
+      "overlap": null
+    },
+    {
+      "id": "appleby",
+      "name": "Appleby",
+      "url": "https://www.applebyglobal.com/careers/",
+      "automaticRefreshSupported": false,
+      "automaticRun": null,
+      "manualEvidence": {
+        "status": "selected roles",
+        "evidenceLevel": "Read-only web search and opening primary public recruitment pages; no Infomonk runtime execution.",
+        "checkedDate": "2026-10-12",
+        "primaryURLs": [
+          "https://www.applebyglobal.com/careers/",
+          "https://appleby-recruitment.azurewebsites.net/",
+          "https://appleby-recruitment.azurewebsites.net/?careerssource=www.applebyglobal.com?careerssource%3Dwww.applebyglobal.com"
+        ],
+        "counts": {
+          "visiblePortalCards": 10,
+          "visibleBermudaRoleOrProgrammeCards": 5,
+          "visibleBermudaMailingListCards": 1,
+          "standaloneOlderDetailsInspected": 3,
+          "employerReportedTotal": null
+        },
+        "limits": [
+          "Portal root/detail fetching intermittent; query variant and primary search index show changing card membership.",
+          "No terminal count/pagination completeness proof.",
+          "Student mailing-list entry is not a vacancy.",
+          "Standalone public details can remain accessible after disappearing from current listing."
+        ],
+        "nextCheck": "Use the public Bermuda office filter, prove complete results and reconcile current list membership before importing older standalone roles.",
+        "record": "remaining-discovery-checks.json"
+      },
+      "overlap": null
+    },
+    {
+      "id": "belco",
+      "name": "BELCO",
+      "url": "https://belco.bm/opportunities/",
+      "automaticRefreshSupported": false,
+      "automaticRun": null,
+      "manualEvidence": {
+        "status": "boundary-only",
+        "evidenceLevel": "Read-only web search and opening primary public recruitment pages; no Infomonk runtime execution.",
+        "checkedDate": "2026-10-12",
+        "primaryURLs": ["https://belco.bm/opportunities/"],
+        "counts": {
+          "vacanciesInspected": null,
+          "employerReportedTotal": null
+        },
+        "limits": [
+          "No named dated roles, vacancy links, deadlines or public result count extracted."
+        ],
+        "nextCheck": "Find dated employer vacancy notices linked from its public opportunities route; do not treat generic recruitment wording as either an opening or zero openings.",
+        "record": "remaining-discovery-checks.json"
+      },
+      "overlap": null
+    },
+    {
+      "id": "saltus",
+      "name": "Saltus",
+      "url": "https://www.saltus.bm/explore/careers",
+      "automaticRefreshSupported": false,
+      "automaticRun": null,
+      "manualEvidence": {
+        "status": "boundary-only",
+        "evidenceLevel": "Read-only web search and opening primary public recruitment pages; no Infomonk runtime execution.",
+        "checkedDate": "2026-10-12",
+        "primaryURLs": ["https://www.saltus.bm/explore/careers"],
+        "counts": {
+          "vacanciesInspected": null,
+          "employerReportedTotal": null
+        },
+        "limits": [
+          "No public named office/technology vacancy, role count or deadline extracted.",
+          "Teaching certification text is general programme context, not a current opening."
+        ],
+        "nextCheck": "Inspect any dated employer recruitment notices and distinguish teaching positions from relevant office/data/technology roles.",
+        "record": "remaining-discovery-checks.json"
+      },
+      "overlap": null
+    },
+    {
+      "id": "hprincess",
+      "name": "Hamilton Princess / Accor",
+      "url": "https://www.thehamiltonprincess.com/careers/",
+      "automaticRefreshSupported": false,
+      "automaticRun": null,
+      "manualEvidence": {
+        "status": "fully paginated",
+        "evidenceLevel": "Read-only web search and opening primary public recruitment pages; no Infomonk runtime execution.",
+        "checkedDate": "2026-10-12",
+        "primaryURLs": [
+          "https://www.thehamiltonprincess.com/careers/",
+          "https://careers.accor.com/global/en/jobs?options=&page=1&q=hamilton+princess+bermuda"
+        ],
+        "counts": {
+          "queryReportedTotal": 2,
+          "queryResultCardsInspected": 2,
+          "selectedRoleDetailsInspected": 2
+        },
+        "limits": [
+          "Keyword-query completeness is narrower than employer-wide completeness.",
+          "Cached page age limits current-availability assurance; valid deadlines not supplied."
+        ],
+        "nextCheck": "Refresh the employer-linked public query and compare hotel/location aliases; preserve unknown deadlines and inspect roles again before relying on availability.",
+        "record": "remaining-discovery-checks.json"
+      },
+      "overlap": null
+    },
+    {
+      "id": "bes",
+      "name": "Bermuda Executive Services",
+      "url": "https://www.bermudaemployment.com/",
+      "automaticRefreshSupported": false,
+      "automaticRun": null,
+      "manualEvidence": {
+        "status": "unresolved/not-open",
+        "evidenceLevel": "Read-only web search and opening primary public recruitment pages; no Infomonk runtime execution.",
+        "checkedDate": "2026-10-12",
+        "primaryURLs": [],
+        "counts": {
+          "vacanciesInspected": null,
+          "employerReportedTotal": null
+        },
+        "limits": [
+          "Last-known domain is unavailable to the tool; earlier report saw a default blog, not established recruitment content.",
+          "Search result names alone risk conflating unrelated BES organizations."
+        ],
+        "nextCheck": "Establish a current first-party recruiter website/link before counting this as a searched Bermuda jobs source.",
+        "record": "remaining-discovery-checks.json"
+      },
+      "overlap": null
+    },
+    {
+      "id": "act",
+      "name": "Applied Computer Technologies (ACT)",
+      "url": "https://www.act.bm/careers/",
+      "automaticRefreshSupported": false,
+      "automaticRun": null,
+      "manualEvidence": {
+        "status": "evergreen-recruitment",
+        "evidenceLevel": "primary-recruitment-boundary-and-capacities-inspected",
+        "checkedDate": "2026-10-12",
+        "primaryURL": "https://www.act.bm/careers/",
+        "observedRoles": [
+          {
+            "title": "On-Site Engineer",
+            "primaryURL": "https://www.act.bm/careers/",
+            "location": "Bermuda employer; individual work locations unstated",
+            "availability": "evergreen capacity invitation; not a discrete verified vacancy"
+          },
+          {
+            "title": "Sales",
+            "primaryURL": "https://www.act.bm/careers/",
+            "location": "Bermuda employer; individual work locations unstated",
+            "availability": "evergreen capacity invitation; not a discrete verified vacancy"
+          },
+          {
+            "title": "Remote Service Desk",
+            "primaryURL": "https://www.act.bm/careers/",
+            "location": "Bermuda employer; individual work locations unstated",
+            "availability": "evergreen capacity invitation; not a discrete verified vacancy"
+          },
+          {
+            "title": "Accounting (AR/AP)",
+            "primaryURL": "https://www.act.bm/careers/",
+            "location": "Bermuda employer; individual work locations unstated",
+            "availability": "evergreen capacity invitation; not a discrete verified vacancy"
+          }
+        ],
+        "limits": [
+          "No dated vacancy IDs, deadlines or confirmed vacancy counts. Resume retention and broad invitation indicate an evergreen intake.",
+          "Application form was not submitted."
+        ],
+        "record": "discovery-additions.json"
+      },
+      "overlap": null
+    },
+    {
+      "id": "ocorian",
+      "name": "Ocorian",
+      "url": "https://www.ocorian.com/careers/search",
+      "automaticRefreshSupported": false,
+      "automaticRun": null,
+      "manualEvidence": {
+        "status": "relevant-roles-observed-partial-list",
+        "evidenceLevel": "primary-list-and-selected-role-details-inspected",
+        "checkedDate": "2026-10-12",
+        "primaryURL": "https://www.ocorian.com/careers/search",
+        "observedRoles": [
+          {
+            "title": "Trust Administrator (Private Wealth)",
+            "primaryURL": "https://www.ocorian.com/job/trust-administrator-private-wealth",
+            "location": "Hamilton, Bermuda",
+            "availability": "listed; closing date not established"
+          },
+          {
+            "title": "Corporate Administrator | Capital Markets",
+            "primaryURL": "https://jobs.smartrecruiters.com/Ocorian/744000143284424-corporate-administrator-capital-markets",
+            "location": "Bermuda",
+            "availability": "listed; closing date not established",
+            "sourceJobId": "744000143284424"
+          }
+        ],
+        "limits": [
+          "Only selected roles and the first global search results were read; entire Hamilton facet/pagination not collected.",
+          "Two routes are one employer source, not two sources."
+        ],
+        "record": "discovery-additions.json"
+      },
+      "overlap": null
+    },
+    {
+      "id": "steph-brown",
+      "name": "Steph Brown / O My Word recruitment",
+      "url": "https://www.recruitment.bm/projects",
+      "automaticRefreshSupported": false,
+      "automaticRun": null,
+      "manualEvidence": {
+        "status": "relevant-roles-observed",
+        "evidenceLevel": "primary-vacancy-blocks-and-details-inspected",
+        "checkedDate": "2026-10-12",
+        "primaryURL": "https://www.recruitment.bm/projects",
+        "observedRoles": [
+          {
+            "title": "Controller",
+            "primaryURL": "https://www.recruitment.bm/projects",
+            "location": "Bermuda",
+            "availability": "listed; closing date not established"
+          },
+          {
+            "title": "Risk Leader",
+            "primaryURL": "https://www.recruitment.bm/projects",
+            "location": "Bermuda",
+            "availability": "listed; closing date not established"
+          },
+          {
+            "title": "Risk Actuary",
+            "primaryURL": "https://www.recruitment.bm/projects",
+            "location": "Hamilton, Bermuda",
+            "availability": "listed; closing date not established",
+            "scope": "specialist quantitative/actuarial adjacent role"
+          }
+        ],
+        "limits": [
+          "Client employers, posting dates, IDs and closing dates are absent.",
+          "Controller duties describe medical-software finance/payroll, but qualifications discuss structured credit/catastrophe models; retain inconsistency for review rather than silently repair."
+        ],
+        "record": "discovery-additions.json"
+      },
+      "overlap": null
+    },
+    {
+      "id": "iep",
+      "name": "Island Employment Partners (IEP)",
+      "url": "https://www.iep.bm/jobs",
+      "automaticRefreshSupported": false,
+      "automaticRun": null,
+      "manualEvidence": {
+        "status": "evergreen-and-old-posts",
+        "evidenceLevel": "primary-list-and-selected-role-details-inspected",
+        "checkedDate": "2026-10-12",
+        "primaryURL": "https://www.iep.bm/jobs",
+        "observedRoles": [
+          {
+            "title": "Executive Assistants",
+            "primaryURL": "https://www.iep.bm/job/executive-legal-assistant",
+            "location": "Bermuda",
+            "availability": "continuous talent intake",
+            "postedDate": "2025-09-02"
+          },
+          {
+            "title": "Corporate Administrators",
+            "primaryURL": "https://www.iep.bm/job/pricing-actuary-permanent-----life-reinsurance",
+            "location": "Bermuda recruiter; client location not independently established",
+            "availability": "ongoing client-demand talent intake",
+            "postedDate": "2025-09-02"
+          },
+          {
+            "title": "Project Consultants - Executive Support",
+            "primaryURL": "https://www.iep.bm/jobs",
+            "location": "Bermuda recruiter",
+            "availability": "listed old post; detail not inspected",
+            "postedDate": "2025-09-02"
+          }
+        ],
+        "limits": [
+          "Seven list entries dated September/November2025; a publication date alone does not prove a current vacancy.",
+          "Two inspected details describe recurring talent needs rather than discrete employer openings. Corporate Administrator URL slug incorrectly refers to a pricing actuary; title/body take precedence."
+        ],
+        "record": "discovery-additions.json"
+      },
+      "overlap": null
+    },
+    {
+      "id": "cml",
+      "name": "CML Offshore Recruitment",
+      "url": "https://www.cml.ky/bermuda",
+      "automaticRefreshSupported": false,
+      "automaticRun": null,
+      "manualEvidence": {
+        "status": "dynamic-results-unresolved",
+        "evidenceLevel": "primary-bermuda-recruitment-boundary-and-linked-portal-inspected",
+        "checkedDate": "2026-10-12",
+        "primaryURL": "https://www.cml.ky/bermuda",
+        "observedRoles": [],
+        "limits": [
+          "Linked result page contains Shazamme scaffolding and a zero counter; dynamic vacancy data was not resolved.",
+          "Do not interpret the scaffold as no Bermuda jobs; no login or registration performed."
+        ],
+        "record": "discovery-additions.json"
+      },
+      "overlap": null
+    },
+    {
+      "id": "bermuda-college",
+      "name": "Bermuda College",
+      "url": "https://www.college.bm/index.php/job-postings",
+      "automaticRefreshSupported": false,
+      "automaticRun": null,
+      "manualEvidence": {
+        "status": "explicit-no-current-postings",
+        "evidenceLevel": "primary-job-postings-page-inspected",
+        "checkedDate": "2026-10-12",
+        "primaryURL": "https://www.college.bm/index.php/job-postings",
+        "observedRoles": [],
+        "limits": [
+          "Primary page explicitly reports no postings at this check.",
+          "Separate recruitment route is a CognitoForms application iframe, not a vacancy list."
+        ],
+        "record": "discovery-additions.json"
+      },
+      "overlap": null
+    },
+    {
+      "id": "bcaa",
+      "name": "Bermuda Civil Aviation Authority",
+      "url": "https://www.bcaa.bm/careers",
+      "automaticRefreshSupported": false,
+      "automaticRun": null,
+      "manualEvidence": {
+        "status": "explicit-no-current-openings",
+        "evidenceLevel": "primary-careers-page-inspected",
+        "checkedDate": "2026-10-12",
+        "primaryURL": "https://www.bcaa.bm/careers",
+        "observedRoles": [],
+        "limits": [
+          "No current openings reported on the observed primary page.",
+          "Distinct from Skyport and Bermuda Airport Authority."
+        ],
+        "record": "discovery-additions.json"
+      },
+      "overlap": null
+    },
+    {
+      "id": "ra",
+      "name": "Regulatory Authority of Bermuda",
+      "url": "https://www.ra.bm/about/careers",
+      "automaticRefreshSupported": false,
+      "automaticRun": null,
+      "manualEvidence": {
+        "status": "explicit-no-current-openings",
+        "evidenceLevel": "primary-careers-page-inspected",
+        "checkedDate": "2026-10-12",
+        "primaryURL": "https://www.ra.bm/about/careers",
+        "observedRoles": [],
+        "limits": [
+          "Primary careers page explicitly reports no open positions.",
+          "Resume-on-file form and mailing-list invitation are not vacancies and were not submitted."
+        ],
+        "record": "discovery-additions.json"
+      },
+      "overlap": null
+    },
+    {
+      "id": "bta",
+      "name": "Bermuda Tourism Authority",
+      "url": "https://www.gotobermuda.com/bta/employment-opportunities",
+      "automaticRefreshSupported": false,
+      "automaticRun": null,
+      "manualEvidence": {
+        "status": "embedded-results-unresolved",
+        "evidenceLevel": "primary-employment-boundary-inspected",
+        "checkedDate": "2026-10-12",
+        "primaryURL": "https://www.gotobermuda.com/bta/employment-opportunities",
+        "observedRoles": [],
+        "limits": [
+          "Page exposes recruitment copy and an empty embedded widget in the extracted view.",
+          "No current jobs collected; empty extraction is not a zero-job conclusion. Historical BI/sales ads were not promoted to current openings."
+        ],
+        "record": "discovery-additions.json"
+      },
+      "overlap": null
+    },
+    {
+      "id": "bios",
+      "name": "ASU BIOS / Bermuda Institute of Ocean Sciences",
+      "url": "https://www.bios.asu.edu/careers",
+      "automaticRefreshSupported": false,
+      "automaticRun": null,
+      "manualEvidence": {
+        "status": "technical-adjacent-role-observed-plus-past-deadlines",
+        "evidenceLevel": "primary-careers-role-details-inspected",
+        "checkedDate": "2026-10-12",
+        "primaryURL": "https://www.bios.asu.edu/careers",
+        "observedRoles": [
+          {
+            "title": "Marine Science Technician",
+            "primaryURL": "https://www.bios.asu.edu/careers",
+            "location": "ASU BIOS Bermuda and research vessel",
+            "availability": "employer states open until filled",
+            "scope": "scientific/shipboard IT, network and data acquisition; approximately150days at sea"
+          },
+          {
+            "title": "Science Education Coordinator",
+            "primaryURL": "https://www.bios.asu.edu/careers",
+            "location": "Bermuda",
+            "availability": "listed with past deadline",
+            "closingDate": "2026-09-25",
+            "scope": "scientific education/coding/GIS adjacent"
+          }
+        ],
+        "limits": [
+          "Role titles share one page; unique vacancy IDs and posted dates absent.",
+          "Marine engineer/master and facilities/maintenance roles were outside technology/data/office scope. Education/facilities deadlines in September2026 are already past."
+        ],
+        "record": "discovery-additions.json"
+      },
+      "overlap": null
+    },
+    {
+      "id": "carey-olsen",
+      "name": "Carey Olsen",
+      "url": "https://www.careyolsen.com/careers/vacancies",
+      "automaticRefreshSupported": false,
+      "automaticRun": null,
+      "manualEvidence": {
+        "status": "relevant-bermuda-roles-observed",
+        "evidenceLevel": "primary-vacancy-list-and-three-selected-details-inspected",
+        "checkedDate": "2026-10-12",
+        "primaryURL": "https://www.careyolsen.com/careers/vacancies",
+        "observedRoles": [
+          {
+            "title": "Assistant Corporate Manager (VA852)",
+            "primaryURL": "https://www.careyolsen.com/careers/vacancies/va852-assistant-corporate-manager",
+            "location": "Bermuda",
+            "availability": "listed; closing date not established",
+            "sourceJobId": "VA852"
+          },
+          {
+            "title": "Senior Corporate Administrator (VA851)",
+            "primaryURL": "https://www.careyolsen.com/careers/vacancies/va851-senior-corporate-administrator",
+            "location": "Bermuda",
+            "availability": "listed; closing date not established",
+            "sourceJobId": "VA851"
+          },
+          {
+            "title": "Trust Officer (VA788)",
+            "primaryURL": "https://www.careyolsen.com/careers/vacancies/va788-trust-officer",
+            "location": "Bermuda, UK remote, Guernsey or Jersey",
+            "availability": "listed multi-location role; closing date not established",
+            "sourceJobId": "VA788"
+          }
+        ],
+        "limits": [
+          "Global technology entries lack an explicit Bermuda location. Southampton labels need office/country resolution; the Intapp role specifies UK/Jersey. Do not assign Bermuda from a place-name match or description mention.",
+          "No application or PeopleHR submission. General speculative vacancy excluded from discrete openings."
+        ],
+        "record": "discovery-additions.json"
+      },
+      "overlap": null
+    },
+    {
+      "id": "elevate-selection",
+      "name": "Elevate Executive Selection Bermuda",
+      "url": "https://www.elevateselection.com/for-job-seekers",
+      "automaticRefreshSupported": false,
+      "automaticRun": null,
+      "manualEvidence": {
+        "status": "recruitment-boundary-without-public-role-list",
+        "evidenceLevel": "primary-bermuda-job-seeker-boundary-inspected",
+        "checkedDate": "2026-10-12",
+        "primaryURL": "https://www.elevateselection.com/for-job-seekers",
+        "observedRoles": [],
+        "limits": [
+          "Recruitment process and candidate invitation verified; no vacancy list or current roles established.",
+          "Primary homepage includes mixed/template contact text. No contact, CV submission or subscription made."
+        ],
+        "record": "discovery-additions.json"
+      },
+      "overlap": null
+    },
+    {
+      "id": "somersfield",
+      "name": "Somersfield Academy",
+      "url": "https://mysomersfield.com/careers",
+      "automaticRefreshSupported": false,
+      "automaticRun": null,
+      "manualEvidence": {
+        "status": "explicit-no-current-staff-or-faculty-positions",
+        "evidenceLevel": "primary-careers-page-inspected",
+        "checkedDate": "2026-10-12",
+        "primaryURL": "https://mysomersfield.com/careers",
+        "observedRoles": [],
+        "limits": [
+          "Primary page explicitly lists no staff and no faculty positions.",
+          "General future-interest invitation is not a current vacancy."
+        ],
+        "record": "discovery-additions.json"
+      },
+      "overlap": null
+    },
+    {
+      "id": "warwick-academy",
+      "name": "Warwick Academy",
+      "url": "https://www.warwick.bm/job-opportunities",
+      "automaticRefreshSupported": false,
+      "automaticRun": null,
+      "manualEvidence": {
+        "status": "explicit-no-current-vacancies",
+        "evidenceLevel": "primary-job-opportunities-page-inspected",
+        "checkedDate": "2026-10-12",
+        "primaryURL": "https://www.warwick.bm/job-opportunities",
+        "observedRoles": [],
+        "limits": [
+          "Primary page explicitly reports no vacancies.",
+          "Generic future CV invitation and employment background do not establish a current role."
+        ],
+        "record": "discovery-additions.json"
+      },
+      "overlap": null
+    },
+    {
+      "id": "bhs",
+      "name": "Bermuda High School (BHS)",
+      "url": "https://www.bhs.bm/about/careers",
+      "automaticRefreshSupported": false,
+      "automaticRun": null,
+      "manualEvidence": {
+        "status": "explicit-no-current-positions",
+        "evidenceLevel": "primary-careers-page-inspected",
+        "checkedDate": "2026-10-12",
+        "primaryURL": "https://www.bhs.bm/about/careers",
+        "observedRoles": [],
+        "limits": [
+          "Careers page explicitly reports no available positions.",
+          "Alumni mentoring/volunteering portals excluded from paid job counts."
+        ],
+        "record": "discovery-additions.json"
+      },
+      "overlap": null
+    },
+    {
+      "id": "ontru",
+      "name": "Ontru",
+      "url": "https://www.ontru.bm/",
+      "automaticRefreshSupported": false,
+      "automaticRun": null,
+      "manualEvidence": {
+        "status": "career-boundary-unresolved-content",
+        "evidenceLevel": "primary-career-section-and-linked-application-boundary-inspected",
+        "checkedDate": "2026-10-12",
+        "primaryURL": "https://www.ontru.bm/",
+        "observedRoles": [],
+        "limits": [
+          "Career section contains images and Apply Now; no reliable text vacancy details obtained.",
+          "Application form observed only. Image content and current role details require further read-only inspection; vacancy advertisements or zero jobs are not inferred."
+        ],
+        "record": "discovery-additions.json"
+      },
+      "overlap": null
+    },
+    {
+      "id": "cancer-health",
+      "name": "Bermuda Cancer and Health Centre",
+      "url": "https://www.cancer.bm/about-us/employment-opportunities",
+      "automaticRefreshSupported": false,
+      "automaticRun": null,
+      "manualEvidence": {
+        "status": "explicit-not-hiring-currently",
+        "evidenceLevel": "primary-employment-page-inspected",
+        "checkedDate": "2026-10-12",
+        "primaryURL": "https://www.cancer.bm/about-us/employment-opportunities",
+        "observedRoles": [],
+        "limits": [
+          "Opened current page says not hiring. Search index still shows an Oncology Clinical Manager and an HR Coordinator PDF with16February2026deadline.",
+          "Current primary page takes precedence; old indexed postings were not treated as open."
+        ],
+        "record": "discovery-additions.json"
+      },
+      "overlap": null
+    },
+    {
+      "id": "health-council",
+      "name": "Bermuda Health Council",
+      "url": "https://healthcouncil.bm/about-us/",
+      "automaticRefreshSupported": false,
+      "automaticRun": null,
+      "manualEvidence": {
+        "status": "explicit-no-current-positions",
+        "evidenceLevel": "primary-employment-section-inspected",
+        "checkedDate": "2026-10-12",
+        "primaryURL": "https://healthcouncil.bm/about-us/",
+        "observedRoles": [],
+        "limits": [
+          "Official Employment Opportunities link resolves the About Us page. Section explicitly reports no available positions.",
+          "Historical contractor/intern ads were excluded from current vacancy counts."
+        ],
+        "record": "discovery-additions.json"
+      },
+      "overlap": null
+    },
+    {
+      "id": "harneys",
+      "name": "Harneys",
+      "url": "https://www.harneys.com/careers/",
+      "automaticRefreshSupported": false,
+      "automaticRun": null,
+      "manualEvidence": {
+        "status": "inspected-public-list-no-bermuda-entries",
+        "evidenceLevel": "primary-careers-linked-full-one-page-vacancy-list-inspected",
+        "checkedDate": "2026-10-12",
+        "primaryURL": "https://www.harneys.com/careers/",
+        "observedRoles": [],
+        "limits": [
+          "Linked public Salesforce list displays Page1of1, four Cayman Islands roles and no Bermuda entries at this check.",
+          "Older Bermuda Legal Secretary/Office Coordinator LinkedIn posting says no longer accepting; not counted as current."
+        ],
+        "record": "discovery-additions.json"
+      },
+      "overlap": null
+    },
+    {
+      "id": "teneo",
+      "name": "Teneo",
+      "url": "https://www.teneo.com/careers/open-positions/",
+      "automaticRefreshSupported": false,
+      "automaticRun": null,
+      "manualEvidence": {
+        "status": "relevant-bermuda-role-observed",
+        "evidenceLevel": "primary-global-list-and-selected-bermuda-detail-inspected",
+        "checkedDate": "2026-10-12",
+        "primaryURL": "https://www.teneo.com/careers/open-positions/",
+        "observedRoles": [
+          {
+            "title": "Senior Consultant, Financial Advisory",
+            "primaryURL": "https://www.teneo.com/careers/open-positions/7762416003/",
+            "location": "Bermuda (explicit primary list label)",
+            "availability": "listed; closing date not established",
+            "sourceJobId": "7762416003",
+            "scope": "professional financial advisory/research, not generic software engineering"
+          }
+        ],
+        "limits": [
+          "Global list includes job-description mentions of Bermuda in roles actually based elsewhere; filter on vacancy location, not body keyword.",
+          "Old search-index7722293003URL redirects to current list. No whole-site enumeration or application performed."
+        ],
+        "record": "discovery-additions.json"
+      },
+      "overlap": null
+    },
+    {
+      "id": "partnerre",
+      "name": "PartnerRe",
+      "url": "https://careers.partnerre.com/go/Open-Positions/9690501/",
+      "automaticRefreshSupported": false,
+      "automaticRun": null,
+      "manualEvidence": {
+        "httpCheck": {
+          "id": "partnerre",
+          "url": "https://careers.partnerre.com/go/Open-Positions/9690501/",
+          "finalUrl": "https://careers.partnerre.com/go/Open-Positions/9690501/",
+          "status": 200,
+          "started": "2026-10-12T03:41:24.762Z",
+          "checkedAt": "2026-10-12T03:41:25.955Z",
+          "sha256": "6c1537d8a29f1ac0f9147c56b0faba2765003f2f1571f43e2511b01b411b53f2",
+          "error": null,
+          "evidenceLevel": "HTTP response captured; human listing review recorded separately"
+        },
+        "status": "four listing pages and all 56 captured role details reviewed",
+        "record": "partnerre-reviewed.json",
+        "detailsReviewed": 56,
+        "explicitBermudaSourceListings": 1,
+        "titleScopeMatches": 0,
+        "limits": [
+          "One CAT Underwriter in Bermuda is outside selected title scope; no market-wide zero claim.",
+          "Facts come from captured explicit microdata, not geographic mentions in descriptions."
+        ]
+      },
+      "overlap": null
+    },
+    {
+      "id": "convex",
+      "name": "Convex",
+      "url": "https://convexin.pinpointhq.com/",
+      "automaticRefreshSupported": false,
+      "automaticRun": null,
+      "manualEvidence": {
+        "httpCheck": {
+          "id": "convex",
+          "url": "https://convexin.pinpointhq.com/",
+          "finalUrl": "https://convexin.pinpointhq.com/",
+          "status": 200,
+          "started": "2026-10-12T03:41:25.975Z",
+          "checkedAt": "2026-10-12T03:41:26.535Z",
+          "sha256": "a7041e470640faf3133d8c11bee4a8b65f22e60a8ca1e0120e0230719d70648a",
+          "error": null,
+          "evidenceLevel": "HTTP response captured; human listing review recorded separately"
+        },
+        "status": "primary boundary captured; vacancy enumeration unresolved",
+        "record": "primary-http-checks.json"
+      },
+      "overlap": null
+    },
+    {
+      "id": "hamilton-insurance",
+      "name": "Hamilton Insurance Group",
+      "url": "https://www.hamiltongroup.com/careers/",
+      "automaticRefreshSupported": false,
+      "automaticRun": null,
+      "manualEvidence": {
+        "httpCheck": {
+          "id": "hamilton-insurance",
+          "url": "https://www.hamiltongroup.com/careers/",
+          "finalUrl": "https://www.hamiltongroup.com/careers/",
+          "status": 200,
+          "started": "2026-10-12T03:41:25.976Z",
+          "checkedAt": "2026-10-12T03:41:26.837Z",
+          "sha256": "29e701b6659c87dea9ff27c21dbff0e8d22e4a79094f385e23157b79076131d3",
+          "error": null,
+          "evidenceLevel": "HTTP response captured; human listing review recorded separately"
+        },
+        "status": "primary boundary captured; vacancy enumeration unresolved",
+        "record": "primary-http-checks.json"
+      },
+      "overlap": null
+    },
+    {
+      "id": "walkers",
+      "name": "Walkers",
+      "url": "https://www.walkersglobal.com/en/Join-Us",
+      "automaticRefreshSupported": false,
+      "automaticRun": null,
+      "manualEvidence": {
+        "httpCheck": {
+          "id": "walkers",
+          "url": "https://www.walkersglobal.com/en/Join-Us",
+          "finalUrl": "https://www.walkersglobal.com/en/Join-Us",
+          "status": 200,
+          "started": "2026-10-12T03:41:25.977Z",
+          "checkedAt": "2026-10-12T03:41:26.418Z",
+          "sha256": "d1eacd2d3c0fc1287ed8e536552d8dd8d1e056d825d1af0e8018d9b89afc9358",
+          "error": null,
+          "evidenceLevel": "HTTP response captured; human listing review recorded separately"
+        },
+        "status": "primary boundary captured; vacancy enumeration unresolved",
+        "record": "primary-http-checks.json"
+      },
+      "overlap": null
+    },
+    {
+      "id": "citco",
+      "name": "Citco",
+      "url": "https://www.citco.com/careers",
+      "automaticRefreshSupported": false,
+      "automaticRun": null,
+      "manualEvidence": {
+        "httpCheck": {
+          "id": "citco",
+          "url": "https://www.citco.com/careers",
+          "finalUrl": "https://www.citco.com/careers",
+          "status": 200,
+          "started": "2026-10-12T03:41:25.977Z",
+          "checkedAt": "2026-10-12T03:41:26.721Z",
+          "sha256": "c622493908ac5a2e14046569d4656bf93a676cf4e77c8f1c0c7712dfe0d4c611",
+          "error": null,
+          "evidenceLevel": "HTTP response captured; human listing review recorded separately"
+        },
+        "status": "primary boundary captured; vacancy enumeration unresolved",
+        "record": "primary-http-checks.json"
+      },
+      "overlap": null
+    },
+    {
+      "id": "marsh",
+      "name": "Marsh",
+      "url": "https://careers.marsh.com/global/en",
+      "automaticRefreshSupported": false,
+      "automaticRun": null,
+      "manualEvidence": {
+        "httpCheck": {
+          "id": "marsh",
+          "url": "https://careers.marsh.com/global/en",
+          "finalUrl": "https://careers.marsh.com/global/en",
+          "status": 200,
+          "started": "2026-10-12T03:41:26.837Z",
+          "checkedAt": "2026-10-12T03:41:28.204Z",
+          "sha256": "0bd7983b5645ec89f9db0fc8c6765f372e4bbc63e88f9400793b6fd3ee1a296c",
+          "error": null,
+          "evidenceLevel": "HTTP response captured; human listing review recorded separately"
+        },
+        "status": "primary boundary captured; vacancy enumeration unresolved",
+        "record": "primary-http-checks.json"
+      },
+      "overlap": null
+    },
+    {
+      "id": "wtw",
+      "name": "WTW",
+      "url": "https://careers.wtwco.com/jobs/search",
+      "automaticRefreshSupported": false,
+      "automaticRun": null,
+      "manualEvidence": {
+        "httpCheck": {
+          "id": "wtw",
+          "url": "https://careers.wtwco.com/jobs/search",
+          "finalUrl": "https://careers.wtwco.com/jobs/search",
+          "status": 200,
+          "started": "2026-10-12T03:41:26.838Z",
+          "checkedAt": "2026-10-12T03:41:27.382Z",
+          "sha256": "d559ac2f682c620ddfa7a353030a24f68255c92d6becd6ac75cded4759454fac",
+          "error": null,
+          "evidenceLevel": "HTTP response captured; human listing review recorded separately"
+        },
+        "status": "primary boundary captured; vacancy enumeration unresolved",
+        "record": "primary-http-checks.json"
+      },
+      "overlap": null
+    },
+    {
+      "id": "aon",
+      "name": "Aon",
+      "url": "https://jobs.aon.com/jobs/locations",
+      "automaticRefreshSupported": false,
+      "automaticRun": null,
+      "manualEvidence": {
+        "httpCheck": {
+          "id": "aon",
+          "url": "https://jobs.aon.com/jobs/locations",
+          "finalUrl": "https://jobs.aon.com/jobs/locations",
+          "status": 200,
+          "started": "2026-10-12T03:41:26.838Z",
+          "checkedAt": "2026-10-12T03:41:27.286Z",
+          "sha256": "5cd49b0d78df6cdd6b5102f164ba7504172a5bd750cb5c4412c203d0bb3b334a",
+          "error": null,
+          "evidenceLevel": "HTTP response captured; human listing review recorded separately"
+        },
+        "status": "complete visible Bermuda-filtered public results; detail/fit unverified",
+        "record": "employer-browser-checks.json",
+        "evidenceLevel": "Fresh visible browser DOM of primary employer public vacancy pages; only vacancy facts recorded. No application, profile or private account pages read.",
+        "checkedAt": "2026-10-12 04:06:57 UTC",
+        "counts": {
+          "pages": 1,
+          "listingsReviewed": 2
+        },
+        "selectedLeads": [
+          {
+            "sourceId": "102372",
+            "title": "Managing Director - Life Solutions - Bermuda",
+            "location": "Hamilton, BM",
+            "category": "Reinsurance",
+            "url": "https://jobs.aon.com/jobs/102372?lang=en-us&previousLocale=en-US",
+            "deadline": null,
+            "scope": "Senior business/reinsurance lead; domain and personal fit review required"
+          },
+          {
+            "sourceId": "102894",
+            "title": "Property Broker - Bermuda",
+            "location": "Hamilton, BM",
+            "category": "Broker",
+            "url": "https://jobs.aon.com/jobs/102894?lang=en-us&previousLocale=en-US",
+            "deadline": null,
+            "scope": "Brokerage adjacent to office/finance; title-rule scope presently excludes broker"
+          }
+        ],
+        "limits": "Manual result-page evidence; supported adapter pending."
+      },
+      "overlap": null
+    },
+    {
+      "id": "advantage",
+      "name": "Advantage Insurance",
+      "url": "https://advantagelife.com/careers/",
+      "automaticRefreshSupported": false,
+      "automaticRun": null,
+      "manualEvidence": {
+        "httpCheck": {
+          "id": "advantage",
+          "url": "https://advantagelife.com/careers/",
+          "finalUrl": "https://advantagelife.com/careers/",
+          "status": 200,
+          "started": "2026-10-12T03:41:26.839Z",
+          "checkedAt": "2026-10-12T03:41:27.45Z",
+          "sha256": "7ca10382f39f8467f4febbc040fe9c71a5a09881eeb96d948b7347b7f81b96a8",
+          "error": null,
+          "evidenceLevel": "HTTP response captured; human listing review recorded separately"
+        },
+        "status": "primary boundary captured; vacancy enumeration unresolved",
+        "record": "primary-http-checks.json"
+      },
+      "overlap": null
+    },
+    {
+      "id": "carrick",
+      "name": "Carrick Holdings",
+      "url": "https://www.carrickholdings.com/careers",
+      "automaticRefreshSupported": false,
+      "automaticRun": null,
+      "manualEvidence": {
+        "httpCheck": {
+          "id": "carrick",
+          "url": "https://www.carrickholdings.com/careers",
+          "finalUrl": "https://www.carrickholdings.com/careers",
+          "status": 200,
+          "started": "2026-10-12T03:41:28.204Z",
+          "checkedAt": "2026-10-12T03:41:28.461Z",
+          "sha256": "541fe1ab0a9aaa42f03cf55c212ed413c2741830107b1d9f04afb8748bd2b82f",
+          "error": null,
+          "evidenceLevel": "HTTP response captured; human listing review recorded separately"
+        },
+        "status": "primary boundary captured; vacancy enumeration unresolved",
+        "record": "primary-http-checks.json"
+      },
+      "overlap": null
+    },
+    {
+      "id": "lancashire",
+      "name": "Lancashire",
+      "url": "https://lancashire-group.pinpointhq.com/vacancies",
+      "automaticRefreshSupported": false,
+      "automaticRun": null,
+      "manualEvidence": {
+        "httpCheck": {
+          "id": "lancashire",
+          "url": "https://www.lancashiregroup.com/en/careers/current-vacancies.html",
+          "finalUrl": "https://careers.lancashiregroup.com/",
+          "status": 200,
+          "started": "2026-10-12T03:41:28.206Z",
+          "checkedAt": "2026-10-12T03:41:30.553Z",
+          "sha256": "a52b045b0ccff0e032dcd5855bfaf9ef2fdefaa369113564e8531afd99f7ad8f",
+          "error": null,
+          "evidenceLevel": "HTTP response captured; human listing review recorded separately"
+        },
+        "status": "primary boundary captured; vacancy enumeration unresolved",
+        "record": "primary-http-checks.json"
+      },
+      "overlap": null
+    }
+  ]
+}

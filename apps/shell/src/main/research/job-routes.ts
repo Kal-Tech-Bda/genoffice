@@ -6,12 +6,20 @@ export function jobSite(id: JobSiteId): JobSite {
   if (!site) throw new Error('Unsupported job source.')
   return site
 }
-export const jobStartUrl = (id: JobSiteId) => jobSite(id).feed ?? jobSite(id).url
+// The public government portal publishes these anonymous guest tenant selectors.
+// They are used only on the two public vacancy endpoints, never account/application routes.
+export const GOVERNMENT_PORTAL_TENANT = 'QLQFK026203F3VBQBV7V48MQG'
+export const jobStartUrl = (id: JobSiteId) => {
+  const site = jobSite(id)
+  return site.adapter === 'government' ? site.url : (site.feed ?? site.url)
+}
 export function jobUrl(id: JobSiteId, raw: string): string {
   const site = jobSite(id),
     url = new URL(raw, site.url)
   const allowedOrigin =
     url.origin === new URL(site.url).origin ||
+    (['greenhouse', 'government'].includes(site.adapter ?? '') &&
+      url.origin === new URL(site.feed!).origin) ||
     (id === 'linkedin' && url.origin === 'https://bm.linkedin.com')
   if (!allowedOrigin || url.username || url.password || url.hash)
     throw new Error('Job links must stay on the selected public career site.')
@@ -82,7 +90,43 @@ export function jobUrl(id: JobSiteId, raw: string): string {
       url.searchParams.get('org') === 'FRONTIER' &&
       url.searchParams.get('cws') === '40' &&
       (url.pathname.endsWith('searchResults') || /^\d+$/.test(url.searchParams.get('rid') ?? ''))
-  else if (site.adapter === 'deloitte')
+  else if (site.adapter === 'greenhouse') {
+    const feed = new URL(site.feed!),
+      board = new URL(site.url),
+      escaped = board.pathname.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'),
+      kind = board.origin === 'https://app.careerpuck.com' ? 'job' : 'jobs',
+      detail = url.pathname.match(new RegExp(`^${escaped}/${kind}/(\\d+)$`))
+    allowed =
+      (url.origin === feed.origin &&
+        url.pathname === feed.pathname &&
+        only(['content']) &&
+        url.searchParams.get('content') === 'true') ||
+      (url.origin === board.origin &&
+        ((url.pathname === board.pathname && !url.search) ||
+          (detail !== null &&
+            only(board.origin === 'https://app.careerpuck.com' ? ['gh_jid'] : []) &&
+            (!url.search || url.searchParams.get('gh_jid') === detail[1]))))
+  } else if (site.adapter === 'government') {
+    const feed = new URL(site.feed!),
+      portal = new URL(site.url)
+    allowed =
+      (url.origin === portal.origin &&
+        ((url.pathname === '/' && !url.search) ||
+          (url.pathname === '/details.html' &&
+            only(['jobId', 'jobTitle']) &&
+            /^[1-9]\d{0,7}$/.test(url.searchParams.get('jobId') ?? '') &&
+            !!url.searchParams.get('jobTitle')?.trim() &&
+            url.searchParams.get('jobTitle')!.length <= 2000))) ||
+      (url.origin === feed.origin &&
+        ((url.pathname === '/fo/rest/jobs' &&
+          only(['firstResult', 'maxResults', 'sortBy', 'sortOrder']) &&
+          /^(?:0|[1-9]\d?0)$/.test(url.searchParams.get('firstResult') ?? '') &&
+          Number(url.searchParams.get('firstResult')) < 300 &&
+          url.searchParams.get('maxResults') === '10' &&
+          url.searchParams.get('sortBy') === 'jobTitle' &&
+          url.searchParams.get('sortOrder') === 'asc') ||
+          (/^\/fo\/rest\/jobs\/[1-9]\d{0,7}\/details$/.test(url.pathname) && !url.search)))
+  } else if (site.adapter === 'deloitte')
     allowed =
       ((url.pathname === '/cbcapply/SearchJobs' || url.pathname === '/cbcapply/SearchJobs/') &&
         only(['pipelineRecordsPerPage', 'pipelineOffset']) &&
@@ -119,6 +163,12 @@ export function jobIsJson(id: JobSiteId, uri: string): boolean {
     (site.adapter === 'wordpress' && url.pathname.includes('/jm-ajax/')) ||
     (site.adapter === 'bamboo' && /\/(?:list|detail)$/.test(url.pathname)) ||
     (site.adapter === 'workday' && url.pathname.includes('/wday/cxs/')) ||
+    (site.adapter === 'greenhouse' &&
+      url.origin === new URL(site.feed!).origin &&
+      url.pathname === new URL(site.feed!).pathname) ||
+    (site.adapter === 'government' &&
+      url.origin === new URL(site.feed!).origin &&
+      /^\/fo\/rest\/jobs(?:\/[1-9]\d{0,7}\/details)?$/.test(url.pathname)) ||
     (site.adapter === 'oracle' && url.pathname.includes('/hcmRestApi/'))
   )
 }
@@ -131,7 +181,10 @@ export async function fetchJobPage(
     site = jobSite(id),
     url = new URL(uri),
     json = jobIsJson(id, uri)
-  const post = site.adapter === 'workday' && url.pathname.endsWith('/jobs')
+  const government = site.adapter === 'government' && json,
+    post =
+      (site.adapter === 'workday' && url.pathname.endsWith('/jobs')) ||
+      (government && url.pathname === '/fo/rest/jobs')
   const response = await fetch(uri, {
     signal: AbortSignal.any([signal, AbortSignal.timeout(20_000)]),
     redirect: 'error',
@@ -141,17 +194,28 @@ export async function fetchJobPage(
       Accept: json ? 'application/json' : 'text/html',
       'User-Agent': 'Infomonk/0.11 public-job-check',
       ...(post ? { 'Content-Type': 'application/json' } : {}),
+      ...(government
+        ? {
+            'lumesse-language': 'EN',
+            username: `${GOVERNMENT_PORTAL_TENANT}:guest:FO`,
+            password: 'guest',
+          }
+        : {}),
     },
     ...(post
       ? {
-          body: JSON.stringify({
-            appliedFacets: url.searchParams.has('facet')
-              ? { [url.searchParams.get('facet')!]: [url.searchParams.get('value')!] }
-              : {},
-            limit: 20,
-            offset: Number(url.searchParams.get('offset') ?? 0),
-            searchText: '',
-          }),
+          body: JSON.stringify(
+            government
+              ? { searchCriteria: { criteria: [] } }
+              : {
+                  appliedFacets: url.searchParams.has('facet')
+                    ? { [url.searchParams.get('facet')!]: [url.searchParams.get('value')!] }
+                    : {},
+                  limit: 20,
+                  offset: Number(url.searchParams.get('offset') ?? 0),
+                  searchText: '',
+                },
+          ),
         }
       : {}),
   })

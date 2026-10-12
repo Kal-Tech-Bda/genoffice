@@ -74,7 +74,7 @@ export function EvidenceDetails({
       ) : (
         <>
           <h3>
-            {details.columnId} · accepted revision {details.revision}
+            {details.columnName ?? details.columnId} · accepted revision {details.revision}
           </h3>
           <p>
             Accepted value: {String(details.cell.value ?? 'Missing')} · {details.cell.origin}
@@ -96,6 +96,7 @@ export function EvidenceDetails({
           {details.cell.evidence.map((e, i) => (
             <article key={i}>
               <strong>{e.sourceName}</strong>
+              <p>{e.uri}</p>
               <p>{e.locator}</p>
               <p>{e.excerpt}</p>
               <small>

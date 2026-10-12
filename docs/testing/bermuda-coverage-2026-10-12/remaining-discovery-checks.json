@@ -1,0 +1,994 @@
+{
+  "schemaVersion": 1,
+  "audit": "Remaining older Bermuda recruitment discovery targets",
+  "checkedOn": "2026-10-12",
+  "checkedWindowUtc": {
+    "started": "2026-10-12T04:03:39Z",
+    "ended": "2026-10-12T04:12:24Z"
+  },
+  "scope": "Public technology, data and office-role leads and recruitment boundaries. Workspace tracker with manual refresh. Read-only source research; no login, application, contact, account changes or alerts.",
+  "previousReport": "docs/use-cases/bermuda-jobs-wide-2026-10-11.md",
+  "interpretation": [
+    "Each record is one requested discovery target; PwC client recruitment and PwC employee recruitment are separate target grains.",
+    "Status applies only to the stated countGrain. A careers landing page, accessible portal, selected detail page or cached search result is not a complete vacancy search.",
+    "Counts are not additive distinct vacancies. Client anonymity, duplicate titles, programmes, mailing lists and overlap with Sompo require separate treatment.",
+    "Null totals mean unknown, not zero. Zero observed Bermuda matches in Digicel Featured Jobs does not establish zero Bermuda openings.",
+    "CheckedOn is the review date; crawlAgeReportedByTool describes source freshness. Web extraction/search may use cached versions and is not a real-time application/runtime verification.",
+    "Public pages were read manually through the web tool. Source-provider terms for programmatic acquisition were not independently reviewed; this record does not certify an automated collector."
+  ],
+  "targetCount": 17,
+  "statusCounts": {
+    "boundary-only": 9,
+    "selected roles": 5,
+    "unresolved/not-open": 2,
+    "fully paginated": 1
+  },
+  "records": [
+    {
+      "targetId": "platinum",
+      "organization": "Platinum Group",
+      "status": "boundary-only",
+      "checkedOn": "2026-10-12",
+      "evidenceMethod": "Read-only web search and opening primary public recruitment pages; no Infomonk runtime execution.",
+      "runtimeTested": false,
+      "primaryUrls": [
+        "https://www.platinumgroup.bm/jobs/",
+        "https://www.platinumgroup.bm/platinum-search/"
+      ],
+      "checks": [
+        {
+          "url": "https://www.platinumgroup.bm/jobs/",
+          "evidenceType": "web-page-extraction",
+          "observation": "Jobs route and View Jobs link opened; no vacancy rows or pagination extracted.",
+          "crawlAgeReportedByTool": "today"
+        },
+        {
+          "url": "https://www.platinumgroup.bm/corporate-administrators/",
+          "evidenceType": "web-search-index-primary",
+          "observation": "An indexed title-only page is insufficient to establish a current vacancy; direct opening timed out.",
+          "crawlAgeReportedByTool": "last week"
+        }
+      ],
+      "countGrain": "Recruiter boundary inspected; no enumerated vacancy universe.",
+      "counts": {
+        "vacanciesInspected": null,
+        "employerReportedTotal": null
+      },
+      "roleLeads": [],
+      "blockers": [
+        "Public extraction exposes the site shell, not the legacy embedded listings.",
+        "The indexed Corporate Administrators page supplies no verified vacancy date, deadline, employer or location field."
+      ],
+      "nextCheck": "Manually enumerate the public job widget or obtain a dated public vacancy export; do not record zero openings."
+    },
+    {
+      "targetId": "pwc-search",
+      "organization": "PwC Bermuda — Executive Search and Selection",
+      "status": "selected roles",
+      "checkedOn": "2026-10-12",
+      "evidenceMethod": "Read-only web search and opening primary public recruitment pages; no Infomonk runtime execution.",
+      "runtimeTested": false,
+      "primaryUrls": [
+        "https://www.pwc.com/bm/bermudatopjobs",
+        "https://www.pwc.com/bm/en/bermudatopjobs/treasury-operations-manager.html",
+        "https://www.pwc.com/bm/en/bermudatopjobs/financial-reporting-director.html",
+        "https://www.pwc.com/bm/en/bermudatopjobs/bermuda-financial-controller.html"
+      ],
+      "checks": [
+        {
+          "url": "https://www.pwc.com/bm/bermudatopjobs",
+          "evidenceType": "web-search-index-primary",
+          "observation": "Index exposes dated client-role titles, including three 2026 postings; opening returns unresolved template variables and Load more. PDF and HTML variants refer to the same leads.",
+          "crawlAgeReportedByTool": "today"
+        },
+        {
+          "url": "https://www.pwc.com/bm/en/bermudatopjobs/treasury-operations-manager.html",
+          "evidenceType": "web-page-extraction",
+          "observation": "Individual client-role page opened; posting label 22 July 2026.",
+          "crawlAgeReportedByTool": "last week"
+        }
+      ],
+      "countGrain": "Three selected client-role details, not PwC employee jobs and not an exhaustive client vacancy count.",
+      "counts": {
+        "selectedRoleDetailsInspected": 3,
+        "employerReportedTotal": null
+      },
+      "roleLeads": [
+        {
+          "title": "Treasury and Operations Manager",
+          "url": "https://www.pwc.com/bm/en/bermudatopjobs/treasury-operations-manager.html",
+          "location": "Bermuda recruitment context; role location not independently explicit",
+          "deadline": null,
+          "caveat": "Posted 22 July 2026. Anonymous life/annuity reinsurer client. Current availability and location need confirmation.",
+          "evidenceType": "web-page-extraction"
+        },
+        {
+          "title": "Director of financial reporting",
+          "url": "https://www.pwc.com/bm/en/bermudatopjobs/financial-reporting-director.html",
+          "location": "Bermuda-based reporting team",
+          "deadline": null,
+          "caveat": "Posted 16 July 2026. Anonymous insurance client; hybrid office requirement. No closing date or open-status field extracted.",
+          "evidenceType": "web-page-extraction"
+        },
+        {
+          "title": "Bermuda Financial Controller",
+          "url": "https://www.pwc.com/bm/en/bermudatopjobs/bermuda-financial-controller.html",
+          "location": "Bermuda; relocation required",
+          "deadline": null,
+          "caveat": "Posted 12 May 2026. Anonymous reinsurance client; no closing date or current open-status field extracted.",
+          "evidenceType": "web-page-extraction"
+        }
+      ],
+      "blockers": [
+        "Dynamic Load more list not traversed; older dated postings are also indexed.",
+        "Anonymous recruiter clients prevent reliable employer-level deduplication.",
+        "Unrelated historical Bermuda/immigration text on this page is visibly stale and was not used as current guidance."
+      ],
+      "nextCheck": "Capture the complete public client-role list with dates, inspect PDFs/details, and confirm open status before import."
+    },
+    {
+      "targetId": "pwc",
+      "organization": "PwC Bermuda — Employer Careers",
+      "status": "selected roles",
+      "checkedOn": "2026-10-12",
+      "evidenceMethod": "Read-only web search and opening primary public recruitment pages; no Infomonk runtime execution.",
+      "runtimeTested": false,
+      "primaryUrls": [
+        "https://www.pwc.com/bm/careers",
+        "https://www.pwc.com/bm/en/careers/experienced/job-search.html",
+        "https://www.pwc.com/gx/en/careers/job-results/description.html?wdcountry=BMU&wdjobreqid=754691WD"
+      ],
+      "checks": [
+        {
+          "url": "https://www.pwc.com/bm/careers",
+          "evidenceType": "web-search-index-primary",
+          "observation": "Index displays first ten rows and reports 13 jobs; opened page omits the dynamic rows. Pagination to remaining three was not verified.",
+          "crawlAgeReportedByTool": "3 days"
+        },
+        {
+          "url": "https://www.pwc.com/gx/en/careers/job-results/description.html?wdcountry=BMU&wdjobreqid=754691WD",
+          "evidenceType": "web-search-index-primary",
+          "observation": "Indexed employer detail provides role ID, multi-location geography and restrictive CARICOM residency/work eligibility. Direct opening returned a tool error.",
+          "crawlAgeReportedByTool": "3 days"
+        }
+      ],
+      "countGrain": "Ten indexed result rows out of a reported thirteen; one indexed detailed lead. Not thirteen freshly verified openings.",
+      "counts": {
+        "indexedRowsInspected": 10,
+        "employerReportedTotal": 13,
+        "jobDetailsOpenedSuccessfully": 0
+      },
+      "indexedResultTitles": [
+        "Assurance - Intern (Summer 2027)",
+        "Assurance Associate - HeadStart Graduate Programme",
+        "Assurance Co-op",
+        "Assurance Experienced Associate",
+        "Assurance Manager",
+        "Assurance Senior Associate",
+        "Talent Acquisition Specialist (Remote Contractor)",
+        "U.S Tax Manager - Insurance",
+        "U.S. Tax Associate",
+        "U.S. Tax Experienced Associate"
+      ],
+      "roleLeads": [
+        {
+          "title": "Talent Acquisition Specialist (Remote Contractor)",
+          "url": "https://www.pwc.com/gx/en/careers/job-results/description.html?wdcountry=BMU&wdjobreqid=754691WD",
+          "location": "Bermuda; Kingston - Scotiabank Centre",
+          "deadline": null,
+          "caveat": "Indexed description limits eligibility to CARICOM nationals legally resident and authorized to work in a CARICOM member country; visa sponsorship says no. Local Bermuda employment cannot be inferred.",
+          "evidenceType": "web-search-index-primary",
+          "jobId": "754691WD"
+        }
+      ],
+      "blockers": [
+        "Dynamic results differ between index and opened extraction.",
+        "Remaining three rows, individual availability and closing dates unverified.",
+        "Multi-location remote eligibility differs from the Bermuda country label."
+      ],
+      "nextCheck": "Complete the employer-linked public listing pagination and confirm individual role IDs/location eligibility, keeping recruiter client jobs separate."
+    },
+    {
+      "targetId": "kpmg",
+      "organization": "KPMG Bermuda",
+      "status": "selected roles",
+      "checkedOn": "2026-10-12",
+      "evidenceMethod": "Read-only web search and opening primary public recruitment pages; no Infomonk runtime execution.",
+      "runtimeTested": false,
+      "primaryUrls": [
+        "https://kpmg.com/bm/en/careers/experienced-hires/employment-opportunities.html"
+      ],
+      "checks": [
+        {
+          "url": "https://kpmg.com/bm/en/careers/experienced-hires/employment-opportunities.html",
+          "evidenceType": "web-page-extraction",
+          "observation": "Nineteen public PeopleHR role links enumerated. All attempted; eighteen details opened. Individual location fields establish Bermuda despite the shared kpmgkyvg host.",
+          "crawlAgeReportedByTool": "today"
+        }
+      ],
+      "countGrain": "Nineteen landing-page role links; eighteen inspected detail pages. Sixteen non-explicitly-closed leads include undated/future/past-start recruitment, so this is not sixteen confirmed current vacancies.",
+      "counts": {
+        "landingRoleLinksEnumerated": 19,
+        "jobDetailsAttempted": 19,
+        "jobDetailsInspected": 18,
+        "explicitlyClosedDetails": 2,
+        "unresolvedDetailLinks": 1
+      },
+      "roleLeads": [
+        {
+          "title": "Senior Manager — IT Risk and Governance",
+          "url": "https://kpmgkyvg.peoplehr.net/Pages/JobBoard/Opening.aspx?v=43b05d59-04b8-4f06-a6ab-a0c44912beb9",
+          "location": "Bermuda",
+          "deadline": "2026-10-16",
+          "caveat": "Technology audit role; title shown as Senior Manager, department IT Audit.",
+          "evidenceType": "web-page-extraction"
+        },
+        {
+          "title": "Senior Manager — Audit",
+          "url": "https://kpmgkyvg.peoplehr.net/Pages/JobBoard/Opening.aspx?v=d14a10ed-7171-401d-9962-28317985cf57",
+          "location": "Bermuda",
+          "deadline": "2026-10-16",
+          "caveat": "Audit department; not a software engineering role.",
+          "evidenceType": "web-page-extraction"
+        },
+        {
+          "title": "Manager — Audit",
+          "url": "https://kpmgkyvg.peoplehr.net/Pages/JobBoard/Opening.aspx?v=e15156d9-fc36-439a-acfa-0f874287f55c",
+          "location": "Bermuda",
+          "deadline": "2026-10-16",
+          "caveat": "Audit department.",
+          "evidenceType": "web-page-extraction"
+        },
+        {
+          "title": "Assistant Manager — Audit",
+          "url": "https://kpmgkyvg.peoplehr.net/Pages/JobBoard/Opening.aspx?v=0fbfef34-2b44-4cda-bbaf-7718f00f0a54",
+          "location": "Bermuda",
+          "deadline": "2026-10-16",
+          "caveat": "Audit department.",
+          "evidenceType": "web-page-extraction"
+        },
+        {
+          "title": "FY28 Audit Seniors",
+          "url": "https://kpmgkyvg.peoplehr.net/Pages/JobBoard/Opening.aspx?v=ef08cc8e-172d-47f6-a9d2-211951b67418",
+          "location": "Bermuda",
+          "deadline": null,
+          "caveat": "Future-cycle recruitment; no closing date extracted. Initial page opened; later repeat returned a status error.",
+          "evidenceType": "web-page-extraction"
+        },
+        {
+          "title": "FY28 Audit Associate",
+          "url": "https://kpmgkyvg.peoplehr.net/Pages/JobBoard/Opening.aspx?v=a62e66bf-94e9-4826-8d25-1b0af61a6ff1",
+          "location": "Bermuda",
+          "deadline": null,
+          "caveat": "Body says commencement September 2027; no closing date extracted.",
+          "evidenceType": "web-page-extraction"
+        },
+        {
+          "title": "FY27 Audit Seniors",
+          "url": "https://kpmgkyvg.peoplehr.net/Pages/JobBoard/Opening.aspx?v=7ae1600d-4773-4e5e-b144-73d6fee024a0",
+          "location": "Bermuda",
+          "deadline": null,
+          "caveat": "Body says commencement September 2026, already past at check date; continued recruitment not established.",
+          "evidenceType": "web-page-extraction"
+        },
+        {
+          "title": "FY27 Audit Associate",
+          "url": "https://kpmgkyvg.peoplehr.net/Pages/JobBoard/Opening.aspx?v=071b21c4-801a-4cae-b939-4d3d77fb1b01",
+          "location": "Bermuda",
+          "deadline": null,
+          "caveat": "Body says commencement September 2026, already past at check date; continued recruitment not established.",
+          "evidenceType": "web-page-extraction"
+        },
+        {
+          "title": "Senior Manager, Tax",
+          "url": "https://kpmgkyvg.peoplehr.net/Pages/JobBoard/Opening.aspx?v=a44448d7-e118-4303-b5c2-2b6965360ef4",
+          "location": "Bermuda",
+          "deadline": null,
+          "caveat": "Explicit Bermuda residence/work requirement; no closing date extracted.",
+          "evidenceType": "web-page-extraction"
+        },
+        {
+          "title": "Associate Director — Risk Consulting",
+          "url": "https://kpmgkyvg.peoplehr.net/Pages/JobBoard/Opening.aspx?v=4829cfc1-b8f5-4b02-b966-8d951c75e73a",
+          "location": "Bermuda",
+          "deadline": "2026-10-16",
+          "caveat": "Advisory department; individual page explicitly confirms Bermuda.",
+          "evidenceType": "web-page-extraction"
+        },
+        {
+          "title": "Senior Manager — Risk Consulting",
+          "url": "https://kpmgkyvg.peoplehr.net/Pages/JobBoard/Opening.aspx?v=46902ea1-a86e-4dda-9b78-b084e0639fc4",
+          "location": "Bermuda",
+          "deadline": "2026-10-16",
+          "caveat": "Advisory department.",
+          "evidenceType": "web-page-extraction"
+        },
+        {
+          "title": "Manager — Management Consulting",
+          "url": "https://kpmgkyvg.peoplehr.net/Pages/JobBoard/Opening.aspx?v=36e1ed0b-ebfe-4d3e-9592-6062cb5d9d74",
+          "location": "Bermuda",
+          "deadline": "2026-10-14",
+          "caveat": "Description includes data/analytics among broader consulting duties.",
+          "evidenceType": "web-page-extraction"
+        },
+        {
+          "title": "Manager — Risk Consulting",
+          "url": "https://kpmgkyvg.peoplehr.net/Pages/JobBoard/Opening.aspx?v=3534725f-09bf-468d-9a1e-e7602a151445",
+          "location": "Bermuda",
+          "deadline": "2026-10-16",
+          "caveat": "Distinct posting ID from the undated Risk Consulting Manager; deduplication remains required.",
+          "evidenceType": "web-page-extraction"
+        },
+        {
+          "title": "Risk Consulting Manager",
+          "url": "https://kpmgkyvg.peoplehr.net/Pages/JobBoard/Opening.aspx?v=b7329c32-5ffc-48cd-aafc-4807fd9118b7",
+          "location": "Bermuda",
+          "deadline": null,
+          "caveat": "Location Hamilton, Bermuda; no closing date extracted.",
+          "evidenceType": "web-page-extraction"
+        },
+        {
+          "title": "Risk Consulting Senior",
+          "url": "https://kpmgkyvg.peoplehr.net/Pages/JobBoard/Opening.aspx?v=ddf03768-9aea-4491-b67c-d4f6848533b7",
+          "location": "Bermuda",
+          "deadline": null,
+          "caveat": "No closing date extracted.",
+          "evidenceType": "web-page-extraction"
+        },
+        {
+          "title": "Manager — Information Technology",
+          "url": "https://kpmgkyvg.peoplehr.net/Pages/JobBoard/Opening.aspx?v=7363aa1f-349b-431e-8d94-25a10d919be5",
+          "location": "Bermuda",
+          "deadline": "2026-10-16",
+          "caveat": "Title is Manager; description and IT Department identify the technology role.",
+          "evidenceType": "web-page-extraction"
+        }
+      ],
+      "excludedOrClosedLeads": [
+        {
+          "title": "Manager — Tax",
+          "url": "https://kpmgkyvg.peoplehr.net/Pages/JobBoard/Opening.aspx?v=6ef3ad3f-e242-4295-b830-ccb23df4969e",
+          "location": "Bermuda",
+          "deadline": "2026-09-14",
+          "caveat": "Individual page explicitly marks vacancy closed although landing-page link remains.",
+          "evidenceType": "web-page-extraction"
+        },
+        {
+          "title": "Manager — Management Consulting",
+          "url": "https://kpmgkyvg.peoplehr.net/Pages/JobBoard/Opening.aspx?v=71d31298-3642-4ca6-9b94-cb60492855ed",
+          "location": "Bermuda",
+          "deadline": "2026-09-22",
+          "caveat": "Individual page explicitly marks vacancy closed; distinct from the Management Consulting Manager closing 14 October.",
+          "evidenceType": "web-page-extraction"
+        }
+      ],
+      "blockers": [
+        "The first Tax-section Senior Manager detail link failed twice; its URL/details were not exposed by the tool.",
+        "Several roles lack closing dates; FY27 roles still mention a September 2026 start.",
+        "Similar titles across departments and different posting IDs require deduplication rather than title-only counting."
+      ],
+      "nextCheck": "Recheck availability near the 14/16 October deadlines and resolve the one failed detail. Preserve closed and future-cycle status in any tracker."
+    },
+    {
+      "targetId": "butterfield",
+      "organization": "Butterfield",
+      "status": "boundary-only",
+      "checkedOn": "2026-10-12",
+      "evidenceMethod": "Read-only web search and opening primary public recruitment pages; no Infomonk runtime execution.",
+      "runtimeTested": false,
+      "primaryUrls": [
+        "https://www.butterfieldgroup.com/careers/our-locations/bermuda",
+        "https://career5.successfactors.eu/career?company=Butterfield"
+      ],
+      "checks": [
+        {
+          "url": "https://www.butterfieldgroup.com/careers/our-locations/bermuda",
+          "evidenceType": "web-page-extraction",
+          "observation": "Bermuda employer page directly links the public SuccessFactors portal.",
+          "crawlAgeReportedByTool": "4 days"
+        },
+        {
+          "url": "https://career5.successfactors.eu/career?company=Butterfield",
+          "evidenceType": "web-page-extraction",
+          "observation": "Portal loads a search shell with a JavaScript-disabled notice; no role rows extracted.",
+          "crawlAgeReportedByTool": "today"
+        }
+      ],
+      "countGrain": "Official Bermuda route and recruitment portal verified, not a current vacancy enumeration.",
+      "counts": {
+        "vacanciesInspected": null,
+        "employerReportedTotal": null
+      },
+      "roleLeads": [],
+      "priorEvidence": {
+        "date": "2026-10-11",
+        "source": "docs/use-cases/bermuda-jobs-wide-2026-10-11.md",
+        "roleIds": ["1846", "1874"],
+        "note": "Earlier browser check saw Lending Assistant and Trust Administrator; not freshly reverified in this web-only check."
+      },
+      "blockers": ["Dynamic SuccessFactors search/pagination unavailable in extracted text."],
+      "nextCheck": "Use the public portal's Bermuda location filter and inspect all result pages, rechecking the two previously observed roles."
+    },
+    {
+      "targetId": "hsbc",
+      "organization": "HSBC Bermuda",
+      "status": "boundary-only",
+      "checkedOn": "2026-10-12",
+      "evidenceMethod": "Read-only web search and opening primary public recruitment pages; no Infomonk runtime execution.",
+      "runtimeTested": false,
+      "primaryUrls": [
+        "https://www.about.hsbc.bm/careers",
+        "https://portal.careers.hsbc.com/careers?location=Bermuda"
+      ],
+      "checks": [
+        {
+          "url": "https://www.about.hsbc.bm/careers",
+          "evidenceType": "web-page-extraction",
+          "observation": "Employer directly links a Bermuda-filtered global careers portal.",
+          "crawlAgeReportedByTool": "6 days"
+        },
+        {
+          "url": "https://portal.careers.hsbc.com/careers?location=Bermuda",
+          "evidenceType": "web-page-extraction",
+          "observation": "Portal labels Bermuda jobs but exposes dynamic configuration rather than result rows.",
+          "crawlAgeReportedByTool": "today"
+        }
+      ],
+      "countGrain": "Employer-linked location boundary, no enumerated vacancy results.",
+      "counts": {
+        "vacanciesInspected": null,
+        "employerReportedTotal": null
+      },
+      "roleLeads": [],
+      "blockers": [
+        "Dynamic portal result list not available through web extraction; no pagination or location-field validation."
+      ],
+      "nextCheck": "Read the complete public Bermuda results and individual role details; do not use login or talent-network submission."
+    },
+    {
+      "targetId": "aspen",
+      "organization": "Aspen",
+      "status": "boundary-only",
+      "checkedOn": "2026-10-12",
+      "evidenceMethod": "Read-only web search and opening primary public recruitment pages; no Infomonk runtime execution.",
+      "runtimeTested": false,
+      "primaryUrls": ["https://www.aspen.co/", "https://www.sompo.com/"],
+      "checks": [
+        {
+          "url": "https://www.aspen.co/",
+          "evidenceType": "public-redirect",
+          "observation": "Primary homepage redirects to sompo.com.",
+          "crawlAgeReportedByTool": "yesterday"
+        },
+        {
+          "url": "https://www.aspen.co/careers/",
+          "evidenceType": "extraction-failure",
+          "observation": "Old guessed careers route returns 404."
+        }
+      ],
+      "countGrain": "Organization route resolution only; not an additional independent vacancy search.",
+      "counts": {
+        "vacanciesInspected": null,
+        "employerReportedTotal": null
+      },
+      "roleLeads": [],
+      "overlapsTarget": "sompo",
+      "blockers": [
+        "Old careers route obsolete; actual job coverage now overlaps the independently checked Sompo target."
+      ],
+      "nextCheck": "Use the employer-linked Sompo recruitment path and retain Aspen as an alias, avoiding duplicate source and vacancy counts."
+    },
+    {
+      "targetId": "athene",
+      "organization": "Athene",
+      "status": "boundary-only",
+      "checkedOn": "2026-10-12",
+      "evidenceMethod": "Read-only web search and opening primary public recruitment pages; no Infomonk runtime execution.",
+      "runtimeTested": false,
+      "primaryUrls": [
+        "https://www.athene.com/careers",
+        "https://athene.wd5.myworkdayjobs.com/athene_careers"
+      ],
+      "checks": [
+        {
+          "url": "https://www.athene.com/careers",
+          "evidenceType": "web-page-extraction",
+          "observation": "Correct careers route links the public Workday list and describes multiple countries, including Bermuda.",
+          "crawlAgeReportedByTool": "yesterday"
+        },
+        {
+          "url": "https://athene.wd5.myworkdayjobs.com/athene_careers",
+          "evidenceType": "web-page-extraction",
+          "observation": "Public recruitment list returns no extractable content.",
+          "crawlAgeReportedByTool": "today"
+        }
+      ],
+      "countGrain": "Global employer careers and Workday boundary; featured global jobs do not establish Bermuda roles.",
+      "counts": {
+        "vacanciesInspected": null,
+        "employerReportedTotal": null
+      },
+      "roleLeads": [],
+      "excludedOrUnconfirmedLeads": [
+        {
+          "title": "Associate Vice President — Finance & Actuarial Technology Delivery",
+          "url": "https://athene.wd5.myworkdayjobs.com/en-US/athene_careers/job/West-Des-Moines-Iowa/Associate-Vice-President--AVP----Finance-Actuary-Data---Reinsurance-Delivery_R254891?q=r254891",
+          "location": "West Des Moines, Iowa (public link path)",
+          "deadline": null,
+          "caveat": "Featured careers link points to Iowa; detail body is not extractable. Excluded from Bermuda leads.",
+          "evidenceType": "web-page-extraction"
+        }
+      ],
+      "blockers": [
+        "Workday content requires dynamic rendering; Bermuda filter and pagination not executed.",
+        "Featured roles on global careers page lack explicit local location fields."
+      ],
+      "nextCheck": "Enumerate employer-linked Workday Bermuda results rather than matching Bermuda text in the global employer description."
+    },
+    {
+      "targetId": "fireminds",
+      "organization": "Fireminds",
+      "status": "unresolved/not-open",
+      "checkedOn": "2026-10-12",
+      "evidenceMethod": "Read-only web search and opening primary public recruitment pages; no Infomonk runtime execution.",
+      "runtimeTested": false,
+      "primaryUrls": [],
+      "attemptedOrganizationUrls": [
+        "https://www.fireminds.com/",
+        "https://www.fireminds.com/company",
+        "https://www.fireminds.com/careers/"
+      ],
+      "checks": [
+        {
+          "url": "https://www.fireminds.com/",
+          "evidenceType": "extraction-failure",
+          "observation": "Production homepage not accessible via this tool."
+        },
+        {
+          "url": "https://dev.fireminds.com/company",
+          "evidenceType": "web-search-index-primary",
+          "observation": "Organization-hosted development mirror describes careers and Bermuda headquarters, but names no vacancy and is not established as the current production recruitment route.",
+          "crawlAgeReportedByTool": "2 weeks"
+        }
+      ],
+      "countGrain": "Unresolved production recruitment boundary; no vacancy count.",
+      "counts": {
+        "vacanciesInspected": null,
+        "employerReportedTotal": null
+      },
+      "roleLeads": [],
+      "blockers": [
+        "Production routes could not be inspected.",
+        "A development mirror's generic opportunities claim cannot establish current vacancies."
+      ],
+      "nextCheck": "Establish the live employer-linked public recruitment route before importing any role."
+    },
+    {
+      "targetId": "digicel",
+      "organization": "Digicel Group",
+      "status": "boundary-only",
+      "checkedOn": "2026-10-12",
+      "evidenceMethod": "Read-only web search and opening primary public recruitment pages; no Infomonk runtime execution.",
+      "runtimeTested": false,
+      "primaryUrls": [
+        "https://careers.digicelgroup.com/",
+        "https://careers.digicelgroup.com/search/",
+        "https://careers.digicelgroup.com/go/Featured-Jobs/767702/",
+        "https://careers.digicelgroup.com/go/Featured-Jobs/767702/25/?q=&sortColumn=referencedate&sortDirection=desc"
+      ],
+      "checks": [
+        {
+          "url": "https://careers.digicelgroup.com/search/",
+          "evidenceType": "web-page-extraction",
+          "observation": "Public accessible search route exposes controls, no extracted search rows.",
+          "crawlAgeReportedByTool": "yesterday"
+        },
+        {
+          "url": "https://careers.digicelgroup.com/go/Featured-Jobs/767702/",
+          "evidenceType": "web-page-extraction",
+          "observation": "Featured subset page 1 reports 1–25 of 32 and lists 25 regional roles, none with a Bermuda location field.",
+          "crawlAgeReportedByTool": "today"
+        },
+        {
+          "url": "https://careers.digicelgroup.com/go/Featured-Jobs/767702/25/?q=&sortColumn=referencedate&sortDirection=desc",
+          "evidenceType": "web-page-extraction",
+          "observation": "Linked final page reports 26–33 of 33 with eight rows. Totals/crawls differ, so no coherent complete snapshot.",
+          "crawlAgeReportedByTool": "yesterday"
+        }
+      ],
+      "countGrain": "Two global Featured Jobs pages inspected, 33 displayed row observations across inconsistent snapshots; not a complete Bermuda search.",
+      "counts": {
+        "featuredPageRowObservations": 33,
+        "pageReportedTotals": [32, 33],
+        "bermudaLocationMatchesWithinObservedRows": 0,
+        "employerBermudaVacancyTotal": null
+      },
+      "roleLeads": [],
+      "blockers": [
+        "No Bermuda location-filter result was established.",
+        "Featured Jobs is a subset of recruitment, and totals differ between retrieved pages.",
+        "Keyword references to Bermuda on roles located in Kingston must not be treated as Bermuda vacancies."
+      ],
+      "nextCheck": "Run the public actual-location Bermuda search, traverse its complete results and verify job-location fields. Zero observed featured matches does not mean zero Bermuda openings."
+    },
+    {
+      "targetId": "ey",
+      "organization": "EY Bermuda",
+      "status": "selected roles",
+      "checkedOn": "2026-10-12",
+      "evidenceMethod": "Read-only web search and opening primary public recruitment pages; no Infomonk runtime execution.",
+      "runtimeTested": false,
+      "primaryUrls": [
+        "https://www.ey.com/en_us/bbc",
+        "https://careers.ey.com/",
+        "https://careers.ey.com/ey/job/Bermuda-FSO-EY-Parthenon-Transaction-Diligence-Senior-HM08/1421428833",
+        "https://careers.ey.com/ey/job/Bermuda-FSO-Core-Business-Services-Executive-Assistant-HM08/1428066833/"
+      ],
+      "checks": [
+        {
+          "url": "https://www.ey.com/en_us/bbc",
+          "evidenceType": "web-search-index-primary",
+          "observation": "Regional primary page establishes Bermuda office/careers context; guessed en_bm/careers route was unavailable.",
+          "crawlAgeReportedByTool": "3 days"
+        },
+        {
+          "url": "https://careers.ey.com/ey/job/Bermuda-FSO-EY-Parthenon-Transaction-Diligence-Senior-HM08/1421428833",
+          "evidenceType": "web-page-extraction",
+          "observation": "Detail explicitly labels Bermuda and 10 October 2026; requisition 1731711.",
+          "crawlAgeReportedByTool": "today"
+        },
+        {
+          "url": "https://careers.ey.com/ey/job/Bermuda-FSO-Core-Business-Services-Executive-Assistant-HM08/1428066833/",
+          "evidenceType": "web-page-extraction",
+          "observation": "Detail explicitly labels Bermuda and 17 September 2026; requisition 1736328.",
+          "crawlAgeReportedByTool": "yesterday"
+        }
+      ],
+      "countGrain": "Two selected Bermuda details inspected; no full EY Bermuda result pagination.",
+      "counts": {
+        "selectedRoleDetailsInspected": 2,
+        "employerReportedTotal": null
+      },
+      "roleLeads": [
+        {
+          "title": "FSO EY Parthenon — Transaction Diligence — Senior",
+          "url": "https://careers.ey.com/ey/job/Bermuda-FSO-EY-Parthenon-Transaction-Diligence-Senior-HM08/1421428833",
+          "location": "Bermuda",
+          "deadline": null,
+          "caveat": "Posting date 10 October 2026; primary location only. No closing date extracted.",
+          "evidenceType": "web-page-extraction",
+          "jobId": "1731711",
+          "postedOn": "2026-10-10"
+        },
+        {
+          "title": "FSO Core Business Services — Executive Assistant",
+          "url": "https://careers.ey.com/ey/job/Bermuda-FSO-Core-Business-Services-Executive-Assistant-HM08/1428066833/",
+          "location": "Bermuda",
+          "deadline": null,
+          "caveat": "Posting date 17 September 2026; primary location only. No closing date extracted.",
+          "evidenceType": "web-page-extraction",
+          "jobId": "1736328",
+          "postedOn": "2026-09-17"
+        }
+      ],
+      "blockers": [
+        "Full country-filtered result universe not enumerated.",
+        "Broad technology/data searches also surface Mauritius roles; these were excluded using actual location fields.",
+        "Old FY26 job pages/search entries cannot establish current openings."
+      ],
+      "nextCheck": "Complete the public Bermuda country/location search and inspect all role details, retaining posted date separately from deadline."
+    },
+    {
+      "targetId": "conyers",
+      "organization": "Conyers",
+      "status": "boundary-only",
+      "checkedOn": "2026-10-12",
+      "evidenceMethod": "Read-only web search and opening primary public recruitment pages; no Infomonk runtime execution.",
+      "runtimeTested": false,
+      "primaryUrls": [
+        "https://www.conyers.com/about-us/careers/",
+        "https://www.conyers.com/about-us/careers/corporate-services-professionals/",
+        "https://www.conyers.com/about-us/careers/business-services-teams/",
+        "https://www.conyers.com/about-us/careers/graduates-students/"
+      ],
+      "checks": [
+        {
+          "url": "https://www.conyers.com/about-us/careers/corporate-services-professionals/",
+          "evidenceType": "web-page-extraction",
+          "observation": "One visible Senior Immigration Specialist role is Cayman Islands; Bermuda office boilerplate is not its location.",
+          "crawlAgeReportedByTool": "yesterday"
+        },
+        {
+          "url": "https://www.conyers.com/about-us/careers/business-services-teams/",
+          "evidenceType": "web-page-extraction",
+          "observation": "Two visible compliance roles are Hong Kong, not Bermuda.",
+          "crawlAgeReportedByTool": "2 days"
+        },
+        {
+          "url": "https://www.conyers.com/about-us/careers/graduates-students/",
+          "evidenceType": "web-search-index-primary",
+          "observation": "Bermuda student programmes are described; 17 April 2026 award and annual 31 March internship deadlines are already past for the present year.",
+          "crawlAgeReportedByTool": "2 weeks"
+        }
+      ],
+      "countGrain": "Relevant corporate/business department pages and student boundary inspected; three visible non-Bermuda role cards. No complete organization vacancy count.",
+      "counts": {
+        "departmentRoleCardsInspected": 3,
+        "bermudaVacancyTotal": null
+      },
+      "roleLeads": [],
+      "blockers": [
+        "Visible department roles are other jurisdictions; Bermuda office text appears on every page.",
+        "General rolling student/gap-year recruitment has no dated current vacancy confirmation.",
+        "Experienced-lawyer opportunities and future student deadlines not completely checked."
+      ],
+      "nextCheck": "Inspect dated Bermuda-specific opportunities across relevant department/programme pages; keep evergreen student recruitment separate from active vacancies."
+    },
+    {
+      "targetId": "appleby",
+      "organization": "Appleby / Appleby Global Services",
+      "status": "selected roles",
+      "checkedOn": "2026-10-12",
+      "evidenceMethod": "Read-only web search and opening primary public recruitment pages; no Infomonk runtime execution.",
+      "runtimeTested": false,
+      "primaryUrls": [
+        "https://www.applebyglobal.com/careers/",
+        "https://appleby-recruitment.azurewebsites.net/",
+        "https://appleby-recruitment.azurewebsites.net/?careerssource=www.applebyglobal.com?careerssource%3Dwww.applebyglobal.com"
+      ],
+      "checks": [
+        {
+          "url": "https://www.applebyglobal.com/careers/",
+          "evidenceType": "web-page-extraction",
+          "observation": "Employer links its public Azure recruitment site.",
+          "crawlAgeReportedByTool": "2 days"
+        },
+        {
+          "url": "https://appleby-recruitment.azurewebsites.net/?careerssource=www.applebyglobal.com?careerssource%3Dwww.applebyglobal.com",
+          "evidenceType": "web-page-extraction",
+          "observation": "A publicly indexed variant opens ten cards: five Bermuda internship/trainee entries plus one Bermuda student mailing-list entry, and four other-country entries. Direct unqualified root intermittently times out.",
+          "crawlAgeReportedByTool": "5 days"
+        }
+      ],
+      "countGrain": "Ten visible portal cards including programmes and mailing-list registration, plus selected standalone details; not ten jobs or a fully enumerated Bermuda vacancy universe.",
+      "counts": {
+        "visiblePortalCards": 10,
+        "visibleBermudaRoleOrProgrammeCards": 5,
+        "visibleBermudaMailingListCards": 1,
+        "standaloneOlderDetailsInspected": 3,
+        "employerReportedTotal": null
+      },
+      "roleLeads": [
+        {
+          "title": "Human Resources Intern",
+          "url": "https://appleby-recruitment.azurewebsites.net/1529/Human-Resources-Intern",
+          "location": "Bermuda",
+          "deadline": null,
+          "caveat": "Listed 25 September 2026 for winter programme. Listing inconsistently mentions law-degree students but requirements specify HR degree/equivalent. Individual link returned cache miss.",
+          "evidenceType": "web-page-extraction",
+          "jobId": "1529",
+          "postedOn": "2026-09-25"
+        },
+        {
+          "title": "2026 AGS Winter Intern",
+          "url": "https://appleby-recruitment.azurewebsites.net/1512/2026-AGS-Winter-Intern",
+          "location": "Bermuda",
+          "deadline": null,
+          "caveat": "Listed 21 August 2026; detail opened. Student programme with corporate administration/compliance/research tasks; no closing date extracted.",
+          "evidenceType": "web-page-extraction",
+          "jobId": "1512",
+          "postedOn": "2026-08-21"
+        }
+      ],
+      "otherVisibleBermudaProgrammes": [
+        {
+          "title": "2028 Trainee/Pupilage Program",
+          "jobId": "1514",
+          "url": "https://appleby-recruitment.azurewebsites.net/1514/2028-TraineePupilage-Program",
+          "deadline": "2028-07-31",
+          "caveat": "Future legal-training intake; listing limits eligibility to Bermudians, spouses of Bermudians and PRC holders. Individual link cache miss."
+        },
+        {
+          "title": "2026 ABL Winter Intern",
+          "jobId": "1511",
+          "caveat": "Legal student programme; no independently opened detail."
+        },
+        {
+          "title": "2027 Trainee/Pupilage Programme",
+          "jobId": "1387",
+          "caveat": "Future legal-training intake; no independently opened detail."
+        }
+      ],
+      "olderStandaloneDetails": [
+        {
+          "title": "Corporate Administrator",
+          "url": "https://appleby-recruitment.azurewebsites.net/1507/Corporate-Administrator",
+          "location": "Bermuda",
+          "deadline": null,
+          "caveat": "Detail opens with 10 August 2026 posting; absent from the inspected portal cards, so current availability is unconfirmed.",
+          "evidenceType": "web-page-extraction",
+          "jobId": "1507"
+        },
+        {
+          "title": "Senior Corporate Administrator",
+          "url": "https://appleby-recruitment.azurewebsites.net/1508/Senior-Corporate-Administrator",
+          "location": "Bermuda",
+          "deadline": null,
+          "caveat": "Detail opens with 10 August 2026 posting; absent from inspected portal cards, so current availability is unconfirmed.",
+          "evidenceType": "web-page-extraction",
+          "jobId": "1508"
+        },
+        {
+          "title": "Legal Executive Assistant",
+          "url": "https://appleby-recruitment.azurewebsites.net/1310/Legal-Executive-Assistant",
+          "location": "Bermuda",
+          "deadline": null,
+          "caveat": "Detail opens with 21 December 2024 posting; absent from inspected portal cards and too old to count as freshly verified vacancy.",
+          "evidenceType": "web-page-extraction",
+          "jobId": "1310"
+        }
+      ],
+      "blockers": [
+        "Portal root/detail fetching intermittent; query variant and primary search index show changing card membership.",
+        "No terminal count/pagination completeness proof.",
+        "Student mailing-list entry is not a vacancy.",
+        "Standalone public details can remain accessible after disappearing from current listing."
+      ],
+      "nextCheck": "Use the public Bermuda office filter, prove complete results and reconcile current list membership before importing older standalone roles."
+    },
+    {
+      "targetId": "belco",
+      "organization": "Bermuda Electric Light Company (BELCO)",
+      "status": "boundary-only",
+      "checkedOn": "2026-10-12",
+      "evidenceMethod": "Read-only web search and opening primary public recruitment pages; no Infomonk runtime execution.",
+      "runtimeTested": false,
+      "primaryUrls": ["https://belco.bm/opportunities/"],
+      "checks": [
+        {
+          "url": "https://belco.bm/opportunities/",
+          "evidenceType": "web-page-extraction",
+          "observation": "Actual careers route describes recruitment, internships and engineering mentoring but names no dated vacancy in the extracted page.",
+          "crawlAgeReportedByTool": "today"
+        }
+      ],
+      "countGrain": "Employer careers information boundary; no enumerated vacancy list.",
+      "counts": {
+        "vacanciesInspected": null,
+        "employerReportedTotal": null
+      },
+      "roleLeads": [],
+      "blockers": [
+        "No named dated roles, vacancy links, deadlines or public result count extracted."
+      ],
+      "nextCheck": "Find dated employer vacancy notices linked from its public opportunities route; do not treat generic recruitment wording as either an opening or zero openings."
+    },
+    {
+      "targetId": "saltus",
+      "organization": "Saltus Grammar School",
+      "status": "boundary-only",
+      "checkedOn": "2026-10-12",
+      "evidenceMethod": "Read-only web search and opening primary public recruitment pages; no Infomonk runtime execution.",
+      "runtimeTested": false,
+      "primaryUrls": ["https://www.saltus.bm/explore/careers"],
+      "checks": [
+        {
+          "url": "https://www.saltus.bm/explore/careers",
+          "evidenceType": "web-page-extraction",
+          "observation": "Correct careers route describes education employment and directs enquiries to HR; no named dated vacancy list extracted.",
+          "crawlAgeReportedByTool": "today"
+        }
+      ],
+      "countGrain": "Employer careers boundary, not a vacancy search.",
+      "counts": {
+        "vacanciesInspected": null,
+        "employerReportedTotal": null
+      },
+      "roleLeads": [],
+      "blockers": [
+        "No public named office/technology vacancy, role count or deadline extracted.",
+        "Teaching certification text is general programme context, not a current opening."
+      ],
+      "nextCheck": "Inspect any dated employer recruitment notices and distinguish teaching positions from relevant office/data/technology roles."
+    },
+    {
+      "targetId": "hprincess",
+      "organization": "Hamilton Princess & Beach Club",
+      "status": "fully paginated",
+      "checkedOn": "2026-10-12",
+      "evidenceMethod": "Read-only web search and opening primary public recruitment pages; no Infomonk runtime execution.",
+      "runtimeTested": false,
+      "primaryUrls": [
+        "https://www.thehamiltonprincess.com/careers/",
+        "https://careers.accor.com/global/en/jobs?options=&page=1&q=hamilton+princess+bermuda"
+      ],
+      "checks": [
+        {
+          "url": "https://www.thehamiltonprincess.com/careers/",
+          "evidenceType": "web-page-extraction",
+          "observation": "Hotel explicitly links this Accor keyword search.",
+          "crawlAgeReportedByTool": "2 weeks"
+        },
+        {
+          "url": "https://careers.accor.com/global/en/jobs?options=&page=1&q=hamilton+princess+bermuda",
+          "evidenceType": "web-page-extraction",
+          "observation": "Query reports two results; both cards are present, both location fields name the hotel in Hamilton, Bermuda, and no further result page is exposed. Both individual details opened.",
+          "crawlAgeReportedByTool": "2 weeks"
+        }
+      ],
+      "countGrain": "All two results of the exact employer-linked keyword query; does not prove all Hamilton Princess openings under every possible search alias.",
+      "counts": {
+        "queryReportedTotal": 2,
+        "queryResultCardsInspected": 2,
+        "selectedRoleDetailsInspected": 2
+      },
+      "roleLeads": [
+        {
+          "title": "Groups & Event Reservations Specialist",
+          "url": "https://careers.accor.com/global/en/job/groups-and-event-reservations-specialist-in-hamilton-princess-and-beach-club-a-fairmont-manage-jid-84345",
+          "location": "Hamilton Princess & Beach Club, Hamilton, Bermuda",
+          "deadline": null,
+          "caveat": "Permanent/full-time. Expiry display 01/01/0001 is a sentinel, not a valid deadline; source crawl is two weeks old.",
+          "evidenceType": "web-page-extraction",
+          "jobId": "68098829-a51b-4df6-b040-34693aa012ce"
+        },
+        {
+          "title": "Royal Service Agent",
+          "url": "https://careers.accor.com/global/en/job/royal-service-agent-in-hamilton-princess-and-beach-club-a-fairmont-manage-jid-82775",
+          "location": "Hamilton Princess & Beach Club, Hamilton, Bermuda",
+          "deadline": null,
+          "caveat": "Permanent/full-time. Expiry display 01/01/0001 is a sentinel, not a valid deadline; source crawl is two weeks old.",
+          "evidenceType": "web-page-extraction",
+          "jobId": "b310938f-8a57-4f10-91df-17b2a4c3e24c"
+        }
+      ],
+      "blockers": [
+        "Keyword-query completeness is narrower than employer-wide completeness.",
+        "Cached page age limits current-availability assurance; valid deadlines not supplied."
+      ],
+      "nextCheck": "Refresh the employer-linked public query and compare hotel/location aliases; preserve unknown deadlines and inspect roles again before relying on availability."
+    },
+    {
+      "targetId": "bes",
+      "organization": "Bermuda Executive Services (BES)",
+      "status": "unresolved/not-open",
+      "checkedOn": "2026-10-12",
+      "evidenceMethod": "Read-only web search and opening primary public recruitment pages; no Infomonk runtime execution.",
+      "runtimeTested": false,
+      "primaryUrls": [],
+      "attemptedOrganizationUrls": [
+        "https://www.bermudaemployment.com/",
+        "https://bermudaemployment.com/",
+        "https://bes.bm/"
+      ],
+      "checks": [
+        {
+          "url": "https://www.bermudaemployment.com/",
+          "evidenceType": "extraction-failure",
+          "observation": "Last-known project recruitment domain cannot be opened in this web-only check; bare and www variants both unavailable."
+        }
+      ],
+      "countGrain": "Unresolved employer/recruiter identity and live public recruitment route; no vacancy count.",
+      "counts": {
+        "vacanciesInspected": null,
+        "employerReportedTotal": null
+      },
+      "roleLeads": [],
+      "rejectedUnverifiedCandidates": [
+        {
+          "url": "https://job-boards.greenhouse.io/bescareers",
+          "reason": "Search result uses BES Careers but no primary Bermuda Executive Services link/identity association established; its no-openings text cannot be attributed to this Bermuda recruiter."
+        },
+        {
+          "url": "https://besjobboard.com/",
+          "reason": "Similarly named executive-search board has no verified association with the Bermuda recruiter."
+        }
+      ],
+      "blockers": [
+        "Last-known domain is unavailable to the tool; earlier report saw a default blog, not established recruitment content.",
+        "Search result names alone risk conflating unrelated BES organizations."
+      ],
+      "nextCheck": "Establish a current first-party recruiter website/link before counting this as a searched Bermuda jobs source."
+    }
+  ]
+}

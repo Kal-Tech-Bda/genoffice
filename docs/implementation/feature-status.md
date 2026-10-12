@@ -1,12 +1,26 @@
 # Infomonk feature status
 
-Updated 11 October 2026. Evidence levels are **runtime-tested**, **unit-tested** and
+Updated 12 October 2026. Evidence levels are **runtime-tested**, **unit-tested** and
 **source-confirmed**. A source trace or enabled button alone is not runtime proof.
 
 The [expanded jobs check](../use-cases/bermuda-jobs-wide-2026-10-11.md) supersedes
 the narrow three-site pilot: 19 registered public sources, pagination, explicit
 partial coverage, 24 uncollected targets, source-listing tracking and immutable
 HTML/JSON evidence. See its manifest for executed Windows tests and exact counts.
+
+The [12 October coverage review](../use-cases/bermuda-coverage-2026-10-12.md)
+supersedes those counts. The registry now separates 26 supported source checks
+from 52 further targets. A careers boundary, selected browser detail and complete
+declared-query collection have different evidence levels; 78 targets do not
+mean 78 collected websites. The latest manifest records executed results.
+
+| Latest iteration                                               | Evidence and boundary                                                                                                                          | Paths                                                    |
+| -------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
+| Whole-table search, source/role/status filters and saved views | Native 205-listing search beyond row 100, shortlist and restart; views do not change accepted rows                                             | `pages.ts`, `TableFilters.tsx`, SQLite schema 3          |
+| Vacancy-fact refresh summaries                                 | Native changed date/disappearance/no-fact-change checks; timestamps and snapshot versions do not become vacancy changes                        | `job-changes.ts`, `ResearchPanel.tsx`                    |
+| Ordinary public HTML tables                                    | Native synthetic 205 rows and live official 40 rows/four tables; context and readable native evidence; partial/unsupported structures rejected | `html-tables.ts`, `table-fetch.ts`, `HtmlTableInput.tsx` |
+| Expanded employer/recruiter sources                            | Reuses Workday/BambooHR; adds bounded Greenhouse and government public endpoints; exact declared scopes in source checks                       | `jobs-api.ts`, `job-routes.ts`, `job-adapters.ts`        |
+| Configured publisher identity                                  | Marked internal with no fabricated listing-field citation; recruiter clients remain unknown when unstated                                      | `jobs.ts`                                                |
 
 Stages 3–5 now implement the bounded research behaviors below; the Stage 1–2
 table following it retains the earlier milestone's evidence.

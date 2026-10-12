@@ -16,9 +16,10 @@ export async function projectDataset(
   let zip: JSZip | undefined
   for (let i = 0; i < tables.length; i++) {
     const table = tables[i]
-    // Stable machine column IDs survive edits to display labels in the review UI.
+    // Public table headings are display labels; immutable metadata retains their column IDs.
+    const displayHeaders = table.id.startsWith('html_')
     const rows = [
-      [...table.columns.map((c) => c.id), '_infomonk_record_id'],
+      [...table.columns.map((c) => (displayHeaders ? c.name : c.id)), '_infomonk_record_id'],
       ...table.rows.map((r) => [...table.columns.map((c) => r.cells[c.id]?.value ?? ''), r.id]),
     ]
     const csv = rows
@@ -47,7 +48,27 @@ export async function projectDataset(
       }
     xml = xml.replace(
       '<sheetData>',
-      `<cols>${table.columns.map((c, index) => `<col min="${index + 1}" max="${index + 1}" width="${c.id === 'supplier' || c.id === 'description' || c.id === 'country' ? 26 : 16}" customWidth="1"/>`).join('')}<col min="${table.columns.length + 1}" max="${table.columns.length + 1}" hidden="1" width="12" customWidth="1"/></cols><sheetData>`,
+      `<cols>${table.columns
+        .map((c, index) => {
+          const width = displayHeaders
+            ? Math.max(
+                16,
+                Math.min(
+                  40,
+                  Math.max(
+                    c.name.length,
+                    ...table.rows.map((r) => String(r.cells[c.id]?.value ?? '').length),
+                  ) + 2,
+                ),
+              )
+            : c.id === 'supplier' || c.id === 'description' || c.id === 'country'
+              ? 26
+              : 16
+          return `<col min="${index + 1}" max="${index + 1}" width="${width}" customWidth="1"/>`
+        })
+        .join(
+          '',
+        )}<col min="${table.columns.length + 1}" max="${table.columns.length + 1}" hidden="1" width="12" customWidth="1"/></cols><sheetData>`,
     )
     if (!zip) {
       zip = part

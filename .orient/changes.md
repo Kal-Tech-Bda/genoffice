@@ -82,3 +82,37 @@ journeys; skipped and historical failures remain explicitly recorded. The data
 engineering harness remains deferred to the final phase.
 
 ---
+
+## 2026-10-12T04:30:01Z — codex/infomonk-workspace — working tree versus bd316fe3
+
+Expanded Bermuda collection to 26 supported public source checks and an
+individually evidenced 78-target inventory. The native tracker contains 137
+source listings; Saved status and a note survive manual refresh, restart and
+native workbook evidence inspection. Primary research now covers complete
+BHB and government lists, 18 KPMG details, all 56 captured PartnerRe details,
+and employer/recruiter boundaries with their exact limits. Two manual research
+reports persist as sources in the same isolated workspace without changing its
+accepted listing history.
+
+The same iteration adds whole-table search/filter/sort, saved shortlist views,
+vacancy-fact refresh summaries and complete ordinary HTML-table acquisition.
+It reuses the research ledger, queue, parse5, native editors and existing
+Workday/BambooHR routes; no dependencies or lockfiles changed. Review fixed
+stale discovery/page responses, context/header ambiguity, configured employer
+names citing posting dates, unsupported availability-flag proof and physical
+warehouse duties presented without domain review.
+
+Verification passed 178 focused tests (5 explicit skips), selected native
+persona/HTML/jobs/attachment journeys, all workspace type checks and affected
+builds. Lint has zero errors and 12 existing warnings; theme, comment and license
+checks pass. Full XLSX quality checks reconcile all 137 records and 78 source
+checks. Existing broad/Windows test limitations remain documented.
+
+Three limits remain: 52 targets are outside automatic acquisition despite
+manual inspection and supported searches can be partial; source listings and
+title rules cannot establish distinct vacancies or personal fit; native sheet
+edits still need reviewed ledger corrections to survive a research refresh.
+The engineering harness remains disabled and last. No application, subscription,
+account change, unrelated deletion or dependency upgrade was introduced.
+
+---

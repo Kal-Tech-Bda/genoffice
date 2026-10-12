@@ -16,6 +16,7 @@ import { hash } from '../src/main/research/extract'
 import type { ResearchConfig } from '../src/shared/research-api'
 import { publicHtml } from '@genoffice/electron-utils/public-html'
 import JSZip from 'jszip'
+import { DatabaseSync } from 'node:sqlite'
 const bmaList = '<h1>Open Positions</h1><a href="/bmacareers/job/IT123">Systems Analyst</a>'
 const bmaDetail = (closing = '16 October 2026') =>
   `<script type="application/ld+json">${JSON.stringify({ '@type': 'JobPosting', title: 'Systems Analyst', datePosted: '2026-10-02', hiringOrganization: 'BMA', jobLocation: [{ address: { addressCountry: 'Bermuda' } }] })}</script><p>Applications must be received no later than ${closing}.</p>`
@@ -26,6 +27,64 @@ const cgDetail =
 const expertise = (title = 'Data Analyst') =>
   `<h2>Available Jobs</h2><div class="s-item-text"><div class="s-rich-text-wrapper"><p style="font-size:14px">${title}</p><p style="font-size:12px">Bermuda</p><p>Download job description</p><p style="font-size:14px">Legal Secretary (Bermuda)</p><p style="font-size:12px">Cayman</p><p style="font-size:14px">Accountant</p><p style="font-size:12px">Cayman</p></div></div>`
 const services: ResearchService[] = []
+
+it('requires a fresh jobs run after provenance rules change while preserving accepted history', async () => {
+  const root = mkdtempSync(join(tmpdir(), 'infomonk-jobs-version-')),
+    workspace = new WorkspaceStore(root)
+  const project = await workspace.create({
+    name: 'Version fence',
+    description: '',
+    startKind: 'researchWeb',
+  })
+  const service = new ResearchService(root, workspace)
+  services.push(service)
+  const workflow = service.save(project.id, 'Jobs', {
+    kind: 'jobs',
+    instructions: 'Technology and office',
+    sourceIds: [],
+    fields: [],
+    countries: [],
+    fromYear: 2023,
+    toYear: 2024,
+    jobSiteIds: ['bma'],
+  })
+  vi.stubGlobal(
+    'fetch',
+    vi.fn(
+      async (url: string) =>
+        new Response(url === jobSite('bma').url ? bmaList : bmaDetail(), {
+          headers: { 'content-type': 'text/html' },
+        }),
+    ),
+  )
+  const first = service.run(project.id, workflow.id, false)
+  await vi.waitFor(() => expect(service.store.run(first.id).status).toBe('review'))
+  await service.publish(project.id, first.id, true, false)
+  const accepted = service.store.accepted(workflow.id)
+  const pending = service.run(project.id, workflow.id, false)
+  await vi.waitFor(() => expect(service.store.run(pending.id).status).toBe('review'))
+  const legacy = new DatabaseSync(join(root, 'infomonk-research.sqlite'))
+  try {
+    legacy
+      .prepare('UPDATE runs SET processing_version=? WHERE id=?')
+      .run('bermuda-jobs-2/schema-2', pending.id)
+  } finally {
+    legacy.close()
+  }
+  await expect(service.publish(project.id, pending.id, true, false)).rejects.toThrow(/obsolete/i)
+  expect(service.store.accepted(workflow.id)).toEqual(accepted)
+  expect(service.store.workflow(workflow.id).acceptedRevision).toBe(1)
+  service.store.cancel(pending.id)
+  const fresh = service.run(project.id, workflow.id, false)
+  await vi.waitFor(() => expect(service.store.run(fresh.id).status).toBe('review'))
+  expect(service.store.run(fresh.id).processingVersion).toBe('bermuda-jobs-3/schema-2')
+  await service.publish(project.id, fresh.id, true, false)
+  const current = service.store.accepted(workflow.id)!.tables[0].rows[0]
+  expect(current.id).toBe(accepted!.tables[0].rows[0].id)
+  expect(current.cells.title.value).toBe('Systems Analyst')
+  expect(current.cells.closing_date.value).toBe('2026-10-16')
+  expect(service.store.workflow(workflow.id).acceptedRevision).toBe(2)
+})
 afterEach(() => {
   for (const service of services.splice(0)) {
     service.close()

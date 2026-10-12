@@ -21,8 +21,21 @@ export function researchMetadata(
             ),
           )
         ? 'World Bank, World Development Indicators, SP.POP.TOTL; original URLs and retrieval times are recorded in cell evidence. CC BY 4.0 subject to source terms. Human changes are labeled manual.'
-        : 'User-provided document snapshots; source versions and locators are recorded in cell evidence. Human changes are labeled manual.',
-    tables: dataset.tables.map((t) => ({ id: t.id, name: t.name, columns: t.columns })),
+        : dataset.tables.some((t) =>
+              t.rows.some((r) =>
+                Object.values(r.cells).some((c) =>
+                  c.evidence.some((e) => e.method === 'html-tables-v1'),
+                ),
+              ),
+            )
+          ? 'Captured public HTML or project-provided HTML snapshots; original URLs, retrieval times, source versions and cell locators are recorded in evidence. Static page/table scope only; source terms apply. Context notes remain review issues. Human changes are labeled manual.'
+          : 'User-provided document snapshots; source versions and locators are recorded in cell evidence. Human changes are labeled manual.',
+    tables: dataset.tables.map((t) => ({
+      id: t.id,
+      name: t.name,
+      columns: t.columns,
+      ...(t.id.startsWith('html_') ? { headerMode: 'labels' } : {}),
+    })),
   })
 }
 export function checkedResearchMetadata(

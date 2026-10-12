@@ -411,11 +411,14 @@ export function jobDataset(
         cells: Object.fromEntries(
           JOB_COLUMNS.map((c) => {
             const proof = entry.proof[c.id],
-              ev = proof
-                ? [evidenceFor(observation, proof)]
-                : ['application_status', 'notes'].includes(c.id)
-                  ? []
-                  : derived
+              configuredEmployer = c.id === 'employer' && !!values.employer && !proof,
+              ev = configuredEmployer
+                ? []
+                : proof
+                  ? [evidenceFor(observation, proof)]
+                  : ['application_status', 'notes'].includes(c.id)
+                    ? []
+                    : derived
             const issues =
               c.id === 'location' &&
               (/all jurisdictions|not stated|confirm/i.test(entry.location ?? '') ||
@@ -431,8 +434,14 @@ export function jobDataset(
                 values[c.id],
                 ev,
                 `Not stated on the checked listing`,
-                issues,
-                ['application_status', 'notes', 'role_group', 'scope_reason'].includes(c.id)
+                configuredEmployer
+                  ? [
+                      ...issues,
+                      'Configured publisher identity; not stated in the captured listing.',
+                    ]
+                  : issues,
+                configuredEmployer ||
+                  ['application_status', 'notes', 'role_group', 'scope_reason'].includes(c.id)
                   ? 'internal'
                   : 'external',
               ),

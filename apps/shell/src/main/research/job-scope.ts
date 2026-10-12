@@ -11,8 +11,12 @@ export function jobScope(title: string): string | null {
     return 'Technology'
   if (/\banalysts?\b/i.test(title)) return 'Analyst — domain review'
   if (/\breinsurance professionals?\b/i.test(title)) return 'Broad recruiter pool — scope review'
+  if (/\b(?:warehouse|logistics)\b/i.test(title))
+    return /\b(?:customer service|operations|administrat(?:ion|ive)|office)\b/i.test(title)
+      ? 'Mixed operational role — domain review'
+      : null
   if (
-    /\b(?:administrat(?:ors?|ion|ive)|account(?:ant|ants|ing)|bookkeep(?:er|ing)|office|secretar(?:y|ies)|paralegal|receptionist|clerk|finance|financial|controller|compliance|claims|operations|audit|tax|risk|supervision|human resources|employee relations|project|relationship manager|brokerage|commercial director|business development|(?:executive|personal|underwriting) assistant)\b/i.test(
+    /\b(?:administrat(?:ors?|ion|ive)|account(?:ant|ants|ing)|bookkeep(?:er|ing)|office|secretar(?:y|ies)|paralegal|receptionist|clerk|finance|financial|controller|compliance|claims|operations|audit|tax|risk|supervision|human resources|HR|employee relations|payroll|procurement|purchasing|trust|fiduciary|corporate|treasury|secretarial|customer service|talent development|learning\s+(?:&|and)\s+talent|country head|project|relationship manager|brokerage|commercial director|business development|(?:executive|personal|underwriting) assistant)\b/i.test(
       title,
     )
   )

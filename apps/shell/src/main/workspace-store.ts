@@ -200,7 +200,7 @@ export class WorkspaceStore {
     const before = this.get(id).workspace.sources.find((source) => source.id === sourceId)
     if (!before?.snapshotPath) throw new Error('Choose a saved local source to update.')
     if (
-      !['.xlsx', '.csv', '.tsv', '.docx', '.pdf', '.md', '.txt'].includes(
+      !['.xlsx', '.csv', '.tsv', '.docx', '.pdf', '.md', '.txt', '.html', '.htm'].includes(
         extname(path).toLowerCase(),
       )
     )

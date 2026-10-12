@@ -1,0 +1,624 @@
+{
+  "schemaVersion": 1,
+  "checkedDate": "2026-10-12",
+  "scope": {
+    "location": "Bermuda",
+    "roles": ["technology", "data", "office"],
+    "tracking": "workspace with manual refresh"
+  },
+  "method": "Read existing 11October source inventory first, discover additional organizations, inspect primary recruitment boundaries and selected details through the web tool. Web-tool page content may be cached; this is manual discovery evidence, not app acquisition/runtime verification.",
+  "counts": {
+    "candidateOrganizations": 22,
+    "inspectedPrimaryRecruitmentOrganizations": 21,
+    "primaryIndexOnlyFollowUps": 1,
+    "additionalFullyCollectedSources": 0
+  },
+  "countingRules": [
+    "Count one organization once even when its employer page and ATS use different domains.",
+    "Boundary inspection, current vacancy collection, talent pools, explicit no-current-position pages and unresolved widgets are distinct evidence states.",
+    "Observed role entries are selected leads/capacities and must not be summed as confirmed-open or distinct vacancies.",
+    "This file excludes the existing43targets and root's independent insurer/broker/fund-service discoveries."
+  ],
+  "entries": [
+    {
+      "id": "act",
+      "name": "Applied Computer Technologies (ACT)",
+      "verifiedPrimaryURL": "https://www.act.bm/careers/",
+      "category": "local-technology-employer",
+      "status": "evergreen-recruitment",
+      "evidenceLevel": "primary-recruitment-boundary-and-capacities-inspected",
+      "bermudaRelevance": "The careers page identifies ACT as based in Bermuda, serving Caribbean clients.",
+      "observedRoles": [
+        {
+          "title": "On-Site Engineer",
+          "primaryURL": "https://www.act.bm/careers/",
+          "location": "Bermuda employer; individual work locations unstated",
+          "availability": "evergreen capacity invitation; not a discrete verified vacancy"
+        },
+        {
+          "title": "Sales",
+          "primaryURL": "https://www.act.bm/careers/",
+          "location": "Bermuda employer; individual work locations unstated",
+          "availability": "evergreen capacity invitation; not a discrete verified vacancy"
+        },
+        {
+          "title": "Remote Service Desk",
+          "primaryURL": "https://www.act.bm/careers/",
+          "location": "Bermuda employer; individual work locations unstated",
+          "availability": "evergreen capacity invitation; not a discrete verified vacancy"
+        },
+        {
+          "title": "Accounting (AR/AP)",
+          "primaryURL": "https://www.act.bm/careers/",
+          "location": "Bermuda employer; individual work locations unstated",
+          "availability": "evergreen capacity invitation; not a discrete verified vacancy"
+        }
+      ],
+      "limits": [
+        "No dated vacancy IDs, deadlines or confirmed vacancy counts. Resume retention and broad invitation indicate an evergreen intake.",
+        "Application form was not submitted."
+      ],
+      "priority": 1
+    },
+    {
+      "id": "ocorian",
+      "name": "Ocorian",
+      "verifiedPrimaryURL": "https://www.ocorian.com/careers/search",
+      "category": "corporate-and-trust-services-employer",
+      "status": "relevant-roles-observed-partial-list",
+      "evidenceLevel": "primary-list-and-selected-role-details-inspected",
+      "bermudaRelevance": "Employer Bermuda office page identifies Hamilton. Trust role ATS confirms Hamilton, Bermuda; corporate role ATS jurisdiction is Bermuda.",
+      "evidenceURLs": [
+        "https://www.ocorian.com/location/bermuda",
+        "https://www.ocorian.com/job/trust-administrator-private-wealth",
+        "https://jobs.smartrecruiters.com/Ocorian/744000143284424-corporate-administrator-capital-markets"
+      ],
+      "observedRoles": [
+        {
+          "title": "Trust Administrator (Private Wealth)",
+          "primaryURL": "https://www.ocorian.com/job/trust-administrator-private-wealth",
+          "location": "Hamilton, Bermuda",
+          "availability": "listed; closing date not established"
+        },
+        {
+          "title": "Corporate Administrator | Capital Markets",
+          "primaryURL": "https://jobs.smartrecruiters.com/Ocorian/744000143284424-corporate-administrator-capital-markets",
+          "location": "Bermuda",
+          "availability": "listed; closing date not established",
+          "sourceJobId": "744000143284424"
+        }
+      ],
+      "limits": [
+        "Only selected roles and the first global search results were read; entire Hamilton facet/pagination not collected.",
+        "Two routes are one employer source, not two sources."
+      ],
+      "priority": 1
+    },
+    {
+      "id": "steph-brown",
+      "name": "Steph Brown / O My Word recruitment",
+      "verifiedPrimaryURL": "https://www.recruitment.bm/projects",
+      "category": "local-recruiter",
+      "status": "relevant-roles-observed",
+      "evidenceLevel": "primary-vacancy-blocks-and-details-inspected",
+      "bermudaRelevance": "All three blocks explicitly state Bermuda or Hamilton, Bermuda.",
+      "observedRoles": [
+        {
+          "title": "Controller",
+          "primaryURL": "https://www.recruitment.bm/projects",
+          "location": "Bermuda",
+          "availability": "listed; closing date not established"
+        },
+        {
+          "title": "Risk Leader",
+          "primaryURL": "https://www.recruitment.bm/projects",
+          "location": "Bermuda",
+          "availability": "listed; closing date not established"
+        },
+        {
+          "title": "Risk Actuary",
+          "primaryURL": "https://www.recruitment.bm/projects",
+          "location": "Hamilton, Bermuda",
+          "availability": "listed; closing date not established",
+          "scope": "specialist quantitative/actuarial adjacent role"
+        }
+      ],
+      "limits": [
+        "Client employers, posting dates, IDs and closing dates are absent.",
+        "Controller duties describe medical-software finance/payroll, but qualifications discuss structured credit/catastrophe models; retain inconsistency for review rather than silently repair."
+      ],
+      "priority": 1
+    },
+    {
+      "id": "iep",
+      "name": "Island Employment Partners (IEP)",
+      "verifiedPrimaryURL": "https://www.iep.bm/jobs",
+      "category": "local-recruiter",
+      "status": "evergreen-and-old-posts",
+      "evidenceLevel": "primary-list-and-selected-role-details-inspected",
+      "bermudaRelevance": "Primary site lists Hamilton, Bermuda office; executive support detail explicitly describes Bermuda corporate environments.",
+      "observedRoles": [
+        {
+          "title": "Executive Assistants",
+          "primaryURL": "https://www.iep.bm/job/executive-legal-assistant",
+          "location": "Bermuda",
+          "availability": "continuous talent intake",
+          "postedDate": "2025-09-02"
+        },
+        {
+          "title": "Corporate Administrators",
+          "primaryURL": "https://www.iep.bm/job/pricing-actuary-permanent-----life-reinsurance",
+          "location": "Bermuda recruiter; client location not independently established",
+          "availability": "ongoing client-demand talent intake",
+          "postedDate": "2025-09-02"
+        },
+        {
+          "title": "Project Consultants - Executive Support",
+          "primaryURL": "https://www.iep.bm/jobs",
+          "location": "Bermuda recruiter",
+          "availability": "listed old post; detail not inspected",
+          "postedDate": "2025-09-02"
+        }
+      ],
+      "limits": [
+        "Seven list entries dated September/November2025; a publication date alone does not prove a current vacancy.",
+        "Two inspected details describe recurring talent needs rather than discrete employer openings. Corporate Administrator URL slug incorrectly refers to a pricing actuary; title/body take precedence."
+      ],
+      "priority": 2
+    },
+    {
+      "id": "cml",
+      "name": "CML Offshore Recruitment",
+      "verifiedPrimaryURL": "https://www.cml.ky/bermuda",
+      "category": "offshore-recruiter",
+      "status": "dynamic-results-unresolved",
+      "evidenceLevel": "primary-bermuda-recruitment-boundary-and-linked-portal-inspected",
+      "bermudaRelevance": "Primary Bermuda page explicitly covers IT, finance and legal professional recruitment.",
+      "evidenceURLs": ["https://www.cml.ky/job-results"],
+      "observedRoles": [],
+      "limits": [
+        "Linked result page contains Shazamme scaffolding and a zero counter; dynamic vacancy data was not resolved.",
+        "Do not interpret the scaffold as no Bermuda jobs; no login or registration performed."
+      ],
+      "priority": 1
+    },
+    {
+      "id": "bermuda-college",
+      "name": "Bermuda College",
+      "verifiedPrimaryURL": "https://www.college.bm/index.php/job-postings",
+      "category": "education-employer",
+      "status": "explicit-no-current-postings",
+      "evidenceLevel": "primary-job-postings-page-inspected",
+      "bermudaRelevance": "Bermuda tertiary institution; administrative and technology functions are plausible future coverage, not current vacancy evidence.",
+      "observedRoles": [],
+      "limits": [
+        "Primary page explicitly reports no postings at this check.",
+        "Separate recruitment route is a CognitoForms application iframe, not a vacancy list."
+      ],
+      "priority": 2
+    },
+    {
+      "id": "bcaa",
+      "name": "Bermuda Civil Aviation Authority",
+      "verifiedPrimaryURL": "https://www.bcaa.bm/careers",
+      "category": "regulator-employer",
+      "status": "explicit-no-current-openings",
+      "evidenceLevel": "primary-careers-page-inspected",
+      "bermudaRelevance": "Bermuda authority; careers page names support functions including finance, administration, HR, IT and business development.",
+      "observedRoles": [],
+      "limits": [
+        "No current openings reported on the observed primary page.",
+        "Distinct from Skyport and Bermuda Airport Authority."
+      ],
+      "priority": 2
+    },
+    {
+      "id": "ra",
+      "name": "Regulatory Authority of Bermuda",
+      "verifiedPrimaryURL": "https://www.ra.bm/about/careers",
+      "category": "regulator-employer",
+      "status": "explicit-no-current-openings",
+      "evidenceLevel": "primary-careers-page-inspected",
+      "bermudaRelevance": "Primary careers page gives Hamilton, Bermuda address; authority regulates communications and electricity.",
+      "observedRoles": [],
+      "limits": [
+        "Primary careers page explicitly reports no open positions.",
+        "Resume-on-file form and mailing-list invitation are not vacancies and were not submitted."
+      ],
+      "priority": 2
+    },
+    {
+      "id": "bta",
+      "name": "Bermuda Tourism Authority",
+      "verifiedPrimaryURL": "https://www.gotobermuda.com/bta/employment-opportunities",
+      "category": "tourism-and-research-employer",
+      "status": "embedded-results-unresolved",
+      "evidenceLevel": "primary-employment-boundary-inspected",
+      "bermudaRelevance": "Official Bermuda Tourism Authority recruitment route; organizational data/insights functions justify inclusion.",
+      "observedRoles": [],
+      "limits": [
+        "Page exposes recruitment copy and an empty embedded widget in the extracted view.",
+        "No current jobs collected; empty extraction is not a zero-job conclusion. Historical BI/sales ads were not promoted to current openings."
+      ],
+      "priority": 1
+    },
+    {
+      "id": "bios",
+      "name": "ASU BIOS / Bermuda Institute of Ocean Sciences",
+      "verifiedPrimaryURL": "https://www.bios.asu.edu/careers",
+      "category": "scientific-and-technical-employer",
+      "status": "technical-adjacent-role-observed-plus-past-deadlines",
+      "evidenceLevel": "primary-careers-role-details-inspected",
+      "bermudaRelevance": "Bermuda institute and vessel operations; IT-adjacent role combines shore support and substantial shipboard rotations.",
+      "observedRoles": [
+        {
+          "title": "Marine Science Technician",
+          "primaryURL": "https://www.bios.asu.edu/careers",
+          "location": "ASU BIOS Bermuda and research vessel",
+          "availability": "employer states open until filled",
+          "scope": "scientific/shipboard IT, network and data acquisition; approximately150days at sea"
+        },
+        {
+          "title": "Science Education Coordinator",
+          "primaryURL": "https://www.bios.asu.edu/careers",
+          "location": "Bermuda",
+          "availability": "listed with past deadline",
+          "closingDate": "2026-09-25",
+          "scope": "scientific education/coding/GIS adjacent"
+        }
+      ],
+      "limits": [
+        "Role titles share one page; unique vacancy IDs and posted dates absent.",
+        "Marine engineer/master and facilities/maintenance roles were outside technology/data/office scope. Education/facilities deadlines in September2026 are already past."
+      ],
+      "priority": 1
+    },
+    {
+      "id": "carey-olsen",
+      "name": "Carey Olsen",
+      "verifiedPrimaryURL": "https://www.careyolsen.com/careers/vacancies",
+      "category": "legal-and-corporate-services-employer",
+      "status": "relevant-bermuda-roles-observed",
+      "evidenceLevel": "primary-vacancy-list-and-three-selected-details-inspected",
+      "bermudaRelevance": "Three primary entries explicitly include Bermuda in Location.",
+      "observedRoles": [
+        {
+          "title": "Assistant Corporate Manager (VA852)",
+          "primaryURL": "https://www.careyolsen.com/careers/vacancies/va852-assistant-corporate-manager",
+          "location": "Bermuda",
+          "availability": "listed; closing date not established",
+          "sourceJobId": "VA852"
+        },
+        {
+          "title": "Senior Corporate Administrator (VA851)",
+          "primaryURL": "https://www.careyolsen.com/careers/vacancies/va851-senior-corporate-administrator",
+          "location": "Bermuda",
+          "availability": "listed; closing date not established",
+          "sourceJobId": "VA851"
+        },
+        {
+          "title": "Trust Officer (VA788)",
+          "primaryURL": "https://www.careyolsen.com/careers/vacancies/va788-trust-officer",
+          "location": "Bermuda, UK remote, Guernsey or Jersey",
+          "availability": "listed multi-location role; closing date not established",
+          "sourceJobId": "VA788"
+        }
+      ],
+      "limits": [
+        "Global technology entries lack an explicit Bermuda location. Southampton labels need office/country resolution; the Intapp role specifies UK/Jersey. Do not assign Bermuda from a place-name match or description mention.",
+        "No application or PeopleHR submission. General speculative vacancy excluded from discrete openings."
+      ],
+      "priority": 1
+    },
+    {
+      "id": "performance-solutions",
+      "name": "Performance Solutions Limited",
+      "verifiedPrimaryURL": "https://psolutions.bm/",
+      "category": "local-hr-and-recruitment-firm",
+      "status": "linked-ats-results-unresolved",
+      "evidenceLevel": "primary-recruitment-boundary-and-linked-ats-inspected",
+      "bermudaRelevance": "Primary Bermuda HR/recruitment firm identifies local talent and consulting services.",
+      "evidenceURLs": ["https://performancesolutions.bamboohr.com/careers/"],
+      "observedRoles": [],
+      "limits": [
+        "Official Open Roles link leads to BambooHR; web extraction returned an empty document.",
+        "Do not claim zero openings; client/employer identity and Bermuda locations require public ATS collection."
+      ],
+      "priority": 1
+    },
+    {
+      "id": "elevate-selection",
+      "name": "Elevate Executive Selection Bermuda",
+      "verifiedPrimaryURL": "https://www.elevateselection.com/for-job-seekers",
+      "category": "local-recruiter",
+      "status": "recruitment-boundary-without-public-role-list",
+      "evidenceLevel": "primary-bermuda-job-seeker-boundary-inspected",
+      "bermudaRelevance": "Page names Elevate Executive Selection Bermuda and discusses local employer recruitment/work eligibility.",
+      "observedRoles": [],
+      "limits": [
+        "Recruitment process and candidate invitation verified; no vacancy list or current roles established.",
+        "Primary homepage includes mixed/template contact text. No contact, CV submission or subscription made."
+      ],
+      "priority": 2
+    },
+    {
+      "id": "somersfield",
+      "name": "Somersfield Academy",
+      "verifiedPrimaryURL": "https://mysomersfield.com/careers",
+      "category": "education-employer",
+      "status": "explicit-no-current-staff-or-faculty-positions",
+      "evidenceLevel": "primary-careers-page-inspected",
+      "bermudaRelevance": "Bermuda school employer, including non-teaching staff boundary.",
+      "observedRoles": [],
+      "limits": [
+        "Primary page explicitly lists no staff and no faculty positions.",
+        "General future-interest invitation is not a current vacancy."
+      ],
+      "priority": 3
+    },
+    {
+      "id": "warwick-academy",
+      "name": "Warwick Academy",
+      "verifiedPrimaryURL": "https://www.warwick.bm/job-opportunities",
+      "category": "education-employer",
+      "status": "explicit-no-current-vacancies",
+      "evidenceLevel": "primary-job-opportunities-page-inspected",
+      "bermudaRelevance": "Page explicitly identifies Warwick Academy, Bermuda.",
+      "observedRoles": [],
+      "limits": [
+        "Primary page explicitly reports no vacancies.",
+        "Generic future CV invitation and employment background do not establish a current role."
+      ],
+      "priority": 3
+    },
+    {
+      "id": "bhs",
+      "name": "Bermuda High School (BHS)",
+      "verifiedPrimaryURL": "https://www.bhs.bm/about/careers",
+      "category": "education-employer",
+      "status": "explicit-no-current-positions",
+      "evidenceLevel": "primary-careers-page-inspected",
+      "bermudaRelevance": "Primary page identifies the Bermuda school and local address.",
+      "observedRoles": [],
+      "limits": [
+        "Careers page explicitly reports no available positions.",
+        "Alumni mentoring/volunteering portals excluded from paid job counts."
+      ],
+      "priority": 3
+    },
+    {
+      "id": "ontru",
+      "name": "Ontru",
+      "verifiedPrimaryURL": "https://www.ontru.bm/",
+      "category": "local-recruiter-and-business-consultant",
+      "status": "career-boundary-unresolved-content",
+      "evidenceLevel": "primary-career-section-and-linked-application-boundary-inspected",
+      "bermudaRelevance": "Primary site gives Hamilton, Bermuda address and recruitment/immigration services.",
+      "evidenceURLs": ["https://www.ontru.bm/application-form"],
+      "observedRoles": [],
+      "limits": [
+        "Career section contains images and Apply Now; no reliable text vacancy details obtained.",
+        "Application form observed only. Image content and current role details require further read-only inspection; vacancy advertisements or zero jobs are not inferred."
+      ],
+      "priority": 2
+    },
+    {
+      "id": "cancer-health",
+      "name": "Bermuda Cancer and Health Centre",
+      "verifiedPrimaryURL": "https://www.cancer.bm/about-us/employment-opportunities",
+      "category": "health-nonprofit-employer",
+      "status": "explicit-not-hiring-currently",
+      "evidenceLevel": "primary-employment-page-inspected",
+      "bermudaRelevance": "Bermuda independent nonprofit with technology/operations and administrative functions.",
+      "observedRoles": [],
+      "limits": [
+        "Opened current page says not hiring. Search index still shows an Oncology Clinical Manager and an HR Coordinator PDF with16February2026deadline.",
+        "Current primary page takes precedence; old indexed postings were not treated as open."
+      ],
+      "priority": 2
+    },
+    {
+      "id": "health-council",
+      "name": "Bermuda Health Council",
+      "verifiedPrimaryURL": "https://healthcouncil.bm/about-us/",
+      "category": "health-regulator-and-data-employer",
+      "status": "explicit-no-current-positions",
+      "evidenceLevel": "primary-employment-section-inspected",
+      "bermudaRelevance": "Employment section identifies Bermuda council; primary data/reporting functions and Hamilton address make it relevant to data/office coverage.",
+      "observedRoles": [],
+      "limits": [
+        "Official Employment Opportunities link resolves the About Us page. Section explicitly reports no available positions.",
+        "Historical contractor/intern ads were excluded from current vacancy counts."
+      ],
+      "priority": 2
+    },
+    {
+      "id": "harneys",
+      "name": "Harneys",
+      "verifiedPrimaryURL": "https://www.harneys.com/careers/",
+      "category": "legal-and-business-services-employer",
+      "status": "inspected-public-list-no-bermuda-entries",
+      "evidenceLevel": "primary-careers-linked-full-one-page-vacancy-list-inspected",
+      "bermudaRelevance": "Primary locations page verifies Sterling House, Hamilton, Bermuda office.",
+      "evidenceURLs": [
+        "https://www.harneys.com/locations/",
+        "https://fs-7986.my.salesforce-sites.com/recruit/fRecruit__ApplyJobList?portal=Candidate"
+      ],
+      "observedRoles": [],
+      "limits": [
+        "Linked public Salesforce list displays Page1of1, four Cayman Islands roles and no Bermuda entries at this check.",
+        "Older Bermuda Legal Secretary/Office Coordinator LinkedIn posting says no longer accepting; not counted as current."
+      ],
+      "priority": 2
+    },
+    {
+      "id": "teneo",
+      "name": "Teneo",
+      "verifiedPrimaryURL": "https://www.teneo.com/careers/open-positions/",
+      "category": "advisory-and-research-employer",
+      "status": "relevant-bermuda-role-observed",
+      "evidenceLevel": "primary-global-list-and-selected-bermuda-detail-inspected",
+      "bermudaRelevance": "Global vacancy block explicitly labels the inspected Financial Advisory role Bermuda.",
+      "observedRoles": [
+        {
+          "title": "Senior Consultant, Financial Advisory",
+          "primaryURL": "https://www.teneo.com/careers/open-positions/7762416003/",
+          "location": "Bermuda (explicit primary list label)",
+          "availability": "listed; closing date not established",
+          "sourceJobId": "7762416003",
+          "scope": "professional financial advisory/research, not generic software engineering"
+        }
+      ],
+      "limits": [
+        "Global list includes job-description mentions of Bermuda in roles actually based elsewhere; filter on vacancy location, not body keyword.",
+        "Old search-index7722293003URL redirects to current list. No whole-site enumeration or application performed."
+      ],
+      "priority": 1
+    },
+    {
+      "id": "msa",
+      "name": "Mount Saint Agnes Academy",
+      "verifiedPrimaryURL": "https://msa.bm/career-opportunities/",
+      "category": "education-employer",
+      "status": "primary-index-only-current-fetch-unavailable",
+      "evidenceLevel": "primary-search-index-only",
+      "bermudaRelevance": "Primary school career page identifies Bermuda school and local address.",
+      "observedRoles": [
+        {
+          "title": "After School Program Assistant",
+          "primaryURL": "https://msa.bm/career-opportunities/",
+          "location": "Bermuda",
+          "availability": "primary index describes immediate hire; current page fetch not established",
+          "scope": "outside technology/data/office scope"
+        }
+      ],
+      "limits": [
+        "Primary indexed page describes two after-school assistant positions; open attempts failed through this web tool.",
+        "Exclude from the inspected-page total and current verified relevant vacancy count. No technology/data/office role verified."
+      ],
+      "priority": 3
+    }
+  ],
+  "pendingEmployerOnlyChecks": [
+    {
+      "name": "Bermuda Microsystems Group (BMG)",
+      "verifiedPrimaryURL": "https://bmg.bm/about/",
+      "status": "employer-presence-only",
+      "evidenceLevel": "primary-employer-page-inspected",
+      "limits": [
+        "Bermuda IT employer verified; no public careers route or current primary vacancy verified. External Senior Systems Engineer copies are not sufficient."
+      ]
+    },
+    {
+      "name": "First Atlantic Commerce / Powertranz",
+      "verifiedPrimaryURL": "https://powertranz.com/",
+      "status": "employer-presence-only",
+      "evidenceLevel": "primary-site-redirect-inspected",
+      "limits": [
+        "Old FirstAtlanticCommerce homepage redirects here. Public recruitment route and Bermuda role location remain unverified."
+      ]
+    },
+    {
+      "name": "Bermuda Aviation Services (BAS)",
+      "verifiedPrimaryURL": "https://basg.bm/",
+      "status": "employer-presence-only",
+      "evidenceLevel": "primary-employer-page-inspected",
+      "limits": [
+        "Bermuda group presence verified; no recruitment route/current role established. Do not confuse Dutch BAS recruitment websites."
+      ]
+    },
+    {
+      "name": "Bermuda Economic Development Corporation (BEDC)",
+      "verifiedPrimaryURL": "https://bedc.bm/",
+      "status": "employer-presence-only",
+      "evidenceLevel": "primary-employer-page-inspected",
+      "limits": [
+        "Hamilton employer verified. No current recruitment boundary or details established from the homepage; old ads/parliament staffing statements do not establish current roles."
+      ]
+    },
+    {
+      "name": "Ad Opus Recruitment",
+      "verifiedPrimaryURL": "https://adopusrecruitment.com/",
+      "status": "primary-index-only-fetch-timeouts",
+      "evidenceLevel": "primary-search-index-only",
+      "limits": [
+        "Indexed primary recruiter homepage confirms Bermuda coverage; repeated opens timed out. Indexed current examples were London/Cayman healthcare, not matching Bermuda roles."
+      ]
+    },
+    {
+      "name": "BermudAir",
+      "verifiedPrimaryURL": "https://press.flybermudair.com/bermudair-celebrates-first-captain-promotions-bermudian-crew-advancements",
+      "status": "official-employer-recruitment-invitation-ats-unresolved",
+      "evidenceLevel": "primary-employer-publication-inspected",
+      "limits": [
+        "Official publication confirms Bermuda recruitment across departments; summer2026internship deadline15May2026is past. Employer-authored LinkedIn post points to bermudair.bamboohr.com, but current public ATS contents were not retrieved."
+      ]
+    },
+    {
+      "name": "BWW Recruitment",
+      "verifiedPrimaryURL": "https://bm.linkedin.com/jobs/view/senior-corporate-administrator-corporate-administrator-3757-at-bww-recruitment-4470866856",
+      "status": "employer-authored-board-role-found-own-site-unavailable",
+      "evidenceLevel": "primary-publisher-public-job-post-inspected",
+      "limits": [
+        "Recruiter posting names Appleby Global Services and two Bermuda corporate governance roles. Own site attempts failed. Reconcile with existing Appleby/LinkedIn entries; do not count the same vacancy again."
+      ]
+    },
+    {
+      "name": "Office of the Privacy Commissioner",
+      "verifiedPrimaryURL": "https://www.privacy.bm/",
+      "status": "employer-presence-only",
+      "evidenceLevel": "primary-homepage-inspected",
+      "limits": [
+        "Bermuda data/privacy institution verified; no recruitment route or vacancy established."
+      ]
+    },
+    {
+      "name": "Bermuda Police Service",
+      "verifiedPrimaryURL": "https://joinus.bps.bm/jobs/Careers",
+      "status": "public-career-route-unresolved",
+      "evidenceLevel": "primary-title-only-empty-extraction",
+      "limits": [
+        "Public page title identifies Police Careers; no listings extracted. Civilian technology/data/office coverage not established. Not counted among inspected recruitment organizations."
+      ]
+    }
+  ],
+  "qualityFindings": [
+    {
+      "severity": "high",
+      "topic": "non-recruitment masquerading as job",
+      "primaryURL": "https://www.bermudajobfinder.com/job/wakefield-quin-limited-barristers-and-attorneys-20260721100641",
+      "finding": "Board labels a WakefieldQuin probate estate/caveat notice as Barristers&Attorneys. Body is legal public-notice text and directs filings to SupremeCourtRegistry; exclude from recruitment."
+    },
+    {
+      "severity": "high",
+      "topic": "talent pool versus vacancy",
+      "primaryURL": "https://www.iep.bm/job/executive-legal-assistant",
+      "finding": "IEP explicitly describes continuous candidate connections. ACT also uses broad capacities and keeps resumes on file. Neither should create a count of discrete confirmed-open jobs."
+    },
+    {
+      "severity": "medium",
+      "topic": "search-index staleness",
+      "primaryURL": "https://www.cancer.bm/about-us/employment-opportunities",
+      "finding": "Search index lists an oncology manager; opened page says not hiring. Current page observation takes precedence; old HRPDFdeadlineFebruary2026is past."
+    },
+    {
+      "severity": "medium",
+      "topic": "location and old-ID ambiguity",
+      "primaryURL": "https://www.teneo.com/careers/open-positions/",
+      "finding": "Teneo job descriptions mention Bermuda for cross-border work even when role location is elsewhere. Old7722293003searchhitredirectslist; currentBermudaroleID7762416003verified from list."
+    },
+    {
+      "severity": "medium",
+      "topic": "inconsistent source facts",
+      "primaryURL": "https://www.recruitment.bm/projects",
+      "finding": "Controller medical-software finance duties conflict with structured-credit/catastrophe-model qualifications. Preserve mismatch for user review."
+    }
+  ],
+  "recommendedNextChecks": [
+    "Collect Ocorian Hamilton results across every public page and inspect all relevant job details.",
+    "Collect CareyOlsen explicit Bermuda role entries, Teneo location-labelled results and StephBrown vacancy blocks; preserve job IDs and source inconsistencies.",
+    "Resolve PerformanceSolutions BambooHR and CML dynamic feeds using public supported acquisition only.",
+    "Inspect Ontru image content and establish whether it advertises actual current roles before creating candidate rows.",
+    "Keep ACT/IEP evergreen intake separate from vacancy rows; retain institutional explicit-zero checks as coverage evidence."
+  ]
+}

@@ -251,7 +251,7 @@ it('treats a multi-line agency heading as one listing and preserves different qu
     '(Senior) Actuarial Associates & Qualified Actuaries - Life & Annuities',
   ])
 })
-it('keeps unselected discovery targets unsearched with null counts and rejects duplicated keys across pages', () => {
+it('keeps unselected supported and discovery targets unsearched with null counts and rejects duplicated keys across pages', () => {
   const page = parseJobPage(
     'onecomm',
     bytes({ meta: { totalCount: 0 }, result: [] }),
@@ -270,11 +270,17 @@ it('keeps unselected discovery targets unsearched with null counts and rejects d
   }
   const dataset = jobDataset([observation], null, ['onecomm'])
   const government = dataset.tables[1].rows.find(
-    (r) => r.cells.source.value === 'Government careers',
+    (r) => r.cells.source.value === 'Government of Bermuda careers',
   )!
   expect(government.cells.matched_rows.value).toBeNull()
   expect(government.cells.last_checked.value).toBeNull()
-  expect(government.cells.status.value).toContain('not collected')
+  expect(government.cells.status.value).toBe('Not selected — not checked')
+  const discovery = dataset.tables[1].rows.find(
+    (r) => r.cells.source.value === 'Bermuda Job Connect',
+  )!
+  expect(discovery.cells.matched_rows.value).toBeNull()
+  expect(discovery.cells.last_checked.value).toBeNull()
+  expect(discovery.cells.status.value).toContain('not collected')
   const detail = parseJobPage(
     'onecomm',
     bytes({

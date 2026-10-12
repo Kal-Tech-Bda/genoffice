@@ -98,7 +98,7 @@ export function registerWorkspaceIpc(
           filters: [
             {
               name: 'Research files',
-              extensions: ['xlsx', 'csv', 'tsv', 'docx', 'pdf', 'md', 'txt'],
+              extensions: ['xlsx', 'csv', 'tsv', 'docx', 'pdf', 'md', 'txt', 'html', 'htm'],
             },
           ],
         })

@@ -7,6 +7,8 @@ import type {
   ResearchValue,
   ResearchWorkflow,
   ResearchRunSummary,
+  ResearchSavedView,
+  ResearchTableView,
 } from '../../shared/research-api'
 import { processingVersion } from './extract'
 import { checkedResearchMetadata } from './metadata'
@@ -107,7 +109,7 @@ export class ResearchStore {
     this.db = new DatabaseSync(path)
     this.db.exec('PRAGMA journal_mode=WAL; PRAGMA foreign_keys=ON; PRAGMA busy_timeout=5000;')
     const version = Number((this.db.prepare('PRAGMA user_version').get() as SqlRow).user_version)
-    if (version > 2) throw new Error('Research database is newer than this application.')
+    if (version > 3) throw new Error('Research database is newer than this application.')
     if (version === 0)
       this.db.exec(`BEGIN IMMEDIATE;
       CREATE TABLE workflows(id TEXT PRIMARY KEY, project_id TEXT NOT NULL, name TEXT NOT NULL, config TEXT NOT NULL, config_version INTEGER NOT NULL, schedule_minutes INTEGER, next_at TEXT, paused INTEGER NOT NULL DEFAULT 0, accepted_revision INTEGER NOT NULL DEFAULT 0, destination TEXT);
@@ -123,6 +125,11 @@ export class ResearchStore {
       CREATE TABLE run_events(id INTEGER PRIMARY KEY,run_id TEXT NOT NULL REFERENCES runs(id),at TEXT NOT NULL,status TEXT NOT NULL,message TEXT NOT NULL);
       INSERT INTO run_events(run_id,at,status,message) SELECT id,updated_at,status,progress FROM runs;
       PRAGMA user_version=2; COMMIT;`)
+    if (version < 3)
+      this.db.exec(`BEGIN IMMEDIATE;
+      CREATE TABLE saved_views(id TEXT PRIMARY KEY,workflow_id TEXT NOT NULL REFERENCES workflows(id),name TEXT NOT NULL,view TEXT NOT NULL,updated_at TEXT NOT NULL);
+      CREATE INDEX saved_view_workflow ON saved_views(workflow_id,updated_at DESC);
+      PRAGMA user_version=3; COMMIT;`)
     this.db.exec('CREATE INDEX IF NOT EXISTS run_history ON runs(workflow_id,created_at DESC)')
     for (const run of this.db
       .prepare("SELECT id FROM runs WHERE status IN ('acquiring','processing')")
@@ -180,6 +187,45 @@ export class ResearchStore {
         .prepare('SELECT id FROM workflows WHERE project_id=? ORDER BY rowid DESC')
         .all(projectId) as SqlRow[]
     ).map((r) => this.workflow(String(r.id)))
+  }
+  views(projectId: string, workflowId: string): ResearchSavedView[] {
+    this.workflow(workflowId, projectId)
+    return this.db
+      .prepare(
+        'SELECT id,name,view FROM saved_views WHERE workflow_id=? ORDER BY updated_at DESC,id',
+      )
+      .all(workflowId)
+      .map((r) => ({
+        id: String(r.id),
+        name: String(r.name),
+        view: decode<ResearchTableView>(r.view),
+      }))
+  }
+  saveView(
+    projectId: string,
+    workflowId: string,
+    name: string,
+    view: ResearchTableView,
+    id?: string,
+  ): ResearchSavedView {
+    this.workflow(workflowId, projectId)
+    if (id && !this.views(projectId, workflowId).some((v) => v.id === id))
+      throw new Error('Saved view not found in this workflow.')
+    if (!id && this.views(projectId, workflowId).length >= 20)
+      throw new Error('Keep at most 20 saved views per workflow.')
+    const result = { id: id ?? randomUUID(), name, view }
+    this.db
+      .prepare(
+        'INSERT INTO saved_views(id,workflow_id,name,view,updated_at) VALUES(?,?,?,?,?) ON CONFLICT(id) DO UPDATE SET name=excluded.name,view=excluded.view,updated_at=excluded.updated_at',
+      )
+      .run(result.id, workflowId, name, JSON.stringify(view), now())
+    return result
+  }
+  deleteView(projectId: string, workflowId: string, id: string): void {
+    this.workflow(workflowId, projectId)
+    if (!this.views(projectId, workflowId).some((v) => v.id === id))
+      throw new Error('Saved view not found in this workflow.')
+    this.db.prepare('DELETE FROM saved_views WHERE id=? AND workflow_id=?').run(id, workflowId)
   }
   save(projectId: string, name: string, config: ResearchConfig, id?: string): ResearchWorkflow {
     if (id) {
