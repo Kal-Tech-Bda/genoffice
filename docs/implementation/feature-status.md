@@ -25,6 +25,12 @@ mean 78 collected websites. The latest manifest records executed results.
 Stages 3–5 now implement the bounded research behaviors below; the Stage 1–2
 table following it retains the earlier milestone's evidence.
 
+The [returning-user/output UI pass](../testing/output-ux-2026-10-12.md) adds direct
+export of exact accepted revisions, guarded external destinations, scoped
+Outputs loading/failure/retry, publication preview recovery and read-only accepted
+HTML identities. Native save/export checks distinguish editable cells from ledger
+facts; no new writer or harness was installed.
+
 The [process journey review](../testing/process-journeys-2026-10-11.md) adds native
 mixed-source failure/conflict review, direct sample-to-full, independent workflow
 reuse and CSV cleanup. Queue rollback/schedule fences, correction identity/validation
@@ -32,7 +38,7 @@ and protected parent/child retention have focused unit coverage. Record keys are
 read-only in the ledger correction UI. Saved local quote input readiness is now
 implemented and [native-tested](../testing/input-readiness-2026-10-11.md). General
 document understanding and source-backed report generation remain gaps; the
-engineering harness remains last/disabled.
+engineering harness follows UI/UX acceptance and remains disabled during this pass.
 
 | Area                                                      | Status                                                                                                                                                | Main paths                                               |
 | --------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
@@ -76,7 +82,7 @@ Workspace flow validation adds:
 
 The [supplier comparison report](../testing/workspace-flow-2026-10-10.md) records
 the independent expected facts and native checks. The engineering harness remains
-disabled and will be implemented last.
+disabled during UI/UX review and is the next implementation step after acceptance.
 
 | Area                                                  | Status / evidence                                                                              | Main implementation                                                                    |
 | ----------------------------------------------------- | ---------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |

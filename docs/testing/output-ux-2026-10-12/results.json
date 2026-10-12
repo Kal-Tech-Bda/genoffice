@@ -1,0 +1,111 @@
+{
+  "checkedAt": "2026-10-12T05:40:43Z",
+  "baselineCommit": "47362a717d785768ad746a5b8884669811cbaa19",
+  "branch": "codex/infomonk-workspace",
+  "scope": "UI/UX gate, then engineering harness next. Generated execution remains disabled.",
+  "environment": {
+    "platform": "Windows",
+    "os": "10.0.26200",
+    "node": "v24.13.1",
+    "npm": "11.8.0",
+    "electron": "43.7.6",
+    "playwright": "1.62.1"
+  },
+  "checks": {
+    "shellBuild": "passed",
+    "shellTypecheck": "passed",
+    "focusedUnit": {
+      "passed": 56,
+      "skipped": 1,
+      "failed": 0,
+      "report": "e2e/artifacts/output-ux-unit.json",
+      "skipReason": "Windows does not permit file symlink fixture creation; directory junction and hard-link checks passed."
+    },
+    "lint": {
+      "notes": "Existing warnings outside the changed UI files; owned-source ESLint passes.",
+      "errors": 0,
+      "warnings": 12
+    },
+    "themeColors": "passed",
+    "englishComments": "passed",
+    "licenses": "passed",
+    "formatting": "owned application/test sources and new report passed",
+    "diffCheck": "passed"
+  },
+  "native": {
+    "uniqueJourneysPassed": 18,
+    "explicitLiveNetworkSkips": 1,
+    "newOutputAndPublicationJourneysPassed": 6,
+    "initialNewCaseRun": {
+      "passed": 5,
+      "log": "e2e/artifacts/output-ux-native.log",
+      "failed": 1,
+      "correction": "HTML added via supported source API instead of unsupported starting-file path."
+    },
+    "finalBatch": {
+      "passed": 17,
+      "skipped": 1,
+      "failed": 1,
+      "correction": "Existing workflow-reuse test now acknowledges review before asserting Publish enabled.",
+      "log": "e2e/artifacts/output-ux-final-native.log"
+    },
+    "finalFocusedRerun": {
+      "passed": 1,
+      "log": "e2e/artifacts/output-ux-reuse-rerun.log",
+      "failed": 0,
+      "command": "npm run test:e2e -- e2e/infomonk-process-journeys.spec.ts --grep \"workflow reuse\""
+    },
+    "contentWidths": [900, 1450],
+    "themes": ["light", "dark"],
+    "mainHorizontalOverflow": false,
+    "outputEvidence": ["ledger-journey-results.json", "overview-journey-results.json"],
+    "captures": [
+      "outputs-900-light.png",
+      "outputs-900-dark.png",
+      "outputs-1450-light.png",
+      "outputs-1450-dark.png",
+      "home-remembered-earlier-workbook-dark.png",
+      "outputs-current-overview-failure.png",
+      "outputs-empty-accepted-state.png"
+    ],
+    "priorArtifactsPreservedAndRestored": 23,
+    "priorEvidence": "e2e/artifacts/output-ux-regression-evidence"
+  },
+  "commands": [
+    "npm run build -w @genoffice/shell",
+    "npm run typecheck -w @genoffice/shell",
+    "npm exec -w @genoffice/shell -- vitest run tests/research-export.test.ts tests/export-target.test.ts tests/research.test.ts tests/research-views.test.ts tests/research-hardening.test.ts tests/workspace-flow.test.ts tests/workspace-portability.test.ts tests/research-html-service.test.ts --reporter=json --outputFile=../../e2e/artifacts/output-ux-unit.json",
+    "npm run test:e2e -- e2e/infomonk-publication-ux.spec.ts e2e/infomonk-output-journey.spec.ts e2e/infomonk-workspace-flow.spec.ts e2e/infomonk-views.spec.ts e2e/infomonk-html-ux.spec.ts e2e/infomonk-html-tables.spec.ts e2e/infomonk-process-journeys.spec.ts e2e/infomonk-readiness.spec.ts e2e/infomonk-tracking-focus.spec.ts",
+    "npm run lint",
+    "npm run check:theme-colors",
+    "npm run check:english-comments",
+    "npm run licenses",
+    "npm exec -- prettier --check <owned application/test sources and new report>",
+    "git diff --check"
+  ],
+  "limits": [
+    "Selected regression, not a complete repository test run or formal accessibility certification.",
+    "No new live research, provider request, credential change, generated-code execution, application or notification subscription.",
+    "Original source snapshots remain in the workspace; accepted XLSX exports include every table, tracking, personal notes and evidence metadata regardless of view filters.",
+    "Native sheet edits require reviewed ledger corrections to survive a research refresh.",
+    "Complete static HTML tables are supported; page-wide active pagination controls can cause conservative rejection even if unrelated to a table.",
+    "Existing hard-linked destinations fail closed; concurrent filesystem changes between destination validation and writing remain a timing limitation.",
+    "Unrelated docs/research/jev-infomonk-2026-10-11.md was not modified or staged."
+  ],
+  "fileHashes": {
+    "apps/shell/src/main/export-target.ts": "8034a7c7ab9e9371cb7b86c1212bc224331ab6fa0234c506e0a66c2c0bd106de",
+    "apps/shell/src/main/research/ipc.ts": "078e535a9c76e475d5d979b1f12df388771084ba2f0a5106437a76d164fb1736",
+    "apps/shell/src/main/research/service.ts": "87097bbde057f4ab36dadf18ae13871e963f97bde0b1bc3cee2adaa803cfafed",
+    "apps/shell/src/main/workspace-ipc.ts": "5751ebe82c62c11db8c8ef9ac2e9e674fb41659e2f6bb21c68a6723236c83740",
+    "apps/shell/src/preload/research.ts": "4713d686a47d65a628c8df227c565bcbef422df1f1c077c8ca857f49562e9019",
+    "apps/shell/src/shared/research-api.ts": "219df8e47c9a798830ec92c86efd21463fd576c7ee20977a5271f8c657f75fa8",
+    "apps/shell/src/renderer/src/infomonk/Workspace.tsx": "72bf2f35571f84e2ee1b22ffbfc628d7c0503446af216d384c6c66f9f705ec4a",
+    "apps/shell/src/renderer/src/infomonk/ResearchPanel.tsx": "e8f9e3b4e0506ce3dd99083b82ef8c32cbffba2704afce6448395711f4117213",
+    "apps/shell/src/renderer/src/infomonk/workspace.css": "ac19120687ec18aa677dfe7bd2f734d17a5b5ad931dfd08732cf1b739cca6e85",
+    "apps/shell/tests/export-target.test.ts": "acff7db738d33643be1fe103aba3071fc1f27cebc567d294c7b3edaa8090c0af",
+    "apps/shell/tests/research-export.test.ts": "e698134cbcf1203b5c95dacd6a4fd173f2c05731bcb0f62bd099d42518def568",
+    "e2e/infomonk-output-journey.spec.ts": "b38334ae6ed14e6319bdda5b4feb396ee13d3a1c8b6129930676c970bec5d892",
+    "e2e/infomonk-publication-ux.spec.ts": "38cb9bcfd8ae52b9a0dab7730bdf3faff5b85d6d6820dd3fdfe526e2a49f1075",
+    "e2e/infomonk-process-journeys.spec.ts": "d3f6284298de412fc666c723b9ab7884d308bd11b9c46a1ea790eaf3bf972464"
+  }
+}

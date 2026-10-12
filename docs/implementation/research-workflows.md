@@ -2,7 +2,8 @@
 
 Implemented 10 October 2026 on the existing Electron fork. This is a bounded local
 milestone. The evidence is in [research verification](research-verification.md).
-The engineering harness is the final phase and remains disabled. `assay.md` is excluded.
+The owner's current order is UI/UX acceptance, then the engineering harness next.
+The harness remains disabled during this UI pass. `assay.md` is excluded.
 
 ## Try the journeys
 
@@ -48,6 +49,13 @@ as manual even when the filter no longer contains that row.
 
 Outputs distinguishes the current accepted revision from earlier immutable
 ledger revisions; native edits to an XLSX are separately owned file edits.
+**Export accepted data** recreates the selected ledger revision with typed values,
+tracking, notes and evidence metadata. It exports every table in that revision;
+view filters do not narrow the export. Original source snapshots remain in the
+workspace. **Open editable workbook** opens the saved projection, which may have
+native edits. Save those edits before using **Export workbook** in the editor.
+Both export paths require an external XLSX destination and reject managed files,
+registered project files, original sources and their aliases.
 Activity links real run events and correction records. Opening a published or
 explicitly selected owned workbook makes it the remembered working workbook;
 cleanup remains attached to the original/cleaned primary workbook.

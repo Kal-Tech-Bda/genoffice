@@ -44,6 +44,7 @@ import { fetchTableSource, tableSourceUrl } from './table-fetch'
 import { RESEARCH_METADATA_LIMIT } from './metadata'
 import { isResearchIdentity } from '../../shared/research-api'
 import { APPLICATION_STATUSES, JOB_SITES } from '../../shared/jobs-api'
+import { exportTarget, workspaceExportProtectedPaths } from '../export-target'
 import {
   jobSite,
   jobUrl,
@@ -574,6 +575,30 @@ export class ResearchService {
       ),
       activity: [...events, ...corrections].sort((a, b) => b.at.localeCompare(a.at)).slice(0, 50),
     }
+  }
+  async exportAccepted(
+    projectId: string,
+    workflowId: string,
+    revision: number,
+    target: string,
+  ): Promise<void> {
+    this.workspace.get(projectId)
+    const workflow = this.store.workflow(workflowId, projectId)
+    if (!Number.isSafeInteger(revision) || revision < 1)
+      throw new Error('Choose a published accepted revision.')
+    const stored = this.store.db
+      .prepare('SELECT dataset FROM revisions WHERE workflow_id=? AND revision=?')
+      .get(workflow.id, revision)
+    if (!stored) throw new Error('Accepted revision not found.')
+    const path = await exportTarget(
+      target,
+      this.userData,
+      workspaceExportProtectedPaths(this.workspace),
+    )
+    // Export ledger facts, not a projection that may have been edited in the native sheet.
+    const dataset = JSON.parse(String(stored.dataset)) as ResearchDataset
+    const bytes = await projectDataset(dataset, workflow.id, revision)
+    await writeXlsxAtomically(path, bytes)
   }
   cell(
     projectId: string,

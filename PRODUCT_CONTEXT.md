@@ -63,6 +63,11 @@ local versions when queued; stale candidates cannot publish. Outputs distinguish
 current and earlier accepted revisions, and Activity includes publications and
 corrections. Public freshness describes saved acquisition evidence, without
 claiming to know whether the external service has subsequently changed.
+Outputs can export any displayed accepted revision directly with its typed facts,
+tracking, notes and evidence metadata. Editable workbook export separately copies
+the saved native file; source snapshot bytes stay in the workspace. Returning
+after a failed HTML refresh shows the last accepted table, and publication success
+survives a preview response failure without requiring another publication.
 
 CSV/TSV import has a delimiter/sample preview. Clean table inspects the complete
 chosen saved sheet/range, previews trimming, chosen number/date normalization,

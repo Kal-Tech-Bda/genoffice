@@ -127,6 +127,11 @@ actions, excessive density and narrow-window failures; verify light/dark themes
 and keyboard access through native journeys. Record remaining limitations and
 make the result reviewable before advancing.
 
+The [returning-user/output review](docs/testing/output-ux-2026-10-12.md) completes
+this persona iteration with revision-specific sharing, failed-refresh/preview
+recovery and scoped navigation. Its manifest records the final selected regression
+evidence and remaining boundaries; the harness has not been enabled.
+
 The specialized research/data engineering harness (original Stage 6) is **next**
 after that UI/UX gate. Reuse existing agent/provider streaming, cancellation and
 tool infrastructure, accepted-ledger contracts and bounded adapters. Reuse chat,

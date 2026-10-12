@@ -1,0 +1,15 @@
+{
+  "checkedAt": "2026-10-12T05:34:12.465Z",
+  "passed": true,
+  "synthetic": true,
+  "actualLocalExtractionAndPublication": true,
+  "responseDelayAndFailureOnly": true,
+  "checks": [
+    "Project transition clears previous outputs while loading.",
+    "Current request failure retains an alert and no stale rows.",
+    "Same-section retry loads the selected project and clears the alert.",
+    "Late success and late failure from departed projects cannot replace current results or show errors.",
+    "A successful empty overview distinguishes no accepted revisions from a failed read."
+  ],
+  "rendererErrors": []
+}

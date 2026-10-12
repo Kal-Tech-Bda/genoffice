@@ -3,6 +3,7 @@ import { copyFile } from 'node:fs/promises'
 import { z } from 'zod'
 import { WORKSPACE_CHANNEL } from '../shared/workspace-api'
 import { WorkspaceStore } from './workspace-store'
+import { exportTarget, workspaceExportProtectedPaths } from './export-target'
 import type { ResearchProjectSummary } from '../shared/research-api'
 import type { WorkspaceProject } from '../shared/workspace-api'
 
@@ -167,7 +168,12 @@ export function registerWorkspaceIpc(
           filters: [{ name: 'Excel workbook', extensions: ['xlsx'] }],
         })
         if (!result.canceled && result.filePath) {
-          await copyFile(ownedPath ?? store.workbookPath(project.id), result.filePath)
+          const target = await exportTarget(
+            result.filePath,
+            app.getPath('userData'),
+            workspaceExportProtectedPaths(store),
+          )
+          await copyFile(ownedPath ?? store.workbookPath(project.id), target)
           return true
         }
         return false

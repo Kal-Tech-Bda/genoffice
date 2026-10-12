@@ -1,0 +1,48 @@
+{
+  "checkedAt": "2026-10-12T05:34:09.955Z",
+  "passed": true,
+  "synthetic": true,
+  "actualLocalTxtExtractionAndPublication": true,
+  "nativeMenuSave": true,
+  "exports": [
+    {
+      "revision": 1,
+      "gridTotal": 125.5,
+      "ledgerTotal": 125.5
+    },
+    {
+      "revision": 2,
+      "gridTotal": 133.5,
+      "ledgerTotal": 133.5
+    }
+  ],
+  "nativeSavedGridTotal": 999,
+  "separateNativeWorkbookExportGridTotal": 999,
+  "acceptedExportAfterNativeSave": 133.5,
+  "protectedManagedProjectionBytesPreserved": true,
+  "exportErrorClearedBySuccessfulRetry": true,
+  "earlierWorkbookRemembered": true,
+  "nativeLayouts": [
+    {
+      "width": 900,
+      "theme": "light"
+    },
+    {
+      "width": 900,
+      "theme": "dark"
+    },
+    {
+      "width": 1450,
+      "theme": "light"
+    },
+    {
+      "width": 1450,
+      "theme": "dark"
+    }
+  ],
+  "rendererErrors": [],
+  "limits": [
+    "No network collection or provider calls.",
+    "Evidence metadata is exported; source snapshot bytes remain in the workspace."
+  ]
+}

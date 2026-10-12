@@ -259,6 +259,7 @@ export interface ResearchApi {
   deleteView(projectId: string, workflowId: string, id: string): Promise<void>
   readiness(projectId: string, workflowId: string): Promise<ResearchReadiness>
   overview(projectId: string): Promise<ResearchOverview>
+  exportAccepted(projectId: string, workflowId: string, revision: number): Promise<boolean>
   policy(projectId: string): Promise<{
     version: number
     firstInputPattern: string

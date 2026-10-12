@@ -439,6 +439,7 @@ test('workflow reuse: new project routes to confirmed inputs and publishes indep
       page.getByRole('button', { name: 'Run all confirmed inputs', exact: true }),
     ).toBeEnabled()
     await page.getByRole('button', { name: 'Run all confirmed inputs', exact: true }).click()
+    await acknowledge(page)
     await expect(
       page.getByRole('button', { name: 'Publish accepted table', exact: true }),
     ).toBeEnabled()

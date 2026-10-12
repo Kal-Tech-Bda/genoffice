@@ -133,8 +133,17 @@ record/column and warns on value/revision divergence. Native viewers use verifie
 snapshot copies. Arbitrary native edits do not silently become ledger corrections.
 
 No new application parser/framework dependency or agent harness was installed.
-The isolated parser experiment is documented separately. The owner puts the
-engineering harness last; it remains disabled.
+The isolated parser experiment is documented separately. The owner's current
+order is UI/UX acceptance, then the engineering harness next. It remains disabled
+during this UI pass.
+
+`ResearchService.exportAccepted` reads an exact immutable SQLite revision and
+reuses `projectDataset` and the atomic XLSX writer. It never reads an editable
+projection or changes workbook ownership. `export-target.ts` protects the managed
+profile, registered files and original/prior source paths, including canonical
+directory aliases and existing file identities. The saved-file workspace export
+uses the same guard. Outputs state is scoped to project and section, preventing
+late overview/export replies from showing another project's results.
 
 The later bounded jobs task adds `ResearchConfig.kind = jobs` and confirmed
 `jobSiteIds` for BMA, Coralisle and Expertise Group. `research/jobs.ts` parses

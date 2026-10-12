@@ -13,6 +13,7 @@ export function exposeResearchApi(): void {
     visitJob: (id, workflowId, runId, rowId) => call('visitJob', id, workflowId, runId, rowId),
     readiness: (id, workflowId) => call('readiness', id, workflowId),
     overview: (id) => call('overview', id),
+    exportAccepted: (id, workflowId, revision) => call('exportAccepted', id, workflowId, revision),
     policy: (id) => call('policy', id),
     state: (id, offset, workflowId) => call('state', id, offset, workflowId),
     detail: (id, runId, page) => call('detail', id, runId, page),

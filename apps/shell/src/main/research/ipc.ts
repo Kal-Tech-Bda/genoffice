@@ -1,4 +1,4 @@
-import { app, ipcMain, shell, type BrowserWindow } from 'electron'
+import { app, dialog, ipcMain, shell, type BrowserWindow } from 'electron'
 import { z } from 'zod'
 import { RESEARCH_CHANNEL, EVIDENCE_CHANNEL, type ResearchConfig } from '../../shared/research-api'
 import { WorkspaceStore } from '../workspace-store'
@@ -151,6 +151,23 @@ export function registerResearchIpc(
     const id = projectId.parse(args[0])
     service.workspace.get(id)
     switch (method) {
+      case 'exportAccepted': {
+        const workflow = service.store.workflow(uuid.parse(args[1]), id)
+        const revision = z.number().int().min(1).max(Number.MAX_SAFE_INTEGER).parse(args[2])
+        if (
+          !service.store.db
+            .prepare('SELECT 1 FROM revisions WHERE workflow_id=? AND revision=?')
+            .get(workflow.id, revision)
+        )
+          throw new Error('Accepted revision not found.')
+        const result = await dialog.showSaveDialog(window, {
+          defaultPath: `${workflow.name.replace(/[<>:"/\\|?*]/g, '-').slice(0, 120)}-accepted-r${revision}.xlsx`,
+          filters: [{ name: 'Excel workbook', extensions: ['xlsx'] }],
+        })
+        if (result.canceled || !result.filePath) return false
+        await service.exportAccepted(id, workflow.id, revision, result.filePath)
+        return true
+      }
       case 'discoverTables':
         return service.discoverTables(id, htmlInput.parse(args[1]))
       case 'views':

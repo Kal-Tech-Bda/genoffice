@@ -146,3 +146,40 @@ remaining limits are loaded-page source search, horizontal scrolling for wide
 tables and no formal accessibility/human usability certification.
 
 ---
+
+## 2026-10-12T05:40:43Z — codex/infomonk-workspace — working tree versus 47362a71
+
+Outputs now exports the selected accepted revision directly through the existing
+projection/atomic XLSX writer. It distinguishes this from the saved editable file,
+states that tracking/notes/evidence are included and snapshots remain local, and
+uses guarded external destinations for both export paths. Home names the remembered
+workbook. Scoped loading/failure/retry and late-response guards prevent another
+project's rows or export outcome appearing after navigation.
+
+Publication requires review acknowledgement, restores focus and retains success
+when the accepted preview fails. Reload does not republish, and later filters still
+apply. A failed HTML refresh returns to accepted data with fresh-versus-durable
+retry guidance. Accepted HTML identity controls are read-only; name/notes saves
+discard the ephemeral preview token while preserving source/table/key identity.
+The current context, architecture, status and UI documents retain the owner's order:
+UI/UX review followed directly by the engineering harness.
+
+Review found no unrelated deletion, dependency/lockfile change, new processing
+framework, provider request or generated-code runner. The internal research IPC
+method is additive. Existing hard-linked export destinations intentionally fail
+closed; validation and writing cannot prevent concurrent filesystem replacement.
+Accepted exports contain personal notes/tracking and evidence metadata; originals
+remain in the workspace. Native edits still need reviewed corrections to survive
+research refresh. These three practical limits are documented in the new report.
+
+Verification passes 56 focused unit tests and 18 unique selected Windows Electron
+journeys. One file-symlink fixture and one live HTML acquisition case are skipped.
+Build/typecheck, theme/comment/license and owned-source formatting checks pass;
+lint has zero errors and 12 existing warnings. An HTML test setup and a prior test's
+pre-acknowledgement Publish expectation were corrected; the final targeted rerun
+passes. Seven new native captures show Outputs, remembered Home, failed/empty states
+and light/dark 900/1450 layouts. Earlier generated evidence was preserved and
+restored; unrelated docs/research was left untouched. The report and manifest are
+in docs/testing/output-ux-2026-10-12.md and its companion artifact directory.
+
+---

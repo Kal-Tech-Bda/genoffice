@@ -86,6 +86,11 @@ export function ResearchPanel({
   const [showAccepted, setShowAccepted] = useState(!!initialSelection && !initialSelection.runId)
   const [needsReview, setNeedsReview] = useState(initialSelection?.needsReview ?? false)
   const [error, setError] = useState('')
+  const [publication, setPublication] = useState<{ workflowId: string; revision: number } | null>(
+    null,
+  )
+  const [acceptedLoadError, setAcceptedLoadError] = useState('')
+  const [publicationPreviewOwned, setPublicationPreviewOwned] = useState(false)
   const [busy, setBusy] = useState(false)
   const [acknowledge, setAcknowledge] = useState(false)
   const [removals, setRemovals] = useState(false)
@@ -103,6 +108,8 @@ export function ResearchPanel({
   const inspectorElement = useRef<HTMLElement>(null)
   const tableElement = useRef<HTMLHeadingElement>(null)
   const publishElement = useRef<HTMLDivElement>(null)
+  const publicationMessageElement = useRef<HTMLParagraphElement>(null)
+  const viewContext = useRef(0)
   const cellReturnFocus = useRef<HTMLElement | null>(null)
   const restoreCellFocus = useRef(false)
   useEffect(() => {
@@ -115,10 +122,16 @@ export function ResearchPanel({
     restoreCellFocus.current = false
     const target = cellReturnFocus.current?.isConnected
       ? cellReturnFocus.current
-      : tableElement.current
+      : (tableElement.current ?? publicationMessageElement.current)
     target?.focus({ preventScroll: true })
     target?.scrollIntoView({ block: 'nearest' })
   }, [selectedCell, busy])
+  useEffect(
+    () => () => {
+      viewContext.current++
+    },
+    [],
+  )
   function closeCellDetails() {
     cellRequest.current++
     restoreCellFocus.current = true
@@ -139,6 +152,9 @@ export function ResearchPanel({
   const readinessElement = useRef<HTMLDivElement>(null)
   const configElement = useRef<HTMLDetailsElement>(null)
   const workflow = state.workflows.find((w) => w.id === selectedId)
+  const editingAcceptedHtml = state.workflows.find(
+    (w) => w.id === editingId && w.acceptedRevision > 0 && w.config.kind === 'htmlTables',
+  )
   const activeView = useMemo(
     () =>
       viewState?.workflowId === selectedId
@@ -201,6 +217,11 @@ export function ResearchPanel({
   const pageRequest = useRef(0)
   const dataset = showAccepted ? accepted : run?.candidate
   function showRun(id: string | null) {
+    viewContext.current++
+    restoreCellFocus.current = false
+    setPublication(null)
+    setPublicationPreviewOwned(false)
+    setAcceptedLoadError('')
     pageRequest.current++
     setRunId(id)
     setRunReload((value) => value + 1)
@@ -277,19 +298,37 @@ export function ResearchPanel({
   useEffect(() => {
     let live = true
     if (!showAccepted || !selectedId) return
+    if (
+      publicationPreviewOwned &&
+      publication?.workflowId === selectedId &&
+      publication.revision >= (workflow?.acceptedRevision ?? 0)
+    )
+      return
     const request = ++pageRequest.current
     void window.infomonkResearch
       .accepted(project.id, selectedId, { needsReview, view: activeView })
       .then((value) => {
-        if (live && request === pageRequest.current) setAccepted(value)
+        if (live && request === pageRequest.current) {
+          setAccepted(value)
+          setAcceptedLoadError('')
+        }
       })
       .catch((err) => {
-        if (live) setError(String(err))
+        if (live) setAcceptedLoadError(String(err))
       })
     return () => {
       live = false
     }
-  }, [project.id, selectedId, showAccepted, needsReview, workflow?.acceptedRevision, activeView])
+  }, [
+    project.id,
+    selectedId,
+    showAccepted,
+    needsReview,
+    workflow?.acceptedRevision,
+    activeView,
+    publication,
+    publicationPreviewOwned,
+  ])
   async function selectCell(table: ResearchTable, row: ResearchRow, column: string) {
     if (!workflow) return
     restoreCellFocus.current = false
@@ -392,10 +431,39 @@ export function ResearchPanel({
     setSelectedId(w.id)
     setHistoryOffset(0)
     showRun(state.latestRuns.find((r) => r.workflowId === w.id)?.id ?? null)
-    setAccepted(await window.infomonkResearch.accepted(project.id, w.id))
+    const context = viewContext.current
+    setAccepted(null)
     const latest = state.latestRuns.find((r) => r.workflowId === w.id)
-    setShowAccepted(w.acceptedRevision > 0 && (!latest || latest.status === 'published'))
+    setShowAccepted(
+      w.acceptedRevision > 0 &&
+        (!latest || ['published', 'failed', 'cancelled', 'obsolete'].includes(latest.status)),
+    )
+    const values = await window.infomonkResearch.accepted(project.id, w.id)
+    if (context !== viewContext.current) return
+    setAccepted(values)
     setSchedule(w.scheduleMinutes?.toString() ?? 'manual')
+  }
+  async function reloadAcceptedPreview(workflowId: string, context = viewContext.current) {
+    setAcceptedLoadError('')
+    try {
+      const values = await window.infomonkResearch.accepted(project.id, workflowId, {
+        needsReview,
+        view: activeView ? { ...activeView, changesOnly: false } : undefined,
+      })
+      if (context !== viewContext.current) return
+      if (!values) throw new Error('Accepted table preview is unavailable.')
+      setAccepted(values)
+      setPublicationPreviewOwned(false)
+    } catch (err) {
+      if (context !== viewContext.current) return
+      setAcceptedLoadError(String(err))
+    }
+    if (context !== viewContext.current) return
+    setShowAccepted(true)
+    cellReturnFocus.current = null
+    restoreCellFocus.current = true
+    setSelectedCell(null)
+    setInspection(null)
   }
   function edit(w: ResearchWorkflow) {
     setEditingId(w.id)
@@ -410,6 +478,10 @@ export function ResearchPanel({
       name,
       {
         ...config,
+        htmlTables:
+          editingAcceptedHtml && config.htmlTables
+            ? { ...config.htmlTables, captureId: undefined }
+            : config.htmlTables,
         countries: countryText
           .split(/[,;\s]+/)
           .filter(Boolean)
@@ -424,6 +496,7 @@ export function ResearchPanel({
     setEditingId(undefined)
     showRun(null)
     setAccepted(await window.infomonkResearch.accepted(project.id, w.id))
+    setShowAccepted(w.acceptedRevision > 0)
     setSchedule(w.scheduleMinutes?.toString() ?? 'manual')
   }
   async function checkInputs(reveal = false) {
@@ -487,6 +560,7 @@ export function ResearchPanel({
           Task
           <select
             aria-label="Research task"
+            disabled={!!editingAcceptedHtml}
             value={config.kind}
             onChange={(e) => {
               const kind = e.target.value as ResearchConfig['kind']
@@ -566,12 +640,33 @@ export function ResearchPanel({
             </fieldset>
           </>
         ) : config.kind === 'htmlTables' ? (
-          <HtmlTableInput
-            key={editingId ?? 'new'}
-            project={project}
-            config={config}
-            onChange={setConfig}
-          />
+          editingAcceptedHtml ? (
+            <section aria-label="Accepted website table inputs" className="im-source-context">
+              <p>
+                The source and record keys are fixed after publication. Create a new workflow to
+                change them. You can edit this workflow's name and notes.
+              </p>
+              <p>
+                Source:{' '}
+                {config.htmlTables?.url ??
+                  project.workspace?.sources.find(
+                    (source) => source.id === config.htmlTables?.sourceId,
+                  )?.name ??
+                  'Saved HTML snapshot'}
+              </p>
+              <p>
+                {config.htmlTables?.selections.length ?? 0} confirmed tables with unchanged record
+                keys.
+              </p>
+            </section>
+          ) : (
+            <HtmlTableInput
+              key={editingId ?? 'new'}
+              project={project}
+              config={config}
+              onChange={setConfig}
+            />
+          )
         ) : config.kind === 'jobs' ? (
           <>
             <p>
@@ -790,6 +885,37 @@ export function ResearchPanel({
       {workflow && (
         <>
           <h2>{workflow.name}</h2>
+          {publication?.workflowId === workflow.id && (
+            <p ref={publicationMessageElement} role="status" tabIndex={-1}>
+              Accepted revision {publication.revision} published. Use Open accepted workbook to view
+              the saved table.
+            </p>
+          )}
+          {acceptedLoadError && (
+            <div className="im-source-context">
+              <p role="alert">
+                The accepted table is saved, but its preview could not be loaded:{' '}
+                {acceptedLoadError}
+              </p>
+              <button
+                disabled={busy}
+                onClick={() => void act(() => reloadAcceptedPreview(workflow.id))}
+              >
+                Reload accepted preview
+              </button>
+            </div>
+          )}
+          {showAccepted &&
+            state.latestRuns.some(
+              (r) => r.workflowId === workflow.id && ['failed', 'cancelled'].includes(r.status),
+            ) && (
+              <p role="status" className="im-source-context">
+                The latest check did not publish. The accepted table is shown; its saved values
+                remain intact. Review the failed or cancelled check in Run history.
+                {workflow.config.kind === 'htmlTables' &&
+                  ' Retry durable inputs reuses the original captured page. Use Refresh website tables to capture the current page again.'}
+              </p>
+            )}
           {workflow.config.kind === 'quotes' && (
             <div ref={readinessElement}>
               <InputReadiness
@@ -1004,6 +1130,17 @@ export function ResearchPanel({
                     </button>
                   )}
                   {r.error && <p role="alert">{r.error}</p>}
+                  {workflow.config.kind === 'htmlTables' &&
+                    ['failed', 'cancelled'].includes(r.status) && (
+                      <p className="im-muted">
+                        Retry durable inputs reuses any original captured bytes; a corrected website
+                        will not replace that capture. For a new page capture, use{' '}
+                        {workflow.acceptedRevision
+                          ? 'Refresh website tables'
+                          : 'Run all confirmed inputs'}
+                        . The accepted table remains unchanged.
+                      </p>
+                    )}
                 </article>
               ))}
           </details>
@@ -1676,20 +1813,26 @@ export function ResearchPanel({
                   items protected by a manual correction.
                 </p>
               )}
+              {!acknowledge && (
+                <p className="im-muted">
+                  Review the table and check the review confirmation before publishing.
+                </p>
+              )}
               <button
                 className="im-primary"
-                disabled={busy || run.sample || run.coverage.failed > 0 || run.inputsChanged}
+                disabled={
+                  busy || !acknowledge || run.sample || run.coverage.failed > 0 || run.inputsChanged
+                }
                 onClick={() =>
                   void act(async () => {
+                    const context = viewContext.current
                     await window.infomonkResearch.publish(project.id, run.id, acknowledge, removals)
-                    setAccepted(
-                      await window.infomonkResearch.accepted(project.id, workflow.id, {
-                        needsReview,
-                        view: activeView ? { ...activeView, changesOnly: false } : undefined,
-                      }),
-                    )
+                    if (context !== viewContext.current) return
+                    setPublication({ workflowId: workflow.id, revision: run.baseRevision + 1 })
+                    setPublicationPreviewOwned(true)
+                    setAccepted(null)
                     setShowAccepted(true)
-                    setSelectedCell(null)
+                    await reloadAcceptedPreview(workflow.id, context)
                   })
                 }
               >

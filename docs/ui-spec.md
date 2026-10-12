@@ -93,6 +93,14 @@ research and new connectors accurately. A blank starter workbook remains useful
 for native work, but file extraction starts at source confirmation instead.
 Opening an older revision explicitly remembers that owned file; the current
 ledger revision remains labeled separately in Outputs.
+Home names the last working workbook and its filename, including an older revision.
+Outputs counts accepted revisions, shows scoped loading/failure/empty states and
+offers **Inspect accepted table**, **Open editable workbook** and per-revision
+**Export accepted data**. Export rebuilds all tables from the selected ledger
+revision, including tracking, notes and evidence. View filters do not narrow it;
+original source snapshots stay in the workspace. Editor **Export workbook** copies
+the saved editable file; Save must precede it when native cells were changed.
+Export destinations cannot overwrite managed workspace data or registered originals.
 
 ## Native workspace geometry
 
@@ -239,3 +247,9 @@ and labels table previews and unsupported-layout explanations.
 The [native UI/UX review](testing/ui-ux-2026-10-12.md) records actual screenshots,
 commands, regression results and limits. Keyboard/layout checks do not constitute
 a formal accessibility audit or a human usability study.
+
+The [returning-user/output review](testing/output-ux-2026-10-12.md) additionally
+verifies revision-specific exports, saved native edits versus accepted facts,
+preview recovery without republishing, post-publication filters and late-response
+isolation. Publish stays disabled before acknowledgement; accepted HTML identity
+controls are read-only while name/notes can be edited.

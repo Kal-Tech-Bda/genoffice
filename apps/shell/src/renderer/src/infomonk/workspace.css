@@ -292,6 +292,13 @@
   width: 100%;
   font-size: 13px;
 }
+.im-project-open small {
+  width: 100%;
+  color: var(--text-secondary);
+  font-size: var(--im-text-small);
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
 .im-project-row time {
   color: var(--text-secondary);
   font-size: 12px;

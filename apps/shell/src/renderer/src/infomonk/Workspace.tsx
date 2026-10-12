@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Home } from '../Home'
 import { SettingsModal } from '../SettingsModal'
 import type { AccountStatus } from '../../../shared/home-api'
@@ -28,6 +28,7 @@ type Section =
   | 'activity'
   | 'cleanup'
 const projectSections = ['sheets', 'sources', 'workflows', 'outputs', 'activity'] as const
+const emptyOverview: ResearchOverview = { outputCount: 0, outputs: [], activity: [] }
 const icons: Partial<Record<Section, string>> = {
   home: '⌂',
   projects: '▤',
@@ -57,11 +58,21 @@ export function Workspace({
   const [selection, setSelection] = useState<
     { workflowId: string; runId: string | null; needsReview?: boolean } | undefined
   >()
-  const [overview, setOverview] = useState<ResearchOverview>({
-    outputCount: 0,
-    outputs: [],
-    activity: [],
-  })
+  const [overviewState, setOverviewState] = useState<{
+    projectId: string
+    section: Section
+    status: 'loading' | 'ready' | 'failed'
+    data: ResearchOverview | null
+  } | null>(null)
+  const [overviewReload, setOverviewReload] = useState(0)
+  const [exportNotice, setExportNotice] = useState<{
+    projectId: string
+    text: string
+  } | null>(null)
+  const [exporting, setExporting] = useState<number | null>(null)
+  const exportRequest = useRef(0)
+  const route = useRef({ projectId, section, homeActive })
+  route.current = { projectId, section, homeActive }
   const [search, setSearch] = useState('')
   const [starred, setStarred] = useState(false)
   const [reviewOnly, setReviewOnly] = useState(false)
@@ -78,6 +89,11 @@ export function Workspace({
   const editorWorkspaceVisible = Boolean(project) && !homeActive
   const isProjectSection =
     projectSections.includes(section as (typeof projectSections)[number]) || section === 'cleanup'
+  const currentOverview =
+    homeActive && overviewState?.projectId === projectId && overviewState.section === section
+      ? overviewState
+      : null
+  const overview = currentOverview?.data ?? emptyOverview
   async function refresh() {
     setProjects(await window.infomonk.list())
   }
@@ -151,23 +167,81 @@ export function Workspace({
   }, [editorWorkspaceVisible])
   useEffect(() => {
     let live = true
-    if (!projectId || !homeActive || !['outputs', 'activity'].includes(section)) return
+    if (!projectId || !homeActive || !['outputs', 'activity'].includes(section)) {
+      setOverviewState(null)
+      return
+    }
+    const current = () =>
+      live &&
+      route.current.projectId === projectId &&
+      route.current.section === section &&
+      route.current.homeActive
+    setOverviewState({ projectId, section, status: 'loading', data: null })
     void window.infomonkResearch
       .overview(projectId)
       .then((value) => {
-        if (live) setOverview(value)
+        if (current()) setOverviewState({ projectId, section, status: 'ready', data: value })
       })
       .catch((err) => {
-        if (live) setError(String(err))
+        if (current()) {
+          setOverviewState({ projectId, section, status: 'failed', data: null })
+          setError(String(err))
+        }
       })
     return () => {
       live = false
     }
+  }, [projectId, homeActive, section, overviewReload])
+  useEffect(() => {
+    const requests = exportRequest
+    requests.current++
+    setExportNotice(null)
+    setExporting(null)
+    return () => {
+      requests.current++
+    }
   }, [projectId, homeActive, section])
+  function clearExportOutcome() {
+    exportRequest.current++
+    setExportNotice(null)
+    setExporting(null)
+  }
+  async function exportAccepted(output: ResearchOverview['outputs'][number]) {
+    if (!project) return
+    const id = project.id
+    const request = ++exportRequest.current
+    const current = () =>
+      request === exportRequest.current &&
+      route.current.projectId === id &&
+      route.current.section === 'outputs' &&
+      route.current.homeActive
+    setExportNotice(null)
+    setError('')
+    setExporting(request)
+    try {
+      const exported = await window.infomonkResearch.exportAccepted(
+        id,
+        output.workflowId,
+        output.revision,
+      )
+      if (exported && current())
+        setExportNotice({
+          projectId: id,
+          text: `${output.name} revision ${output.revision} exported from accepted data.`,
+        })
+    } catch (err) {
+      if (current()) setError(String(err))
+    } finally {
+      setExporting((value) => (value === request ? null : value))
+    }
+  }
   async function navigate(
     next: Section,
     requestedSelection?: { workflowId: string; runId: string | null; needsReview?: boolean },
   ) {
+    clearExportOutcome()
+    setOverviewState(null)
+    if (next === 'outputs' || next === 'activity') setOverviewReload((value) => value + 1)
     setSection(next)
     setError('')
     setEditing(null)
@@ -179,11 +253,13 @@ export function Workspace({
     }
   }
   async function openProject(item: WorkspaceProject) {
+    clearExportOutcome()
     setProjectId(item.id)
     setSection('sheets')
     await window.infomonk.open(item.id)
   }
   async function newProject(kind: typeof startKind = 'general') {
+    clearExportOutcome()
     await window.aiOfficeTabs.activate('home')
     setTemplate(undefined)
     setStartKind(kind)
@@ -353,6 +429,7 @@ export function Workspace({
           </button>
           <button onClick={() => void run(() => navigate('outputs'))}>{mt('create')}</button>
           <button
+            title="Exports the saved workbook file. Save spreadsheet edits first; accepted ledger exports are available in Outputs."
             onClick={() =>
               void run(async () => {
                 await window.infomonk.exportWorkbook(
@@ -453,10 +530,17 @@ export function Workspace({
                       </span>
                       <button
                         className="im-project-open"
+                        aria-label={`Open last working workbook: ${item.name}`}
                         onClick={() => void run(() => openProject(item))}
                       >
                         <strong>{item.name}</strong>
                         <span>{item.workspace?.description || mt('localWorkspace')}</span>
+                        <small>
+                          Open last working workbook ·{' '}
+                          {(item.workspace?.workingWorkbook ?? item.workspace?.primaryWorkbook)
+                            ?.split(/[\\/]/)
+                            .pop()}
+                        </small>
                       </button>
                       <time dateTime={item.updatedAt}>
                         {new Date(item.updatedAt).toLocaleDateString()}
@@ -682,7 +766,34 @@ export function Workspace({
               )}
               {section === 'outputs' && (
                 <>
-                  <h2>Accepted tables · {overview.outputCount}</h2>
+                  <h2>
+                    Accepted revisions
+                    {currentOverview?.status === 'ready' ? ` · ${overview.outputCount}` : ''}
+                  </h2>
+                  <p className="im-muted">
+                    Export accepted data includes every table in the selected ledger revision, with
+                    tracking, notes and evidence; filters do not narrow the export, and source
+                    snapshots remain in this workspace. Native workbook edits require Save and the
+                    separate Export workbook action in the spreadsheet editor.
+                  </p>
+                  {(!currentOverview || currentOverview.status === 'loading') && (
+                    <p role="status">Loading accepted revisions…</p>
+                  )}
+                  {currentOverview?.status === 'failed' && (
+                    <p className="im-muted">
+                      Accepted revisions could not load. Reopen Outputs to retry.
+                    </p>
+                  )}
+                  {currentOverview?.status === 'ready' && overview.outputCount === 0 && (
+                    <p className="im-muted">
+                      No accepted revisions yet. Run and review a workflow, then publish its table.
+                    </p>
+                  )}
+                  {exportNotice?.projectId === project.id && (
+                    <p className="im-notice" role="status">
+                      {exportNotice.text}
+                    </p>
+                  )}
                   {overview.outputCount > 100 && (
                     <p className="im-muted">
                       Showing the latest 100 accepted revisions. Older files remain in the project
@@ -702,9 +813,28 @@ export function Workspace({
                           {output.current ? 'Current accepted table' : 'Earlier accepted revision'}{' '}
                           · {new Date(output.at).toLocaleString()}
                         </p>
+                        <small>Editable workbook · {output.path.split(/[\\/]/).pop()}</small>
                       </div>
+                      {output.current && (
+                        <button
+                          disabled={busy}
+                          aria-label={`Inspect accepted table: ${output.name}`}
+                          onClick={() =>
+                            void run(() =>
+                              navigate('workflows', {
+                                workflowId: output.workflowId,
+                                runId: null,
+                              }),
+                            )
+                          }
+                        >
+                          Inspect accepted table
+                        </button>
+                      )}
                       <button
                         disabled={busy}
+                        aria-label={`Open ${output.name} revision ${output.revision}`}
+                        title="Opens the editable workbook file. Saved native spreadsheet changes may differ from the accepted ledger."
                         onClick={() =>
                           void run(() =>
                             output.current
@@ -713,7 +843,14 @@ export function Workspace({
                           )
                         }
                       >
-                        Open {output.name} revision {output.revision}
+                        Open editable workbook
+                      </button>
+                      <button
+                        disabled={busy || exporting !== null}
+                        aria-label={`Export accepted data: ${output.name} revision ${output.revision}`}
+                        onClick={() => void exportAccepted(output)}
+                      >
+                        Export accepted data
                       </button>
                     </article>
                   ))}
@@ -754,6 +891,14 @@ export function Workspace({
               )}
               {section === 'activity' && (
                 <div className="im-timeline">
+                  {(!currentOverview || currentOverview.status === 'loading') && (
+                    <p role="status">Loading research activity…</p>
+                  )}
+                  {currentOverview?.status === 'failed' && (
+                    <p className="im-muted">
+                      Research activity could not load. Local workspace activity remains below.
+                    </p>
+                  )}
                   {[
                     ...(metadata?.activity ?? []).map((entry, index) => ({
                       ...entry,
