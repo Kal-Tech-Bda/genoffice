@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 import type { WorkspaceProject } from '../../../shared/workspace-api'
 import type { HtmlTableDiscovery, ResearchConfig } from '../../../shared/research-api'
 
@@ -17,6 +17,7 @@ export function HtmlTableInput({
   } | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const helpId = useId()
   const request = useRef(0)
   const input = config.htmlTables ?? { url: '', selections: [] }
   const sourceVersion = project.workspace?.sources.find((s) => s.id === input.sourceId)?.sha256
@@ -27,6 +28,16 @@ export function HtmlTableInput({
   sourceRef.current = sourceKey
   const previousSource = useRef(sourceKey)
   const discovery = captured?.sourceKey === sourceKey ? captured.value : null
+  const savedHtmlSources = (project.workspace?.sources ?? []).filter(
+    (source) => /\.html?$/i.test(source.name) && source.snapshotPath,
+  )
+  const supportedTables = discovery?.tables.filter((table) => table.supported) ?? []
+  const confirmedHeaders = input.selections.filter(
+    (selection) => selection.confirmFirstRowAsHeader === true,
+  ).length
+  const allHeadersConfirmed =
+    input.selections.length > 0 && confirmedHeaders === input.selections.length
+  const mixedHeaders = confirmedHeaders > 0 && !allHeadersConfirmed
   useEffect(() => {
     const activeRequests = request
     activeRequests.current++
@@ -103,11 +114,11 @@ export function HtmlTableInput({
   return (
     <section className="im-html-input" aria-label="Whole website table input">
       <p>
-        Read all rows of ordinary HTML tables in one request. Select tables and a unique record key
-        before building the maintained sheet. Source text stays text; dates and numbers are not
-        guessed.
+        Capture a public page or saved HTML snapshot, inspect its tables and source notes, then
+        choose the tables and unique record keys to maintain. Every source row is read. Dates and
+        numbers stay source text.
       </p>
-      <div className="im-controls">
+      <div className="im-controls" aria-busy={loading}>
         <label>
           Table source
           <select
@@ -119,10 +130,7 @@ export function HtmlTableInput({
                 e.target.value === 'web'
                   ? { url: '' }
                   : {
-                      sourceId:
-                        project.workspace?.sources.find(
-                          (s) => /\.html?$/i.test(s.name) && s.snapshotPath,
-                        )?.id ?? '',
+                      sourceId: savedHtmlSources[0]?.id ?? '',
                     },
               )
             }
@@ -136,18 +144,17 @@ export function HtmlTableInput({
             Saved HTML source
             <select
               aria-label="Saved HTML source"
+              aria-describedby={`${helpId}-source`}
               disabled={loading}
               value={input.sourceId}
               onChange={(e) => changeSource({ sourceId: e.target.value })}
             >
               <option value="">Choose an HTML snapshot</option>
-              {(project.workspace?.sources ?? [])
-                .filter((s) => /\.html?$/i.test(s.name) && s.snapshotPath)
-                .map((s) => (
-                  <option key={s.id} value={s.id}>
-                    {s.name}
-                  </option>
-                ))}
+              {savedHtmlSources.map((source) => (
+                <option key={source.id} value={source.id}>
+                  {source.name}
+                </option>
+              ))}
             </select>
           </label>
         ) : (
@@ -155,26 +162,48 @@ export function HtmlTableInput({
             Public table URL
             <input
               aria-label="Public table URL"
+              aria-describedby={`${helpId}-source`}
               type="url"
+              autoComplete="url"
+              spellCheck={false}
               maxLength={4096}
               disabled={loading}
               placeholder="https://www.gov.bm/public-holidays"
               value={input.url ?? ''}
               onChange={(e) => changeSource({ url: e.target.value })}
+              onKeyDown={(e) => {
+                if (
+                  e.key === 'Enter' &&
+                  !e.nativeEvent.isComposing &&
+                  !loading &&
+                  input.url?.trim()
+                ) {
+                  e.preventDefault()
+                  void discover()
+                }
+              }}
             />
           </label>
         )}
         <button
+          type="button"
           disabled={loading || !(input.url?.trim() || input.sourceId)}
           onClick={() => void discover()}
         >
           {loading ? 'Reading the complete page…' : 'Find tables on this page'}
         </button>
       </div>
-      <p className="im-muted">
+      <p className="im-muted" id={`${helpId}-source`}>
+        {local && !savedHtmlSources.length
+          ? 'Add an HTML file in Sources, then choose its saved snapshot here. '
+          : ''}
         Static tables only. Sign-in pages, scripts, merged cells and paginated tables need another
-        capture method. Only the confirmed page and same-site redirects are read.
+        capture method.{' '}
+        {local
+          ? 'The selected saved snapshot is read.'
+          : 'Only the confirmed page and same-site redirects are read.'}
       </p>
+      {loading && <p role="status">Reading the source and identifying complete tables…</p>}
       {error && <p role="alert">{error}</p>}
       {discovery && (
         <>
@@ -185,35 +214,35 @@ export function HtmlTableInput({
           </p>
           <div className="im-controls">
             <button
+              type="button"
+              disabled={loading || !supportedTables.length}
+              aria-describedby={`${helpId}-selection`}
               onClick={() =>
                 onChange({
                   ...config,
                   htmlTables: {
                     ...input,
-                    selections: discovery.tables
-                      .filter((t) => t.supported)
-                      .map((t) => ({
-                        tableId: t.id,
-                        keyColumns: [],
-                        confirmFirstRowAsHeader: !t.headerNeedsConfirmation,
-                      })),
+                    selections: supportedTables.map((t) => ({
+                      tableId: t.id,
+                      keyColumns: [],
+                      confirmFirstRowAsHeader: !t.headerNeedsConfirmation,
+                    })),
                   },
                 })
               }
             >
               Select all supported tables
             </button>
-            <button disabled={!input.selections.length} onClick={useFirstColumn}>
-              Use first column as record key
-            </button>
             <label>
               <input
                 type="checkbox"
                 disabled={!input.selections.length}
-                checked={
-                  !!input.selections.length &&
-                  input.selections.every((s) => s.confirmFirstRowAsHeader === true)
-                }
+                checked={allHeadersConfirmed}
+                aria-checked={mixedHeaders ? 'mixed' : allHeadersConfirmed}
+                aria-describedby={`${helpId}-selection`}
+                ref={(element) => {
+                  if (element) element.indeterminate = mixedHeaders
+                }}
                 onChange={(e) =>
                   onChange({
                     ...config,
@@ -229,11 +258,25 @@ export function HtmlTableInput({
               />
               First row contains column names in selected tables
             </label>
+            <button
+              type="button"
+              disabled={!input.selections.length}
+              aria-describedby={`${helpId}-selection`}
+              onClick={useFirstColumn}
+            >
+              Use first column as record key
+            </button>
           </div>
-          <small>
-            Confirm the headers and unique keys before saving. Full-table validation rejects
+          <small id={`${helpId}-selection`}>
+            Inspect the preview before confirming headers or using the first column as a key. Select
+            multiple key columns when one column is not unique. Full-table validation rejects
             duplicate or blank keys; it never merges rows silently.
           </small>
+          <p role="status">
+            {input.selections.length
+              ? `${input.selections.length} tables selected · ${input.selections.length - confirmedHeaders} need header confirmation · ${input.selections.filter((selection) => !selection.keyColumns.length).length} need record keys`
+              : 'No tables selected. Choose supported tables below, then confirm their headers and record keys.'}
+          </p>
           {discovery.issues.map((issue, i) => (
             <p className="im-muted" key={i}>
               {issue}
@@ -258,6 +301,9 @@ export function HtmlTableInput({
                   <input
                     type="checkbox"
                     disabled={!table.supported || loading}
+                    aria-describedby={
+                      table.blockers.length ? `${helpId}-${table.id}-blockers` : undefined
+                    }
                     checked={!!selection}
                     onChange={(e) =>
                       change(
@@ -273,11 +319,15 @@ export function HtmlTableInput({
                   />
                   Use {table.name} ({table.rowCount} rows)
                 </label>
-                {table.blockers.map((message, i) => (
-                  <p className="im-error" key={i}>
-                    {message}
-                  </p>
-                ))}
+                {table.blockers.length > 0 && (
+                  <div id={`${helpId}-${table.id}-blockers`}>
+                    {table.blockers.map((message, i) => (
+                      <p className="im-error" key={i}>
+                        {message}
+                      </p>
+                    ))}
+                  </div>
+                )}
                 {table.warnings.map((message, i) => (
                   <p className="im-muted" key={i}>
                     {message}
@@ -305,9 +355,9 @@ export function HtmlTableInput({
                         First row contains column names for {table.name}
                       </label>
                     )}
-                    <fieldset>
+                    <fieldset aria-describedby={`${helpId}-${table.id}-keys`}>
                       <legend>Record key for {table.name}</legend>
-                      <small>
+                      <small id={`${helpId}-${table.id}-keys`}>
                         Choose columns whose combined values uniquely identify each row. Keys cannot
                         be blank or duplicated.
                       </small>
@@ -338,11 +388,15 @@ export function HtmlTableInput({
                     Preview {table.name} · first {table.sample.length} of {table.rowCount} rows
                   </summary>
                   <div className="im-table-scroll">
-                    <table>
+                    <table
+                      aria-label={`${table.name} preview: first ${table.sample.length} of ${table.rowCount} source rows`}
+                    >
                       <thead>
                         <tr>
                           {table.columns.map((c) => (
-                            <th key={c.id}>{c.name}</th>
+                            <th key={c.id} scope="col">
+                              {c.name}
+                            </th>
                           ))}
                         </tr>
                       </thead>

@@ -1,0 +1,123 @@
+.im-source-checks {
+  min-width: 0;
+}
+.im-source-checks-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 12px;
+}
+.im-research .im-source-checks-toolbar label {
+  display: grid;
+  gap: 6px;
+  margin: 8px 0;
+  min-width: 0;
+  width: min(100%, 360px);
+  font-size: 12px;
+  font-weight: 600;
+}
+.im-source-checks-toolbar input {
+  width: 100%;
+  min-width: 0;
+}
+.im-source-checks-page,
+.im-source-checks-counts {
+  margin: 8px 0;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+.im-source-checks-scroll {
+  max-height: 420px;
+  overflow: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--im-radius-control);
+}
+.im-source-checks-scroll:focus-visible {
+  outline: 2px solid var(--im-accent);
+  outline-offset: 3px;
+}
+.im-source-checks table {
+  min-width: 660px;
+  table-layout: fixed;
+}
+.im-source-checks caption {
+  padding: 8px 12px;
+  text-align: left;
+  font-size: 12px;
+  color: var(--text-secondary);
+  background: var(--surface);
+}
+.im-research .im-source-checks th,
+.im-research .im-source-checks td {
+  padding: 10px 12px;
+  vertical-align: top;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  font-size: 12px;
+}
+.im-source-checks thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--im-soft);
+}
+.im-source-checks thead th:first-child {
+  width: 25%;
+}
+.im-source-checks thead th:nth-child(2) {
+  width: 18%;
+}
+.im-source-checks thead th:nth-child(3) {
+  width: 12%;
+}
+.im-source-checks thead th:nth-child(4) {
+  width: 17%;
+}
+.im-source-checks tbody th {
+  background: var(--surface);
+  font-weight: 400;
+}
+.im-source-checks-name {
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+.im-source-checks-state {
+  display: inline-block;
+  padding: 3px 7px;
+  border: 1px solid var(--border);
+  border-radius: var(--im-radius-control);
+  background: var(--hover);
+}
+.im-source-checks-state.is-partial {
+  color: var(--im-accent);
+  background: var(--im-soft);
+}
+.im-source-checks summary {
+  cursor: pointer;
+}
+.im-source-checks summary:focus-visible {
+  outline: 2px solid var(--im-accent);
+  outline-offset: 3px;
+}
+.im-source-checks dl {
+  margin: 10px 0;
+}
+.im-source-checks dt {
+  margin-top: 10px;
+  font-weight: 600;
+}
+.im-source-checks dd {
+  margin: 4px 0 0;
+}
+.im-research .im-source-checks td button {
+  width: auto;
+  padding: 6px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--im-radius-control);
+  background: var(--surface);
+  font-size: 12px;
+}
+.im-source-checks-empty {
+  color: var(--text-secondary);
+}

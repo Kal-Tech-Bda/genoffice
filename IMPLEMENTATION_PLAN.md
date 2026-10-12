@@ -1,9 +1,9 @@
 # Infomonk implementation scope and next milestones
 
-Updated 11 October 2026. The owner authorized Stages 1–2, then Stages 3–5.
+Updated 12 October 2026. The owner authorized Stages 1–2, then Stages 3–5.
 Stages 0–5 are delivered locally within the supported boundaries below;
-Further workspace flow features are authorized; the owner requires the data
-engineering harness to be last. The supplied build prompt is context, and direct user
+Further workspace flow features are authorized; the owner's latest order is
+UI/UX acceptance, then the data engineering harness next. The supplied build prompt is context, and direct user
 scope takes precedence. `assay.md` remains excluded.
 
 | Stage | Delivered behavior                                                                                                                                                                     | Evidence                                                                                                                |
@@ -120,16 +120,21 @@ fresh-process native evidence. No ongoing notification automation was requested.
 
 ## Remaining order (owner-directed)
 
-Continue workspace accuracy, table-to-output workflows and validation first.
-The original Stage 7 secondary editors/writers remain available; richer
-table-to-template workflows and release/localization work remain pending.
-Broader input families require their own measured coverage and evidence checks.
+The owner's 12 October instruction supersedes the earlier harness-last order.
+Finish UI/UX first: exercise project starts, source/table configuration, candidate
+review, evidence inspection, tracking, outputs and reopening; address confusing
+actions, excessive density and narrow-window failures; verify light/dark themes
+and keyboard access through native journeys. Record remaining limitations and
+make the result reviewable before advancing.
 
-The specialized research/data engineering harness (original Stage 6) is **last**,
-reusing the existing
-agent/provider streaming, cancellation and tool infrastructure. It should consume
-the accepted-ledger contracts and bounded adapters, not recreate chat, editors,
-formula evaluation or durable execution.
+The specialized research/data engineering harness (original Stage 6) is **next**
+after that UI/UX gate. Reuse existing agent/provider streaming, cancellation and
+tool infrastructure, accepted-ledger contracts and bounded adapters. Reuse chat,
+editors, formula evaluation and durable execution.
+
+The original Stage 7 secondary editors/writers remain available. Richer templates,
+localization, broader source coverage, installer publishing and hosted deployment
+are separate later work; they are not prerequisites for beginning the harness.
 
 Its frozen preparation inputs remain useful, but generated execution stays
 disabled. Installer publishing, paid requests and a hosted/team deployment are

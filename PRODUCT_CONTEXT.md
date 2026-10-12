@@ -1,9 +1,9 @@
 # Infomonk product context
 
-Updated 11 October 2026. Stages 0–5 are implemented locally on the GenOffice fork
-within bounded supported input/source families. The engineering harness remains
-disabled and will be the final implementation phase, after workspace accuracy,
-usable outputs and end-to-end validation.
+Updated 12 October 2026. Stages 0–5 are implemented locally on the GenOffice fork
+within bounded supported input/source families. The owner has made UI/UX the
+remaining gate: review and improve the workspace flows, then build the engineering
+harness next. Generated execution remains disabled during this UI/UX pass.
 
 Infomonk is an AI research and data intelligence workspace that builds, verifies
 and maintains structured tables from documents and the web. The current runnable
@@ -29,8 +29,9 @@ invalidate them. Samples remain diagnostic. No OCR or model request is added.
 - The owner initially approved an audit only, then authorized completing Stages
   1–2 first, then explicitly authorized Stages 3–5. The attached build prompt supplies product context; direct user
   scope controls execution. `assay.md` remains excluded.
-- The owner then authorized further workspace features and use-case testing,
-  explicitly placing the data engineering harness last. The original numbered
+- The owner authorized further workspace features and use-case testing, initially
+  placing the data engineering harness last. On 12 October the owner updated the
+  order to UI/UX acceptance followed directly by the harness. The original numbered
   roadmap does not override that order.
 - Windows is the executed platform. Local work must remain useful without paid
   APIs. No provider request or credential change was required for this milestone.
@@ -127,7 +128,8 @@ registered public sources and lists 24 additional targets with uncollected count
 Source listings, distinct vacancies and fully searched websites are different
 measures. LinkedIn guest results and Chubb keyword search have explicit coverage
 limits. Employer-browser confirmations remain separate evidence when the app
-does not yet acquire that portal. The engineering harness stays last.
+does not yet acquire that portal. This historical expansion preceded the owner's
+updated UI/UX → harness order.
 
 The [next persona iteration](docs/use-cases/persona-iteration-2026-10-12.md) adds
 full-table job views, a persistent shortlist and facts-only refresh summaries.

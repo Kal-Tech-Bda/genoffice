@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { WorkspaceProject } from '../../../shared/workspace-api'
 import { mt } from './en'
 
@@ -19,15 +19,38 @@ export function ProjectCreator({
   const [url, setUrl] = useState('')
   const [delimiter, setDelimiter] = useState<string | undefined>()
   const [sample, setSample] = useState<string[][]>([])
+  const [previewVersion, setPreviewVersion] = useState(0)
+  const [previewLoading, setPreviewLoading] = useState(false)
+  const [previewFailed, setPreviewFailed] = useState(false)
   const [error, setError] = useState('')
   const [busy, setBusy] = useState(false)
+  const dialog = useRef<HTMLFormElement>(null)
+  const nameInput = useRef<HTMLInputElement>(null)
+  const [returnFocus] = useState(() =>
+    document.activeElement instanceof HTMLElement ? document.activeElement : null,
+  )
+  useEffect(() => {
+    nameInput.current?.focus()
+    return () => {
+      if (returnFocus?.isConnected) returnFocus.focus()
+    }
+  }, [returnFocus])
   useEffect(
     () =>
       window.infomonk.onSourceDrop((paths) => {
         const path = paths[0]
-        if (!path) return
+        if (!path || busy) return
+        if (!/\.(xlsx|csv|tsv|docx|pdf|md|txt)$/i.test(path)) {
+          setError(mt('chooseWorkbook'))
+          return
+        }
         setFilePath(path)
         setDelimiter(undefined)
+        setSample([])
+        setPreviewLoading(true)
+        setPreviewFailed(false)
+        setPreviewVersion((value) => value + 1)
+        setError('')
         setName(
           (current) =>
             current ||
@@ -37,11 +60,15 @@ export function ProjectCreator({
               .replace(/\.[^.]+$/, ''),
         )
       }),
-    [],
+    [busy],
   )
   useEffect(() => {
     if (!filePath) return
     let alive = true
+    setSample([])
+    setPreviewLoading(true)
+    setPreviewFailed(false)
+    setError('')
     void window.infomonk
       .filePreview(filePath, delimiter)
       .then((result) => {
@@ -50,12 +77,18 @@ export function ProjectCreator({
         if (delimiter === undefined && result.delimiter) setDelimiter(result.delimiter)
       })
       .catch((err) => {
-        if (alive) setError(String(err))
+        if (alive) {
+          setError(String(err))
+          setPreviewFailed(true)
+        }
+      })
+      .finally(() => {
+        if (alive) setPreviewLoading(false)
       })
     return () => {
       alive = false
     }
-  }, [filePath, delimiter])
+  }, [filePath, delimiter, previewVersion])
   async function choose() {
     try {
       const path = await window.infomonk.pickFile()
@@ -66,6 +99,10 @@ export function ProjectCreator({
       }
       setFilePath(path)
       setDelimiter(undefined)
+      setSample([])
+      setPreviewLoading(true)
+      setPreviewFailed(false)
+      setPreviewVersion((value) => value + 1)
       setError('')
       if (!name)
         setName(
@@ -79,6 +116,7 @@ export function ProjectCreator({
     }
   }
   async function submit() {
+    if (busy || previewLoading || previewFailed) return
     setBusy(true)
     setError('')
     try {
@@ -110,13 +148,9 @@ export function ProjectCreator({
     }
   }
   return (
-    <div
-      className="im-modal-shade"
-      onKeyDown={(event) => {
-        if (event.key === 'Escape' && !busy) onClose()
-      }}
-    >
+    <div className="im-modal-shade">
       <form
+        ref={dialog}
         className="im-dialog"
         role="dialog"
         data-infomonk-source-drop
@@ -124,6 +158,32 @@ export function ProjectCreator({
         onDrop={(event) => event.preventDefault()}
         aria-modal="true"
         aria-labelledby="im-create-title"
+        onKeyDown={(event) => {
+          if (event.key === 'Escape') {
+            event.preventDefault()
+            event.stopPropagation()
+            if (!busy) onClose()
+          }
+          if (event.key !== 'Tab') return
+          const controls = Array.from(
+            dialog.current?.querySelectorAll<HTMLElement>(
+              'button:not(:disabled), input:not(:disabled), select:not(:disabled), textarea:not(:disabled), [tabindex]',
+            ) ?? [],
+          ).filter((element) => element.tabIndex >= 0 && element.getClientRects().length > 0)
+          if (!controls.length) {
+            event.preventDefault()
+            return
+          }
+          const first = controls[0]
+          const last = controls.at(-1)
+          if (event.shiftKey && document.activeElement === first) {
+            event.preventDefault()
+            last?.focus()
+          } else if (!event.shiftKey && document.activeElement === last) {
+            event.preventDefault()
+            first?.focus()
+          }
+        }}
         onSubmit={(event) => {
           event.preventDefault()
           void submit()
@@ -157,8 +217,10 @@ export function ProjectCreator({
         <label>
           {mt('projectName')}
           <input
+            ref={nameInput}
             autoFocus
             required
+            disabled={busy}
             maxLength={120}
             value={name}
             onChange={(event) => setName(event.target.value)}
@@ -167,6 +229,7 @@ export function ProjectCreator({
         <label>
           {mt('goal')}
           <textarea
+            disabled={busy}
             value={description}
             onBlur={() => {
               if (!name && description.trim()) setName(description.trim().slice(0, 60))
@@ -181,16 +244,22 @@ export function ProjectCreator({
           <>
             <label>
               {mt('file')}
-              <button type="button" aria-label={mt('chooseFile')} onClick={() => void choose()}>
+              <button
+                type="button"
+                aria-label={mt('chooseFile')}
+                disabled={busy}
+                onClick={() => void choose()}
+              >
                 {filePath?.split(/[\\/]/).pop() ?? mt('chooseFile')}
               </button>
             </label>
-            {sample.length > 0 && (
+            {filePath && /\.(csv|tsv)$/i.test(filePath) && (
               <>
                 <label>
                   {mt('delimiter')}
                   <select
                     aria-label={mt('delimiter')}
+                    disabled={busy || previewLoading}
                     value={delimiter}
                     onChange={(event) => setDelimiter(event.target.value)}
                   >
@@ -206,25 +275,29 @@ export function ProjectCreator({
                     ))}
                   </select>
                 </label>
-                <div className="im-table-scroll">
-                  <table aria-label={mt('importPreview')}>
-                    <tbody>
-                      {sample.map((row, r) => (
-                        <tr key={r}>
-                          {row.map((cell, c) => (
-                            <td key={c}>{cell}</td>
-                          ))}
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
               </>
+            )}
+            {previewLoading && <p role="status">Reading selected file…</p>}
+            {sample.length > 0 && (
+              <div className="im-table-scroll">
+                <table aria-label={mt('importPreview')}>
+                  <tbody>
+                    {sample.map((row, r) => (
+                      <tr key={r}>
+                        {row.map((cell, c) => (
+                          <td key={c}>{cell}</td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             )}
             <label>
               {mt('url')}
               <input
                 type="url"
+                disabled={busy}
                 value={url}
                 onChange={(event) => setUrl(event.target.value)}
                 placeholder="https://"
@@ -242,7 +315,10 @@ export function ProjectCreator({
           <button type="button" onClick={onClose} disabled={busy}>
             {mt('cancel')}
           </button>
-          <button className="im-primary" disabled={busy || !name.trim()}>
+          <button
+            className="im-primary"
+            disabled={busy || previewLoading || previewFailed || !name.trim()}
+          >
             {busy ? mt('creating') : mt('create')}
           </button>
         </div>

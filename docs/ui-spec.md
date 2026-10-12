@@ -162,7 +162,7 @@ Other manual/agent operations are not a field-evidence or correction ledger.
 
 ## Tokens and accessibility
 
-The Bermuda jobs task lists 19 supported public sites with Select all and Clear
+The initial Bermuda jobs expansion listed 19 supported public sites with Select all and Clear
 selection controls. It explains title-rule matching, adjacent roles, partial
 search coverage and uncollected targets. Jobs uses 100-row paging with personal
 status/notes beside role, location, deadline and listing observation. Additional
@@ -172,7 +172,7 @@ null. Run completion refers to configured acquisition bounds, not whole-site
 coverage. JSON evidence is inspected as stored text in both workflow and native
 Sheets Details. Employer facts cannot be edited through personal tracking.
 
-The next iteration expands that source selector to 26 public sources and exposes
+The current iteration expands that source selector to 26 public sources and exposes
 the full 78-target coverage table with uncollected counts left blank. Whole-table
 search, role/source/status/availability filters and sorting submit together; named
 views survive restart and shortlist actions create personal tracking updates.
@@ -199,3 +199,43 @@ selected/disabled/error states and reduced-motion rules. Creation supports keybo
 input and Escape dismissal; inherited keyboard shortcuts remain. New workspace
 copy is centralized in `en.ts` with English fallback; full new-copy localization
 is deferred. This milestone does not claim a formal accessibility certification.
+
+## UI/UX gate before the harness — 12 October
+
+The owner's current order is UI/UX acceptance followed directly by the engineering
+harness. Broader source coverage, templates, localization and release work remain
+separate later work.
+
+Job views keep quick presets, search, role group and source selection visible.
+Tracking status, availability and sorting sit under More filters and sorting;
+active secondary criteria open that section. Presets announce their applied state
+and are not highlighted while the separate review filter is active. Changed
+draft filters show an Apply view reminder. Select controls have stable names.
+
+Source checks use compact source/hostname, local display date, matching count,
+recorded scope and expandable details. Partial, bounded, retained and unsearched
+checks remain distinct. Null counts display Not checked. Full recorded scope,
+exact URL and timestamp remain available. The source search explicitly covers the
+loaded page; summary counts describe loaded data. A target is not a distinct
+company, and a bounded check is not exhaustive coverage.
+
+Cell selection focuses and reveals the details panel. It uses readable field
+names and shows excerpts/issues immediately; hashes, locators and record IDs sit
+under expandable details. Close returns to the originating cell. A saved tracking
+change waits for the table to update and controls to enable before returning
+focus; if the current view removes the row, focus returns to the table heading.
+Go to table and Review and publish make long workflow pages easier to navigate.
+Table headers remain visible inside their scroll area; unnecessary row paging
+controls are omitted when there is one page.
+
+Below 1,000px the workspace navigation collapses to named icon controls, retaining
+Settings and Help. Long project names, source actions and output actions wrap.
+The project dialog contains Tab/Shift+Tab focus, restores focus on dismissal,
+keeps its actions visible and announces pending file reads. A new selection clears
+old preview rows immediately; pending/failed reads block creation. HTML setup
+announces readiness, provides source guidance, exposes mixed header confirmation
+and labels table previews and unsupported-layout explanations.
+
+The [native UI/UX review](testing/ui-ux-2026-10-12.md) records actual screenshots,
+commands, regression results and limits. Keyboard/layout checks do not constitute
+a formal accessibility audit or a human usability study.

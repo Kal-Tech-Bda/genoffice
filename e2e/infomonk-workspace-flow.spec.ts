@@ -175,12 +175,14 @@ test('a user compares supplier quotes, reviews missing facts, versions sources, 
     await expect(
       page.getByRole('heading', { name: 'Accepted revision 2', exact: true }),
     ).toBeVisible()
-    await expect(quoteTable().locator('tbody tr')).toHaveCount(0)
+    await expect(quoteTable().locator('tbody tr:not(.im-empty-view)')).toHaveCount(0)
+    await expect(quoteTable().getByText('No rows match this view.', { exact: false })).toBeVisible()
     expect(await totals(page, project.id, workflowId)).toEqual(expected.afterCorrection)
     record(
       'Project needs-review filter links to the actual missing fact; manual correction resolves it',
     )
-    await page.getByRole('button', { name: 'Sources · 3', exact: true }).click()
+    await expect(page.getByRole('button', { name: 'Sources', exact: true })).toContainText('3')
+    await page.getByRole('button', { name: 'Sources', exact: true }).click()
     for (const [before, after] of [
       ['northwind.txt', 'northwind-v2.txt'],
       ['maple.pdf', 'maple-v2.txt'],

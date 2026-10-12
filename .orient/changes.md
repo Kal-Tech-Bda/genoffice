@@ -116,3 +116,33 @@ The engineering harness remains disabled and last. No application, subscription,
 account change, unrelated deletion or dependency upgrade was introduced.
 
 ---
+
+## 2026-10-12T05:12:30Z — codex/infomonk-workspace — working tree versus da8c59cb
+
+Improved the existing workspace UI before the engineering harness. Source checks
+now show compact coverage states with expandable exact scope/evidence. Job views
+use fewer visible controls, announce applied presets and flag unapplied filters.
+Evidence selection brings readable details into view, and closing or saving returns
+keyboard focus safely even when a filter removes the row.
+
+Project creation clears stale samples, announces reads, blocks pending/failed
+previews and supports keyboard containment/return. Named compact navigation and
+wrapping project/source/output rows work at narrow widths in both themes. HTML
+setup explains missing sources and blockers, announces readiness and exposes
+accessible previews and mixed header confirmation. Current roadmap documents now
+record the owner's updated order: UI/UX acceptance, then the harness next.
+
+Seventeen unique selected Windows Electron journeys pass, including the persisted
+137-listing tracker, synthetic tracking updates, source versioning, reviewed
+publication, save/reopen and Assistant layout. Two explicit live-network cases
+were skipped. Shell build/typecheck, theme, comment, license and scoped formatting
+checks pass; lint has zero errors and 12 existing warnings. Corrected test fixtures
+and assertions are recorded in docs/testing/ui-ux-2026-10-12/results.json.
+
+No unrelated drift found: no dependency, lockfile, backend acquisition, provider,
+license or generated-execution change. Earlier test evidence was preserved and
+restored after regression; this pass has its own screenshots and report. The
+remaining limits are loaded-page source search, horizontal scrolling for wide
+tables and no formal accessibility/human usability certification.
+
+---

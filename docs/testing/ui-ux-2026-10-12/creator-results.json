@@ -1,0 +1,80 @@
+{
+  "checkedAt": "2026-10-12T05:04:53.145Z",
+  "passed": true,
+  "synthetic": true,
+  "realLocalPreviewAndResearchService": true,
+  "delayedResponseOnly": true,
+  "checks": [
+    "Tab and Shift+Tab stay inside creator; Escape returns focus to invoker",
+    "Old rows disappear immediately while a different file loads",
+    "Pending and failed preview cannot submit the form",
+    "Obsolete failed response cannot replace current document selection",
+    "Choosing the same file retries preview and clears failed state",
+    "Create remains visible with a scrollable import preview",
+    "Real local quote project and accepted revision appear in Outputs",
+    "Main panels fit both widths/themes with named compact navigation"
+  ],
+  "layouts": [
+    {
+      "width": 900,
+      "theme": "light",
+      "section": "Home"
+    },
+    {
+      "width": 900,
+      "theme": "light",
+      "section": "Sources"
+    },
+    {
+      "width": 900,
+      "theme": "light",
+      "section": "Outputs"
+    },
+    {
+      "width": 900,
+      "theme": "dark",
+      "section": "Home"
+    },
+    {
+      "width": 900,
+      "theme": "dark",
+      "section": "Sources"
+    },
+    {
+      "width": 900,
+      "theme": "dark",
+      "section": "Outputs"
+    },
+    {
+      "width": 1450,
+      "theme": "light",
+      "section": "Home"
+    },
+    {
+      "width": 1450,
+      "theme": "light",
+      "section": "Sources"
+    },
+    {
+      "width": 1450,
+      "theme": "light",
+      "section": "Outputs"
+    },
+    {
+      "width": 1450,
+      "theme": "dark",
+      "section": "Home"
+    },
+    {
+      "width": 1450,
+      "theme": "dark",
+      "section": "Sources"
+    },
+    {
+      "width": 1450,
+      "theme": "dark",
+      "section": "Outputs"
+    }
+  ],
+  "rendererErrors": []
+}

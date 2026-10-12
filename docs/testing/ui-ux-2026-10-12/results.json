@@ -1,0 +1,116 @@
+{
+  "checkedAt": "2026-10-12T05:11:14Z",
+  "baselineCommit": "da8c59cb1b32b6337a3b57b87c929b4cc5104242",
+  "branch": "codex/infomonk-workspace",
+  "scope": "UI/UX gate, then engineering harness next; generated execution remains disabled.",
+  "environment": {
+    "platform": "Windows",
+    "os": "10.0.26200",
+    "node": "v24.13.1",
+    "npm": "11.8.0",
+    "electron": "43.7.6",
+    "playwright": "1.62.1"
+  },
+  "checks": {
+    "shellBuild": "passed",
+    "shellTypecheck": "passed",
+    "lint": {
+      "errors": 0,
+      "warnings": 12,
+      "notes": "Existing warnings outside the changed UI files"
+    },
+    "themeColors": "passed",
+    "englishComments": "passed",
+    "licenses": "passed",
+    "formatting": "passed after scoped formatting",
+    "diffCheck": "passed"
+  },
+  "native": {
+    "uniqueJourneysPassed": 17,
+    "explicitLiveNetworkSkips": 2,
+    "windowSizes": [
+      [1450, 1000],
+      [900, 800]
+    ],
+    "creatorContentWidths": [900, 1450],
+    "themes": ["light", "dark"],
+    "creatorLayoutsVerified": 12,
+    "persistedResearch": {
+      "listings": 137,
+      "coverageTargets": 78,
+      "checkedSources": 26,
+      "uncollectedTargets": 52,
+      "originalResearchCheck": "2026-10-12T04:38:47.538Z",
+      "acceptedRevision": 4,
+      "acceptedRevisionUnchanged": true,
+      "notes": "Copied closed demo profile; no new web collection or tracking writes"
+    },
+    "syntheticFilteredRowFocusRecovery": "passed; Saved to Applied removes one visible row while both ledger records remain",
+    "assistantLayout": "passed; draft retained through side change/resize/collapse and side preference retained through restart; no provider call",
+    "runs": [
+      {
+        "command": "$env:INFOMONK_UI_LIVE='1'; npm run test:e2e -- e2e/infomonk-tracker-ux.spec.ts e2e/infomonk-html-ux.spec.ts e2e/infomonk-creator-ux.spec.ts e2e/infomonk-views.spec.ts e2e/infomonk-html-tables.spec.ts e2e/infomonk-html-discovery-state.spec.ts e2e/infomonk-jobs.spec.ts e2e/infomonk-workspace-flow.spec.ts e2e/infomonk-readiness.spec.ts e2e/infomonk-process-journeys.spec.ts e2e/ai-panel-side-settings.spec.ts",
+        "log": "e2e/artifacts/ui-ux-regression.log",
+        "passed": 15,
+        "skipped": 2,
+        "failed": 1,
+        "note": "The supplier journey expected zero tbody rows, but an explicit empty-state row was present. Assertion now excludes empty-state rows and verifies the message."
+      },
+      {
+        "command": "$env:INFOMONK_UI_LIVE='1'; npm run test:e2e -- e2e/infomonk-tracker-ux.spec.ts e2e/infomonk-html-ux.spec.ts e2e/infomonk-creator-ux.spec.ts e2e/infomonk-tracking-focus.spec.ts e2e/infomonk-workspace-flow.spec.ts",
+        "log": "e2e/artifacts/ui-ux-final-native.log",
+        "passed": 4,
+        "failed": 2,
+        "note": "Tracking fixture exceeded the shared three-year configuration bound; corrected to2025–2026. Supplier journey used the former source-count accessible name; it now separately verifies the visible count and stable Sources label."
+      },
+      {
+        "command": "npm run test:e2e -- e2e/infomonk-tracking-focus.spec.ts e2e/infomonk-workspace-flow.spec.ts",
+        "log": "e2e/artifacts/ui-ux-final-focus-flow.log",
+        "passed": 3,
+        "failed": 0,
+        "note": "Final rerun passes filtered-out-row focus recovery and the full supplier version/refresh/save/restart journey."
+      },
+      {
+        "command": "INFOMONK_UI_LIVE=1 npm run test:e2e -- e2e/infomonk-tracker-ux.spec.ts",
+        "log": "e2e/artifacts/ui-ux-final-tracker-capture.log",
+        "passed": 1,
+        "failed": 0,
+        "note": "Final default collapsed coverage screenshots and persisted tracker journey pass."
+      }
+    ]
+  },
+  "commands": [
+    "npm run build -w @genoffice/shell",
+    "npm run typecheck -w @genoffice/shell",
+    "npm run lint",
+    "npm run check:theme-colors",
+    "npm run check:english-comments",
+    "npm run licenses",
+    "npm exec -- prettier --check <owned changed files only>",
+    "git diff --check"
+  ],
+  "limits": [
+    "Not a complete repository test run or accessibility certification.",
+    "Development StrictMode focus setup is source-reviewed; native acceptance uses the built production route.",
+    "Two explicit live-network acquisition cases were not rerun for this UI-only change.",
+    "Source search covers the loaded coverage page; job views query the entire ledger.",
+    "Historical test artifacts regenerated during regression were preserved under ignored e2e/artifacts/ui-ux-regression-evidence then restored; this pass has its own durable UI evidence.",
+    "No provider credentials, paid requests, generated-code execution, dependency upgrades, job applications or notifications were used."
+  ],
+  "fileHashes": {
+    "apps/shell/src/renderer/src/infomonk/HtmlTableInput.tsx": "13520775dae0e89a2723d8558e7cad211496e1db30ed1c7bea131640e84e1845",
+    "apps/shell/src/renderer/src/infomonk/ProjectCreator.tsx": "3c62b66903ebbfda5f4696f94fbd057305856601cb7d62ef244befba810c4aba",
+    "apps/shell/src/renderer/src/infomonk/ResearchPanel.tsx": "795c81c54d5a3ff7fd1c99f4f8f44325584821d10c8d93632ca44c94d03d9a04",
+    "apps/shell/src/renderer/src/infomonk/TableFilters.tsx": "2052f0dbff499cb75e7a487dc0ea910944a1efb617171a918204d5f99612e3bc",
+    "apps/shell/src/renderer/src/infomonk/SourceChecks.tsx": "af26fa47dc91da917eb072097bbb9d866d2e66f325137405c9559549779fe192",
+    "apps/shell/src/renderer/src/infomonk/Workspace.tsx": "d9cd0e4dc4f719f90e53385de110e23e0b2bf8354c4c59d62ac8114a28949c3b",
+    "apps/shell/src/renderer/src/infomonk/research.css": "7ec2a31fad54157d8e6534f51577f8d462cc3b8c68b8280f1a48df41bb3669af",
+    "apps/shell/src/renderer/src/infomonk/workspace.css": "66f520596541e711cedad478ccd983ac4e37ff067e4926e3ee0a6492bfd666fb",
+    "apps/shell/src/renderer/src/infomonk/source-checks.css": "d297604a9836c3c02381fd3255bb16242dc6736fad57cd18f54f44d989f6f2b1",
+    "e2e/infomonk-creator-ux.spec.ts": "74cd878e227469bb454ab792d52d2a5223dcf19bb3ecce6889338d7cac13746a",
+    "e2e/infomonk-html-ux.spec.ts": "06a65fc20d779ad5d2b9aab93e82d7e3cdcd285989bde9d9331e77ed524f7d01",
+    "e2e/infomonk-tracker-ux.spec.ts": "b6eba09ff6795590f7c422ea4341c3d699f4208e4567103c44ae4d4e740baae4",
+    "e2e/infomonk-tracking-focus.spec.ts": "829461c2fd79aacdc4164042df174a5d8c7471061665d3b45b0e3d10fb05b3ca",
+    "e2e/infomonk-workspace-flow.spec.ts": "c100b47d71f9b3b0bdcabde0ca906055ace8a2aa111a7746f32985fb51145fb5"
+  }
+}

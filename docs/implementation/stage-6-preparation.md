@@ -2,9 +2,10 @@
 
 This hardening milestone defines defaults and evaluation inputs. It does not
 enable a coding agent, generated-code runner or private cloud processing.
-`assay.md` remains excluded. The owner subsequently moved the engineering harness
-to the final phase, after workspace accuracy, outputs and validation. This
-historical Stage 6 contract is preparation only; execution remains disabled.
+`assay.md` remains excluded. The owner initially moved the engineering harness
+to the final phase, then updated the order on 12 October: UI/UX acceptance followed
+directly by the harness. This contract remains preparation until that next
+milestone; execution is disabled during the UI/UX pass.
 
 ## First input pattern and independent evaluation
 

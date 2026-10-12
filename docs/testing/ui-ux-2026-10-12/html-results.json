@@ -1,0 +1,13 @@
+{
+  "checkedAt": "2026-10-12T05:04:55.257Z",
+  "synthetic": true,
+  "realServiceAndParser": true,
+  "publicNetworkRequests": 0,
+  "discoveredTables": 3,
+  "selectedTables": 2,
+  "unsupportedTableExcluded": true,
+  "mixedHeadersConfirmedByKeyboard": true,
+  "namedPreviewColumnHeaders": true,
+  "savedConfigurationOnly": true,
+  "rendererErrors": []
+}

@@ -1,0 +1,28 @@
+{
+  "checkedAt": "2026-10-12T05:10:36.301Z",
+  "sourceResearchCheckedAt": "2026-10-12T04:38:47.538Z",
+  "profile": "C:\\Users\\Place\\Documents\\ChatGPT\\Socrates\\e2e\\artifacts\\ui-tracker-zgO4bf",
+  "projectId": "proj-5b6c1ad2e71c",
+  "workflowId": "d62bfcfd-8ae6-4f07-99ef-ca46c2648276",
+  "acceptedRevision": 4,
+  "persistedListings": 137,
+  "sourceTargets": 78,
+  "unchangedAcceptedRevision": true,
+  "focusReturn": true,
+  "themes": [
+    "light",
+    "dark"
+  ],
+  "windowSizes": [
+    [
+      1450,
+      1000
+    ],
+    [
+      900,
+      800
+    ]
+  ],
+  "rendererErrors": [],
+  "limits": "Uses a copied closed demo profile from the prior live collection; no new job search, application or tracking write."
+}

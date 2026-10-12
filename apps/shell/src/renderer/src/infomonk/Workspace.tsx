@@ -241,6 +241,7 @@ export function Workspace({
             <button
               className={section === key && homeActive ? 'selected' : ''}
               title={mt(key)}
+              aria-label={mt(key)}
               key={key}
               onClick={() => void run(() => navigate(key))}
             >
@@ -272,6 +273,7 @@ export function Workspace({
                 <button
                   key={key}
                   title={mt(key)}
+                  aria-label={mt(key)}
                   className={
                     section === key || (key === 'sheets' && section === 'cleanup') ? 'selected' : ''
                   }
@@ -290,24 +292,46 @@ export function Workspace({
           </div>
         )}
         <div className="im-sidebar-footer">
-          <button title={mt('connections')} onClick={() => void run(() => navigate('connections'))}>
-            <span>↗</span>
+          <button
+            title={mt('connections')}
+            aria-label={mt('connections')}
+            onClick={() => void run(() => navigate('connections'))}
+          >
+            <span aria-hidden="true">↗</span>
             <span>{mt('connections')}</span>
           </button>
-          <button title={mt('localFiles')} onClick={() => void run(() => navigate('localFiles'))}>
-            <span>▱</span>
+          <button
+            title={mt('localFiles')}
+            aria-label={mt('localFiles')}
+            onClick={() => void run(() => navigate('localFiles'))}
+          >
+            <span aria-hidden="true">▱</span>
             <span>{mt('localFiles')}</span>
           </button>
           <div className="im-footer-actions">
-            <button onClick={() => void run(showSettings)}>{mt('settings')}</button>
             <button
+              title={mt('settings')}
+              aria-label={mt('settings')}
+              onClick={() => void run(showSettings)}
+            >
+              <span className="im-footer-icon" aria-hidden="true">
+                ⚙
+              </span>
+              <span>{mt('settings')}</span>
+            </button>
+            <button
+              title={mt('help')}
+              aria-label={mt('help')}
               onClick={() =>
                 void run(async () => {
                   await window.aiOffice.openHelp()
                 })
               }
             >
-              {mt('help')}
+              <span className="im-footer-icon" aria-hidden="true">
+                ?
+              </span>
+              <span>{mt('help')}</span>
             </button>
           </div>
           <small>{mt('localWorkspace')}</small>

@@ -20,6 +20,7 @@ import { isResearchIdentity } from '../../../shared/research-api'
 import { InputReadiness } from './InputReadiness'
 import { TableFilters } from './TableFilters'
 import { HtmlTableInput } from './HtmlTableInput'
+import { SourceChecks } from './SourceChecks'
 import { JOB_SITES, APPLICATION_STATUSES } from '../../../shared/jobs-api'
 
 declare global {
@@ -99,6 +100,31 @@ export function ResearchPanel({
     locator: string
     sourceName: string
   } | null>(null)
+  const inspectorElement = useRef<HTMLElement>(null)
+  const tableElement = useRef<HTMLHeadingElement>(null)
+  const publishElement = useRef<HTMLDivElement>(null)
+  const cellReturnFocus = useRef<HTMLElement | null>(null)
+  const restoreCellFocus = useRef(false)
+  useEffect(() => {
+    if (!selectedCell) return
+    inspectorElement.current?.focus({ preventScroll: true })
+    inspectorElement.current?.scrollIntoView({ block: 'nearest' })
+  }, [selectedCell])
+  useEffect(() => {
+    if (selectedCell || busy || !restoreCellFocus.current) return
+    restoreCellFocus.current = false
+    const target = cellReturnFocus.current?.isConnected
+      ? cellReturnFocus.current
+      : tableElement.current
+    target?.focus({ preventScroll: true })
+    target?.scrollIntoView({ block: 'nearest' })
+  }, [selectedCell, busy])
+  function closeCellDetails() {
+    cellRequest.current++
+    restoreCellFocus.current = true
+    setSelectedCell(null)
+    setInspection(null)
+  }
   const [correction, setCorrection] = useState('')
   const [reason, setReason] = useState('')
   const [schedule, setSchedule] = useState('manual')
@@ -266,6 +292,8 @@ export function ResearchPanel({
   }, [project.id, selectedId, showAccepted, needsReview, workflow?.acceptedRevision, activeView])
   async function selectCell(table: ResearchTable, row: ResearchRow, column: string) {
     if (!workflow) return
+    restoreCellFocus.current = false
+    cellReturnFocus.current = document.activeElement as HTMLElement | null
     const request = ++cellRequest.current
     const result = await window.infomonkResearch.cell(
       project.id,
@@ -845,6 +873,26 @@ export function ResearchPanel({
             >
               Inspect accepted table
             </button>
+            {dataset && (
+              <button
+                onClick={() => {
+                  tableElement.current?.focus({ preventScroll: true })
+                  tableElement.current?.scrollIntoView({ block: 'start' })
+                }}
+              >
+                Go to table
+              </button>
+            )}
+            {run?.status === 'review' && !showAccepted && (
+              <button
+                onClick={() => {
+                  publishElement.current?.focus({ preventScroll: true })
+                  publishElement.current?.scrollIntoView({ block: 'nearest' })
+                }}
+              >
+                Review and publish
+              </button>
+            )}
           </div>
           {pending && !(pending.sample && pending.status === 'review') && (
             <p className="im-muted">
@@ -1101,7 +1149,7 @@ export function ResearchPanel({
           )}
           {dataset && (
             <>
-              <h3>
+              <h3 ref={tableElement} tabIndex={-1}>
                 {showAccepted
                   ? `Accepted revision ${workflow.acceptedRevision}`
                   : run?.status === 'published'
@@ -1156,95 +1204,118 @@ export function ResearchPanel({
                   ))}
                 </details>
               )}
-              {dataset.tables.map((table) => (
-                <div
-                  className={`im-research-table ${table.id === 'jobs' ? 'im-jobs-table' : ''}`}
-                  key={table.id}
-                >
-                  <h3>
-                    {table.name} · {table.totalRows ?? table.rows.length}
-                    {needsReview
-                      ? ` of ${table.allRows ?? table.totalRows} rows need review`
-                      : activeView?.tableId === table.id
-                        ? ` of ${table.allRows ?? table.totalRows} rows`
-                        : ' rows'}
-                  </h3>
-                  <p>{table.rowMeaning}</p>
-                  {table.id === 'jobs' && (
-                    <TableFilters
-                      projectId={project.id}
-                      workflowId={workflow.id}
+              {dataset.tables.map((table) =>
+                table.id === 'job_sources' ? (
+                  <div className="im-research-table" key={table.id}>
+                    <SourceChecks
+                      key={workflow.id}
                       table={table}
-                      view={activeView?.tableId === table.id ? activeView : undefined}
                       busy={busy}
-                      onApply={(view) => act(() => applyView(view))}
+                      onInspect={(row, column) => void act(() => selectCell(table, row, column))}
                     />
-                  )}
-                  <small>
-                    Showing rows {(table.offset ?? 0) + (table.rows.length ? 1 : 0)}–
-                    {(table.offset ?? 0) + table.rows.length}. Click a cell to inspect its evidence
-                    {showAccepted ? ' or record a correction' : ''}.
-                  </small>
-                  <div className="im-controls">
-                    {table.id === 'jobs' && (
-                      <button disabled={busy} onClick={() => setAllJobFields(!allJobFields)}>
-                        {allJobFields ? 'Show compact job tracker' : 'Show all job fields'}
-                      </button>
-                    )}
-                    <button
-                      disabled={busy || !table.offset}
-                      onClick={() =>
-                        void act(() => pageTable(table.id, Math.max(0, (table.offset ?? 0) - 100)))
-                      }
-                    >
-                      Previous {table.name} rows
-                    </button>
-                    <button
-                      disabled={
-                        busy || (table.offset ?? 0) + 100 >= (table.totalRows ?? table.rows.length)
-                      }
-                      onClick={() => void act(() => pageTable(table.id, (table.offset ?? 0) + 100))}
-                    >
-                      Next {table.name} rows
-                    </button>
-                  </div>
-                  <div className="im-table-scroll">
-                    <table>
-                      <thead>
-                        <tr>
-                          {table.columns
-                            .filter(
-                              (c) =>
-                                table.id !== 'jobs' ||
-                                allJobFields ||
-                                [
-                                  'title',
-                                  'location',
-                                  'closing_date',
-                                  'listing_status',
-                                  'application_status',
-                                  'notes',
-                                ].includes(c.id),
+                    {(table.totalRows ?? table.rows.length) > 100 && (
+                      <div className="im-controls">
+                        <button
+                          disabled={busy || !table.offset}
+                          onClick={() =>
+                            void act(() =>
+                              pageTable(table.id, Math.max(0, (table.offset ?? 0) - 100)),
                             )
-                            .map((c) => (
-                              <th key={c.id}>
-                                {c.name}
-                                <small>{c.type}</small>
-                              </th>
-                            ))}
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {table.rows.length === 0 && (
-                          <tr className="im-empty-view">
-                            <td colSpan={table.columns.length}>
-                              No rows match this view. Adjust the filters or choose All listings;
-                              accepted records remain intact.
-                            </td>
-                          </tr>
-                        )}
-                        {table.rows.slice(0, 100).map((row) => (
-                          <tr key={row.id}>
+                          }
+                        >
+                          Previous {table.name} rows
+                        </button>
+                        <button
+                          disabled={
+                            busy ||
+                            (table.offset ?? 0) + 100 >= (table.totalRows ?? table.rows.length)
+                          }
+                          onClick={() =>
+                            void act(() => pageTable(table.id, (table.offset ?? 0) + 100))
+                          }
+                        >
+                          Next {table.name} rows
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <div
+                    className={`im-research-table ${table.id === 'jobs' ? 'im-jobs-table' : ''}`}
+                    key={table.id}
+                  >
+                    <h3 aria-live="polite">
+                      {table.name} · {table.totalRows ?? table.rows.length}
+                      {needsReview
+                        ? ` of ${table.allRows ?? table.totalRows} rows need review`
+                        : activeView?.tableId === table.id
+                          ? ` of ${table.allRows ?? table.totalRows} rows`
+                          : ' rows'}
+                    </h3>
+                    <p>{table.rowMeaning}</p>
+                    {table.id === 'jobs' && (
+                      <TableFilters
+                        key={workflow.id}
+                        reviewOnly={needsReview}
+                        projectId={project.id}
+                        workflowId={workflow.id}
+                        table={table}
+                        view={activeView?.tableId === table.id ? activeView : undefined}
+                        busy={busy}
+                        onApply={(view) => act(() => applyView(view))}
+                      />
+                    )}
+                    <small>
+                      Showing rows {(table.offset ?? 0) + (table.rows.length ? 1 : 0)}–
+                      {(table.offset ?? 0) + table.rows.length}. Click a cell to inspect its
+                      evidence
+                      {showAccepted
+                        ? table.id === 'jobs'
+                          ? '; update your tracking status or notes in their own fields'
+                          : ' or record a correction'
+                        : ''}
+                      .
+                    </small>
+                    <div className="im-controls">
+                      {table.id === 'jobs' && (
+                        <button disabled={busy} onClick={() => setAllJobFields(!allJobFields)}>
+                          {allJobFields ? 'Show compact job tracker' : 'Show all job fields'}
+                        </button>
+                      )}
+                      {(table.totalRows ?? table.rows.length) > 100 && (
+                        <>
+                          <button
+                            disabled={busy || !table.offset}
+                            onClick={() =>
+                              void act(() =>
+                                pageTable(table.id, Math.max(0, (table.offset ?? 0) - 100)),
+                              )
+                            }
+                          >
+                            Previous {table.name} rows
+                          </button>
+                          <button
+                            disabled={
+                              busy ||
+                              (table.offset ?? 0) + 100 >= (table.totalRows ?? table.rows.length)
+                            }
+                            onClick={() =>
+                              void act(() => pageTable(table.id, (table.offset ?? 0) + 100))
+                            }
+                          >
+                            Next {table.name} rows
+                          </button>
+                        </>
+                      )}
+                    </div>
+                    <div
+                      className="im-table-scroll"
+                      tabIndex={0}
+                      aria-label={`${table.name} table scroll area`}
+                    >
+                      <table aria-label={table.name}>
+                        <thead>
+                          <tr>
                             {table.columns
                               .filter(
                                 (c) =>
@@ -1259,86 +1330,140 @@ export function ResearchPanel({
                                     'notes',
                                   ].includes(c.id),
                               )
-                              .map((column) => {
-                                const c = row.cells[column.id]
-                                const prior = accepted?.tables
-                                  .find((t) => t.id === table.id)
-                                  ?.rows.find((r) => r.id === row.id)?.cells[column.id]
-                                return (
-                                  <td
-                                    key={column.id}
-                                    className={
-                                      table.id === 'jobs' && column.type === 'date'
-                                        ? 'im-job-date'
-                                        : undefined
-                                    }
-                                  >
-                                    <button
-                                      disabled={busy}
-                                      className={c?.missingReason ? 'im-cell-missing' : ''}
-                                      title={
-                                        !showAccepted && prior && prior.value !== c?.value
-                                          ? `Previous accepted value: ${String(prior.value ?? 'missing')}`
-                                          : c?.origin
-                                      }
-                                      onClick={() =>
-                                        void act(() => selectCell(table, row, column.id))
+                              .map((c) => (
+                                <th key={c.id} scope="col" title={`Field type: ${c.type}`}>
+                                  {c.name}
+                                </th>
+                              ))}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {table.rows.length === 0 && (
+                            <tr className="im-empty-view">
+                              <td colSpan={table.columns.length}>
+                                No rows match this view.{' '}
+                                {table.id === 'jobs'
+                                  ? 'Adjust the filters or choose All listings.'
+                                  : 'Clear Show rows needing review to see all records.'}{' '}
+                                Accepted records remain intact.
+                              </td>
+                            </tr>
+                          )}
+                          {table.rows.slice(0, 100).map((row) => (
+                            <tr key={row.id}>
+                              {table.columns
+                                .filter(
+                                  (c) =>
+                                    table.id !== 'jobs' ||
+                                    allJobFields ||
+                                    [
+                                      'title',
+                                      'location',
+                                      'closing_date',
+                                      'listing_status',
+                                      'application_status',
+                                      'notes',
+                                    ].includes(c.id),
+                                )
+                                .map((column) => {
+                                  const c = row.cells[column.id]
+                                  const prior = accepted?.tables
+                                    .find((t) => t.id === table.id)
+                                    ?.rows.find((r) => r.id === row.id)?.cells[column.id]
+                                  return (
+                                    <td
+                                      key={column.id}
+                                      className={
+                                        table.id === 'jobs' && column.type === 'date'
+                                          ? 'im-job-date'
+                                          : undefined
                                       }
                                     >
+                                      <button
+                                        disabled={busy}
+                                        className={c?.missingReason ? 'im-cell-missing' : ''}
+                                        title={
+                                          !showAccepted && prior && prior.value !== c?.value
+                                            ? `Previous accepted value: ${String(prior.value ?? 'missing')}`
+                                            : c?.origin
+                                        }
+                                        onClick={() =>
+                                          void act(() => selectCell(table, row, column.id))
+                                        }
+                                      >
+                                        {table.id === 'jobs' &&
+                                        column.id === 'notes' &&
+                                        c?.value === ''
+                                          ? 'Add note'
+                                          : String(c?.value ?? 'Missing')}
+                                        {c?.origin === 'manual' && <small>Manual override</small>}
+                                      </button>
                                       {table.id === 'jobs' &&
-                                      column.id === 'notes' &&
-                                      c?.value === ''
-                                        ? 'Add note'
-                                        : String(c?.value ?? 'Missing')}
-                                      {c?.origin === 'manual' && <small>Manual override</small>}
-                                    </button>
-                                    {table.id === 'jobs' &&
-                                      !allJobFields &&
-                                      column.id === 'title' && (
-                                        <small className="im-job-source">
-                                          {!showAccepted &&
-                                            row.change &&
-                                            row.change.kind !== 'unchanged' && (
-                                              <span className="im-change-label">
-                                                {row.change.kind.replaceAll('-', ' ')}
-                                                {row.change.fields.length
-                                                  ? ` · ${row.change.fields.join(', ')}`
-                                                  : ''}
-                                              </span>
+                                        !allJobFields &&
+                                        column.id === 'title' && (
+                                          <small className="im-job-source">
+                                            {!showAccepted &&
+                                              row.change &&
+                                              row.change.kind !== 'unchanged' && (
+                                                <span className="im-change-label">
+                                                  {row.change.kind.replaceAll('-', ' ')}
+                                                  {row.change.fields.length
+                                                    ? ` · ${row.change.fields.join(', ')}`
+                                                    : ''}
+                                                </span>
+                                              )}
+                                            {row.cells.role_group?.value
+                                              ? `${String(row.cells.role_group.value)} · `
+                                              : ''}
+                                            {String(row.cells.source_site.value)} ·{' '}
+                                            {String(
+                                              row.cells.employer.value ?? 'Employer not stated',
                                             )}
-                                          {row.cells.role_group?.value
-                                            ? `${String(row.cells.role_group.value)} · `
-                                            : ''}
-                                          {String(row.cells.source_site.value)} ·{' '}
-                                          {String(
-                                            row.cells.employer.value ?? 'Employer not stated',
-                                          )}
-                                          {showAccepted &&
-                                            row.cells.application_status?.value === 'To review' && (
-                                              <button
-                                                className="im-shortlist-action"
-                                                disabled={busy}
-                                                onClick={() => void act(() => shortlist(row))}
-                                              >
-                                                Save to shortlist
-                                              </button>
-                                            )}
-                                        </small>
-                                      )}
-                                  </td>
-                                )
-                              })}
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                                            {row.cells.employer.origin === 'internal' &&
+                                              row.cells.employer.value && (
+                                                <span> · configured publisher</span>
+                                              )}
+                                            {showAccepted &&
+                                              row.cells.application_status?.value ===
+                                                'To review' && (
+                                                <button
+                                                  className="im-shortlist-action"
+                                                  disabled={busy}
+                                                  onClick={() => void act(() => shortlist(row))}
+                                                >
+                                                  Save to shortlist
+                                                </button>
+                                              )}
+                                          </small>
+                                        )}
+                                    </td>
+                                  )
+                                })}
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ),
+              )}
             </>
           )}
           {selectedCell && (
-            <aside className="im-cell-inspector">
+            <aside
+              ref={inspectorElement}
+              className="im-cell-inspector"
+              role="region"
+              aria-label="Cell details"
+              tabIndex={-1}
+            >
+              <div className="im-inspector-heading">
+                <h3>
+                  {selectedCell.table.columns.find((c) => c.id === selectedCell.column)?.name ??
+                    selectedCell.column}
+                </h3>
+                <button onClick={closeCellDetails}>Close cell details</button>
+              </div>
               {selectedCell.table.id === 'jobs' && (
                 <button
                   disabled={busy}
@@ -1356,13 +1481,20 @@ export function ResearchPanel({
                   Open live listing
                 </button>
               )}
-              <h3>
-                {selectedCell.column} · record {selectedCell.row.id.slice(0, 8)}
-              </h3>
               <p>
                 Value: {String(selectedCell.row.cells[selectedCell.column].value ?? 'Missing')} ·{' '}
-                {selectedCell.row.cells[selectedCell.column].origin}
+                {selectedCell.row.cells[selectedCell.column].origin === 'external'
+                  ? 'Source value'
+                  : selectedCell.row.cells[selectedCell.column].origin === 'manual'
+                    ? 'Manual override'
+                    : 'Workspace value'}
               </p>
+              <details className="im-evidence-technical">
+                <summary>Record details</summary>
+                <small>
+                  {selectedCell.column} · record {selectedCell.row.id}
+                </small>
+              </details>
               {!showAccepted && (
                 <p>
                   Previous accepted value:{' '}
@@ -1387,13 +1519,15 @@ export function ResearchPanel({
               )}
               {selectedCell.row.cells[selectedCell.column].evidence.map((e, i) => (
                 <article key={i}>
-                  <strong>
-                    {e.sourceName} · {e.locator}
-                  </strong>
+                  <strong>{e.sourceName}</strong>
                   <p>{e.excerpt}</p>
-                  <small>
-                    {e.uri} · retrieved {e.retrievedAt} · SHA256 {e.sourceVersion}
-                  </small>
+                  <details className="im-evidence-technical">
+                    <summary>Snapshot details</summary>
+                    <small>{e.uri}</small>
+                    <small>Retrieved {e.retrievedAt}</small>
+                    <small>Locator: {e.locator}</small>
+                    <small>SHA256 {e.sourceVersion}</small>
+                  </details>
                   <div className="im-controls">
                     <button disabled={busy} onClick={() => void act(() => inspect(e))}>
                       Verify snapshot and locator
@@ -1496,7 +1630,7 @@ export function ResearchPanel({
                             view: activeView,
                           }),
                         )
-                        setSelectedCell(null)
+                        closeCellDetails()
                       })
                     }
                   >
@@ -1513,7 +1647,13 @@ export function ResearchPanel({
             </aside>
           )}
           {run?.status === 'review' && !showAccepted && (
-            <div className="im-research-publish">
+            <div
+              ref={publishElement}
+              className="im-research-publish"
+              tabIndex={-1}
+              role="region"
+              aria-label="Publication review"
+            >
               <label>
                 <input
                   type="checkbox"
