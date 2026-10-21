@@ -1,5 +1,11 @@
 # Infomonk
 
+**Current direction — 20 October 2026:** the engineering harness is paused
+indefinitely while we audit GenOffice's existing AI backend and upstream-update
+compatibility. See the [renewed AI audit](docs/audit/genoffice-ai-stack-2026-10-20.md)
+and [proposed integration process](docs/audit/upstream-compatibility-2026-10-20.md).
+No upstream application update or harness implementation is part of this audit.
+
 Infomonk is a desktop research and data intelligence workspace built on
 [GenOffice](https://github.com/genspark-ai/genoffice). This fork currently delivers
 project organization, local spreadsheet cleanup, bounded supplier-quote extraction,

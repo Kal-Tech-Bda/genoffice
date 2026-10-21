@@ -1,9 +1,10 @@
 # Infomonk product context
 
-Updated 12 October 2026. Stages 0–5 are implemented locally on the GenOffice fork
-within bounded supported input/source families. The owner has made UI/UX the
-remaining gate: review and improve the workspace flows, then build the engineering
-harness next. Generated execution remains disabled during this UI/UX pass.
+Updated 20 October 2026. Stages 0–5 are implemented locally on the GenOffice fork
+within bounded supported input/source families. The owner has paused the
+engineering harness indefinitely while the existing GenOffice AI backend and
+upstream compatibility are audited. Generated execution remains disabled.
+Resume harness work only on further owner direction after that review.
 
 Infomonk is an AI research and data intelligence workspace that builds, verifies
 and maintains structured tables from documents and the web. The current runnable
@@ -33,6 +34,9 @@ invalidate them. Samples remain diagnostic. No OCR or model request is added.
   placing the data engineering harness last. On 12 October the owner updated the
   order to UI/UX acceptance followed directly by the harness. The original numbered
   roadmap does not override that order.
+- On 20 October the owner superseded that sequence: pause the harness indefinitely,
+  reread current upstream documentation and audit the existing AI backend before
+  proposing new infrastructure. Source-update compatibility is the current priority.
 - Windows is the executed platform. Local work must remain useful without paid
   APIs. No provider request or credential change was required for this milestone.
 - Preserve original files, licenses, notices, history, internal package names and

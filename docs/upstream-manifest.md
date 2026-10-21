@@ -1,6 +1,23 @@
 # Upstream and local-checkout manifest
 
-Recorded 9 October 2026.
+## Latest review — 20 October 2026
+
+Current upstream was fetched and pinned to
+`1cb2925afe173b266c1545a3871a397429e11b7e`. The audited Infomonk application remains
+`a4e787388c02a6eb52538e08e7c1ff8b1ea4e46f`; no upstream merge was applied.
+The common base is `1ca5e9adfc1807a158db19741eff825dba9ab757`, with 92 upstream-only
+and 11 fork-only commits at these snapshots. A three-way merge calculation finds
+three conflicted files; clean merges also need semantic compatibility checks.
+
+See the [renewed AI audit](audit/genoffice-ai-stack-2026-10-20.md),
+[compatibility plan](audit/upstream-compatibility-2026-10-20.md) and
+[exact audit manifest](audit/ai-stack-2026-10-20.json).
+The engineering harness is paused indefinitely by owner instruction.
+
+## Original checkout record — 9 October 2026
+
+The following record is historical. Its branch/push/status statements describe
+the initial checkout, not the latest application state.
 
 | Item                            | Value                                                                                                                       |
 | ------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |

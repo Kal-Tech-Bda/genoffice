@@ -1,5 +1,9 @@
 # Infomonk implemented UI specification
 
+Current direction, 20 October: the engineering harness is paused indefinitely
+for a GenOffice AI-backend and upstream compatibility audit. The earlier
+UI/UX-to-harness sequence below is historical, not the current work order.
+
 Updated 11 October 2026. Stages 1–5 are implemented in the GenOffice Electron
 shell. [Actual screenshots](implementation/verification.md#screenshots) show
 executed native windows; [baseline screenshots](audit/verification.md) are historical.
@@ -210,9 +214,9 @@ is deferred. This milestone does not claim a formal accessibility certification.
 
 ## UI/UX gate before the harness — 12 October
 
-The owner's current order is UI/UX acceptance followed directly by the engineering
-harness. Broader source coverage, templates, localization and release work remain
-separate later work.
+The owner's 12 October order was UI/UX acceptance followed by the engineering
+harness. The 20 October pause supersedes that order. Broader source coverage,
+templates, localization and release work remain separate later work.
 
 Job views keep quick presets, search, role group and source selection visible.
 Tracking status, availability and sorting sit under More filters and sorting;

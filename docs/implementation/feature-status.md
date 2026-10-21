@@ -1,6 +1,7 @@
 # Infomonk feature status
 
-Updated 12 October 2026. Evidence levels are **runtime-tested**, **unit-tested** and
+Updated 20 October 2026. The engineering harness is paused indefinitely for the
+existing-backend and upstream compatibility audit. Evidence levels are **runtime-tested**, **unit-tested** and
 **source-confirmed**. A source trace or enabled button alone is not runtime proof.
 
 The [expanded jobs check](../use-cases/bermuda-jobs-wide-2026-10-11.md) supersedes
@@ -38,7 +39,7 @@ and protected parent/child retention have focused unit coverage. Record keys are
 read-only in the ledger correction UI. Saved local quote input readiness is now
 implemented and [native-tested](../testing/input-readiness-2026-10-11.md). General
 document understanding and source-backed report generation remain gaps; the
-engineering harness follows UI/UX acceptance and remains disabled during this pass.
+engineering harness is paused indefinitely and remains disabled.
 
 | Area                                                      | Status                                                                                                                                                | Main paths                                               |
 | --------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
@@ -82,7 +83,7 @@ Workspace flow validation adds:
 
 The [supplier comparison report](../testing/workspace-flow-2026-10-10.md) records
 the independent expected facts and native checks. The engineering harness remains
-disabled during UI/UX review and is the next implementation step after acceptance.
+disabled and paused indefinitely pending the owner's backend/compatibility review.
 
 | Area                                                  | Status / evidence                                                                              | Main implementation                                                                    |
 | ----------------------------------------------------- | ---------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |

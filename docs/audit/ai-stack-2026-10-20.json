@@ -1,0 +1,161 @@
+{
+  "clientDate": "2026-10-20",
+  "timezone": "America/Halifax",
+  "recordedAtUtc": "2026-10-21T00:57:49.282Z",
+  "scope": "Existing GenOffice AI backend and upstream compatibility audit. Harness paused indefinitely; no application merge or harness implementation.",
+  "applicationHead": "a4e787388c02a6eb52538e08e7c1ff8b1ea4e46f",
+  "upstreamHead": "1cb2925afe173b266c1545a3871a397429e11b7e",
+  "mergeBase": "1ca5e9adfc1807a158db19741eff825dba9ab757",
+  "git": {
+    "forkOnlyCommits": 11,
+    "upstreamOnlyCommits": 92,
+    "forkFiles": 352,
+    "addedForkFiles": 323,
+    "modifiedForkFiles": 29,
+    "forkBinaryAssets": 112,
+    "forkAddedLines": 50665,
+    "forkRemovedLines": 378,
+    "upstreamFiles": 1257,
+    "overlap": [
+      ".gitattributes",
+      "README.md",
+      "apps/sheets/src/preload/index.ts",
+      "apps/sheets/src/renderer/App.tsx",
+      "apps/sheets/src/renderer/ExcelShell.tsx",
+      "apps/sheets/src/renderer/ai/AiChatPanel.tsx",
+      "apps/shell/electron-builder.cjs",
+      "apps/shell/package.json",
+      "apps/shell/src/main/index.ts",
+      "apps/shell/src/main/tab-manager.ts",
+      "apps/shell/src/preload/index.ts",
+      "apps/shell/src/renderer/src/main.tsx",
+      "e2e/sheets-find-replace.spec.ts",
+      "packages/electron-utils/package.json",
+      "packages/project-store/src/store.ts",
+      "packages/project-store/src/types.ts"
+    ],
+    "conflicts": [
+      {
+        "path": "apps/sheets/src/renderer/ai/AiChatPanel.tsx",
+        "chunks": 4
+      },
+      {
+        "path": "apps/shell/src/main/index.ts",
+        "chunks": 2
+      },
+      {
+        "path": "apps/shell/src/main/tab-manager.ts",
+        "chunks": 1
+      }
+    ],
+    "mergeTree": "b1c0f40af37b04d873570f6cc10455af7e4bdccb",
+    "mergeApplied": false,
+    "unmodifiedByFork": [
+      "packages/agent-core",
+      "packages/ai-provider",
+      "packages/ai-search",
+      "package-lock.json",
+      ".github/workflows/ci.yml"
+    ]
+  },
+  "upstreamCi": {
+    "sha": "1cb2925afe173b266c1545a3871a397429e11b7e",
+    "status": "completed",
+    "conclusion": "success",
+    "url": "https://github.com/genspark-ai/genoffice/actions/runs/39416318270",
+    "evidence": "GitHub API reported; not a local Infomonk integration result"
+  },
+  "verification": [
+    {
+      "subject": "Fork agent-core",
+      "command": "npm run test -w @genoffice/agent-core",
+      "passed": 166,
+      "files": 9,
+      "failed": 0,
+      "evidence": "Mock/unit tests; process-local TEMP/TMP ignored cache override"
+    },
+    {
+      "subject": "Fork ai-provider",
+      "command": "npm run test -w @genoffice/ai-provider",
+      "passed": 417,
+      "failed": 1,
+      "files": 30,
+      "failure": "Inherited Windows ai-settings-guard fixture: invalid joined Windows path, ENOENT. No live provider request."
+    },
+    {
+      "subject": "Extracted pinned upstream agent-core",
+      "source": "1cb2925afe173b266c1545a3871a397429e11b7e",
+      "root": ".task/upstream-ai-audit-1cb2925a/packages/agent-core",
+      "passed": 216,
+      "files": 12,
+      "failed": 0,
+      "evidence": "Exact git archive sources and existing Vitest4.1.11; no fork runtime imports; not full application integration"
+    },
+    {
+      "subject": "File parsing",
+      "command": "npm run test -w @genoffice/file-parse -- tests/text-formats.test.ts tests/office-formats.test.ts tests/zip-bomb-gate.test.ts",
+      "passed": 85,
+      "files": 3,
+      "failed": 0
+    },
+    {
+      "subject": "CLI/MCP/skill/capabilities",
+      "command": "npm run test -w @genoffice/cli -- tests/cli.test.ts tests/mcp.test.ts tests/agent-skills.test.ts tests/capabilities.test.ts",
+      "passed": 43,
+      "files": 4,
+      "failed": 1,
+      "failure": "Initial workbook-info exit3; did not reproduce, exact cause unidentified."
+    },
+    {
+      "subject": "Focused CLI/DOCX rerun",
+      "command": "npm run test -w @genoffice/cli -- tests/docx.test.ts tests/cli.test.ts -t 'info reads workbook|docx|Word|paragraph|create|atomic|apply'",
+      "passed": 17,
+      "nameFilteredSkips": 18,
+      "files": 2,
+      "failed": 0
+    },
+    {
+      "subject": "Source CLI diagnostic",
+      "serialSuccesses": 4,
+      "concurrentSuccesses": 4,
+      "evidence": "Actual native workbook info, code0/Sheet1/empty stderr"
+    },
+    {
+      "subject": "Search routing/media",
+      "command": "npm run test -w @genoffice/ai-search -- tests/search.test.ts tests/serply.test.ts tests/parallel.test.ts tests/media-tools.test.ts",
+      "passed": 53,
+      "files": 4,
+      "failed": 0,
+      "evidence": "Mocked network/provider implementations; no live cloud requests"
+    },
+    {
+      "subject": "Built CLI0.10.0",
+      "results": [
+        "help succeeded",
+        "synthetic supplier DOCX read returned9 blocks",
+        "compatibility workbook info returnedSheet1"
+      ],
+      "evidence": "Local built CLI exercised; does not prove Infomonk GUI profile routing"
+    }
+  ],
+  "verificationProvenance": "Test outputs inspected in this chat; no persistent raw logs were produced by the audit agents. Counts represent executions at different source snapshots, not a deduplicated total.",
+  "unverified": [
+    "Resolved candidate application build",
+    "Integrated native AI/provider journey",
+    "Live model/search/media account availability",
+    "Runtime reproduction of pre-send cancellation risk",
+    "Installed application update/release feed",
+    "Full repository test suite at current upstream"
+  ],
+  "productChanges": [],
+  "documentationChangesOnly": true,
+  "excluded": ["assay.md", "unrelated docs/research/"],
+  "nextAction": "Review existing backend and proposed upstream integration plan; harness does not automatically resume.",
+  "extractedUpstreamFilesByteVerified": 26,
+  "documentationChecks": {
+    "formatting": "passed on all owned Markdown/JSON files",
+    "relativeLinks": "audit and entry-point links resolve",
+    "productSourceDiff": "none",
+    "diffCheck": "passed"
+  }
+}

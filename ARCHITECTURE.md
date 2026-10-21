@@ -133,9 +133,9 @@ record/column and warns on value/revision divergence. Native viewers use verifie
 snapshot copies. Arbitrary native edits do not silently become ledger corrections.
 
 No new application parser/framework dependency or agent harness was installed.
-The isolated parser experiment is documented separately. The owner's current
-order is UI/UX acceptance, then the engineering harness next. It remains disabled
-during this UI pass.
+The isolated parser experiment is documented separately. On 20 October the owner
+paused the engineering harness indefinitely for an existing-backend and upstream
+compatibility audit. It remains disabled; no generated execution is introduced.
 
 `ResearchService.exportAccepted` reads an exact immutable SQLite revision and
 reuses `projectDataset` and the atomic XLSX writer. It never reads an editable

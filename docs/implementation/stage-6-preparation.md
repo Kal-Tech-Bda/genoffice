@@ -2,12 +2,22 @@
 
 This hardening milestone defines defaults and evaluation inputs. It does not
 enable a coding agent, generated-code runner or private cloud processing.
-`assay.md` remains excluded. The owner initially moved the engineering harness
-to the final phase, then updated the order on 12 October: UI/UX acceptance followed
-directly by the harness. This contract remains preparation until that next
-milestone; execution is disabled during the UI/UX pass.
+`assay.md` remains excluded. On 20 October the owner paused the engineering harness
+indefinitely while the existing GenOffice AI backend and upstream integration are
+audited. This supersedes the earlier harness-next sequence. This document is
+historical preparation, not an active implementation plan. Generated execution
+remains disabled; resume only on further owner direction after audit review.
 
-## First input pattern and independent evaluation
+## Superseded brainstorming and earlier evaluation inputs
+
+The 20 October website brainstorm selected website-first exploration, a local
+Docker runner, browser replay where needed, reviewed data changes, app-open
+scheduling and bounded repair. Those are unimplemented preferences, not a runtime
+commitment. The subsequent indefinite pause takes precedence; revisit them only
+after the existing-backend/upstream audit and further owner direction.
+
+The invoice-first material below records an earlier preparation proposal. It does
+not override that later discussion or authorize implementation.
 
 Start with **supplier-invoices-v1**: labeled, born-digital supplier invoices with
 an invoice number, supplier identity, issued date, currency, payable amount,

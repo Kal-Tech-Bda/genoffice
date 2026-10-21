@@ -1,5 +1,11 @@
 # GenOffice capability and reuse map
 
+The [20 October renewed AI audit](audit/genoffice-ai-stack-2026-10-20.md) and
+[upstream compatibility review](audit/upstream-compatibility-2026-10-20.md)
+supersede this baseline for current agent/provider/CLI/skill/knowledge-base
+capabilities. The engineering harness is paused indefinitely; the staged
+recommendations below remain historical context.
+
 Baseline reviewed 9 October 2026 at `1ca5e9adfc1807a158db19741eff825dba9ab757`.
 
 **Conclusion:** retain the desktop shell, live editors, embedded Univer, workbook

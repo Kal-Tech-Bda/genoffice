@@ -183,3 +183,33 @@ restored; unrelated docs/research was left untouched. The report and manifest ar
 in docs/testing/output-ux-2026-10-12.md and its companion artifact directory.
 
 ---
+
+## 2026-10-21T00:59:30Z — codex/infomonk-workspace — documentation versus a4e78738
+
+Recorded the owner's 20 October local-date instruction to pause the engineering
+harness indefinitely. The current context, implementation plan, README, UI/status
+and preparation documents now require existing-backend/upstream review before any
+further owner-directed harness work. Earlier brainstorming remains historical.
+
+Fetched and audited upstream 1cb2925a against the unchanged Infomonk application
+a4e78738. New reports explain agent/provider/tool ownership, CLI/MCP, imported
+skills, knowledge-base reading, usage and evidence boundaries, with a proposed
+maintenance process. A temporary merge-tree calculation found three conflict files;
+no application merge, provider configuration, dependency or harness changed.
+
+Three findings deserve priority: combine upstream chat/window improvements with
+Infomonk integration hooks rather than selecting one conflict side; fix clean-merge
+feature gaps such as hidden knowledge-base navigation and the existing fetch call
+that would miss upstream connection pinning; align CLI/profile/update identities
+and the fork's CI branch coverage before relying on automatic updates. These are
+documented recommendations, not refactors or workflow deployments performed here.
+
+Focused checks passed 166 fork-core, 216 extracted upstream-core, 85 parser and 53
+mocked search tests. Provider checks passed 417 with one inherited Windows fixture
+failure. CLI checks passed 43 with an initial intermittent workbook-info failure;
+the focused rerun passed 17 and eight direct source diagnostics succeeded. No live
+model/provider journey or resolved integration build is claimed. Exact extracted
+upstream package bytes were verified against all 26 Git-tree files. Documentation
+formatting/links/diff checks passed; unrelated docs/research was left untouched.
+
+---

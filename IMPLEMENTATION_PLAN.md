@@ -1,9 +1,10 @@
 # Infomonk implementation scope and next milestones
 
-Updated 12 October 2026. The owner authorized Stages 1–2, then Stages 3–5.
+Updated 20 October 2026. The owner authorized Stages 1–2, then Stages 3–5.
 Stages 0–5 are delivered locally within the supported boundaries below;
-Further workspace flow features are authorized; the owner's latest order is
-UI/UX acceptance, then the data engineering harness next. The supplied build prompt is context, and direct user
+The engineering harness is paused indefinitely by the owner's 20 October
+instruction. Current work audits GenOffice's AI backend and plans compatibility
+with upstream updates. The supplied build prompt is context, and direct user
 scope takes precedence. `assay.md` remains excluded.
 
 | Stage | Delivered behavior                                                                                                                                                                     | Evidence                                                                                                                |
@@ -120,20 +121,28 @@ fresh-process native evidence. No ongoing notification automation was requested.
 
 ## Remaining order (owner-directed)
 
-The owner's 12 October instruction supersedes the earlier harness-last order.
-Finish UI/UX first: exercise project starts, source/table configuration, candidate
-review, evidence inspection, tracking, outputs and reopening; address confusing
-actions, excessive density and narrow-window failures; verify light/dark themes
-and keyboard access through native journeys. Record remaining limitations and
-make the result reviewable before advancing.
+The owner's 20 October instruction supersedes the earlier harness-next order.
+Pause the harness indefinitely and first understand the current upstream AI
+backend, existing capabilities and safe source-update integration. The
+[backend audit](docs/audit/genoffice-ai-stack-2026-10-20.md) and
+[upstream integration plan](docs/audit/upstream-compatibility-2026-10-20.md)
+record the evidence and proposed next work. Resume harness work only on further
+owner direction after review.
+
+The completed UI/UX scope covered project starts, source/table configuration,
+candidate review, evidence inspection, tracking, outputs and reopening. It addressed
+confusing actions, density and narrow-window failures, and verified light/dark
+themes and keyboard access through native journeys. Its evidence and remaining
+limitations are recorded below.
 
 The [returning-user/output review](docs/testing/output-ux-2026-10-12.md) completes
 this persona iteration with revision-specific sharing, failed-refresh/preview
 recovery and scoped navigation. Its manifest records the final selected regression
 evidence and remaining boundaries; the harness has not been enabled.
 
-The specialized research/data engineering harness (original Stage 6) is **next**
-after that UI/UX gate. Reuse existing agent/provider streaming, cancellation and
+The specialized research/data engineering harness (original Stage 6) is **paused
+indefinitely**. Its earlier proposal is not implementation authorization. Any later
+proposal must reuse existing agent/provider streaming, cancellation and
 tool infrastructure, accepted-ledger contracts and bounded adapters. Reuse chat,
 editors, formula evaluation and durable execution.
 

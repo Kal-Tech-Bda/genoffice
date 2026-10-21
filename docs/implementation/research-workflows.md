@@ -2,8 +2,9 @@
 
 Implemented 10 October 2026 on the existing Electron fork. This is a bounded local
 milestone. The evidence is in [research verification](research-verification.md).
-The owner's current order is UI/UX acceptance, then the engineering harness next.
-The harness remains disabled during this UI pass. `assay.md` is excluded.
+The owner paused the engineering harness indefinitely on 20 October for an
+existing-backend and upstream compatibility audit. It remains disabled.
+`assay.md` is excluded.
 
 ## Try the journeys
 
